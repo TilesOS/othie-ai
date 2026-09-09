@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "data_dir": "./.kith",
+  "credentials_file": "./.kith/credentials.json",
+  "parser_version": "1",
+  "chunker_version": "1",
+  "reconciliation_interval_ms": 60000,
+  "ingestion": {
+    "concurrency": 2,
+    "max_file_bytes": 26214400,
+    "chunk_tokens": 500,
+    "overlap_tokens": 75,
+    "retry_limit": 5,
+    "watch_enabled": true
+  },
+  "models": {
+    "embedding": {
+      "provider": "ollama",
+      "model": "nomic-embed-text",
+      "revision": "configured",
+      "dimensions": 768,
+      "timeout_ms": 1500
+    },
+    "compiler": {
+      "provider": "ollama",
+      "model": "qwen3:4b",
+      "revision": "configured",
+      "thinking": false,
+      "synthesis_deadline_ms": 2000
+    }
+  },
+  "providers": [
+    {
+      "id": "ollama",
+      "kind": "ollama",
+      "base_url": "http://127.0.0.1:11434",
+      "allowed_redirect_origins": []
+    },
+    {
+      "id": "openai",
+      "kind": "openai_compatible",
+      "base_url": "https://api.openai.com",
+      "api_key_env": "OPENAI_API_KEY",
+      "allowed_redirect_origins": []
+    }
+  ],
+  "profiles": {
+    "company": {
+      "sources": [
+        {
+          "root": "./examples/company-docs/policies",
+          "role": "authoritative",
+          "authority_priority": 90,
+          "retrieval_weight": 1,
+          "global_rule_documents": ["global/**"]
+        },
+        {
+          "root": "./examples/company-docs/reference",
+          "role": "reference",
+          "authority_priority": 20,
+          "retrieval_weight": 0.8,
+          "global_rule_documents": []
+        }
+      ],
+      "exclusions": ["**/.*/**", "**/generated/**", "**/*.secret.*", "**/.env*"],
+      "permitted_exports": "rules_and_excerpts",
+      "providers": {
+        "embeddings": ["ollama"],
+        "extraction": ["ollama"],
+        "synthesis": ["ollama"]
+      },
+      "token_budget": {
+        "enabled": true,
+        "max_tokens": 500,
+        "tokenizer": "o200k_base",
+        "host_model": "gpt-5"
+      },
+      "safeguards": {
+        "max_query_chars": 8000,
+        "max_candidates": 40,
+        "max_response_chars": 100000
+      }
+    }
+  }
+}

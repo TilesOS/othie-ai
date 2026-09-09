@@ -1,0 +1,42 @@
+{
+  "name": "kith-ai-context-compiler",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "bin": {
+    "kith": "./dist/src/cli.js",
+    "kith-mcp": "./dist/src/mcp/bridge.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/cli.ts engine foreground",
+    "test": "vitest run",
+    "test:mcp": "vitest run test/mcp.integration.test.ts",
+    "test:models": "vitest run --config vitest.models.config.ts",
+    "benchmark": "tsx src/benchmark.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@lancedb/lancedb": "0.38.0",
+    "@modelcontextprotocol/client": "2.0.0",
+    "@modelcontextprotocol/server": "2.0.0",
+    "chokidar": "5.0.0",
+    "gpt-tokenizer": "4.0.0",
+    "lru-cache": "11.5.2",
+    "mammoth": "1.12.2",
+    "pdfjs-dist": "6.3.289",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2",
+    "vitest": "5.0.0"
+  },
+  "overrides": {
+    "sharp": "0.35.4"
+  }
+}

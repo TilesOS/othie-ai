@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-09-09T14:59:10.799Z",
+  "hardware": {
+    "platform": "darwin",
+    "os_release": "25.6.0",
+    "cpu": "Apple M5 Pro",
+    "logical_cpus": 18,
+    "total_memory_bytes": 51539607552,
+    "rss_bytes": 230211584
+  },
+  "models": {
+    "embedding": { "provider": "ollama", "model": "nomic-embed-text", "revision": "configured", "dimensions": 768, "timeout_ms": 1500 },
+    "compiler": { "provider": "ollama", "model": "qwen3:4b", "revision": "configured", "thinking": false, "synthesis_deadline_ms": 2000 }
+  },
+  "engine_start_ms": 2.002749999999992,
+  "indexing": {
+    "elapsed_ms": 53.870958,
+    "documents_per_second": 74.25151043350667,
+    "chunks_per_second": 92.81438804188333,
+    "active_documents": 4,
+    "active_chunks": 5
+  },
+  "query_ms": {
+    "cold": 4.664708999999988,
+    "warm_p50": 1.337582999999995,
+    "warm_p95": 1.7803749999999923,
+    "warm_samples": [1.7803749999999923, 1.5727080000000058, 1.267583000000002, 1.337582999999995, 1.1971670000000074, 1.2814579999999864, 1.3870829999999899, 1.3484579999999937, 1.2846250000000055, 1.1424590000000023]
+  },
+  "fallback_frequency": 1,
+  "note": "Fresh temporary state; configured providers were unavailable. These are lexical-fallback baseline measurements, not real-model quality or synthesis measurements."
+}
