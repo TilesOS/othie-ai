@@ -1,10 +1,10 @@
-import type { KithConfig } from "../config.js";
+import type { OthieConfig } from "../config.js";
 import type { JsonMessage, ModelProvider } from "./types.js";
 import { ProviderError } from "./types.js";
 
 function isLoopback(url: URL): boolean { return ["127.0.0.1", "::1", "localhost"].includes(url.hostname); }
 
-async function guardedFetch(endpoint: NonNullable<KithConfig["providers"]>[number], path: string, init: RequestInit): Promise<Response> {
+async function guardedFetch(endpoint: NonNullable<OthieConfig["providers"]>[number], path: string, init: RequestInit): Promise<Response> {
   const base = new URL(endpoint.base_url);
   if (endpoint.kind === "openai_compatible" && !isLoopback(base) && base.protocol !== "https:") throw new ProviderError("Remote providers require HTTPS", false);
   const target = new URL(path, base.href.endsWith("/") ? base : new URL(`${base.href}/`));
@@ -24,7 +24,7 @@ async function guardedFetch(endpoint: NonNullable<KithConfig["providers"]>[numbe
 
 export class HttpModelProvider implements ModelProvider {
   readonly remote: boolean;
-  constructor(readonly id: string, private readonly endpoint: KithConfig["providers"][number]) {
+  constructor(readonly id: string, private readonly endpoint: OthieConfig["providers"][number]) {
     this.remote = !isLoopback(new URL(endpoint.base_url));
   }
 
@@ -58,7 +58,7 @@ export class HttpModelProvider implements ModelProvider {
       if (!data.message?.content) throw new ProviderError("Invalid Ollama generation response");
       return JSON.parse(data.message.content) as unknown;
     }
-    const response = await guardedFetch(this.endpoint, "v1/chat/completions", { method: "POST", headers: this.headers(), body: JSON.stringify({ model, messages, response_format: { type: "json_schema", json_schema: { name: "kith_output", strict: true, schema } } }), signal });
+    const response = await guardedFetch(this.endpoint, "v1/chat/completions", { method: "POST", headers: this.headers(), body: JSON.stringify({ model, messages, response_format: { type: "json_schema", json_schema: { name: "othie_output", strict: true, schema } } }), signal });
     const data = await response.json() as { choices?: Array<{ message?: { content?: string } }> };
     const content = data.choices?.[0]?.message?.content;
     if (!content) throw new ProviderError("Invalid OpenAI-compatible generation response");

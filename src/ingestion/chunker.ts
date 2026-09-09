@@ -1,23 +1,21 @@
+import { evidenceUnits } from "./sentences.js";
 import { createHash } from "node:crypto";
-import type { KithConfig, KithProfile, KithSource } from "../config.js";
+import type { OthieConfig, OthieProfile, OthieSource } from "../config.js";
 import { countTokens } from "../tokenizer.js";
 import type { ChunkRecord, ParsedSection } from "../types.js";
 
 export function sha256(value: string | Uint8Array): string { return createHash("sha256").update(value).digest("hex"); }
 
-function sentencePieces(text: string): string[] {
-  return text.split(/(?<=[.!?])\s+(?=[A-Z0-9"'])|\n+/).map((part) => part.trim()).filter(Boolean);
-}
 
 export function chunkSections(input: {
   sections: ParsedSection[];
   documentId: string;
   revisionId: string;
   profileName: string;
-  profile: KithProfile;
-  source: KithSource;
+  profile: OthieProfile;
+  source: OthieSource;
   sourcePath: string;
-  config: KithConfig;
+  config: OthieConfig;
 }): ChunkRecord[] {
   const tokenizer = input.profile.token_budget.tokenizer;
   const max = input.config.ingestion.chunk_tokens;
@@ -26,7 +24,7 @@ export function chunkSections(input: {
   for (const section of input.sections) {
     const heading = section.heading ?? "Document";
     const prefix = `${heading}\n`;
-    const sentences = sentencePieces(section.text);
+    const sentences = evidenceUnits(section.text.replace(/\n+/g, " "));
     let window: string[] = [];
     const emit = () => {
       if (!window.length) return;

@@ -35,25 +35,25 @@ function parseMarkdown(text: string): ParsedSection[] {
   return sections;
 }
 
-export async function parseDocument(path: string, maxBytes: number): Promise<ParsedSection[]> {
-  const fileStat = await stat(path);
-  if (fileStat.size > maxBytes) throw new SkippedDocumentError("oversized", `File exceeds ${maxBytes} bytes`);
+export async function parseDocument(path: string, maxBytes: number, snapshot?: Buffer): Promise<ParsedSection[]> {
+  const size = snapshot?.length ?? (await stat(path)).size;
+  if (size > maxBytes) throw new SkippedDocumentError("oversized", `File exceeds ${maxBytes} bytes`);
   const extension = extname(path).toLowerCase();
   if ([".md", ".markdown", ".txt"].includes(extension)) {
-    const text = await readFile(path, "utf8");
+    const text = snapshot?.toString("utf8") ?? await readFile(path, "utf8");
     if (text.includes("\u0000")) throw new SkippedDocumentError("malformed", "Text contains null bytes");
     return extension === ".txt" ? parsePlainText(text) : parseMarkdown(text);
   }
   if (extension === ".docx") {
     try {
-      const result = await mammoth.extractRawText({ path });
+      const result = await mammoth.extractRawText(snapshot ? { buffer: snapshot } : { path });
       return parsePlainText(result.value);
     } catch (error) { throw new SkippedDocumentError("malformed", `DOCX parse failed: ${String(error)}`); }
   }
   if (extension === ".pdf") {
     try {
       const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
-      const bytes = new Uint8Array(await readFile(path));
+      const bytes = new Uint8Array(snapshot ?? await readFile(path));
       const pdf = await pdfjs.getDocument({ data: bytes }).promise;
       const sections: ParsedSection[] = [];
       for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {

@@ -9,6 +9,8 @@ interface DocumentRow {
 }
 
 export interface JobRow { id: number; path: string; profile: string; kind: "upsert" | "delete" | "rebuild"; attempts: number }
+export type DerivedOperation = "text" | "embeddings" | "extraction";
+export interface DerivedJob { id: number; document_id: string; revision_id: string; operation: DerivedOperation; attempts: number; path: string; profile: string }
 
 export class ManifestStore {
   readonly db: DatabaseSync;
@@ -56,8 +58,16 @@ export class ManifestStore {
         error TEXT, created_at INTEGER NOT NULL, UNIQUE(path, profile, kind)
       );
       CREATE TABLE IF NOT EXISTS metadata (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS derived_jobs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, document_id TEXT NOT NULL, revision_id TEXT NOT NULL,
+        operation TEXT NOT NULL, state TEXT NOT NULL DEFAULT 'pending', attempts INTEGER NOT NULL DEFAULT 0,
+        available_at INTEGER NOT NULL DEFAULT 0, error TEXT, UNIQUE(revision_id, operation)
+      );
       INSERT OR IGNORE INTO metadata(key,value) VALUES ('corpus_revision','0'),('rule_revision','0'),('schema_version','1');
     `);
+    const columns = this.db.prepare("PRAGMA table_info(jobs)").all() as Array<{name: string}>;
+    if (!columns.some((column) => column.name === "rerun")) this.db.exec("ALTER TABLE jobs ADD COLUMN rerun INTEGER NOT NULL DEFAULT 0");
+    this.setMetadata("schema_version", "2");
   }
 
   close(): void { this.db.close(); }
@@ -91,7 +101,7 @@ export class ManifestStore {
     } catch (error) { this.db.exec("ROLLBACK"); throw error; }
   }
 
-  publishReplacement(documentId: string, revisionId: string, contentHash: string, chunks: ChunkRecord[]): void {
+  publishReplacement(documentId: string, revisionId: string, contentHash: string, chunks: ChunkRecord[], operations: DerivedOperation[] = []): void {
     const now = new Date().toISOString();
     this.db.exec("BEGIN IMMEDIATE");
     try {
@@ -105,6 +115,8 @@ export class ManifestStore {
       this.db.prepare("UPDATE revisions SET status='active',published_at=? WHERE id=?").run(now, revisionId);
       this.db.prepare("UPDATE revisions SET status='superseded' WHERE document_id=? AND id<>? AND status='active'").run(documentId, revisionId);
       this.db.prepare("UPDATE documents SET active_revision_id=?,content_hash=?,status='active',error=NULL,updated_at=? WHERE id=?").run(revisionId,contentHash,now,documentId);
+      this.db.prepare("DELETE FROM derived_jobs WHERE document_id=? AND revision_id<>?").run(documentId, revisionId);
+      for (const operation of operations) this.ensureDerivedJob(documentId, revisionId, operation);
       this.bump("corpus_revision");
       this.db.exec("COMMIT");
     } catch (error) { this.db.exec("ROLLBACK"); throw error; }
@@ -128,6 +140,7 @@ export class ManifestStore {
     try {
       this.db.prepare("UPDATE documents SET active_revision_id=NULL,status='revoked',error=?,updated_at=? WHERE id=?").run(reason,new Date().toISOString(),document.id);
       this.db.prepare("DELETE FROM rules WHERE document_id=?").run(document.id);
+      this.db.prepare("DELETE FROM derived_jobs WHERE document_id=?").run(document.id);
       this.bump("corpus_revision"); this.bump("rule_revision");
       this.db.exec("COMMIT");
     } catch (error) { this.db.exec("ROLLBACK"); throw error; }
@@ -136,7 +149,16 @@ export class ManifestStore {
   enqueue(path: string, profile: string, kind: "upsert" | "delete" | "rebuild"): void {
     const now = Date.now();
     this.db.prepare(`INSERT INTO jobs(path,profile,kind,state,attempts,available_at,created_at) VALUES(?,?,?,'pending',0,?,?)
-      ON CONFLICT(path,profile,kind) DO UPDATE SET state='pending',available_at=excluded.available_at,error=NULL`).run(path,profile,kind,now,now);
+      ON CONFLICT(path,profile,kind) DO UPDATE SET
+        rerun=CASE WHEN jobs.state='processing' THEN 1 ELSE 0 END,
+        state=CASE WHEN jobs.state='processing' THEN 'processing' ELSE 'pending' END,
+        attempts=CASE WHEN jobs.state='processing' THEN jobs.attempts ELSE 0 END,
+        available_at=excluded.available_at,error=NULL`).run(path,profile,kind,now,now);
+  }
+
+  invalidatePath(path: string, profile: string): void {
+    const result = this.db.prepare("UPDATE documents SET active_revision_id=NULL,status='pending' WHERE path=? AND profile=? AND status<>'revoked'").run(path, profile);
+    if (result.changes) this.bump("corpus_revision");
   }
 
   listDocuments(profile?: string): DocumentRow[] {
@@ -146,19 +168,26 @@ export class ManifestStore {
   getMetadata(key: string): string | undefined { return (this.db.prepare("SELECT value FROM metadata WHERE key=?").get(key) as {value:string}|undefined)?.value; }
   setMetadata(key: string, value: string): void { this.db.prepare("INSERT INTO metadata(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value").run(key,value); }
 
-  recoverJobs(): void { this.db.prepare("UPDATE jobs SET state='pending' WHERE state='processing'").run(); }
+  recoverJobs(): void {
+    this.db.prepare("UPDATE jobs SET state='pending',rerun=0 WHERE state='processing'").run();
+    this.db.prepare("UPDATE derived_jobs SET state='pending' WHERE state='processing'").run();
+  }
 
   claimJob(): JobRow | undefined {
     this.db.exec("BEGIN IMMEDIATE");
     try {
-      const row = this.db.prepare("SELECT id,path,profile,kind,attempts FROM jobs WHERE state='pending' AND available_at<=? ORDER BY id LIMIT 1").get(Date.now()) as JobRow | undefined;
+      const row = this.db.prepare(`SELECT id,path,profile,kind,attempts FROM jobs j WHERE state='pending' AND available_at<=?
+        AND NOT EXISTS (SELECT 1 FROM jobs busy WHERE busy.path=j.path AND busy.profile=j.profile AND busy.state='processing') ORDER BY id LIMIT 1`).get(Date.now()) as JobRow | undefined;
       if (row) this.db.prepare("UPDATE jobs SET state='processing',attempts=attempts+1 WHERE id=?").run(row.id);
       this.db.exec("COMMIT");
       return row;
     } catch (error) { this.db.exec("ROLLBACK"); throw error; }
   }
 
-  completeJob(id: number): void { this.db.prepare("DELETE FROM jobs WHERE id=?").run(id); }
+  completeJob(id: number): void {
+    this.db.prepare("DELETE FROM jobs WHERE id=? AND rerun=0").run(id);
+    this.db.prepare("UPDATE jobs SET state='pending',rerun=0,attempts=0 WHERE id=? AND rerun=1").run(id);
+  }
   retryJob(id: number, error: string, delayMs: number, terminal: boolean): void {
     this.db.prepare("UPDATE jobs SET state=?,available_at=?,error=? WHERE id=?").run(terminal ? "failed" : "pending",Date.now()+delayMs,error.slice(0,1000),id);
   }
@@ -177,12 +206,13 @@ export class ManifestStore {
     return rows.map(rowToChunk);
   }
 
-  getChunk(id: string): ChunkRecord | undefined {
-    const row = this.db.prepare(`SELECT c.* FROM chunks c JOIN documents d ON d.id=c.document_id WHERE c.id=? AND d.active_revision_id=c.revision_id AND d.status='active'`).get(id) as Record<string,unknown> | undefined;
+  getChunk(id: string, profile?: string): ChunkRecord | undefined {
+    const row = this.db.prepare(`SELECT c.* FROM chunks c JOIN documents d ON d.id=c.document_id WHERE c.id=? AND (? IS NULL OR c.profile=?) AND d.active_revision_id=c.revision_id AND d.status='active'`).get(id,profile??null,profile??null) as Record<string,unknown> | undefined;
     return row ? rowToChunk(row) : undefined;
   }
 
   replaceRules(documentId: string, revisionId: string, rules: RuleRecord[]): void {
+    if (!this.isActiveRevision(documentId, revisionId)) return;
     this.db.exec("BEGIN IMMEDIATE");
     try {
       this.db.prepare("DELETE FROM rules WHERE document_id=?").run(documentId);
@@ -201,11 +231,39 @@ export class ManifestStore {
     const placeholders=profiles?.length?profiles.map(()=>"?").join(","):"";const where=placeholders?` WHERE profile IN (${placeholders})`:"";
     const documents = this.db.prepare(`SELECT status,COUNT(*) AS count FROM documents${where} GROUP BY status`).all(...(profiles??[]));
     const jobs = this.db.prepare(`SELECT state,COUNT(*) AS count FROM jobs${where} GROUP BY state`).all(...(profiles??[]));
-    return { revisions: this.getRevisionCounters(), documents, jobs };
+    const derivedJobs = this.db.prepare(`SELECT j.operation,j.state,COUNT(*) AS count FROM derived_jobs j JOIN documents d ON d.id=j.document_id
+      ${placeholders ? `WHERE d.profile IN (${placeholders})` : ""} GROUP BY j.operation,j.state`).all(...(profiles??[]));
+    return { revisions: this.getRevisionCounters(), documents, jobs, derivedJobs };
+  }
+
+  isActiveRevision(documentId: string, revisionId: string): boolean {
+    return Boolean(this.db.prepare("SELECT 1 FROM documents WHERE id=? AND active_revision_id=? AND status='active'").get(documentId, revisionId));
+  }
+
+  ensureDerivedJob(documentId: string, revisionId: string, operation: DerivedOperation): void {
+    this.db.prepare("INSERT OR IGNORE INTO derived_jobs(document_id,revision_id,operation) VALUES(?,?,?)").run(documentId, revisionId, operation);
+  }
+
+  claimDerivedJob(): DerivedJob | undefined {
+    const job = this.db.prepare(`SELECT j.id,j.document_id,j.revision_id,j.operation,j.attempts,d.path,d.profile
+      FROM derived_jobs j JOIN documents d ON d.id=j.document_id
+      WHERE j.state='pending' AND j.available_at<=? AND d.status='active' AND d.active_revision_id=j.revision_id
+      ORDER BY j.available_at,j.id LIMIT 1`).get(Date.now()) as DerivedJob | undefined;
+    if (job) this.db.prepare("UPDATE derived_jobs SET state='processing',attempts=attempts+1 WHERE id=?").run(job.id);
+    return job;
+  }
+
+  finishDerivedJob(id: number, error?: string): void {
+    if (error) {
+      this.db.prepare(`UPDATE derived_jobs SET state='pending',error=?,available_at=? + MIN(30000,250 * (1 << MIN(attempts,7))) WHERE id=?`).run(error.slice(0,1000),Date.now(),id);
+    } else {
+      this.db.prepare("UPDATE derived_jobs SET state='done',error=NULL WHERE id=?").run(id);
+      this.bump("corpus_revision");
+    }
   }
 
   purge(): void {
-    this.db.exec("BEGIN IMMEDIATE; DELETE FROM chunks_fts; DELETE FROM rules; DELETE FROM chunks; DELETE FROM revisions; DELETE FROM documents; DELETE FROM jobs; UPDATE metadata SET value='0' WHERE key IN ('corpus_revision','rule_revision'); COMMIT;");
+    this.db.exec("BEGIN IMMEDIATE; DELETE FROM derived_jobs; DELETE FROM chunks_fts; DELETE FROM rules; DELETE FROM chunks; DELETE FROM revisions; DELETE FROM documents; DELETE FROM jobs; UPDATE metadata SET value=CAST(value AS INTEGER)+1 WHERE key IN ('corpus_revision','rule_revision'); COMMIT;");
   }
 }
 

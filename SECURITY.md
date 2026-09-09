@@ -1,6 +1,6 @@
 # Security model
 
-Kith limits accidental cross-profile disclosure with real-path admission, per-bridge credentials, profile allowlists, operation-scoped provider allowlists, HTTPS-only remote providers, redirect rejection, and rules-only export modes. These are not a sandbox against malicious software running as the same OS user.
+Othie limits accidental cross-profile disclosure with real-path admission, per-bridge credentials, profile allowlists, operation-scoped provider allowlists, HTTPS-only remote providers, redirect rejection, and rules-only export modes. These are not a sandbox against malicious software running as the same OS user.
 
 Local indexing does not guarantee local consumption. An authorized MCP host can transmit returned context to its own model provider. Review every host's data handling.
 

@@ -1,12 +1,12 @@
 import { realpath, stat } from "node:fs/promises";
 import { basename, extname, isAbsolute, relative, resolve, sep } from "node:path";
-import type { KithProfile, KithSource } from "../config.js";
+import type { OthieProfile, OthieSource } from "../config.js";
 
-const blockedNames = new Set([".git", ".svn", ".hg", ".kith", "node_modules", "dist", "build", "coverage"]);
+const blockedNames = new Set([".git", ".svn", ".hg", ".othie", ".kith", "node_modules", "dist", "build", "coverage"]);
 const credentialPattern = /(^|[._-])(env|credential|credentials|secret|secrets|token|key|keys)([._-]|$)/i;
 const supported = new Set([".md", ".markdown", ".txt", ".pdf", ".docx"]);
 
-export interface AdmittedPath { path: string; source: KithSource }
+export interface AdmittedPath { path: string; source: OthieSource }
 
 function inside(root: string, candidate: string): boolean {
   const rel = relative(root, candidate);
@@ -18,7 +18,7 @@ function matchesSimpleGlob(path: string, pattern: string): boolean {
   return new RegExp(`(^|/)${escaped}($|/)`, "i").test(path.replaceAll("\\", "/"));
 }
 
-export async function admitPath(input: string, profile: KithProfile, stateDir: string): Promise<AdmittedPath | undefined> {
+export async function admitPath(input: string, profile: OthieProfile, stateDir: string): Promise<AdmittedPath | undefined> {
   let actual: string;
   try {
     actual = await realpath(input);
@@ -42,7 +42,7 @@ export async function admitPath(input: string, profile: KithProfile, stateDir: s
   return undefined;
 }
 
-export function isGlobalDocument(path: string, source: KithSource): boolean {
+export function isGlobalDocument(path: string, source: OthieSource): boolean {
   const rel = relative(source.root, path).replaceAll("\\", "/");
   return source.global_rule_documents.some((glob) => matchesSimpleGlob(rel, glob));
 }

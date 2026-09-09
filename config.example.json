@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "data_dir": "./.kith",
-  "credentials_file": "./.kith/credentials.json",
+  "data_dir": "./.othie",
+  "credentials_file": "./.othie/credentials.json",
   "parser_version": "1",
   "chunker_version": "1",
   "reconciliation_interval_ms": 60000,

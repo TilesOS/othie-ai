@@ -71,11 +71,11 @@ export const configSchema = z.object({
   profiles: z.record(z.string().min(1), profileSchema),
 });
 
-export type KithConfig = z.infer<typeof configSchema>;
-export type KithProfile = z.infer<typeof profileSchema>;
-export type KithSource = z.infer<typeof sourceSchema>;
+export type OthieConfig = z.infer<typeof configSchema>;
+export type OthieProfile = z.infer<typeof profileSchema>;
+export type OthieSource = z.infer<typeof sourceSchema>;
 
-export async function loadConfig(path: string): Promise<KithConfig> {
+export async function loadConfig(path: string): Promise<OthieConfig> {
   const raw = JSON.parse(await readFile(path, "utf8")) as unknown;
   const config = configSchema.parse(raw);
   const base = resolve(path, "..");

@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 import { chmod, copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { loadConfig } from "./config.js";
 import { createCredential } from "./engine/credentials.js";
 import { requestEngine } from "./engine/ipc.js";
 import { runEngine } from "./engine/lifecycle.js";
 import { defaultDataDir, defaultIpcPath } from "./paths.js";
+import { hostConfiguration, type HostName } from "./mcp/host-config.js";
 import type { ContextResult } from "./types.js";
 
 function flag(name:string):string|undefined{const index=process.argv.indexOf(`--${name}`);return index>=0?process.argv[index+1]:undefined;}
@@ -17,9 +18,15 @@ async function clientIdentity(){const bridgeId=flag("bridge");const credentialFi
 export async function main():Promise<void>{
   const [command,subcommand]=process.argv.slice(2).filter((arg,index,array)=>!arg.startsWith("--")&&(index===0||!array[index-1]!.startsWith("--")));
   if(command==="init"){const target=resolve(flag("config")??"config.json");const source=new URL(import.meta.url.includes("/dist/")?"../../config.example.json":"../config.example.json",import.meta.url);await copyFile(source,target);process.stdout.write(`Created ${target}\n`);return;}
+  if(command==="host-config"){
+    const host=flag("host"),bridgeId=flag("bridge"),credentialFile=flag("credential-file");
+    if(!host||!["claude","cursor","vscode"].includes(host)||!bridgeId||!credentialFile)throw new Error("host-config requires --host claude|cursor|vscode --bridge NAME --credential-file FILE");
+    const bridgePath=fileURLToPath(new URL(import.meta.url.includes("/dist/")?"./mcp/bridge.js":"../dist/src/mcp/bridge.js",import.meta.url));
+    process.stdout.write(`${JSON.stringify(hostConfiguration(host as HostName,{configPath:resolve(flag("config")??"config.json"),bridgeId,credentialFile,bridgePath}),null,2)}\n`);return;
+  }
   const paths=await configAndPaths();
   if(command==="engine"&&subcommand==="foreground"){
-    const running=await runEngine(paths.config);process.stderr.write(`Kith engine listening at ${running.ipcPath}\n`);await new Promise<void>((resolveDone)=>{let stopping=false;const stop=()=>{if(stopping)return;stopping=true;void running.close().then(resolveDone);};process.once("SIGINT",stop);process.once("SIGTERM",stop);});return;
+    const running=await runEngine(paths.config);process.stderr.write(`Othie engine listening at ${running.ipcPath}\n`);await new Promise<void>((resolveDone)=>{let stopping=false;const stop=()=>{if(stopping)return;stopping=true;void running.close().then(resolveDone);};process.once("SIGINT",stop);process.once("SIGTERM",stop);});return;
   }
   if(command==="credential"&&subcommand==="create"){
     const bridgeId=flag("bridge");const profiles=(flag("profiles")??"").split(",").filter(Boolean);if(!bridgeId||!profiles.length)throw new Error("--bridge and comma-separated --profiles are required");for(const profile of profiles)if(!paths.config.profiles[profile])throw new Error(`Unknown profile ${profile}`);
@@ -30,7 +37,7 @@ export async function main():Promise<void>{
   if(command==="status"){const result=await requestEngine<Record<string,unknown>>(paths.ipcPath,{...identity,method:"status"});process.stdout.write(`${JSON.stringify(result,null,2)}\n`);return;}
   if(command==="query"){const query=flag("query");if(!query)throw new Error("--query is required");const profile=flag("profile");const maxTokens=flag("max-tokens");const params={query,...(profile?{profile}:{}),...(maxTokens?{max_tokens:Number(maxTokens)}:{}),synthesize:has("synthesize")};const result=await requestEngine<ContextResult>(paths.ipcPath,{...identity,method:"context",params});process.stdout.write(`${result.text}\n`);return;}
   if(command==="rebuild"||command==="purge"){await requestEngine(paths.ipcPath,{...identity,method:command});process.stdout.write(`${command} accepted\n`);return;}
-  throw new Error("Usage: kith init | engine foreground | credential create | status | query | rebuild | purge");
+  throw new Error("Usage: othie init | engine foreground | credential create | host-config | status | query | rebuild | purge");
 }
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)main().catch((error)=>{process.stderr.write(`${error instanceof Error?error.message:String(error)}\n`);process.exitCode=1;});

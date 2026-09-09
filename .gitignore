@@ -6,4 +6,6 @@ dist/
 .DS_Store
 coverage/
 *.log
+.othie/
+# Retain protection for state created before the rename.
 .kith/

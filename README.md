@@ -1,8 +1,10 @@
-# Kith AI Local Context Compiler
+# Othie AI
 
-Kith is a single-user background engine for macOS (Apple Silicon) and Windows x64. It watches configured documents, keeps durable local revisions, extracts cited rules from authoritative sources, and returns a bounded `<organization_context>` block through MCP.
+**Othie** is the product; **Othie AI** is the company and website brand.
 
-Kith supplies context; the MCP host decides whether and how to call the tool and use its result. V1 does not promise automatic retrieval or system-prompt insertion. Processing can be local while consumption is not: a host may send Kith's returned text to its cloud model.
+Othie is a single-user background engine for macOS (Apple Silicon) and Windows x64. It watches configured documents, keeps durable local revisions, retries unfinished provider work, extracts cited rules from authoritative sources, and returns a bounded `<organization_context>` block through MCP.
+
+Othie supplies context; the MCP host decides whether and how to call the tool and use its result. V1 does not promise automatic retrieval or system-prompt insertion. Processing can be local while consumption is not: a host may send Othie's returned text to its cloud model.
 
 ## What this build includes
 
@@ -26,7 +28,7 @@ npm run build
 cp config.example.json config.json
 ollama pull nomic-embed-text
 ollama pull qwen3:4b
-node dist/src/cli.js credential create --config config.json --bridge claude --profiles company --default-profile company --out .kith/bridge-claude.credential
+node dist/src/cli.js credential create --config config.json --bridge claude --profiles company --default-profile company --out .othie/bridge-claude.credential
 node dist/src/cli.js engine foreground --config config.json
 ```
 
@@ -45,7 +47,7 @@ The engine resolves real paths before admission, rejects symlink/junction escape
 
 Bridge secrets are not stored in `config.json`. `credential create` stores a SHA-256 verifier in the protected state directory and writes the random credential to the requested mode-0600 file. A same-user malicious process is outside this isolation boundary. Rely on OS account permissions and enable FileVault or BitLocker for data at rest.
 
-Remote endpoints must use HTTPS unless they are loopback. Redirects are rejected; configure the final approved endpoint. Credentials are read from named environment variables, including `OPENAI_API_KEY`, never from Kith configuration. Authorize a remote provider separately for each profile operation (`embeddings`, `extraction`, `synthesis`).
+Remote endpoints must use HTTPS unless they are loopback. Redirects are rejected; configure the final approved endpoint. Credentials are read from named environment variables, including `OPENAI_API_KEY`, never from Othie configuration. Authorize a remote provider separately for each profile operation (`embeddings`, `extraction`, `synthesis`).
 
 ## MCP host setup
 
@@ -54,13 +56,13 @@ Every host launches a lightweight stdio bridge. Use absolute paths in actual hos
 ```json
 {
   "mcpServers": {
-    "kith": {
+    "othie": {
       "command": "/absolute/path/to/node",
-      "args": ["/absolute/path/to/Kith AI/dist/src/mcp/bridge.js"],
+      "args": ["/absolute/path/to/Othie AI/dist/src/mcp/bridge.js"],
       "env": {
-        "KITH_CONFIG": "/absolute/path/to/Kith AI/config.json",
-        "KITH_BRIDGE_ID": "claude",
-        "KITH_BRIDGE_CREDENTIAL_FILE": "/absolute/path/to/Kith AI/.kith/bridge-claude.credential"
+        "OTHIE_CONFIG": "/absolute/path/to/Othie AI/config.json",
+        "OTHIE_BRIDGE_ID": "claude",
+        "OTHIE_BRIDGE_CREDENTIAL_FILE": "/absolute/path/to/Othie AI/.othie/bridge-claude.credential"
       }
     }
   }
@@ -72,25 +74,25 @@ Create a separate credential/grant for Claude Desktop, Cursor, and VS Code. Thei
 - `get_organization_context({ query, profile?, max_tokens?, synthesize? })`
 - `get_context_status({})`
 
-`synthesize` defaults to false. A request cap can lower, never raise, the profile cap. The token guarantee covers all returned XML, citations, and status under `o200k_base` or `cl100k_base`; host framing and unsupported host tokenizers are identified as estimates and are outside the guarantee.
+`synthesize` defaults to false. A request cap can lower, never raise, an enabled profile cap. When the profile cap is disabled, an explicit request cap still applies. The token guarantee covers all returned XML, citations, and status under `o200k_base` or `cl100k_base`; host framing and unsupported host tokenizers are identified as estimates and are outside the guarantee.
 
 ## CLI
 
 ```text
-kith init --config config.json
-kith engine foreground --config config.json
-kith credential create --config config.json --bridge NAME --profiles p1,p2 [--default-profile p1] [--admin] --out FILE
-kith status --config config.json --bridge NAME --credential-file FILE
-kith query --config config.json --bridge NAME --credential-file FILE --query "..." [--profile NAME] [--max-tokens 200] [--synthesize]
-kith rebuild --config config.json --bridge ADMIN --credential-file FILE
-kith purge --config config.json --bridge ADMIN --credential-file FILE
+othie init --config config.json
+othie engine foreground --config config.json
+othie credential create --config config.json --bridge NAME --profiles p1,p2 [--default-profile p1] [--admin] --out FILE
+othie status --config config.json --bridge NAME --credential-file FILE
+othie query --config config.json --bridge NAME --credential-file FILE --query "..." [--profile NAME] [--max-tokens 200] [--synthesize]
+othie rebuild --config config.json --bridge ADMIN --credential-file FILE
+othie purge --config config.json --bridge ADMIN --credential-file FILE
 ```
 
-Purge removes Kith's active and historical SQLite/Lance-derived state. It cannot erase filesystem backups or promise secure physical erasure.
+Purge removes Othie's active and historical SQLite/Lance-derived state. It cannot erase filesystem backups or promise secure physical erasure.
 
 ## Background startup
 
-- macOS: edit the placeholders in `packaging/macos/com.kithai.engine.plist`, copy it to `~/Library/LaunchAgents/`, and load it with `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.kithai.engine.plist`.
+- macOS: edit the placeholders in `packaging/macos/com.othieai.engine.plist`, copy it to `~/Library/LaunchAgents/`, and load it with `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.othieai.engine.plist`.
 - Windows: from PowerShell, run `packaging/windows/install-task.ps1 -NodePath ... -CliPath ... -ConfigPath ...`. It creates a per-user logon task; no administrator account is requested.
 
 Foreground mode is recommended during initial host verification. Only the engine owns watchers and database writes; bridges contain no indexing logic.
@@ -101,7 +103,7 @@ Foreground mode is recommended during initial host verification. Only the engine
 npm run typecheck
 npm test
 npm run test:mcp
-RUN_KITH_MODEL_TESTS=1 npm run test:models
+RUN_OTHIE_MODEL_TESTS=1 npm run test:models
 npm run benchmark
 ```
 
@@ -127,3 +129,35 @@ Document text is untrusted data. Structured output, source-ID validation, exact 
 - [Node IPC](https://nodejs.org/api/net.html#ipc-support)
 - [gpt-tokenizer](https://github.com/niieani/gpt-tokenizer)
 - [Ollama local-only configuration](https://docs.ollama.com/faq#how-do-i-disable-ollama-cloud-features)
+
+## Stabilization and release gates
+
+See [MVP verification](docs/verification.md) for regression coverage, database upgrade
+behavior, Windows CI, and the native-host acceptance procedure. The current conflict
+check recognizes explicit opposing modalities for the same scoped action; it does not
+interpret every difference between two policies as a contradiction.
+
+Use `othie host-config --host claude|cursor|vscode --config config.json --bridge NAME
+--credential-file FILE` to print host-specific configuration. This command does not
+modify host settings or include the secret in its output. Excerpts are packed as complete
+sentence units with following qualifications attached; rules are always kept whole.
+
+## Updating an existing development setup
+
+The product is now Othie, from Othie AI. Commands are `othie` and `othie-mcp`,
+and MCP configuration uses the `othie` server key and `OTHIE_*` environment variables.
+Rebuild and regenerate host configuration with `host-config`, replacing the old
+server entry. Stop the previous engine and bridge processes before restarting.
+
+New sample configurations store state in `.othie/`; platform defaults are
+`~/Library/Application Support/Othie` on macOS and `%LOCALAPPDATA%\Othie` on Windows.
+Existing state and credentials are not automatically moved or deleted. To retain
+an existing index, keep `data_dir` and `credentials_file` set to their previous
+explicit paths (including `.kith/` or the old `KithAI` application-data directory),
+and use the existing bridge credential file when regenerating host configuration.
+Both old and new hidden state folders remain excluded from indexing and Git.
+
+If you installed background startup, unload the old `com.kithai.engine` LaunchAgent
+or unregister the `Kith AI Context Engine` scheduled task before installing the
+renamed template. Repository folder names are independent of the brand; generated
+host configuration resolves the actual checkout path.

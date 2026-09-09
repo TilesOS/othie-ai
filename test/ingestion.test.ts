@@ -1,7 +1,7 @@
 import { rename, rm, unlink, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { KithEngine } from "../src/engine/service.js";
+import { OthieEngine } from "../src/engine/service.js";
 import { admitPath } from "../src/security/paths.js";
 import { countTokens } from "../src/tokenizer.js";
 import { fixture, waitFor } from "./helpers.js";
@@ -11,7 +11,7 @@ const cleanups:string[]=[];afterEach(async()=>{for(const path of cleanups.splice
 describe("offline-first ingestion",()=>{
   it("keeps new documents keyword-searchable without Ollama and handles saves, edits, and deletion",async()=>{
     const f=await fixture();cleanups.push(f.root);const path=join(f.docs,"handbook.md");await writeFile(path,"# Vacation\nEmployees may take twenty days of vacation.\n");
-    const engine=new KithEngine(f.config,f.data);await engine.start();
+    const engine=new OthieEngine(f.config,f.data);await engine.start();
     try{
       await waitFor(()=>engine.store.getDocument(path,"company")?.status==="active");const first=engine.store.listActiveChunks("company");expect(first.length).toBeGreaterThan(0);
       const offline=await engine.context("company",{query:"vacation"});expect(offline.text).toContain("twenty days");expect(offline.status.keywordAvailable).toBe(true);expect(offline.status.vectorAvailable).toBe(false);expect(countTokens(offline.text,"o200k_base")).toBeLessThanOrEqual(500);
@@ -22,7 +22,7 @@ describe("offline-first ingestion",()=>{
   });
 
   it("never exposes a staged replacement after a crash boundary",async()=>{
-    const f=await fixture();cleanups.push(f.root);const path=join(f.docs,"policy.txt");await writeFile(path,"The support window is nine hours.");const engine=new KithEngine(f.config,f.data);await engine.start();
+    const f=await fixture();cleanups.push(f.root);const path=join(f.docs,"policy.txt");await writeFile(path,"The support window is nine hours.");const engine=new OthieEngine(f.config,f.data);await engine.start();
     try{await waitFor(()=>engine.store.getDocument(path,"company")?.status==="active");const doc=engine.store.getDocument(path,"company")!;engine.store.beginReplacement({documentId:doc.id,revisionId:"staged-only",path,profile:"company",role:"reference",authority:50,weight:1,contentHash:"different",parserVersion:"1",chunkerVersion:"1",mtimeMs:1,size:1});expect(engine.store.listActiveChunks("company")).toHaveLength(0);}finally{await engine.stop();}
   });
 
@@ -31,6 +31,6 @@ describe("offline-first ingestion",()=>{
   });
 
   it("reconciles renames and newly applied exclusions",async()=>{
-    const f=await fixture();cleanups.push(f.root);const oldPath=join(f.docs,"old.md");const newPath=join(f.docs,"new.md");await writeFile(oldPath,"# Naming\nUse the blue label.");const engine=new KithEngine(f.config,f.data);await engine.start();try{await waitFor(()=>engine.store.getDocument(oldPath,"company")?.status==="active");await rename(oldPath,newPath);await engine.ingestion.reconcile();await waitFor(()=>engine.store.getDocument(newPath,"company")?.status==="active");expect(engine.store.getDocument(oldPath,"company")?.status).toBe("revoked");f.config.profiles.company!.exclusions.push("new.md");await engine.ingestion.reconcile();expect(engine.store.getDocument(newPath,"company")?.status).toBe("revoked");}finally{await engine.stop();}
+    const f=await fixture();cleanups.push(f.root);const oldPath=join(f.docs,"old.md");const newPath=join(f.docs,"new.md");await writeFile(oldPath,"# Naming\nUse the blue label.");const engine=new OthieEngine(f.config,f.data);await engine.start();try{await waitFor(()=>engine.store.getDocument(oldPath,"company")?.status==="active");await rename(oldPath,newPath);await engine.ingestion.reconcile();await waitFor(()=>engine.store.getDocument(newPath,"company")?.status==="active");expect(engine.store.getDocument(oldPath,"company")?.status).toBe("revoked");f.config.profiles.company!.exclusions.push("new.md");await engine.ingestion.reconcile();expect(engine.store.getDocument(newPath,"company")?.status).toBe("revoked");}finally{await engine.stop();}
   });
 });
