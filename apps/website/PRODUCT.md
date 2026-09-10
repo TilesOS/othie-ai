@@ -16,7 +16,7 @@ Othie is a single-user local context engine. It indexes documents the user selec
 
 ## Positioning
 
-Othie turns user-selected working documents into bounded, cited context packs for compatible AI tools. Its core distinction is local control over source selection, retrieval, and export rather than a claim to remember every conversation or automatically inject context into every prompt.
+Othie turns user-selected working documents into bounded, cited context packs for compatible AI tools. By retrieving relevant whole facts under a configurable token cap, it helps teams preserve a finite model context window for code, conversation history, tool results, and later steps. This can reduce input-token overhead and, for genuinely large prompts, prompt-processing time; exact gains depend on the connected host, model, and caching behavior. Its core distinction is local control over source selection, retrieval, and export rather than a claim to remember every conversation or automatically inject context into every prompt.
 
 ## Operating Context
 

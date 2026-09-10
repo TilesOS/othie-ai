@@ -65,9 +65,15 @@ export function HomeSections() {
 
         <article className="feature-showcase">
           <div className="feature-copy">
-            <span className="feature-index">Control</span>
-            <h3>Set a hard edge around what leaves the engine.</h3>
-            <p>Profiles cap returned context. Othie packs complete facts, keeps citations and qualifiers attached, and reports when no whole item fits the requested budget.</p>
+            <span className="feature-index">Preserve</span>
+            <h3>Spend the context window on the task—not the archive.</h3>
+            <p>Large codebases and documentation sets can consume a model&apos;s finite context with material the task never uses. Othie returns a bounded set of relevant, cited facts, leaving more room for code, conversation history, tool results, and the work still ahead.</p>
+            <ul className="check-list">
+              <li><Check size={15} /> Less irrelevant context in each request</li>
+              <li><Check size={15} /> More runway before compaction or truncation</li>
+              <li><Check size={15} /> A hard cap on Othie&apos;s returned tokens</li>
+            </ul>
+            <p className="feature-caveat">For genuinely large prompts, less input can also reduce prompt-processing time. Actual gains depend on the connected host, model, and caching behavior.</p>
             <Link className="text-link" href="/privacy">Read the privacy boundary <ArrowRight size={15} /></Link>
           </div>
           <div className="feature-visual budget-visual" aria-label="Illustrative context budget packing" role="img">
