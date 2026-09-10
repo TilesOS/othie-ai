@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-10T05:35:36Z",
+  "title": "Design System: Othie AI",
+  "extensions": {
+    "colorMeta": {
+      "void": { "role": "neutral", "displayName": "Context Void", "canonical": "#090D0F", "tonalRamp": ["#090d0f", "#11191c", "#243034", "#3b494d", "#5a686b", "#879295", "#bec5c7", "#eef1f2"] },
+      "surface": { "role": "neutral", "displayName": "Local Surface", "canonical": "#11171A", "tonalRamp": ["#0b1012", "#11171a", "#202a2e", "#354247", "#536064", "#7e898c", "#b8c0c2", "#edf0f1"] },
+      "foreground": { "role": "neutral", "displayName": "Signal White", "canonical": "#F4F7F6", "tonalRamp": ["#1b211f", "#323936", "#525b57", "#76807c", "#9da6a2", "#c4cbc8", "#e2e7e5", "#f4f7f6"] },
+      "brand-accent": { "role": "primary", "displayName": "Retrieval Teal", "canonical": "#2DD4BF", "tonalRamp": ["#07362f", "#09584d", "#0d7b6c", "#14a08d", "#2dd4bf", "#63e2d2", "#a4eee5", "#e6fbf8"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Stable product promises and major route headlines." },
+      "body": { "displayName": "Body", "purpose": "Outcome-oriented explanations with a readable measure." },
+      "label": { "displayName": "Source Metadata", "purpose": "Citations, source paths, statuses, and measured controls only." }
+    },
+    "shadows": [
+      { "name": "float", "value": "0 18px 54px rgb(0 0 0 / 0.34)", "purpose": "Compact scrolled navigation and focused product surfaces." },
+      { "name": "showcase", "value": "0 34px 90px rgb(0 0 0 / 0.25)", "purpose": "Large mechanism demonstrations." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Control and navigation state changes." },
+      { "name": "context-signal", "value": "3.6s loop with 0.7s pause", "purpose": "One repeating context-transfer motion; disabled for reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "620px" },
+      { "name": "compact", "value": "700px" },
+      { "name": "tablet", "value": "900px" },
+      { "name": "navigation", "value": "960px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The rare teal conversion action.",
+      "html": "<button class=\"ds-btn-primary\">SEE DOWNLOAD STATUS</button>",
+      "css": ".ds-btn-primary{background:var(--brand-accent);color:var(--on-accent);border:0;border-radius:999px;padding:12px 20px;font:650 14px Inter,sans-serif;transition:transform 180ms cubic-bezier(.16,1,.3,1),background 180ms}.ds-btn-primary:hover{transform:translateY(-2px);background:#5ee7d3}.ds-btn-primary:focus-visible{outline:2px solid #81eadb;outline-offset:4px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Neutral supporting action with a cool structural edge.",
+      "html": "<button class=\"ds-btn-secondary\">SEE HOW IT WORKS</button>",
+      "css": ".ds-btn-secondary{background:#ffffff09;color:#f4f7f6;border:1px solid #263033;border-radius:999px;padding:12px 20px;font:650 14px Inter,sans-serif;transition:transform 180ms cubic-bezier(.16,1,.3,1),background 180ms}.ds-btn-secondary:hover{transform:translateY(-2px);background:#ffffff0f}.ds-btn-secondary:focus-visible{outline:2px solid #81eadb;outline-offset:4px}"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "chip",
+      "description": "Compact release or recommendation state.",
+      "html": "<span class=\"ds-status\"><i></i>DESKTOP PREVIEW IN DEVELOPMENT</span>",
+      "css": ".ds-status{display:inline-flex;align-items:center;gap:8px;background:#0d1214bf;color:#c0c9c6;border:1px solid #263033;border-radius:999px;padding:6px 12px;font:500 12px 'Geist Mono',monospace}.ds-status i{width:7px;height:7px;border-radius:50%;background:#2dd4bf}"
+    },
+    {
+      "name": "Showcase Panel",
+      "kind": "card",
+      "description": "Wide mechanism surface for product proof, not a generic feature tile.",
+      "html": "<div class=\"ds-showcase\"><span>CONTEXT PACK</span><strong>Cited facts stay whole.</strong></div>",
+      "css": ".ds-showcase{background:#0d1214;color:#f4f7f6;border:1px solid #263033;border-radius:18px;padding:28px;box-shadow:0 34px 90px rgb(0 0 0 / .25)}.ds-showcase span{display:block;color:#2dd4bf;font:500 12px 'Geist Mono',monospace}.ds-showcase strong{display:block;margin-top:10px;font:560 24px Inter,sans-serif}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Restrained links that compact into a tonal floating surface after scroll.",
+      "html": "<nav class=\"ds-nav\"><strong>Othie AI</strong><a href=\"#\">Product</a><a href=\"#\">Pricing</a><a href=\"#\">Download</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:24px;background:#0e1315db;color:#a2aeaa;border:1px solid #ffffff14;border-radius:18px;padding:10px 14px;font:500 14px Inter,sans-serif}.ds-nav strong{margin-right:auto;color:#f4f7f6}.ds-nav a:hover{color:#f4f7f6}.ds-nav a:focus-visible{outline:2px solid #81eadb;outline-offset:4px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Context Signal",
+    "overview": "The site feels like a precise desktop instrument seen in a low-lit working session: mostly neutral, calm enough to read, and alive only where information moves. The signature is a restrained diagonal line field that resolves into selected source paths, bounded context, and host destinations.",
+    "keyCharacteristics": ["Dark, cool, matte surfaces with a single rare teal signal", "Large centered language paired with concrete product demonstrations", "Wide showcases, thin rules, compact mono facts, and crisp state labels", "Motion concentrated in the flowing context field and meaningful control changes"],
+    "rules": [
+      { "name": "Rare Signal", "body": "Brand accent should occupy roughly five to ten percent of a viewport and primarily mark the main action, selected state, and live context path.", "section": "colors" },
+      { "name": "Stable Headline", "body": "Headlines do not type, flicker, or cycle. The mechanism moves around a stable value proposition.", "section": "typography" }
+    ],
+    "dos": ["Do show Othie's mechanism through clearly labeled illustrative source and citation data.", "Do bind every brand treatment, including canvas/WebGL color, to the central accent token.", "Do let quiet space and typography carry most of the visual weight."],
+    "donts": ["Don't turn the page into a grid of generic feature cards.", "Don't use green body copy, large green panels, gradient text, or pervasive glow.", "Don't imply an illustrative UI, installer, integration, or price already ships."]
+  }
+}
