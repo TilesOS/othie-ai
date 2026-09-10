@@ -20,7 +20,7 @@
     ],
     "motion": [
       { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Control and navigation state changes." },
-      { "name": "context-signal", "value": "Continuous ambient drift with mouse-local bending", "purpose": "One site-wide context-transfer field that persists across routes, bends near the pointer, and is disabled for reduced motion." }
+      { "name": "context-signal", "value": "Resolution-aware full-viewport drift with mouse-local bending", "purpose": "One site-wide context-transfer field that persists across routes, bends near the pointer, and is disabled for reduced motion." }
     ],
     "breakpoints": [
       { "name": "mobile", "value": "620px" },
