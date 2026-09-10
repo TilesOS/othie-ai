@@ -12,6 +12,17 @@ The compiled `host-config --host vscode` command also produced the expected edit
 configuration. No Windows runner, desktop-host UI session, or logon startup test was run
 in this local verification.
 
+## Workspace reorganization verification
+
+2026-09-10, macOS: root `npm run build`, `npm run typecheck`, and `npm test`
+passed after moving the engine to `packages/engine`. The suite passed 27 implemented
+tests across seven test files; the real-model test remains a TODO. The added compiled-CLI
+check creates a config outside the workspace, verifies bundled sample source paths and
+config-relative state, refuses to overwrite the config, and checks the generated bridge path.
+The root CLI also generated VS Code configuration pointing to the new compiled bridge.
+All 52 relocated tracked files were accounted for; only the CLI initialization code changed.
+Windows and native desktop-host acceptance were not rerun locally.
+
 ## Coverage
 
 - Actual LanceDB keyword and vector searches filter both profile and active IDs before
@@ -55,9 +66,9 @@ its result. Native app acceptance and real-model quality/latency remain separate
 Generate the correct JSON shape without changing any existing host settings:
 
 ```sh
-node dist/src/cli.js host-config --host claude --config config.json --bridge claude --credential-file .othie/bridge-claude.credential
-node dist/src/cli.js host-config --host cursor --config config.json --bridge cursor --credential-file .othie/bridge-cursor.credential
-node dist/src/cli.js host-config --host vscode --config config.json --bridge vscode --credential-file .othie/bridge-vscode.credential
+node packages/engine/dist/src/cli.js host-config --host claude --config config.json --bridge claude --credential-file .othie/bridge-claude.credential
+node packages/engine/dist/src/cli.js host-config --host cursor --config config.json --bridge cursor --credential-file .othie/bridge-cursor.credential
+node packages/engine/dist/src/cli.js host-config --host vscode --config config.json --bridge vscode --credential-file .othie/bridge-vscode.credential
 ```
 
 Create each credential with `credential create` first. Merge the generated configuration

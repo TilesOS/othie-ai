@@ -17,6 +17,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npm run typecheck
       - run: npm test
       - name: Check Windows startup script syntax
         if: runner.os == 'Windows'
@@ -24,5 +25,5 @@ jobs:
         run: |
           $tokens = $null
           $errors = $null
-          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'packaging/windows/install-task.ps1'), [ref]$tokens, [ref]$errors) | Out-Null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'apps/desktop/packaging/windows/install-task.ps1'), [ref]$tokens, [ref]$errors) | Out-Null
           if ($errors.Count) { throw ($errors | Out-String) }

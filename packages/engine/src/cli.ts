@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import { chmod, copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
-import { resolve, join } from "node:path";
+import { chmod, mkdir, readFile, writeFile } from "node:fs/promises";
+import { resolve, join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { loadConfig } from "./config.js";
+import { configSchema, loadConfig } from "./config.js";
 import { createCredential } from "./engine/credentials.js";
 import { requestEngine } from "./engine/ipc.js";
 import { runEngine } from "./engine/lifecycle.js";
@@ -17,7 +17,19 @@ async function clientIdentity(){const bridgeId=flag("bridge");const credentialFi
 
 export async function main():Promise<void>{
   const [command,subcommand]=process.argv.slice(2).filter((arg,index,array)=>!arg.startsWith("--")&&(index===0||!array[index-1]!.startsWith("--")));
-  if(command==="init"){const target=resolve(flag("config")??"config.json");const source=new URL(import.meta.url.includes("/dist/")?"../../config.example.json":"../config.example.json",import.meta.url);await copyFile(source,target);process.stdout.write(`Created ${target}\n`);return;}
+  if (command === "init") {
+    const target = resolve(flag("config") ?? "config.json");
+    const source = new URL(import.meta.url.includes("/dist/") ? "../../config.example.json" : "../config.example.json", import.meta.url);
+    const config = configSchema.parse(JSON.parse(await readFile(source, "utf8")));
+    for (const profile of Object.values(config.profiles)) {
+      for (const entry of profile.sources) {
+        entry.root = resolve(dirname(fileURLToPath(source)), entry.root);
+      }
+    }
+    await writeFile(target, `${JSON.stringify(config, null, 2)}\n`, { flag: "wx" });
+    process.stdout.write(`Created ${target}\n`);
+    return;
+  }
   if(command==="host-config"){
     const host=flag("host"),bridgeId=flag("bridge"),credentialFile=flag("credential-file");
     if(!host||!["claude","cursor","vscode"].includes(host)||!bridgeId||!credentialFile)throw new Error("host-config requires --host claude|cursor|vscode --bridge NAME --credential-file FILE");

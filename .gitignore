@@ -9,3 +9,11 @@ coverage/
 .othie/
 # Retain protection for state created before the rename.
 .kith/
+
+# Local development configuration and website output.
+config.json
+.next/
+out/
+# Model artifacts are distributed separately.
+*.gguf
+*.safetensors

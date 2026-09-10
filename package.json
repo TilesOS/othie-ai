@@ -1,42 +1,25 @@
 {
-  "name": "othie-ai-context-compiler",
+  "name": "othie-ai",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "engines": {
     "node": ">=24 <25"
   },
-  "bin": {
-    "othie": "./dist/src/cli.js",
-    "othie-mcp": "./dist/src/mcp/bridge.js"
-  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "dev": "tsx src/cli.ts engine foreground",
-    "test": "vitest run",
-    "test:mcp": "vitest run test/mcp.integration.test.ts test/lifecycle.integration.test.ts",
-    "test:models": "vitest run --config vitest.models.config.ts",
-    "benchmark": "tsx src/benchmark.ts",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "pretest": "npm run build",
-    "pretest:mcp": "npm run build"
-  },
-  "dependencies": {
-    "@lancedb/lancedb": "0.38.0",
-    "@modelcontextprotocol/client": "2.0.0",
-    "@modelcontextprotocol/server": "2.0.0",
-    "chokidar": "5.0.0",
-    "gpt-tokenizer": "4.0.0",
-    "lru-cache": "11.5.2",
-    "mammoth": "1.12.2",
-    "pdfjs-dist": "6.3.289",
-    "zod": "4.5.4"
-  },
-  "devDependencies": {
-    "@types/node": "24.13.3",
-    "tsx": "4.23.13",
-    "typescript": "7.0.2",
-    "vitest": "5.0.0"
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:mcp": "npm run test:mcp --workspace=@othie/engine",
+    "test:models": "npm run test:models --workspace=@othie/engine",
+    "engine": "node packages/engine/dist/src/cli.js",
+    "dev": "npm run dev:engine",
+    "dev:engine": "tsx packages/engine/src/cli.ts engine foreground",
+    "benchmark": "tsx packages/engine/src/benchmark.ts"
   },
   "overrides": {
     "sharp": "0.35.4"
