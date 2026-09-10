@@ -20,7 +20,7 @@
     ],
     "motion": [
       { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Control and navigation state changes." },
-      { "name": "context-signal", "value": "3.6s loop with 0.7s pause", "purpose": "One repeating context-transfer motion; disabled for reduced motion." }
+      { "name": "context-signal", "value": "Continuous ambient drift with mouse-local bending", "purpose": "One focal context-transfer field that bends near the pointer and is disabled for reduced motion." }
     ],
     "breakpoints": [
       { "name": "mobile", "value": "620px" },

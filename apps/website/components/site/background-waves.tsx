@@ -11,6 +11,8 @@ const fragment = /* glsl */ `
   precision highp float;
   uniform float uTime;
   uniform vec2 uResolution;
+  uniform vec2 uPointer;
+  uniform float uPointerStrength;
   uniform vec3 uAccent;
 
   float line(vec2 p, float offset, float width) {
@@ -23,18 +25,30 @@ const fragment = /* glsl */ `
   void main() {
     vec2 uv = (gl_FragCoord.xy * 2.0 - uResolution.xy) / min(uResolution.x, uResolution.y);
     uv.x -= 0.22;
+
+    vec2 pointerDelta = uv - uPointer;
+    float pointerDistance = length(pointerDelta);
+    float pointerHalo = exp(-pointerDistance * pointerDistance * 3.4) * uPointerStrength;
+    float safeDistance = max(pointerDistance, 0.08);
+    vec2 warped = uv + (pointerDelta / safeDistance) * pointerHalo * 0.145;
+    warped.y += sin(pointerDelta.x * 5.0 - uTime * 0.32) * pointerHalo * 0.028;
+
     float field = 0.0;
     float accentField = 0.0;
     for (int i = -8; i <= 8; i++) {
       float offset = float(i) * 0.095;
-      float strand = line(uv, offset, 0.0035);
+      float strand = line(warped, offset, 0.0035);
       field += strand * (0.24 - abs(offset) * 0.09);
       if (i == -2 || i == 1 || i == 4) accentField += strand;
     }
+
     float edge = smoothstep(1.65, 0.15, length(uv * vec2(0.72, 0.9)));
     float fade = smoothstep(-1.2, -0.15, uv.x) * smoothstep(2.0, 0.35, uv.x);
-    vec3 color = mix(vec3(0.72, 0.78, 0.77), uAccent, clamp(accentField * 0.72, 0.0, 0.68));
-    gl_FragColor = vec4(color, clamp(field * edge * fade, 0.0, 0.32));
+    float pointerCore = exp(-pointerDistance * pointerDistance * 28.0) * uPointerStrength;
+    float accentMix = clamp(accentField * 0.72 + pointerHalo * 0.24, 0.0, 0.72);
+    vec3 color = mix(vec3(0.72, 0.78, 0.77), uAccent, accentMix);
+    float alpha = field * edge * fade + pointerCore * 0.08 + pointerHalo * field * 0.18;
+    gl_FragColor = vec4(color, clamp(alpha, 0.0, 0.36));
   }
 `;
 
@@ -65,9 +79,15 @@ export function BackgroundWaves() {
         const gl = renderer.gl;
         gl.clearColor(0, 0, 0, 0);
         const [r, g, b] = readAccent();
+        const pointer = new Vec2(0, 0);
+        const pointerTarget = new Vec2(0, 0);
+        let pointerStrength = 0;
+        let pointerStrengthTarget = 0;
         const uniforms = {
           uTime: { value: 0 },
           uResolution: { value: new Vec2(1, 1) },
+          uPointer: { value: pointer },
+          uPointerStrength: { value: 0 },
           uAccent: { value: [r, g, b] },
         };
         const geometry = new Triangle(gl);
@@ -78,19 +98,52 @@ export function BackgroundWaves() {
           renderer.setSize(rect.width, rect.height);
           uniforms.uResolution.value.set(gl.canvas.width, gl.canvas.height);
         };
+        const onPointerMove = (event: PointerEvent) => {
+          if (!visible || event.pointerType === "touch") {
+            pointerStrengthTarget = 0;
+            return;
+          }
+          const rect = wrapper.getBoundingClientRect();
+          const inside = event.clientX >= rect.left && event.clientX <= rect.right
+            && event.clientY >= rect.top && event.clientY <= rect.bottom;
+          if (!inside) {
+            pointerStrengthTarget = 0;
+            return;
+          }
+          const scale = Math.min(rect.width, rect.height);
+          pointerTarget.set(
+            ((event.clientX - rect.left) * 2 - rect.width) / scale - 0.22,
+            ((rect.bottom - event.clientY) * 2 - rect.height) / scale,
+          );
+          pointerStrengthTarget = 1;
+        };
+        const releasePointer = () => { pointerStrengthTarget = 0; };
+        const onPointerOut = (event: PointerEvent) => {
+          if (!event.relatedTarget) releasePointer();
+        };
         const render = (time: number) => {
           if (disposed || contextLost) return;
           if (visible && !document.hidden) {
+            pointer.x += (pointerTarget.x - pointer.x) * 0.075;
+            pointer.y += (pointerTarget.y - pointer.y) * 0.075;
+            pointerStrength += (pointerStrengthTarget - pointerStrength) * 0.065;
+            uniforms.uPointerStrength.value = pointerStrength;
             uniforms.uTime.value = time * 0.001;
             renderer.render({ scene: mesh });
           }
           frame = requestAnimationFrame(render);
         };
-        const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; });
+        const observer = new IntersectionObserver(([entry]) => {
+          visible = entry.isIntersecting;
+          if (!visible) pointerStrengthTarget = 0;
+        });
         const onLost = (event: Event) => { event.preventDefault(); contextLost = true; setReady(false); };
-        const onRestored = () => { contextLost = false; resize(); frame = requestAnimationFrame(render); };
+        const onRestored = () => { contextLost = false; resize(); setReady(true); frame = requestAnimationFrame(render); };
         observer.observe(wrapper);
         window.addEventListener("resize", resize, { passive: true });
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
+        window.addEventListener("pointerout", onPointerOut);
+        window.addEventListener("blur", releasePointer);
         canvas.addEventListener("webglcontextlost", onLost);
         canvas.addEventListener("webglcontextrestored", onRestored);
         resize();
@@ -100,6 +153,9 @@ export function BackgroundWaves() {
           cancelAnimationFrame(frame);
           observer.disconnect();
           window.removeEventListener("resize", resize);
+          window.removeEventListener("pointermove", onPointerMove);
+          window.removeEventListener("pointerout", onPointerOut);
+          window.removeEventListener("blur", releasePointer);
           canvas.removeEventListener("webglcontextlost", onLost);
           canvas.removeEventListener("webglcontextrestored", onRestored);
           geometry.remove();
