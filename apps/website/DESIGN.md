@@ -64,7 +64,7 @@ The site feels like a precise desktop instrument seen in a low-lit working sessi
 - Dark, cool, matte surfaces with a single rare teal signal
 - Large centered language paired with concrete product demonstrations
 - Wide showcases, thin rules, compact mono facts, and crisp state labels
-- Motion concentrated in a pointer-responsive context field and meaningful control changes
+- Motion concentrated in a site-wide, pointer-responsive context field and meaningful control changes
 
 ## Colors
 

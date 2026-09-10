@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/geist-mono";
+import { BackgroundWaves } from "@/components/site/background-waves";
 import { Footer } from "@/components/site/footer";
 import { Header } from "@/components/site/header";
 import { getSiteOrigin, siteConfig } from "@/lib/site";
@@ -33,8 +34,9 @@ export const viewport: Viewport = { colorScheme: "dark", themeColor: "#090d0f" }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body>
+        <BackgroundWaves />
         <a className="skip-link" href="#main-content">Skip to content</a>
         <Header />
         {children}

@@ -7,7 +7,6 @@
  */
 import { ArrowDown, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { BackgroundWaves } from "@/components/site/background-waves";
 import { ContextDemo } from "@/components/site/context-demo";
 import { HomeSections } from "@/components/site/home-sections";
 import { siteConfig } from "@/lib/site";
@@ -17,7 +16,6 @@ export default function HomePage() {
   return (
     <main id="main-content">
       <section className="hero" aria-labelledby="hero-title">
-        <BackgroundWaves />
         <div className="hero-inner">
           <Link className="availability-badge" href="/download"><span />{siteConfig.releaseStage}<ArrowRight size={14} /></Link>
           <h1 id="hero-title"><span>Your AI,</span>familiar with your work.</h1>

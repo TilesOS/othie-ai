@@ -35,15 +35,15 @@ const fragment = /* glsl */ `
 
     float field = 0.0;
     float accentField = 0.0;
-    for (int i = -8; i <= 8; i++) {
-      float offset = float(i) * 0.095;
+    for (int i = -10; i <= 10; i++) {
+      float offset = float(i) * 0.11;
       float strand = line(warped, offset, 0.0035);
-      field += strand * (0.24 - abs(offset) * 0.09);
-      if (i == -2 || i == 1 || i == 4) accentField += strand;
+      field += strand * (0.22 - abs(offset) * 0.05);
+      if (i == -6 || i == -1 || i == 4 || i == 9) accentField += strand;
     }
 
-    float edge = smoothstep(1.65, 0.15, length(uv * vec2(0.72, 0.9)));
-    float fade = smoothstep(-1.2, -0.15, uv.x) * smoothstep(2.0, 0.35, uv.x);
+    float edge = smoothstep(2.0, 0.45, length(uv * vec2(0.55, 0.7)));
+    float fade = smoothstep(-1.7, -0.55, uv.x) * smoothstep(1.7, 0.55, uv.x);
     float pointerCore = exp(-pointerDistance * pointerDistance * 28.0) * uPointerStrength;
     float accentMix = clamp(accentField * 0.72 + pointerHalo * 0.24, 0.0, 0.72);
     vec3 color = mix(vec3(0.72, 0.78, 0.77), uAccent, accentMix);
@@ -171,8 +171,8 @@ export function BackgroundWaves() {
   return (
     <div ref={wrapperRef} className={`wave-field${ready ? " wave-field--ready" : ""}`} aria-hidden="true">
       <svg className="wave-fallback" viewBox="0 0 1200 620" preserveAspectRatio="none">
-        {[-120, -72, -24, 24, 72, 120].map((offset, index) => (
-          <path key={offset} className={index === 2 || index === 4 ? "wave-fallback__accent" : undefined} d={`M -80 ${390 + offset} C 260 ${190 + offset}, 410 ${560 + offset}, 1280 ${175 + offset}`} />
+        {[-260, -208, -156, -104, -52, 0, 52, 104, 156, 208, 260].map((offset, index) => (
+          <path key={offset} className={index === 3 || index === 6 || index === 9 ? "wave-fallback__accent" : undefined} d={`M -80 ${390 + offset} C 260 ${190 + offset}, 410 ${560 + offset}, 1280 ${175 + offset}`} />
         ))}
       </svg>
       <canvas ref={canvasRef} />
