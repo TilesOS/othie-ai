@@ -48,6 +48,25 @@ typography:
     fontWeight: 400
     lineHeight: 1.6
     letterSpacing: "-0.011em"
+  eyebrow:
+    fontFamily: "Instrument Serif, ui-serif, Georgia, Times New Roman, serif"
+    fontSize: "1.0625rem"
+    fontWeight: 400
+    fontStyle: italic
+    lineHeight: 1.2
+    letterSpacing: "0"
+  action:
+    fontFamily: "Instrument Serif, ui-serif, Georgia, Times New Roman, serif"
+    fontSize: "1.0625rem"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "0"
+  figure:
+    fontFamily: "Instrument Serif, ui-serif, Georgia, Times New Roman, serif"
+    fontSize: "clamp(2.1rem, 3.4vw, 3rem)"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "-0.02em"
   label:
     fontFamily: "Geist Mono Variable, Geist Mono, ui-monospace, SFMono-Regular, monospace"
     fontSize: "0.75rem"
@@ -71,6 +90,7 @@ components:
   button-primary:
     backgroundColor: "{colors.foreground}"
     textColor: "{colors.on-light}"
+    typography: "{typography.action}"
     rounded: "{rounded.control}"
     padding: "0 20px"
   button-primary-hover:
@@ -79,6 +99,7 @@ components:
   button-secondary:
     backgroundColor: "transparent"
     textColor: "{colors.foreground}"
+    typography: "{typography.action}"
     rounded: "{rounded.control}"
     padding: "0 20px"
 ---
@@ -103,6 +124,8 @@ document-to-context mechanism.
 - Two-tone paragraph headings: the lead clause in white, its continuation in muted grey
 - A generative field of vertical light bars filling the first viewport, fading to black
 - Small radii (4–6px) everywhere except pills on buttons and status chips
+- A serif accent voice — Instrument Serif — on eyebrows, actions, and figures only
+- Two generative fields: a dense bar field in the hero, a near-black ambient wash below it
 
 ## Colors
 
@@ -119,16 +142,27 @@ Neon. Secondary actions are a 1px hairline pill. Colour is not used to indicate 
 
 ## Typography
 
-Inter carries display and interface copy at weight 400; there is no bold display type.
-Geist Mono at 12px uppercase is reserved for eyebrows, source names, citations, platform
-metadata, and measured controls.
+Three faces, each with one job. **Inter** carries display and interface copy at weight 400;
+there is no bold display type. **Instrument Serif** is the accent voice. **Geist Mono** at
+12px uppercase is the data voice.
+
+**The Two-Voice Rule.** Every small piece of text is either editorial or machine-produced,
+and the face says which. Instrument Serif italic marks the editorial asides a person wrote —
+section eyebrows, feature indices, button labels, and headline figures. Geist Mono uppercase
+marks anything the engine produced — source paths, citations, token counts, statuses, release
+metadata, and commands. A citation never takes the serif; an eyebrow never takes the mono.
 
 **The Two-Tone Heading Rule.** Section headings are written as a sentence pair. The first
 clause is wrapped in `<b>` and renders white at weight 400; the remainder inherits
 `--heading-muted`. This is the site's primary typographic signature — use it for every h2.
 
-**The Stable Headline Rule.** Headlines do not type, flicker, or cycle. The mechanism moves
-around a stable value proposition.
+**The Stable Stem Rule.** The hero headline's stem — "Your AI, familiar with your work," — is
+fixed and never animates. Only the closing clause after the comma types and cycles, through
+phrases naming what Othie spares you. Nothing else on the site types, flickers, or cycles;
+route headlines and every h2 are static. The typed clause is decorative and carries
+`aria-hidden`, with one stable phrase rendered for assistive technology beside it; under
+`prefers-reduced-motion` the first phrase is written out with no caret. The h1 reserves the
+height of its longest wrap so the clause can never reflow the page.
 
 **The Ramp Rule.** Every font-size sits on one ramp: 0.625, 0.6875, 0.75, 0.8125, 0.875,
 0.9375, 1, 1.0625, 1.125, 1.25, 1.5rem for interface text, then the fluid display clamps.
@@ -146,6 +180,11 @@ feature copy at 34rem. The hero is left-set, not centred, and its min-height is
 viewport the visitor lands on at any screen size. Height-based media queries trim the hero's
 type and padding on short or landscape windows so both actions stay above the fold. Feature
 sections run beside a sticky scroll-spy rail.
+
+Two generative fields carry the ground. The hero's dense bar field fills the first viewport;
+everything below it sits over a fixed, full-viewport ambient wash of slow luminance clouds
+capped near 13% alpha — a peak of roughly 12/255 over black. The hero paints an opaque black
+ground so only one field is ever visible at a time.
 
 ## Elevation & Depth
 
@@ -173,11 +212,14 @@ A terminal command band and a dotted-texture closing CTA bracket the feature sec
 - **Do** show Othie's mechanism through clearly labeled illustrative source and citation data.
 - **Do** bind every brand treatment, including canvas/WebGL colour, to the central accent token.
 - **Do** let hairlines, alignment, and quiet space carry the structure.
+- **Do** keep the serif for editorial asides and the mono for engine output; never swap them.
 
 ### Don't:
 
 - **Don't** centre body sections or use a teal-tinted near-black ground.
 - **Don't** make the primary button the accent colour, or use the accent as a panel fill.
 - **Don't** set display weights above 400, or use gradient text and pervasive glow.
+- **Don't** animate any headline but the hero's closing clause, or let it reflow the page.
+- **Don't** let the ambient wash rise to where it competes with panels or text.
 - **Don't** turn the page into a grid of generic feature cards.
 - **Don't** imply an illustrative UI, installer, integration, or price already ships.

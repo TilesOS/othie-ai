@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/geist-mono";
+import "@fontsource/instrument-serif";
+import "@fontsource/instrument-serif/400-italic.css";
+import { AmbientField } from "@/components/site/ambient-field";
 import { Footer } from "@/components/site/footer";
 import { Header } from "@/components/site/header";
 import { getSiteOrigin, siteConfig } from "@/lib/site";
@@ -35,6 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
+        <AmbientField />
         <a className="skip-link" href="#main-content">Skip to content</a>
         <Header />
         {children}

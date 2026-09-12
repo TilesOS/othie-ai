@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-12T16:35:31Z",
+  "generatedAt": "2026-09-12T18:07:59Z",
   "title": "Design System: Othie AI",
   "extensions": {
     "colorMeta": {
@@ -333,9 +333,21 @@
         "displayName": "Body",
         "purpose": "Outcome-oriented explanation at a 58-66ch measure."
       },
+      "eyebrow": {
+        "displayName": "Editorial Eyebrow",
+        "purpose": "Instrument Serif italic on section eyebrows and feature indices \u2014 the asides a person wrote."
+      },
+      "action": {
+        "displayName": "Action Label",
+        "purpose": "Instrument Serif on button labels, both variants, since they always appear as a pair."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Instrument Serif on the stat-band numerals."
+      },
       "label": {
         "displayName": "Source Metadata",
-        "purpose": "Eyebrows, citations, source paths, statuses, and measured controls only."
+        "purpose": "Geist Mono uppercase for engine output only: citations, source paths, token counts, statuses, commands."
       }
     },
     "shadows": [],
@@ -363,6 +375,21 @@
         "name": "field-drift",
         "value": "0.008 units/second",
         "purpose": "Horizontal drift of the hero bar field; slow enough to read as ambient rather than animated."
+      },
+      {
+        "name": "ambient-drift",
+        "value": "0.011 units/second",
+        "purpose": "Drift of the page-wide ambient wash below the hero."
+      },
+      {
+        "name": "type-cadence",
+        "value": "58ms in, 28ms out, 2200ms hold",
+        "purpose": "Hero clause typing; disabled entirely under prefers-reduced-motion."
+      },
+      {
+        "name": "caret-blink",
+        "value": "1.05s steps(1, end)",
+        "purpose": "Hero caret."
       }
     ],
     "breakpoints": [
@@ -397,6 +424,10 @@
         "purpose": "Hero subheading is dropped; headline scales down further."
       }
     ],
+    "ambientField": {
+      "rule": "A fixed, full-viewport WebGL wash sits behind every section except the hero.",
+      "note": "Slow fbm luminance clouds with a faint accent tint and a whisper of vertical striation, alpha capped at 0.13 \u2014 a peak near 12/255 over black. Rendered at devicePixelRatio 1 since it carries no fine detail, paused while the document is hidden, and not mounted at all under prefers-reduced-motion. The hero paints an opaque black ground so the two fields never overlap."
+    },
     "surfaceFill": {
       "rule": "The landing hero is min-height: calc(100svh - var(--header-height) - var(--announce-height)).",
       "note": "The WebGL bar field fills that box exactly at any screen size. Column count derives from the measured CSS width at roughly one bar per 13px (clamped 40-300), so density is constant from a 375px phone to a 3440px ultrawide rather than scaling with aspect ratio. devicePixelRatio is clamped to 1.5 and re-read on display change."
@@ -409,7 +440,7 @@
       "refersTo": "button-primary",
       "description": "The single main action. White on black \u2014 colour never signals primacy in this system.",
       "html": "<button class=\"ds-btn-primary\">Get started</button>",
-      "css": ".ds-btn-primary { display: inline-flex; min-height: 2.5rem; align-items: center; justify-content: center; gap: .5rem; border: 1px solid transparent; border-radius: 999px; padding: 0 1.25rem; background: #FFFFFF; color: #1A1A1A; font: 500 .9375rem/1 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.02em; cursor: pointer; transition: background 160ms cubic-bezier(.16,1,.3,1); } .ds-btn-primary:hover { background: #D9DADD; } .ds-btn-primary:focus-visible { outline: 1px solid #47E1BD; outline-offset: 3px; }"
+      "css": ".ds-btn-primary { display: inline-flex; min-height: 2.5rem; align-items: center; justify-content: center; gap: .5rem; border: 1px solid transparent; border-radius: 999px; padding: 0 1.25rem; background: #FFFFFF; color: #1A1A1A; font: 400 1.0625rem/1 \"Instrument Serif\", ui-serif, Georgia, serif; letter-spacing: 0; cursor: pointer; transition: background 160ms cubic-bezier(.16,1,.3,1); } .ds-btn-primary:hover { background: #D9DADD; } .ds-btn-primary:focus-visible { outline: 1px solid #47E1BD; outline-offset: 3px; }"
     },
     {
       "name": "Secondary Button",
@@ -417,7 +448,7 @@
       "refersTo": "button-secondary",
       "description": "The paired alternative action: a hairline pill that never competes with the primary.",
       "html": "<button class=\"ds-btn-secondary\">Read the docs</button>",
-      "css": ".ds-btn-secondary { display: inline-flex; min-height: 2.5rem; align-items: center; justify-content: center; gap: .5rem; border: 1px solid #61646B; border-radius: 999px; padding: 0 1.25rem; background: transparent; color: #FFFFFF; font: 400 .9375rem/1 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.02em; cursor: pointer; transition: border-color 160ms cubic-bezier(.16,1,.3,1), background 160ms cubic-bezier(.16,1,.3,1); } .ds-btn-secondary:hover { border-color: #FFFFFF; background: rgba(255,255,255,.04); } .ds-btn-secondary:focus-visible { outline: 1px solid #47E1BD; outline-offset: 3px; }"
+      "css": ".ds-btn-secondary { display: inline-flex; min-height: 2.5rem; align-items: center; justify-content: center; gap: .5rem; border: 1px solid #61646B; border-radius: 999px; padding: 0 1.25rem; background: transparent; color: #FFFFFF; font: 400 1.0625rem/1 \"Instrument Serif\", ui-serif, Georgia, serif; letter-spacing: 0; cursor: pointer; transition: border-color 160ms cubic-bezier(.16,1,.3,1), background 160ms cubic-bezier(.16,1,.3,1); } .ds-btn-secondary:hover { border-color: #FFFFFF; background: rgba(255,255,255,.04); } .ds-btn-secondary:focus-visible { outline: 1px solid #47E1BD; outline-offset: 3px; }"
     },
     {
       "name": "Two-Tone Lead Heading",
@@ -428,12 +459,12 @@
       "css": ".ds-lede { margin: 0; max-width: 46rem; color: #797D86; font: 400 clamp(1.85rem, 3.4vw, 3rem)/1.125 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.04em; text-wrap: pretty; } .ds-lede b { color: #FFFFFF; font-weight: 400; }"
     },
     {
-      "name": "Mono Label",
+      "name": "Editorial Eyebrow",
       "kind": "chip",
-      "refersTo": "label",
-      "description": "The eyebrow above every heading, and the only place uppercase appears.",
+      "refersTo": "eyebrow",
+      "description": "The editorial eyebrow above every heading, set in Instrument Serif italic.",
       "html": "<span class=\"ds-mono-label\"><i class=\"ds-signal-dot\"></i>Runs locally on your machine</span>",
-      "css": ".ds-mono-label { display: inline-flex; align-items: center; gap: .5rem; color: #C9CBCF; font: 500 .75rem/1 \"Geist Mono\", ui-monospace, SFMono-Regular, monospace; letter-spacing: .01em; text-transform: uppercase; } .ds-signal-dot { width: .4rem; height: .4rem; flex: none; border-radius: 50%; background: #47E1BD; box-shadow: 0 0 0 3px rgba(71,225,189,.1); }"
+      "css": ".ds-mono-label { display: inline-flex; align-items: center; gap: .5rem; color: #C9CBCF; font: italic 400 1.0625rem/1.2 \"Instrument Serif\", ui-serif, Georgia, serif; letter-spacing: 0; } .ds-signal-dot { width: .4rem; height: .4rem; flex: none; border-radius: 50%; background: #47E1BD; box-shadow: 0 0 0 3px rgba(71,225,189,.1); }"
     },
     {
       "name": "Announcement Bar",
@@ -474,6 +505,14 @@
       "description": "Signature component. Sticky rail beside the feature block; the accent dot marks position, not importance.",
       "html": "<nav class=\"ds-rail\"><span>Mechanism</span><a href=\"#\" aria-current=\"true\">Choose sources</a><a href=\"#\">Carry context</a><a href=\"#\">Preserve the window</a></nav>",
       "css": ".ds-rail { display: grid; align-content: start; gap: .1rem; width: 13.5rem; } .ds-rail > span { margin-bottom: .9rem; color: #61646B; font: 500 .6875rem/1 \"Geist Mono\", ui-monospace, SFMono-Regular, monospace; letter-spacing: .02em; text-transform: uppercase; } .ds-rail a { display: flex; align-items: center; gap: .65rem; padding: .5rem 0; color: #61646B; font: 400 .84rem/1.6 Inter, ui-sans-serif, system-ui, sans-serif; text-decoration: none; transition: color 180ms cubic-bezier(.16,1,.3,1); } .ds-rail a::before { content: \"\"; width: .3rem; height: .3rem; flex: none; border-radius: 50%; background: currentColor; opacity: .5; transition: background 180ms cubic-bezier(.16,1,.3,1), opacity 180ms cubic-bezier(.16,1,.3,1); } .ds-rail a:hover { color: #94979E; } .ds-rail a[aria-current=\"true\"] { color: #FFFFFF; } .ds-rail a[aria-current=\"true\"]::before { background: #47E1BD; opacity: 1; }"
+    },
+    {
+      "name": "Typed Hero Clause",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature component. The headline stem is fixed; only this clause types and cycles. Decorative, so it is aria-hidden with a stable phrase rendered alongside for assistive technology.",
+      "html": "<h1 class=\"ds-hero-h1\">Your AI, familiar with your work, <span class=\"ds-sr-only\">without handing over the archive.</span><span class=\"ds-typed\" aria-hidden=\"true\">without handing over the archive.<i class=\"ds-caret\"></i></span></h1>",
+      "css": ".ds-hero-h1 { margin: 0; max-width: 20ch; min-height: calc(3em * 1.125); color: #FFFFFF; font: 400 clamp(2.5rem, 5vw, 4.25rem)/1.125 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.04em; text-wrap: pretty; } .ds-typed { color: #797D86; } .ds-caret { display: inline-block; width: .06em; height: .78em; margin-left: .06em; translate: 0 .06em; background: #47E1BD; animation: ds-caret-blink 1.05s steps(1, end) infinite; } .ds-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } @keyframes ds-caret-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } } @media (prefers-reduced-motion: reduce) { .ds-caret { display: none; } }"
     },
     {
       "name": "Command Box",

@@ -9,10 +9,19 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { BackgroundWaves } from "@/components/site/background-waves";
 import { CommandBlock } from "@/components/site/command-block";
+import { TypedPhrases } from "@/components/site/typed-phrases";
 import { ContextDemo } from "@/components/site/context-demo";
 import { HomeSections } from "@/components/site/home-sections";
 import { siteConfig } from "@/lib/site";
 import "./extended.css";
+
+/* The stable half of the hero sentence never moves; only this clause cycles. */
+const heroPhrases = [
+  "without handing over the archive.",
+  "without pasting the same context twice.",
+  "without shipping your files to the cloud.",
+  "without losing the thread between tools.",
+] as const;
 
 const primitives = [
   {
@@ -90,7 +99,11 @@ export default function HomePage() {
             <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="currentColor"><rect x="0" y="0" width="3" height="12" /><rect x="4.5" y="3" width="3" height="9" /><rect x="9" y="6" width="3" height="6" /></svg>
             Runs locally on your machine
           </span>
-          <h1 id="hero-title">Your AI, familiar with your work, <span>without handing over the archive.</span></h1>
+          <h1 id="hero-title">
+            Your AI, familiar with your work,{" "}
+            <span className="sr-only">{heroPhrases[0]}</span>
+            <TypedPhrases phrases={heroPhrases} />
+          </h1>
           <p>Othie brings selected documents, preferences, and working rules into compatible AI tools — indexed locally, returned with citations, and bounded by a budget you set.</p>
           <div className="hero-actions">
             <Link className="button button--primary button--large" href="/download">Get started</Link>

@@ -33,6 +33,9 @@
   --radius-control: 999px;
   --radius-panel: 4px;
   --radius-showcase: 6px;
+  --font-sans: var(--font-sans);
+  --font-serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, monospace;
   --header-height: 4rem;
   --announce-height: 2.5rem;
   --section-space: clamp(5rem, 9vw, 8.5rem);
@@ -41,13 +44,15 @@
 
 * { box-sizing: border-box; }
 html { background: var(--background); color-scheme: dark; scroll-behavior: smooth; scroll-padding-top: 8rem; }
-body { position: relative; min-width: 320px; margin: 0; overflow-x: hidden; isolation: isolate; background: var(--background); color: var(--foreground); font-family: "Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1rem; line-height: 1.6; letter-spacing: -0.011em; -webkit-font-smoothing: antialiased; }
+body { position: relative; min-width: 320px; margin: 0; overflow-x: hidden; isolation: isolate; background: var(--background); color: var(--foreground); font-family: var(--font-sans); font-size: 1rem; line-height: 1.6; letter-spacing: -0.011em; -webkit-font-smoothing: antialiased; }
 body > main, body > .site-footer { position: relative; z-index: 1; }
 button, a, input { font: inherit; }
 a { color: inherit; text-decoration: none; }
 button { color: inherit; }
 ::selection { background: rgb(var(--brand-accent-rgb) / 0.28); color: var(--foreground); }
 :focus-visible { outline: 1px solid var(--focus); outline-offset: 3px; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
 .skip-link { position: fixed; z-index: 1000; left: 1rem; top: 1rem; transform: translateY(-150%); border-radius: var(--radius-control); background: var(--foreground); color: var(--on-light); padding: 0.65rem 1rem; font-weight: 500; transition: transform 160ms var(--ease-out); }
 .skip-link:focus { transform: translateY(0); }
@@ -79,23 +84,23 @@ button { color: inherit; }
 .header-actions { display: flex; align-items: center; gap: 1rem; }
 .header-chip { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--muted-foreground); font-size: 0.8125rem; transition: color 140ms var(--ease-out); }
 .header-chip:hover { color: var(--foreground); }
-.header-chip b { color: var(--label-foreground); font-weight: 400; font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.75rem; }
+.header-chip b { color: var(--label-foreground); font-weight: 400; font-family: var(--font-mono); font-size: 0.75rem; }
 
 /* ---------- Buttons ---------- */
-.button { display: inline-flex; min-height: 2.5rem; align-items: center; justify-content: center; gap: 0.5rem; border: 1px solid transparent; border-radius: var(--radius-control); padding: 0 1.25rem; font-size: 0.9375rem; font-weight: 500; line-height: 1; letter-spacing: -0.02em; transition: background 160ms var(--ease-out), border-color 160ms var(--ease-out), color 160ms var(--ease-out), opacity 160ms var(--ease-out); }
+.button { display: inline-flex; min-height: 2.5rem; align-items: center; justify-content: center; gap: 0.5rem; border: 1px solid transparent; border-radius: var(--radius-control); padding: 0 1.25rem; font-family: var(--font-serif); font-size: 1.0625rem; font-weight: 400; line-height: 1; letter-spacing: 0; transition: background 160ms var(--ease-out), border-color 160ms var(--ease-out), color 160ms var(--ease-out), opacity 160ms var(--ease-out); }
 .button--primary { background: var(--foreground); color: var(--on-light); }
 .button--primary:hover { background: var(--foreground-hover); }
-.button--secondary { border-color: var(--quiet-foreground); background: transparent; color: var(--foreground); font-weight: 400; }
+.button--secondary { border-color: var(--quiet-foreground); background: transparent; color: var(--foreground); }
 .button--secondary:hover { border-color: var(--foreground); background: rgb(255 255 255 / 0.04); }
 .button--accent { background: var(--brand-accent); color: var(--on-accent); }
 .button--accent:hover { background: var(--brand-accent-hover); }
-.button--large { min-height: 3rem; padding: 0 1.75rem; font-size: 1rem; }
+.button--large { min-height: 3rem; padding: 0 1.75rem; font-size: 1.125rem; }
 .icon-button { display: inline-grid; width: 2.4rem; height: 2.4rem; place-items: center; border: 1px solid var(--border); border-radius: 4px; background: var(--surface-bright); cursor: pointer; }
 .mobile-menu-trigger { display: none; }
 .mobile-menu-overlay { position: fixed; z-index: 80; inset: 0; background: rgb(0 0 0 / 0.72); animation: fade-in 180ms ease-out; }
 .mobile-menu-panel { position: fixed; z-index: 81; inset: 0 0 auto 0; padding: 1.25rem; border-bottom: 1px solid var(--border); background: #000; animation: menu-in 220ms var(--ease-out); }
 .mobile-menu-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
-.mobile-menu-title { font-family: "Geist Mono Variable", ui-monospace, monospace; color: var(--quiet-foreground); font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.mobile-menu-title { font-family: var(--font-mono); color: var(--quiet-foreground); font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; }
 .mobile-nav { display: grid; }
 .mobile-nav a { padding: 0.9rem 0.1rem; border-top: 1px solid var(--border-soft); font-size: 1.125rem; font-weight: 400; letter-spacing: -0.03em; }
 .mobile-menu-cta { width: 100%; margin-top: 1.25rem; }
@@ -105,19 +110,22 @@ button { color: inherit; }
    continuation drops to a muted grey. <b> marks the lead clause. */
 .lede { margin: 0; color: var(--heading-muted); font-size: clamp(1.85rem, 3.4vw, 3rem); font-weight: 400; line-height: 1.125; letter-spacing: -0.04em; text-wrap: pretty; }
 .lede b { color: var(--foreground); font-weight: 400; }
-.mono-label { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--label-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.75rem; font-weight: 500; line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; }
 .mono-label svg { color: var(--brand-accent); }
 .signal-dot { width: 0.4rem; height: 0.4rem; flex: none; border-radius: 50%; background: var(--brand-accent); box-shadow: 0 0 0 3px var(--brand-accent-soft); }
-.section-label, .demo-kicker, .mono-meta, .footer-label, .feature-index, .docs-step { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--label-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.75rem; font-weight: 500; line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; }
+/* Editorial voice: section eyebrows and asides, set in Instrument Serif italic. */
+.section-label, .mono-label, .feature-index { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--label-foreground); font-family: var(--font-serif); font-size: 1.0625rem; font-style: italic; font-weight: 400; line-height: 1.2; letter-spacing: 0; text-transform: none; }
+/* Data voice: anything the engine produced — paths, citations, counts, statuses. */
+.demo-kicker, .mono-meta, .footer-label, .docs-step { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--label-foreground); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; }
 
 /* ---------- Hero ---------- */
 /* Fills exactly what is visible on load: the viewport less the announcement rail and header.
    svh keeps mobile stable while the browser chrome collapses. */
-.hero { position: relative; display: flex; min-height: calc(100svh - var(--header-height) - var(--announce-height)); flex-direction: column; justify-content: flex-end; overflow: hidden; padding: clamp(7rem, 20vh, 15rem) 0 clamp(2.5rem, 5vh, 4.5rem); }
+.hero { position: relative; z-index: 1; background: var(--background); display: flex; min-height: calc(100svh - var(--header-height) - var(--announce-height)); flex-direction: column; justify-content: flex-end; overflow: hidden; padding: clamp(7rem, 20vh, 15rem) 0 clamp(2.5rem, 5vh, 4.5rem); }
 .hero-inner { position: relative; z-index: 2; width: min(calc(100% - 3rem), var(--wide-container)); margin-inline: auto; text-align: left; }
 .hero-eyebrow { margin-bottom: 1.5rem; }
-.hero h1 { max-width: 20ch; margin: 0; font-size: clamp(2.5rem, 5vw, 4.25rem); font-weight: 400; line-height: 1.125; letter-spacing: -0.04em; text-wrap: pretty; }
-.hero h1 span { color: var(--heading-muted); }
+.hero h1 { max-width: 20ch; min-height: calc(3em * 1.125); margin: 0; font-size: clamp(2.5rem, 5vw, 4.25rem); font-weight: 400; line-height: 1.125; letter-spacing: -0.04em; text-wrap: pretty; }
+.hero-typed { color: var(--heading-muted); }
+.hero-caret { display: inline-block; width: 0.06em; height: 0.78em; margin-left: 0.06em; translate: 0 0.06em; background: var(--brand-accent); animation: caret-blink 1.05s steps(1, end) infinite; }
 .hero-inner > p { max-width: 58ch; margin: 1.5rem 0 0; color: var(--muted-foreground); font-size: 1.0625rem; line-height: 1.6; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.25rem; }
 
@@ -129,7 +137,7 @@ button { color: inherit; }
 .primitive p b { color: var(--foreground); font-weight: 500; }
 .primitive-visual { position: relative; display: grid; height: 8.5rem; overflow: hidden; align-content: start; gap: 0.4rem; border: 1px solid var(--border-soft); border-radius: var(--radius-panel); background: var(--surface); padding: 0.85rem; }
 .primitive-visual::after { content: ""; position: absolute; inset: auto 0 0 0; height: 3rem; background: linear-gradient(to top, var(--surface), transparent); }
-.primitive-visual span { display: flex; align-items: center; gap: 0.4rem; color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.625rem; letter-spacing: 0.01em; }
+.primitive-visual span { display: flex; align-items: center; gap: 0.4rem; color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.01em; }
 .primitive-visual span i { width: 0.3rem; height: 0.3rem; flex: none; border-radius: 50%; background: var(--brand-accent-dim); font-style: normal; }
 .primitive-visual span.is-live i { background: var(--brand-accent); }
 .primitive-visual span em { margin-left: auto; color: var(--faint-foreground); font-style: normal; }
@@ -137,6 +145,10 @@ button { color: inherit; }
 .primitive-bar--fill { background: var(--brand-accent-dim); }
 
 /* ---------- Hero field (WebGL bar field) ---------- */
+.ambient-field { position: fixed; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; }
+.ambient-field canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 900ms ease; }
+.ambient-field--ready canvas { opacity: 1; }
+
 .wave-field { position: absolute; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; }
 .wave-field::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgb(0 0 0 / 0.35) 0%, rgb(0 0 0 / 0.1) 30%, rgb(0 0 0 / 0.72) 72%, #000 100%); }
 .wave-field canvas, .wave-fallback { position: absolute; width: 100%; height: 100%; inset: 0; }
@@ -167,14 +179,14 @@ button { color: inherit; }
 .demo-flow { display: grid; grid-template-columns: minmax(210px, 0.8fr) 3rem minmax(300px, 1.25fr) 3rem minmax(210px, 0.75fr); align-items: stretch; min-height: 31rem; }
 .demo-flow section { padding: 1.5rem; }
 .demo-pane-heading { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.25rem; }
-.demo-pane-heading > span { font-family: "Geist Mono Variable", ui-monospace, monospace; color: var(--quiet-foreground); font-size: 0.6875rem; text-transform: uppercase; }
+.demo-pane-heading > span { font-family: var(--font-mono); color: var(--quiet-foreground); font-size: 0.6875rem; text-transform: uppercase; }
 .demo-pane-heading h3 { margin: 0; font-size: 1rem; font-weight: 500; letter-spacing: -0.025em; }
 .demo-sources, .demo-context { border-right: 1px solid var(--border-soft); }
 .source-file { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.7rem; margin-top: 0.5rem; padding: 0.8rem; border: 1px solid var(--border-soft); border-radius: var(--radius-panel); background: var(--surface-raised); }
 .source-file > svg:last-child { color: var(--brand-accent); }
 .source-file div { display: grid; min-width: 0; }
 .source-file strong { overflow: hidden; font-size: 0.8125rem; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
-.source-file span { color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.625rem; }
+.source-file span { color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.625rem; }
 .demo-note { margin-top: 1rem; color: var(--quiet-foreground); font-size: 0.75rem; line-height: 1.55; }
 .flow-arrow { display: grid; place-items: center; color: #3d4046; }
 .flow-arrow svg { width: 1rem; }
@@ -183,11 +195,11 @@ button { color: inherit; }
 .fact-list { display: grid; gap: 0.5rem; min-height: 13rem; }
 .context-fact { padding: 0.8rem; border: 1px solid var(--border-soft); border-radius: var(--radius-panel); background: var(--surface-raised); animation: fact-in 300ms var(--ease-out); }
 .context-fact p { margin: 0; color: var(--foreground-dim); font-size: 0.8125rem; line-height: 1.55; }
-.context-fact span { display: block; margin-top: 0.45rem; color: var(--brand-accent); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.625rem; }
+.context-fact span { display: block; margin-top: 0.45rem; color: var(--brand-accent); font-family: var(--font-mono); font-size: 0.625rem; }
 .budget-control { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--border-soft); }
 .budget-control > div { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .budget-control label { font-size: 0.8125rem; font-weight: 400; }
-.budget-control output, .budget-summary { color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.6875rem; }
+.budget-control output, .budget-summary { color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.6875rem; }
 .slider-root { position: relative; display: flex; width: 100%; height: 1.5rem; align-items: center; margin-top: 0.65rem; touch-action: none; user-select: none; }
 .slider-track { position: relative; flex-grow: 1; height: 2px; overflow: hidden; background: var(--border); }
 .slider-range { position: absolute; height: 100%; background: var(--brand-accent); }
@@ -202,7 +214,7 @@ button { color: inherit; }
 .host-orbit__ring::after { right: 0.3rem; bottom: 2rem; width: 0.25rem; height: 0.25rem; opacity: 0.55; }
 .host-orbit__core { display: grid; width: 4.5rem; height: 4.5rem; place-items: center; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface-raised); color: var(--brand-accent); }
 .demo-host > p { max-width: 25ch; margin: 0 auto; color: var(--muted-foreground); font-size: 0.8125rem; }
-.host-status { display: inline-flex; align-items: center; gap: 0.45rem; margin-top: auto; color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.625rem; text-transform: uppercase; }
+.host-status { display: inline-flex; align-items: center; gap: 0.45rem; margin-top: auto; color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.625rem; text-transform: uppercase; }
 .host-status span { width: 0.35rem; height: 0.35rem; border-radius: 50%; background: var(--brand-accent); }
 
 /* ---------- Terminal command block ---------- */
@@ -212,9 +224,9 @@ button { color: inherit; }
 .command-band h2 { margin: 1rem 0 0; color: var(--heading-muted); font-size: clamp(1.5rem, 2.6vw, 2.25rem); font-weight: 400; line-height: 1.15; letter-spacing: -0.035em; }
 .command-band h2 b { color: var(--foreground); font-weight: 400; }
 .command-box { position: relative; z-index: 1; display: flex; align-items: center; gap: 0.75rem; min-width: min(100%, 30rem); border: 1px solid var(--border); border-radius: var(--radius-panel); background: #000; padding: 0.85rem 0.9rem; }
-.command-box code { overflow-x: auto; flex: 1; color: var(--foreground-dim); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.8125rem; white-space: nowrap; }
+.command-box code { overflow-x: auto; flex: 1; color: var(--foreground-dim); font-family: var(--font-mono); font-size: 0.8125rem; white-space: nowrap; }
 .command-box code b { color: var(--brand-accent); font-weight: 400; }
-.command-box > span { color: var(--brand-accent); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.8125rem; }
+.command-box > span { color: var(--brand-accent); font-family: var(--font-mono); font-size: 0.8125rem; }
 .command-copy { display: inline-grid; width: 1.9rem; height: 1.9rem; flex: none; place-items: center; border: 1px solid var(--border-soft); border-radius: var(--radius-xs); background: var(--surface-bright); color: var(--muted-foreground); cursor: pointer; transition: color 140ms var(--ease-out), border-color 140ms var(--ease-out); }
 .command-copy:hover { border-color: var(--quiet-foreground); color: var(--foreground); }
 .command-copy[data-copied="true"] { color: var(--brand-accent); border-color: var(--brand-accent-dim); }
@@ -229,12 +241,13 @@ button { color: inherit; }
 .footer-label { margin-bottom: 0.35rem; color: var(--quiet-foreground); }
 .footer-links a { width: max-content; color: var(--muted-foreground); font-size: 0.875rem; transition: color 140ms var(--ease-out); }
 .footer-links a:hover { color: var(--foreground); }
-.footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 4rem; padding-top: 1.25rem; border-top: 1px solid var(--border-soft); color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.6875rem; text-transform: uppercase; }
+.footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 4rem; padding-top: 1.25rem; border-top: 1px solid var(--border-soft); color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; }
 .footer-status { display: inline-flex; align-items: center; gap: 0.45rem; }
 .footer-status i { width: 0.35rem; height: 0.35rem; border-radius: 50%; background: var(--brand-accent); font-style: normal; }
 
 @keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes caret-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
 @keyframes fact-in { from { opacity: 0.45; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
 /* Short or landscape windows: the hero still fills the viewport, but the type and

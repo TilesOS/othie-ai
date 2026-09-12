@@ -14,7 +14,7 @@
 
 .story-layout { display: grid; grid-template-columns: 13.5rem minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); }
 .section-rail { position: sticky; top: calc(var(--header-height) + 3rem); display: grid; height: max-content; align-content: start; gap: 0.1rem; }
-.section-rail > span { margin-bottom: 0.9rem; color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; }
+.section-rail > span { margin-bottom: 0.9rem; color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; }
 .section-rail a { display: flex; align-items: center; gap: 0.65rem; padding: 0.5rem 0; color: var(--quiet-foreground); font-size: 0.8125rem; transition: color 180ms var(--ease-out); }
 .section-rail a::before { content: ""; width: 0.3rem; height: 0.3rem; flex: none; border-radius: 50%; background: currentColor; opacity: 0.5; transition: background 180ms var(--ease-out), opacity 180ms var(--ease-out); }
 .section-rail a:hover { color: var(--muted-foreground); }
@@ -36,13 +36,13 @@
 .text-link:hover { border-color: var(--brand-accent); }
 
 .feature-visual { display: grid; align-content: start; min-height: 26rem; overflow: hidden; border: 1px solid var(--border-soft); border-radius: var(--radius-showcase); background: var(--surface); }
-.visual-bar { display: flex; justify-content: space-between; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-soft); color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.6875rem; text-transform: uppercase; }
+.visual-bar { display: flex; justify-content: space-between; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-soft); color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; }
 .folder-tree { display: grid; align-content: center; gap: 0.5rem; padding: 2.5rem clamp(1.25rem, 4vw, 3rem); }
 .tree-root, .tree-branch { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.65rem; min-height: 3.1rem; padding: 0.75rem 0.9rem; border: 1px solid var(--border-soft); border-radius: var(--radius-panel); background: var(--surface-raised); }
 .tree-root { background: var(--surface-bright); }
 .tree-root svg, .tree-branch svg { color: var(--brand-accent); }
 .tree-root span, .tree-branch span { font-size: 0.875rem; font-weight: 400; }
-.tree-root small, .tree-branch em { color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.625rem; font-style: normal; }
+.tree-root small, .tree-branch em { color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.625rem; font-style: normal; }
 .tree-branch { margin-left: 2.4rem; }
 .tree-branch i { position: absolute; right: 100%; top: -0.55rem; width: 1.8rem; height: 2.15rem; border-bottom: 1px solid var(--border); border-left: 1px solid var(--border); }
 .tree-branch--muted { border-style: dashed; background: transparent; }
@@ -56,19 +56,19 @@
 .host-flow-core .brand-mark { width: 3.25rem; height: 3.25rem; margin-bottom: 0.7rem; border-radius: var(--radius-panel); background: var(--surface-raised); }
 .host-flow-core .brand-mark::before { width: 1.05rem; height: 1.05rem; }
 .host-flow-core strong { font-size: 0.875rem; font-weight: 500; }
-.host-flow-core small { color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.625rem; text-transform: uppercase; }
+.host-flow-core small { color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.625rem; text-transform: uppercase; }
 .signal-line { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; width: calc(100% - 4rem); height: 1px; margin: 0 auto; background: var(--border); }
 .signal-line > span { width: 0.35rem; height: 0.35rem; margin: -0.17rem auto 0; border: 1px solid var(--brand-accent); border-radius: 50%; background: var(--surface); }
 .signal-line i { position: absolute; top: -0.2rem; left: 5%; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--brand-accent); box-shadow: 0 0 0 5px var(--brand-accent-soft); }
 .host-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; padding: 1.25rem 1.5rem 0; }
 .host-row > span { display: grid; min-height: 4.5rem; place-content: center; border: 1px solid var(--border-soft); border-radius: var(--radius-panel); background: var(--surface-raised); text-align: center; font-size: 0.8125rem; }
-.host-row small { margin-top: 0.25rem; color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.625rem; text-transform: uppercase; }
+.host-row small { margin-top: 0.25rem; color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.625rem; text-transform: uppercase; }
 
 .budget-stack { display: grid; align-content: center; gap: 0.7rem; padding: 2.5rem 2rem; }
 .budget-stack > div { display: flex; width: var(--item-width); min-height: 3.2rem; align-items: center; justify-content: space-between; padding: 0.7rem 0.85rem; border: 1px solid var(--border-soft); border-radius: var(--radius-panel); background: var(--surface-raised); }
 .budget-stack > div::before { content: ""; width: 0.35rem; height: 0.35rem; flex: none; margin-right: 0.6rem; border-radius: 50%; background: var(--brand-accent); }
 .budget-stack span { flex: 1; font-size: 0.8125rem; }
-.budget-stack em { color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.625rem; font-style: normal; }
+.budget-stack em { color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.625rem; font-style: normal; }
 .budget-stack .budget-remainder { border-style: dashed; background: transparent; }
 .budget-stack .budget-remainder::before { background: var(--quiet-foreground); }
 .budget-stack .budget-remainder em { color: var(--muted-foreground); }
@@ -78,20 +78,20 @@
 .stat-band > div:first-child p { margin: 1.25rem 0 0; max-width: 52ch; color: var(--muted-foreground); font-size: 0.9375rem; line-height: 1.65; }
 .stat-figures { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--border-soft); border: 1px solid var(--border-soft); border-radius: var(--radius-showcase); overflow: hidden; }
 .stat-figures > div { display: grid; align-content: start; gap: 0.75rem; background: var(--surface); padding: clamp(1.25rem, 2.5vw, 1.75rem); }
-.stat-figures strong { font-size: clamp(1.5rem, 2.6vw, 2.25rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.04em; }
-.stat-figures span { color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.625rem; line-height: 1.5; text-transform: uppercase; }
+.stat-figures strong { font-family: var(--font-serif); font-size: clamp(2.1rem, 3.4vw, 3rem); font-weight: 400; line-height: 1; letter-spacing: -0.02em; }
+.stat-figures span { color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.625rem; line-height: 1.5; text-transform: uppercase; }
 
 /* ---------- Compatibility ---------- */
 .compatibility-section { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(2.5rem, 7vw, 6rem); padding: var(--section-space) 0 0; }
 .compatibility-copy p { max-width: 50ch; margin: 1.25rem 0 1.75rem; color: var(--muted-foreground); font-size: 0.9375rem; line-height: 1.65; }
 .compatibility-list { border-top: 1px solid var(--border-soft); }
 .compatibility-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--border-soft); }
-.host-monogram { display: grid; width: 2.25rem; height: 2.25rem; place-items: center; border: 1px solid var(--border-soft); border-radius: var(--radius-panel); background: var(--surface-raised); color: var(--muted-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.6875rem; text-transform: uppercase; }
+.host-monogram { display: grid; width: 2.25rem; height: 2.25rem; place-items: center; border: 1px solid var(--border-soft); border-radius: var(--radius-panel); background: var(--surface-raised); color: var(--muted-foreground); font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; }
 .compatibility-row div { display: grid; gap: 0.15rem; }
 .compatibility-row strong { font-size: 0.9375rem; font-weight: 400; }
 .compatibility-row div span { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--quiet-foreground); font-size: 0.75rem; }
 .compatibility-row div span::before { content: ""; width: 0.3rem; height: 0.3rem; border-radius: 50%; background: var(--brand-accent); }
-.compatibility-row small { color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.625rem; text-align: right; text-transform: uppercase; }
+.compatibility-row small { color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.625rem; text-align: right; text-transform: uppercase; }
 .compatibility-note { margin: 1.25rem 0 0; color: var(--quiet-foreground); font-size: 0.75rem; line-height: 1.6; }
 
 /* ---------- Setup timeline ---------- */
@@ -99,7 +99,7 @@
 .setup-section .section-intro { max-width: 46rem; }
 .setup-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin: 3rem 0 0; padding: 0; list-style: none; border: 1px solid var(--border-soft); border-radius: var(--radius-showcase); overflow: hidden; background: var(--border-soft); }
 .setup-timeline li { display: grid; align-content: start; gap: 0.6rem; min-height: 12rem; background: var(--surface); padding: clamp(1.25rem, 2.5vw, 1.75rem); }
-.setup-timeline > li > span { color: var(--quiet-foreground); font-family: "Geist Mono Variable", ui-monospace, monospace; font-size: 0.6875rem; }
+.setup-timeline > li > span { color: var(--quiet-foreground); font-family: var(--font-mono); font-size: 0.6875rem; }
 .setup-timeline h3 { margin: 2rem 0 0; font-size: 1rem; font-weight: 500; letter-spacing: -0.025em; }
 .setup-timeline p { margin: 0; color: var(--muted-foreground); font-size: 0.8125rem; line-height: 1.6; }
 
