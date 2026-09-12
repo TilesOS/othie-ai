@@ -10,8 +10,8 @@ const vertex = /* glsl */ `
 /**
  * The quiet counterpart to the hero field: slow, large-scale luminance clouds that
  * keep the pure black from reading as an empty void behind the lower page. Capped
- * thirteen percent alpha — a peak of roughly 12/255 over black — so it reads as depth
- * rather than as content.
+ * a peak near 17/255 over black, with a floor around 3/255 so no region stays pure
+ * black. Stays under the panel tones so surfaces keep their edge.
  */
 const fragment = /* glsl */ `
   precision mediump float;
@@ -46,15 +46,16 @@ const fragment = /* glsl */ `
 
     float a = fbm(p + vec2(uTime * 0.011, uTime * -0.007));
     float b = fbm(p * 0.55 - vec2(uTime * 0.005, uTime * 0.003));
-    float cloud = smoothstep(0.34, 0.88, a * 0.66 + b * 0.44);
+    float cloud = smoothstep(0.26, 0.80, a * 0.66 + b * 0.44);
 
     /* A whisper of vertical striation keeps it in the same family as the hero field. */
     float striation = (sin(uv.x * uResolution.x * 0.07) * 0.5 + 0.5) * 0.12;
 
-    vec3 colour = mix(vec3(0.40, 0.43, 0.47), uAccent, cloud * 0.26);
-    float alpha = cloud * (0.085 + striation * 0.045);
+    vec3 colour = mix(vec3(0.46, 0.50, 0.54), uAccent, cloud * 0.26);
+    /* A floor keeps the darkest regions off pure black; the cloud rides on top of it. */
+    float alpha = 0.024 + cloud * (0.095 + striation * 0.05);
 
-    gl_FragColor = vec4(colour, clamp(alpha, 0.0, 0.13));
+    gl_FragColor = vec4(colour, clamp(alpha, 0.0, 0.16));
   }
 `;
 

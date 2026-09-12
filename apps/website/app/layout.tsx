@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.companyName,
-    images: [{ url: "/og.png", width: 1733, height: 907, alt: "Your AI, familiar with your work." }],
+    images: [{ url: "/og.png", width: 1733, height: 907, alt: "AI familiar with your work." }],
   },
   twitter: {
     card: "summary_large_image",

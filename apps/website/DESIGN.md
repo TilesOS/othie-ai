@@ -156,13 +156,22 @@ metadata, and commands. A citation never takes the serif; an eyebrow never takes
 clause is wrapped in `<b>` and renders white at weight 400; the remainder inherits
 `--heading-muted`. This is the site's primary typographic signature — use it for every h2.
 
-**The Stable Stem Rule.** The hero headline's stem — "Your AI, familiar with your work," — is
-fixed and never animates. Only the closing clause after the comma types and cycles, through
-phrases naming what Othie spares you. Nothing else on the site types, flickers, or cycles;
-route headlines and every h2 are static. The typed clause is decorative and carries
-`aria-hidden`, with one stable phrase rendered for assistive technology beside it; under
-`prefers-reduced-motion` the first phrase is written out with no caret. The h1 reserves the
-height of its longest wrap so the clause can never reflow the page.
+**The Stable Stem Rule.** The hero headline's stem — "AI familiar with your work" — is fixed
+and never animates. Only the clause beneath it types and cycles, through phrases naming what
+Othie spares you. Nothing else on the site types, flickers, or cycles; route headlines and
+every h2 are static.
+
+The clause is a **block**, so it always owns its own row: the stem above it can never reflow
+as characters arrive, and the caret never rides up to the end of the first line. The clause,
+not the h1, reserves its own height — one row at desktop where every phrase fits a single
+line, two below 780px where the measure forces a wrap. Reserving it there rather than on the
+h1 keeps the stem pinned without padding dead space under the headline. Phrases must stay
+under the h1's 17em measure; a longer phrase wraps and breaks the reservation.
+
+The caret is a thin **white** bar, not the accent — the accent is reserved for state, and a
+blinking brand-coloured caret reads as a status indicator. The typed clause is decorative and
+carries `aria-hidden`, with one stable phrase rendered for assistive technology beside it;
+under `prefers-reduced-motion` the first phrase is written out with no caret.
 
 **The Ramp Rule.** Every font-size sits on one ramp: 0.625, 0.6875, 0.75, 0.8125, 0.875,
 0.9375, 1, 1.0625, 1.125, 1.25, 1.5rem for interface text, then the fluid display clamps.
@@ -182,9 +191,11 @@ type and padding on short or landscape windows so both actions stay above the fo
 sections run beside a sticky scroll-spy rail.
 
 Two generative fields carry the ground. The hero's dense bar field fills the first viewport;
-everything below it sits over a fixed, full-viewport ambient wash of slow luminance clouds
-capped near 13% alpha — a peak of roughly 12/255 over black. The hero paints an opaque black
-ground so only one field is ever visible at a time.
+everything below it sits over a fixed, full-viewport ambient wash of slow luminance clouds:
+a median near 9/255 over black, a peak near 17/255, and a floor near 3/255 so no region of
+the page stays pure black. Those numbers are deliberate — the wash must stay below
+`surface-bright` (27/255) so panels keep their edge against it. The hero paints an opaque
+black ground so only one field is ever visible at a time.
 
 ## Elevation & Depth
 

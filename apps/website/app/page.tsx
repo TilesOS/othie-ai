@@ -15,7 +15,7 @@ import { HomeSections } from "@/components/site/home-sections";
 import { siteConfig } from "@/lib/site";
 import "./extended.css";
 
-/* The stable half of the hero sentence never moves; only this clause cycles. */
+/* The stem "AI familiar with your work" never moves; only this clause cycles. */
 const heroPhrases = [
   "without handing over the archive.",
   "without pasting the same context twice.",
@@ -100,7 +100,7 @@ export default function HomePage() {
             Runs locally on your machine
           </span>
           <h1 id="hero-title">
-            Your AI, familiar with your work,{" "}
+            AI familiar with your work{" "}
             <span className="sr-only">{heroPhrases[0]}</span>
             <TypedPhrases phrases={heroPhrases} />
           </h1>

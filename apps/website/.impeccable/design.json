@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-12T18:07:59Z",
+  "generatedAt": "2026-09-12T18:33:55Z",
   "title": "Design System: Othie AI",
   "extensions": {
     "colorMeta": {
@@ -426,7 +426,7 @@
     ],
     "ambientField": {
       "rule": "A fixed, full-viewport WebGL wash sits behind every section except the hero.",
-      "note": "Slow fbm luminance clouds with a faint accent tint and a whisper of vertical striation, alpha capped at 0.13 \u2014 a peak near 12/255 over black. Rendered at devicePixelRatio 1 since it carries no fine detail, paused while the document is hidden, and not mounted at all under prefers-reduced-motion. The hero paints an opaque black ground so the two fields never overlap."
+      "note": "Slow fbm luminance clouds with a faint accent tint and a whisper of vertical striation. Median near 9/255 over black, peak near 17/255, floor near 3/255 so no region stays pure black \u2014 deliberately below surface-bright (27/255) so panels keep their edge. Rendered at devicePixelRatio 1 since it carries no fine detail, paused while the document is hidden, and not mounted at all under prefers-reduced-motion. The hero paints an opaque black ground so the two fields never overlap."
     },
     "surfaceFill": {
       "rule": "The landing hero is min-height: calc(100svh - var(--header-height) - var(--announce-height)).",
@@ -510,9 +510,9 @@
       "name": "Typed Hero Clause",
       "kind": "custom",
       "refersTo": null,
-      "description": "Signature component. The headline stem is fixed; only this clause types and cycles. Decorative, so it is aria-hidden with a stable phrase rendered alongside for assistive technology.",
-      "html": "<h1 class=\"ds-hero-h1\">Your AI, familiar with your work, <span class=\"ds-sr-only\">without handing over the archive.</span><span class=\"ds-typed\" aria-hidden=\"true\">without handing over the archive.<i class=\"ds-caret\"></i></span></h1>",
-      "css": ".ds-hero-h1 { margin: 0; max-width: 20ch; min-height: calc(3em * 1.125); color: #FFFFFF; font: 400 clamp(2.5rem, 5vw, 4.25rem)/1.125 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.04em; text-wrap: pretty; } .ds-typed { color: #797D86; } .ds-caret { display: inline-block; width: .06em; height: .78em; margin-left: .06em; translate: 0 .06em; background: #47E1BD; animation: ds-caret-blink 1.05s steps(1, end) infinite; } .ds-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } @keyframes ds-caret-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } } @media (prefers-reduced-motion: reduce) { .ds-caret { display: none; } }"
+      "description": "Signature component. The stem is fixed; only the clause below types and cycles. The clause is a block so it owns its own row and the stem can never reflow, and it reserves its own height. Decorative: aria-hidden, with a stable phrase alongside for assistive technology, and no caret under reduced motion.",
+      "html": "<h1 class=\"ds-hero-h1\">AI familiar with your work <span class=\"ds-sr-only\">without handing over the archive.</span><span class=\"ds-typed\" aria-hidden=\"true\">without handing over the archive.<i class=\"ds-caret\"></i></span></h1>",
+      "css": ".ds-hero-h1 { margin: 0; max-width: 17em; color: #FFFFFF; font: 400 clamp(2.5rem, 5vw, 4.25rem)/1.125 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.04em; text-wrap: pretty; } .ds-typed { display: block; min-height: 1.125em; color: #797D86; } .ds-caret { display: inline-block; width: .06em; height: .78em; margin-left: .06em; translate: 0 .06em; background: #FFFFFF; animation: ds-caret-blink 1.05s steps(1, end) infinite; } .ds-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } @keyframes ds-caret-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } } @media (prefers-reduced-motion: reduce) { .ds-caret { display: none; } }"
     },
     {
       "name": "Command Box",
