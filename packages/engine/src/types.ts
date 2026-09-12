@@ -48,7 +48,19 @@ export interface SearchHit {
   score: number;
 }
 
-export interface ContextRequest {
+export type ContextSurface = "code" | "chat" | "work" | "unknown";
+export type ContextPhase = "turn_start" | "on_demand" | "post_discovery";
+
+export interface ContextRequestMetadata {
+  schema_version?: "1";
+  surface?: ContextSurface;
+  phase?: ContextPhase;
+  host?: string;
+  workspace_root?: string;
+  active_paths?: string[];
+}
+
+export interface ContextRequest extends ContextRequestMetadata {
   query: string;
   profile?: string;
   max_tokens?: number;
@@ -71,7 +83,51 @@ export interface ContextStatus {
   ruleRevision: number;
 }
 
+export interface ContextCitation {
+  source: string;
+  at: string;
+  quote?: string;
+}
+
+export interface ContextBriefV1 {
+  schema_version: "1";
+  request: {
+    surface: ContextSurface;
+    phase: ContextPhase;
+    host?: string;
+    workspace_root?: string;
+    active_paths?: string[];
+  };
+  context_text: string;
+  applicable_rules: Array<{
+    id: string;
+    text: string;
+    category: string;
+    scope: string;
+    authority: number;
+    citation: ContextCitation;
+  }>;
+  permitted_excerpts: Array<{
+    id: string;
+    text: string;
+    citation: ContextCitation;
+  }>;
+  synthesis?: {
+    text: string;
+    citations: ContextCitation[];
+  };
+  external_facts: [];
+  navigation_hints: [];
+  verification_checks: [];
+  conflicts: Array<{
+    rule_ids: string[];
+    detection: "explicit_opposition_only";
+  }>;
+  status: ContextStatus;
+}
+
 export interface ContextResult {
   text: string;
   status: ContextStatus;
+  brief: ContextBriefV1;
 }

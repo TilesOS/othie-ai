@@ -3,6 +3,8 @@
 The automated desktop suite runs without downloading models. `npm test` builds the
 production JavaScript and tests the source modules plus compiled stdio bridge/CLI.
 `npm run test:mcp` builds and runs just the MCP and engine-process integration tests.
+The root workspace commands also build, typecheck, and test the repository-contained
+Codex prompt-hook prototype.
 
 ## Recorded local result
 
@@ -23,6 +25,20 @@ The root CLI also generated VS Code configuration pointing to the new compiled b
 All 52 relocated tracked files were accounted for; only the CLI initialization code changed.
 Windows and native desktop-host acceptance were not rerun locally.
 
+## Context-delivery vertical-slice verification
+
+2026-09-11, macOS: root `npm run typecheck`, `npm test`, and `npm run test:mcp`
+passed after adding request metadata, structured context output, and the Codex hook
+prototype. The full deterministic test run passed 49 implemented tests: 28 engine,
+14 website, and 7 Codex-adapter tests; the existing real-model test remains a TODO.
+The dedicated MCP/process suite passed all five tests. Engine and Codex-adapter builds
+passed, and a separate Next.js Webpack production build passed for the website.
+
+The exact root `npm run build` did not complete in this restricted runner because the
+unchanged Next.js Turbopack build was denied permission to bind its internal helper port.
+This is recorded as an environment limitation, not a passing root-build result. No manual
+Codex host session, Windows run, or native desktop-host acceptance was performed.
+
 ## Coverage
 
 - Actual LanceDB keyword and vector searches filter both profile and active IDs before
@@ -42,6 +58,13 @@ Windows and native desktop-host acceptance were not rerun locally.
 - Whole rules and complete excerpt units retain qualifications, escape XML, and fit
   200/500-token limits. Count includes framing/citations. Empty output is explicit when
   no whole unit fits. Disabling the profile cap still permits a caller to request a cap.
+- Legacy context requests still return the XML text block. Optional surface/phase/host/
+  workspace metadata is bounded at the MCP boundary and echoed only as provenance in a
+  versioned structured brief. Structured rules, excerpts, synthesis, safe citation labels,
+  conflicts, status, and revision counters come from the same final packed selection.
+- Codex hook fixtures cover relevant, empty, invalid, unavailable, and timed-out results.
+  The positive fixture emits cited `additionalContext`; the other cases fail open, and
+  diagnostic assertions exclude prompt and returned-context canaries.
 - Two actual SDK clients use the compiled bridge with watching enabled. File creation,
   editing, renaming, and deletion are observed through MCP without manually enqueuing
   ingestion jobs. The bridge reconnects after engine restart.
@@ -95,6 +118,21 @@ Primary host references checked for this pass:
 - [Claude Desktop local MCP setup](https://github.com/modelcontextprotocol/docs/blob/main/quickstart/user.mdx)
 - [Cursor MCP configuration](https://prod.cursor.com/docs/mcp)
 - [VS Code MCP servers](https://code.visualstudio.com/docs/agent-customization/mcp-servers)
+- [Codex lifecycle hooks](https://learn.chatgpt.com/docs/hooks)
+
+## Codex prompt-hook acceptance
+
+The prototype setup and removal procedure is documented in
+[`integrations/codex/README.md`](../integrations/codex/README.md). Installing the MCP
+server does not install this hook. A user must deliberately add and trust the project-local
+hook configuration. The internal deadline is two seconds by default, the example Codex
+handler timeout is three seconds, and either timeout leaves prompt submission unblocked.
+
+Automated fixtures establish the adapter contract but are not a manual Codex host check.
+When manually accepting the hook, record the Codex version, OS, date, positive prompt,
+empty prompt, observed deadline behavior, and removal result. Use synthetic source text:
+Codex may send the injected context to its cloud model even when Othie retrieval and
+compilation run locally.
 
 ## Upgrade notes
 

@@ -12,6 +12,12 @@ import type { ContextResult } from "./types.js";
 
 function flag(name:string):string|undefined{const index=process.argv.indexOf(`--${name}`);return index>=0?process.argv[index+1]:undefined;}
 function has(name:string):boolean{return process.argv.includes(`--${name}`);}
+async function queryInput():Promise<string|undefined>{
+  if(!has("query-stdin"))return flag("query");
+  let value="";process.stdin.setEncoding("utf8");
+  for await(const chunk of process.stdin){value+=chunk;if(value.length>100_000)throw new Error("stdin query exceeds 100000 characters");}
+  return value;
+}
 async function configAndPaths(){const configPath=resolve(flag("config")??"config.json");const config=await loadConfig(configPath);const dataDir=config.data_dir??defaultDataDir();return {config,configPath,dataDir,ipcPath:config.ipc_path??defaultIpcPath(dataDir),credentialsPath:config.credentials_file??join(dataDir,"credentials.json")};}
 async function clientIdentity(){const bridgeId=flag("bridge");const credentialFile=flag("credential-file");if(!bridgeId||!credentialFile)throw new Error("--bridge and --credential-file are required");return {bridgeId,credential:(await readFile(resolve(credentialFile),"utf8")).trim()};}
 
@@ -47,7 +53,13 @@ export async function main():Promise<void>{
   }
   const identity=await clientIdentity();
   if(command==="status"){const result=await requestEngine<Record<string,unknown>>(paths.ipcPath,{...identity,method:"status"});process.stdout.write(`${JSON.stringify(result,null,2)}\n`);return;}
-  if(command==="query"){const query=flag("query");if(!query)throw new Error("--query is required");const profile=flag("profile");const maxTokens=flag("max-tokens");const params={query,...(profile?{profile}:{}),...(maxTokens?{max_tokens:Number(maxTokens)}:{}),synthesize:has("synthesize")};const result=await requestEngine<ContextResult>(paths.ipcPath,{...identity,method:"context",params});process.stdout.write(`${result.text}\n`);return;}
+  if(command==="query"){
+    const query=await queryInput();if(!query)throw new Error("--query or --query-stdin is required");const profile=flag("profile");const maxTokens=flag("max-tokens");
+    const surface=flag("surface"),phase=flag("phase");if(surface&&!(["code","chat","work","unknown"] as string[]).includes(surface))throw new Error("Invalid --surface");if(phase&&!(["turn_start","on_demand","post_discovery"] as string[]).includes(phase))throw new Error("Invalid --phase");
+    const host=flag("host"),workspaceRoot=flag("workspace-root");const params={query,...(profile?{profile}:{}),...(maxTokens?{max_tokens:Number(maxTokens)}:{}),synthesize:has("synthesize"),schema_version:"1" as const,
+      ...(surface?{surface:surface as "code"|"chat"|"work"|"unknown"}:{}),...(phase?{phase:phase as "turn_start"|"on_demand"|"post_discovery"}:{}),...(host?{host}:{}),...(workspaceRoot?{workspace_root:workspaceRoot}:{}),
+    };const result=await requestEngine<ContextResult>(paths.ipcPath,{...identity,method:"context",params});process.stdout.write(has("json")?`${JSON.stringify(result)}\n`:`${result.text}\n`);return;
+  }
   if(command==="rebuild"||command==="purge"){await requestEngine(paths.ipcPath,{...identity,method:command});process.stdout.write(`${command} accepted\n`);return;}
   throw new Error("Usage: othie init | engine foreground | credential create | host-config | status | query | rebuild | purge");
 }

@@ -66,4 +66,6 @@ Build in `apps/website` using the [website build brief](docs/website-build-plan.
 Keep the engine and desktop implementation separate. Configure the website deployment for
 `apps/website` while using the repository's shared npm lockfile and workspace installation.
 
-See also [verification](docs/verification.md), [model notes](MODELS.md), and [security](SECURITY.md).
+See also the [context delivery roadmap](docs/context-delivery-roadmap.md), its
+[near-term implementation handoff](docs/near-term-context-delivery-handoff.md),
+[verification](docs/verification.md), [model notes](MODELS.md), and [security](SECURITY.md).

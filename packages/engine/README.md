@@ -4,7 +4,7 @@
 
 Othie is a single-user background engine for macOS (Apple Silicon) and Windows x64. It watches configured documents, keeps durable local revisions, retries unfinished provider work, extracts cited rules from authoritative sources, and returns a bounded `<organization_context>` block through MCP.
 
-Othie supplies context; the MCP host decides whether and how to call the tool and use its result. V1 does not promise automatic retrieval or system-prompt insertion. Processing can be local while consumption is not: a host may send Othie's returned text to its cloud model.
+Othie supplies context; an MCP host decides whether and how to call the tool and use its result. MCP access alone does not provide automatic retrieval or prompt insertion. The repository also contains an opt-in Codex prompt-hook prototype for automatic turn-start delivery. Processing can be local while consumption is not: a host may send Othie's returned text or injected hook context to its cloud model.
 
 ## What this build includes
 
@@ -15,6 +15,7 @@ Othie supplies context; the MCP host decides whether and how to call the tool an
 - SQLite manifests/rules/job state and offline FTS; LanceDB text FTS and model-versioned vector tables. Query embedding failure falls back to keyword retrieval.
 - Structured Ollama/OpenAI-compatible provider adapters, exact-quotation validation, authority/reference separation, provenance, and unresolved conflict reporting.
 - Deterministic whole-item packing, XML escaping, exact configured-tokenizer counting, an explicit minimum envelope, a 500-token default, optional two-second synthesis, LRU caching, and in-flight coalescing.
+- Optional surface, phase, host, workspace, and active-path request metadata plus a versioned structured context brief derived from the exact packed selection.
 
 This is a reliable local-operation baseline, not an enterprise qualification. Central identity, centrally enforced policy, fleet management, compliance certification, application-managed encryption, OCR, Linux/Windows ARM, a review UI, and guaranteed host hooks are outside v1.
 
@@ -71,10 +72,35 @@ Every host launches a lightweight stdio bridge. Use absolute paths in actual hos
 
 Create a separate credential/grant for Claude Desktop, Cursor, and VS Code. Their MCP configuration shapes and tool-calling behavior change independently; verify each host using its current documentation. The exposed tools are:
 
-- `get_organization_context({ query, profile?, max_tokens?, synthesize? })`
+- `get_organization_context({ query, profile?, max_tokens?, synthesize?, schema_version?, surface?, phase?, host?, workspace_root?, active_paths? })`
 - `get_context_status({})`
 
 `synthesize` defaults to false. A request cap can lower, never raise, an enabled profile cap. When the profile cap is disabled, an explicit request cap still applies. The token guarantee covers all returned XML, citations, and status under `o200k_base` or `cl100k_base`; host framing and unsupported host tokenizers are identified as estimates and are outside the guarantee.
+
+`surface` accepts `code`, `chat`, `work`, or `unknown`; `phase` accepts `turn_start`,
+`on_demand`, or `post_discovery`. Missing values normalize to `unknown` and `on_demand`
+in the response brief. `schema_version` currently accepts only `"1"`. Host names are
+limited to 128 characters, paths to 4,096 characters, and `active_paths` to 64 non-empty
+entries at the MCP boundary. These fields are provenance/relevance hints only: they do
+not select or authorize a profile, widen permitted exports, or currently change retrieval
+or candidate caching.
+
+Successful context calls return both the existing XML `TextContent` and a
+`structuredContent` `ContextBriefV1`. The brief contains the same packed rules,
+sentence-level excerpts, synthesis, safe citation labels, conflicts, and status as the
+XML result; omitted or over-budget candidates are not copied into the structured form.
+External facts, navigation hints, and verification checks remain explicit empty arrays
+until trustworthy producers exist. Legacy callers can continue reading the text block.
+
+## Codex automatic-delivery prototype
+
+[`integrations/codex`](../../integrations/codex/README.md) contains an opt-in
+`UserPromptSubmit` command hook and example project-local configuration. It differs from
+MCP tool access: the hook runs at turn start and conditionally adds a small developer
+context block, while an MCP-only host must choose to call the tool. The adapter uses a
+credential-checked Othie CLI/IPC request, has a configurable two-second internal deadline,
+and fails open with no injected context when Othie is empty, unavailable, late, or invalid.
+It does not edit user or global Codex configuration.
 
 ## CLI
 
@@ -125,6 +151,7 @@ Document text is untrusted data. Structured output, source-ID validation, exact 
 
 - [MCP tools specification](https://modelcontextprotocol.io/specification/2026-07-28/server/tools)
 - [MCP TypeScript SDK v2](https://github.com/modelcontextprotocol/typescript-sdk)
+- [Codex hooks](https://learn.chatgpt.com/docs/hooks)
 - [LanceDB full-text search](https://docs.lancedb.com/search/full-text-search)
 - [Node IPC](https://nodejs.org/api/net.html#ipc-support)
 - [gpt-tokenizer](https://github.com/niieani/gpt-tokenizer)

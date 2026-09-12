@@ -25,6 +25,8 @@ export class ContextCompiler {
 
   private key(profileName: string, request: ContextRequest): string {
     const revisions=this.store.getRevisionCounters(); const profile=this.config.profiles[profileName]!;
+    // Surface, phase, host, and path signals are provenance-only in this slice. Add
+    // them here if they begin changing retrieval, selection, or synthesis behavior.
     return sha256(JSON.stringify({ query:request.query.replace(/\s+/g," ").trim(),profile:profileName,corpus:revisions.corpus,rules:revisions.rules,
       embedding:this.config.models.embedding,compiler:this.config.models.compiler,extractPrompt:EXTRACTION_PROMPT_VERSION,synthPrompt:SYNTHESIS_PROMPT_VERSION,
       synth:Boolean(request.synthesize),exports:profile.permitted_exports,providers:profile.providers }));

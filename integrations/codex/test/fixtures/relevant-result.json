@@ -1,0 +1,12 @@
+{
+  "text": "<organization_context profile=\"company\" mode=\"deterministic\"><items><excerpt>Support replies arrive within four hours.<citation source=\"s1/support.md\" at=\"paragraph 1\"/></excerpt></items><conflicts count=\"0\" detection=\"explicit_opposition_only\"></conflicts><status tokenizer=\"o200k_base\" tokenizer_estimate=\"false\" tokens=\"80\" omitted=\"0\" keyword=\"true\" vector=\"true\" corpus_revision=\"2\" rule_revision=\"1\"/></organization_context>",
+  "brief": {
+    "schema_version": "1",
+    "request": { "surface": "code", "phase": "turn_start", "host": "codex", "workspace_root": "/workspace" },
+    "context_text": "<organization_context profile=\"company\" mode=\"deterministic\"><items><excerpt>Support replies arrive within four hours.<citation source=\"s1/support.md\" at=\"paragraph 1\"/></excerpt></items><conflicts count=\"0\" detection=\"explicit_opposition_only\"></conflicts><status tokenizer=\"o200k_base\" tokenizer_estimate=\"false\" tokens=\"80\" omitted=\"0\" keyword=\"true\" vector=\"true\" corpus_revision=\"2\" rule_revision=\"1\"/></organization_context>",
+    "applicable_rules": [],
+    "permitted_excerpts": [{ "id": "e1", "text": "Support replies arrive within four hours.", "citation": { "source": "s1/support.md", "at": "paragraph 1" } }],
+    "external_facts": [], "navigation_hints": [], "verification_checks": [], "conflicts": [],
+    "status": { "profile": "company", "mode": "deterministic", "tokenizer": "o200k_base", "tokenizerEstimate": false, "tokenCount": 80, "omittedItems": 0, "conflicts": 0, "keywordAvailable": true, "vectorAvailable": true, "synthesisAttempted": false, "corpusRevision": 2, "ruleRevision": 1 }
+  }
+}
