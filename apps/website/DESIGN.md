@@ -197,6 +197,15 @@ the page stays pure black. Those numbers are deliberate — the wash must stay b
 `surface-bright` (27/255) so panels keep their edge against it. The hero paints an opaque
 black ground so only one field is ever visible at a time.
 
+**The Shallow-Ramp Rule.** Both fields paint gradients that span only a handful of the 255
+available levels, which makes them fragile in ways a normal gradient is not. Three things are
+required, not optional: declare `precision highp float` (`mediump` is genuine fp16 on many
+desktop GPUs and visibly quantises a ramp this shallow, while Apple GPUs promote it and hide
+the fault); dither the output by half a level to break up 8-bit contouring, since most
+external monitors do not dither in hardware the way laptop panels do; and key any periodic
+term to CSS pixels rather than to the backing buffer, or its pitch shifts with
+devicePixelRatio and differs per display.
+
 ## Elevation & Depth
 
 Depth comes from the tonal ramp and hairline borders alone. Drop shadows and luminous halos

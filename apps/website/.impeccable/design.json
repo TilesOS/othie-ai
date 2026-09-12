@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-12T18:33:55Z",
+  "generatedAt": "2026-09-12T18:55:36Z",
   "title": "Design System: Othie AI",
   "extensions": {
     "colorMeta": {
@@ -426,7 +426,7 @@
     ],
     "ambientField": {
       "rule": "A fixed, full-viewport WebGL wash sits behind every section except the hero.",
-      "note": "Slow fbm luminance clouds with a faint accent tint and a whisper of vertical striation. Median near 9/255 over black, peak near 17/255, floor near 3/255 so no region stays pure black \u2014 deliberately below surface-bright (27/255) so panels keep their edge. Rendered at devicePixelRatio 1 since it carries no fine detail, paused while the document is hidden, and not mounted at all under prefers-reduced-motion. The hero paints an opaque black ground so the two fields never overlap."
+      "note": "Slow fbm luminance clouds with a faint accent tint and a whisper of vertical striation. Median near 9/255 over black, peak near 17/255, floor near 3/255 so no region stays pure black \u2014 deliberately below surface-bright (27/255) so panels keep their edge. Requires precision highp float (mediump is fp16 on many desktop GPUs and quantises a ramp this shallow), a half-level output dither for 8-bit panels, and any periodic term keyed to CSS pixels rather than the backing buffer. Rendered at devicePixelRatio 1 since it carries no fine detail, paused while the document is hidden, and not mounted at all under prefers-reduced-motion. The hero paints an opaque black ground so the two fields never overlap."
     },
     "surfaceFill": {
       "rule": "The landing hero is min-height: calc(100svh - var(--header-height) - var(--announce-height)).",

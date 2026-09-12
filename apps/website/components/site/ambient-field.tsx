@@ -14,10 +14,11 @@ const vertex = /* glsl */ `
  * black. Stays under the panel tones so surfaces keep their edge.
  */
 const fragment = /* glsl */ `
-  precision mediump float;
+  precision highp float;
   uniform float uTime;
   uniform vec2 uResolution;
   uniform vec3 uAccent;
+  uniform float uPixelRatio;
 
   float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
 
@@ -48,14 +49,22 @@ const fragment = /* glsl */ `
     float b = fbm(p * 0.55 - vec2(uTime * 0.005, uTime * 0.003));
     float cloud = smoothstep(0.26, 0.80, a * 0.66 + b * 0.44);
 
-    /* A whisper of vertical striation keeps it in the same family as the hero field. */
-    float striation = (sin(uv.x * uResolution.x * 0.07) * 0.5 + 0.5) * 0.12;
+    /* A whisper of vertical striation keeps it in the same family as the hero field.
+       Keyed to CSS pixels, not the backing buffer, so the pitch is identical on every
+       display instead of shifting with devicePixelRatio. */
+    float cssX = gl_FragCoord.x / max(uPixelRatio, 0.001);
+    float striation = (sin(cssX * 0.028) * 0.5 + 0.5) * 0.05;
 
     vec3 colour = mix(vec3(0.46, 0.50, 0.54), uAccent, cloud * 0.26);
     /* A floor keeps the darkest regions off pure black; the cloud rides on top of it. */
     float alpha = 0.024 + cloud * (0.095 + striation * 0.05);
 
-    gl_FragColor = vec4(colour, clamp(alpha, 0.0, 0.16));
+    /* The whole wash spans ~15 of the 255 available levels, which contours badly on
+       8-bit panels. A half-level ordered dither breaks the bands up. */
+    float peak = max(max(colour.r, colour.g), colour.b);
+    float dither = (hash(gl_FragCoord.xy * 0.6180339887) - 0.5) / (255.0 * max(peak, 0.001));
+
+    gl_FragColor = vec4(colour, clamp(alpha + dither, 0.0, 0.16));
   }
 `;
 
@@ -91,6 +100,7 @@ export function AmbientField() {
           uTime: { value: 0 },
           uResolution: { value: new Vec2(1, 1) },
           uAccent: { value: [r, g, b] },
+          uPixelRatio: { value: 1 },
         };
         const geometry = new Triangle(gl);
         const program = new Program(gl, { vertex, fragment, uniforms, transparent: true });
@@ -102,6 +112,7 @@ export function AmbientField() {
           if (rect.width === 0 || rect.height === 0) return;
           renderer.setSize(rect.width, rect.height);
           uniforms.uResolution.value.set(gl.canvas.width, gl.canvas.height);
+          uniforms.uPixelRatio.value = renderer.dpr;
         };
         const resizeObserver = new ResizeObserver(resize);
         resizeObserver.observe(wrapper);
