@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-12T18:55:36Z",
+  "generatedAt": "2026-09-12T19:08:57Z",
   "title": "Design System: Othie AI",
   "extensions": {
     "colorMeta": {
@@ -429,8 +429,8 @@
       "note": "Slow fbm luminance clouds with a faint accent tint and a whisper of vertical striation. Median near 9/255 over black, peak near 17/255, floor near 3/255 so no region stays pure black \u2014 deliberately below surface-bright (27/255) so panels keep their edge. Requires precision highp float (mediump is fp16 on many desktop GPUs and quantises a ramp this shallow), a half-level output dither for 8-bit panels, and any periodic term keyed to CSS pixels rather than the backing buffer. Rendered at devicePixelRatio 1 since it carries no fine detail, paused while the document is hidden, and not mounted at all under prefers-reduced-motion. The hero paints an opaque black ground so the two fields never overlap."
     },
     "surfaceFill": {
-      "rule": "The landing hero is min-height: calc(100svh - var(--header-height) - var(--announce-height)).",
-      "note": "The WebGL bar field fills that box exactly at any screen size. Column count derives from the measured CSS width at roughly one bar per 13px (clamped 40-300), so density is constant from a 375px phone to a 3440px ultrawide rather than scaling with aspect ratio. devicePixelRatio is clamped to 1.5 and re-read on display change."
+      "rule": "The landing hero is min-height: min(calc(100svh - var(--header-height) - var(--announce-height)), var(--hero-max)), where --hero-max is 50rem.",
+      "note": "Below the cap the hero fills the viewport; past it the hero stops at 50rem so the primitives row comes into view and the headline holds the same absolute position it has on a laptop. Physical screen size is not exposed by any web API, so viewport height is the proxy \u2014 and it also responds to a resized window. The WebGL bar field fills that box exactly at any screen size. Column count derives from the measured CSS width at roughly one bar per 13px (clamped 40-300), so density is constant from a 375px phone to a 3440px ultrawide rather than scaling with aspect ratio. devicePixelRatio is clamped to 1.5 and re-read on display change."
     }
   },
   "components": [

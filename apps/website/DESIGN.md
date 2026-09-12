@@ -185,9 +185,18 @@ narrow column.
 
 A 1408px outer frame carries near-full-bleed sections; reading columns sit at 46rem and
 feature copy at 34rem. The hero is left-set, not centred, and its min-height is
-`100svh` less the announcement rail and header, so the generative field fills exactly the
-viewport the visitor lands on at any screen size. Height-based media queries trim the hero's
-type and padding on short or landscape windows so both actions stay above the fold. Feature
+`min(100svh less the announcement rail and header, 50rem)`. Below the cap the hero fills the
+viewport exactly; past it — tall desktop monitors — it stops at 50rem so the primitives row
+comes into view and the headline holds the same absolute position it has on a laptop.
+Height-based media queries trim the hero's type and padding on short or landscape windows so
+both actions stay above the fold.
+
+**The Viewport-Proxy Rule.** Physical screen size is not knowable on the web: no API reports
+inches or millimetres, CSS `in` and `cm` are fixed ratios to `px` (1in is exactly 96px), and
+a panel's EDID never reaches the page. Viewport height is the honest proxy, and the better
+one — it responds to a resized window, which a display measurement would not. Accept its one
+real limit: a 24-inch 1080p monitor and a 14-inch laptop present nearly the same viewport
+(roughly 950 and 916 CSS pixels tall), so no rule can treat them differently. Feature
 sections run beside a sticky scroll-spy rail.
 
 Two generative fields carry the ground. The hero's dense bar field fills the first viewport;

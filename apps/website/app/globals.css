@@ -37,6 +37,11 @@
   --font-serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
   --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, monospace;
   --header-height: 4rem;
+  /* The hero fills the first viewport up to this cap. Past it — tall desktop monitors —
+     it stops so the primitives row comes into view and the headline keeps the same
+     absolute position it has on a laptop. Physical screen size is not knowable on the
+     web; viewport height is the honest proxy, and it also responds to a resized window. */
+  --hero-max: 50rem;
   --announce-height: 2.5rem;
   --section-space: clamp(5rem, 9vw, 8.5rem);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -120,7 +125,7 @@ button { color: inherit; }
 /* ---------- Hero ---------- */
 /* Fills exactly what is visible on load: the viewport less the announcement rail and header.
    svh keeps mobile stable while the browser chrome collapses. */
-.hero { position: relative; z-index: 1; background: var(--background); display: flex; min-height: calc(100svh - var(--header-height) - var(--announce-height)); flex-direction: column; justify-content: flex-end; overflow: hidden; padding: clamp(7rem, 20vh, 15rem) 0 clamp(2.5rem, 5vh, 4.5rem); }
+.hero { position: relative; z-index: 1; background: var(--background); display: flex; min-height: min(calc(100svh - var(--header-height) - var(--announce-height)), var(--hero-max)); flex-direction: column; justify-content: flex-end; overflow: hidden; padding: clamp(7rem, 20vh, 15rem) 0 clamp(2.5rem, 5vh, 4.5rem); }
 .hero-inner { position: relative; z-index: 2; width: min(calc(100% - 3rem), var(--wide-container)); margin-inline: auto; text-align: left; }
 .hero-eyebrow { margin-bottom: 1.5rem; }
 .hero h1 { max-width: 17em; margin: 0; font-size: clamp(2.5rem, 5vw, 4.25rem); font-weight: 400; line-height: 1.125; letter-spacing: -0.04em; text-wrap: pretty; }
@@ -280,7 +285,7 @@ button { color: inherit; }
   .mobile-menu-trigger { display: inline-grid; }
   .header-inner { justify-content: space-between; }
   .header-actions { margin-left: auto; }
-  .hero { min-height: calc(100svh - var(--header-height) - var(--announce-height)); padding-top: clamp(6rem, 26vh, 11rem); }
+  .hero { min-height: min(calc(100svh - var(--header-height) - var(--announce-height)), var(--hero-max)); padding-top: clamp(6rem, 26vh, 11rem); }
   .demo-flow { grid-template-columns: 1fr; }
   .demo-sources, .demo-context { border-right: 0; border-bottom: 1px solid var(--border-soft); }
   .flow-arrow { height: 3rem; transform: rotate(90deg); }
