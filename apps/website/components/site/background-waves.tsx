@@ -19,6 +19,7 @@ const fragment = /* glsl */ `
   uniform vec2 uPointer;
   uniform float uPointerStrength;
   uniform vec3 uAccent;
+  uniform float uColumns;
 
   float hash(float n) { return fract(sin(n * 127.1) * 43758.5453123); }
 
@@ -42,8 +43,7 @@ const fragment = /* glsl */ `
 
   void main() {
     vec2 st = gl_FragCoord.xy / uResolution.xy;
-    float aspect = uResolution.x / max(uResolution.y, 1.0);
-    float columns = 150.0 * clamp(aspect / 1.6, 0.6, 1.8);
+    float columns = uColumns;
 
     float x = st.x + uTime * 0.008;
     float column = floor(x * columns);
@@ -73,7 +73,7 @@ const fragment = /* glsl */ `
 
 function readAccent(): [number, number, number] {
   const value = getComputedStyle(document.documentElement).getPropertyValue("--brand-accent-rgb").trim().split(/\s+/).map(Number);
-  return [value[0] / 255 || 0.204, value[1] / 255 || 0.835, value[2] / 255 || 0.604];
+  return [value[0] / 255 || 0.278, value[1] / 255 || 0.882, value[2] / 255 || 0.741];
 }
 
 /* Rounded so the server and client render byte-identical markup. */
@@ -119,16 +119,36 @@ export function BackgroundWaves() {
           uPointer: { value: pointer },
           uPointerStrength: { value: 0 },
           uAccent: { value: [r, g, b] },
+          uColumns: { value: 96 },
         };
         const geometry = new Triangle(gl);
         const program = new Program(gl, { vertex, fragment, uniforms, transparent: true });
         const mesh = new Mesh(gl, { geometry, program });
+        /* One bar roughly every 13 CSS pixels, so a phone and an ultrawide monitor
+           both get a field at the same visual density rather than the same bar count. */
+        const columnsFor = (width: number) => Math.round(Math.min(300, Math.max(40, width / 13)));
         const resize = () => {
           const rect = wrapper.getBoundingClientRect();
+          if (rect.width === 0 || rect.height === 0) return;
+          renderer.dpr = Math.min(window.devicePixelRatio, 1.5);
           renderer.setSize(rect.width, rect.height);
           uniforms.uResolution.value.set(gl.canvas.width, gl.canvas.height);
+          uniforms.uColumns.value = columnsFor(rect.width);
         };
         const resizeObserver = new ResizeObserver(resize);
+
+        /* devicePixelRatio does not fire resize on its own — dragging the window to a
+           display with a different density needs its own listener. */
+        let dprQuery: MediaQueryList | null = null;
+        const watchPixelRatio = () => {
+          dprQuery?.removeEventListener("change", onPixelRatioChange);
+          dprQuery = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+          dprQuery.addEventListener("change", onPixelRatioChange);
+        };
+        function onPixelRatioChange() {
+          resize();
+          watchPixelRatio();
+        }
         const onPointerMove = (event: PointerEvent) => {
           if (event.pointerType === "touch") {
             pointerStrengthTarget = 0;
@@ -163,6 +183,9 @@ export function BackgroundWaves() {
         const onLost = (event: Event) => { event.preventDefault(); contextLost = true; setReady(false); };
         const onRestored = () => { contextLost = false; resize(); setReady(true); frame = requestAnimationFrame(render); };
         resizeObserver.observe(wrapper);
+        watchPixelRatio();
+        window.addEventListener("resize", resize, { passive: true });
+        window.addEventListener("orientationchange", resize);
         window.addEventListener("pointermove", onPointerMove, { passive: true });
         window.addEventListener("pointerout", onPointerOut);
         window.addEventListener("blur", releasePointer);
@@ -174,6 +197,9 @@ export function BackgroundWaves() {
         cleanup = () => {
           cancelAnimationFrame(frame);
           resizeObserver.disconnect();
+          dprQuery?.removeEventListener("change", onPixelRatioChange);
+          window.removeEventListener("resize", resize);
+          window.removeEventListener("orientationchange", resize);
           window.removeEventListener("pointermove", onPointerMove);
           window.removeEventListener("pointerout", onPointerOut);
           window.removeEventListener("blur", releasePointer);

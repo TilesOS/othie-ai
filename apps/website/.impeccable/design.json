@@ -1,82 +1,538 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-10T05:35:36Z",
+  "generatedAt": "2026-09-12T16:35:31Z",
   "title": "Design System: Othie AI",
   "extensions": {
     "colorMeta": {
-      "void": { "role": "neutral", "displayName": "Context Void", "canonical": "#090D0F", "tonalRamp": ["#090d0f", "#11191c", "#243034", "#3b494d", "#5a686b", "#879295", "#bec5c7", "#eef1f2"] },
-      "surface": { "role": "neutral", "displayName": "Local Surface", "canonical": "#11171A", "tonalRamp": ["#0b1012", "#11171a", "#202a2e", "#354247", "#536064", "#7e898c", "#b8c0c2", "#edf0f1"] },
-      "foreground": { "role": "neutral", "displayName": "Signal White", "canonical": "#F4F7F6", "tonalRamp": ["#1b211f", "#323936", "#525b57", "#76807c", "#9da6a2", "#c4cbc8", "#e2e7e5", "#f4f7f6"] },
-      "brand-accent": { "role": "primary", "displayName": "Retrieval Teal", "canonical": "#2DD4BF", "tonalRamp": ["#07362f", "#09584d", "#0d7b6c", "#14a08d", "#2dd4bf", "#63e2d2", "#a4eee5", "#e6fbf8"] }
+      "foreground-dim": {
+        "role": "neutral",
+        "displayName": "Dim White",
+        "canonical": "#E4E5E7",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242526",
+          "#414243",
+          "#606163",
+          "#818284",
+          "#a4a5a7",
+          "#c8c9cb",
+          "#eeeef0"
+        ]
+      },
+      "label-foreground": {
+        "role": "neutral",
+        "displayName": "Label Grey",
+        "canonical": "#C9CBCF",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242527",
+          "#404245",
+          "#5f6165",
+          "#808286",
+          "#a3a5a9",
+          "#c7c9cd",
+          "#edeef1"
+        ]
+      },
+      "foreground-hover": {
+        "role": "neutral",
+        "displayName": "Pressed White",
+        "canonical": "#D9DADD",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242526",
+          "#414244",
+          "#606164",
+          "#818285",
+          "#a4a5a8",
+          "#c8c9cc",
+          "#eeeef1"
+        ]
+      },
+      "faint-foreground": {
+        "role": "neutral",
+        "displayName": "Faint Grey",
+        "canonical": "#4B4E54",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#232529",
+          "#3f4248",
+          "#5e6167",
+          "#7f8289",
+          "#a2a5ac",
+          "#c6c9d0",
+          "#eceef4"
+        ]
+      },
+      "brand-accent-hover": {
+        "role": "primary",
+        "displayName": "Retrieval Signal Hover",
+        "canonical": "#6BEACE",
+        "tonalRamp": [
+          "#00120b",
+          "#003124",
+          "#005440",
+          "#00765f",
+          "#009980",
+          "#35bda3",
+          "#63e3c7",
+          "#abffed"
+        ]
+      },
+      "brand-accent-dim": {
+        "role": "primary",
+        "displayName": "Retrieval Signal Dim",
+        "canonical": "#2E6A5C",
+        "tonalRamp": [
+          "#000f0b",
+          "#042c24",
+          "#114d41",
+          "#326e60",
+          "#549081",
+          "#77b3a3",
+          "#9bd8c7",
+          "#ccfaed"
+        ]
+      },
+      "on-light": {
+        "role": "neutral",
+        "displayName": "On Light",
+        "canonical": "#1A1A1A",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "warning": {
+        "role": "tertiary",
+        "displayName": "Pending Amber",
+        "canonical": "#E2B66C",
+        "tonalRamp": [
+          "#150800",
+          "#371f00",
+          "#5d3a00",
+          "#815900",
+          "#a47a2e",
+          "#c89d53",
+          "#eec177",
+          "#ffe9b2"
+        ]
+      },
+      "warning-border": {
+        "role": "tertiary",
+        "displayName": "Pending Amber Edge",
+        "canonical": "#55482E",
+        "tonalRamp": [
+          "#0f0a03",
+          "#2c2413",
+          "#4c4028",
+          "#6d5f45",
+          "#8f8165",
+          "#b2a386",
+          "#d7c7aa",
+          "#f9edd6"
+        ]
+      },
+      "void": {
+        "role": "neutral",
+        "displayName": "Absolute Void",
+        "canonical": "#000000",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Base Surface",
+        "canonical": "#0A0A0B",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252526",
+          "#424243",
+          "#616162",
+          "#828283",
+          "#a5a5a6",
+          "#c9c9ca",
+          "#eeeeef"
+        ]
+      },
+      "surface-raised": {
+        "role": "neutral",
+        "displayName": "Raised Surface",
+        "canonical": "#131415",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242526",
+          "#414243",
+          "#606163",
+          "#818284",
+          "#a4a5a6",
+          "#c8c9cb",
+          "#edeef0"
+        ]
+      },
+      "surface-bright": {
+        "role": "neutral",
+        "displayName": "Bright Surface",
+        "canonical": "#18191B",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242526",
+          "#414244",
+          "#606164",
+          "#818285",
+          "#a4a5a8",
+          "#c8c9cc",
+          "#edeef1"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Signal White",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "muted-foreground": {
+        "role": "neutral",
+        "displayName": "Muted Grey",
+        "canonical": "#94979E",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#232529",
+          "#3f4248",
+          "#5e6168",
+          "#7f8289",
+          "#a2a5ac",
+          "#c6c9d0",
+          "#eceef4"
+        ]
+      },
+      "quiet-foreground": {
+        "role": "neutral",
+        "displayName": "Quiet Grey",
+        "canonical": "#61646B",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#232529",
+          "#3f4248",
+          "#5e6168",
+          "#7f828a",
+          "#a2a5ad",
+          "#c6c9d1",
+          "#eceef5"
+        ]
+      },
+      "heading-muted": {
+        "role": "neutral",
+        "displayName": "Heading Grey",
+        "canonical": "#797D86",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#23252a",
+          "#3f424a",
+          "#5d616a",
+          "#7e828b",
+          "#a1a5ae",
+          "#c5c9d3",
+          "#ebeef6"
+        ]
+      },
+      "brand-accent": {
+        "role": "primary",
+        "displayName": "Retrieval Signal",
+        "canonical": "#47E1BD",
+        "tonalRamp": [
+          "#001209",
+          "#003221",
+          "#00563c",
+          "#00795b",
+          "#009c7b",
+          "#00c09e",
+          "#4ee6c2",
+          "#a1ffe9"
+        ]
+      },
+      "on-accent": {
+        "role": "neutral",
+        "displayName": "On Signal",
+        "canonical": "#06110D",
+        "tonalRamp": [
+          "#080c0b",
+          "#1f2724",
+          "#394540",
+          "#57655f",
+          "#788680",
+          "#9aa9a3",
+          "#becdc7",
+          "#e6f2ed"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#303236",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#242528",
+          "#404246",
+          "#5f6166",
+          "#808287",
+          "#a3a5aa",
+          "#c7c9ce",
+          "#eceef2"
+        ]
+      },
+      "border-soft": {
+        "role": "neutral",
+        "displayName": "Hairline Soft",
+        "canonical": "#242628",
+        "tonalRamp": [
+          "#0a0b0c",
+          "#242527",
+          "#404244",
+          "#5f6164",
+          "#808385",
+          "#a3a5a8",
+          "#c7c9cc",
+          "#edeff1"
+        ]
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Stable product promises and major route headlines." },
-      "body": { "displayName": "Body", "purpose": "Outcome-oriented explanations with a readable measure." },
-      "label": { "displayName": "Source Metadata", "purpose": "Citations, source paths, statuses, and measured controls only." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "The hero promise and route headlines. Weight 400, left-set, never bold."
+      },
+      "lede": {
+        "displayName": "Lead Heading",
+        "purpose": "Every section h2, written as a two-tone sentence pair with <b> on the lead clause."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Outcome-oriented explanation at a 58-66ch measure."
+      },
+      "label": {
+        "displayName": "Source Metadata",
+        "purpose": "Eyebrows, citations, source paths, statuses, and measured controls only."
+      }
     },
-    "shadows": [
-      { "name": "float", "value": "0 18px 54px rgb(0 0 0 / 0.34)", "purpose": "Compact scrolled navigation and focused product surfaces." },
-      { "name": "showcase", "value": "0 34px 90px rgb(0 0 0 / 0.25)", "purpose": "Large mechanism demonstrations." }
-    ],
+    "shadows": [],
+    "elevation": {
+      "model": "flat",
+      "note": "No drop shadows anywhere. Depth is carried entirely by the neutral tonal ramp (#000 through #18191B) and 1px hairline borders. The only box-shadows in the system are accent halo rings on status dots and an inset 1px selection ring, neither of which is elevation."
+    },
     "motion": [
-      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Control and navigation state changes." },
-      { "name": "context-signal", "value": "Resolution-aware full-viewport drift with mouse-local bending", "purpose": "One site-wide context-transfer field that persists across routes, bends near the pointer, and is disabled for reduced motion." }
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default easing for every state transition and panel entrance."
+      },
+      {
+        "name": "state",
+        "value": "140-180ms",
+        "purpose": "Hover, focus, and selection changes on controls."
+      },
+      {
+        "name": "reveal",
+        "value": "220-300ms",
+        "purpose": "Accordion content, menu entrance, and fact insertion."
+      },
+      {
+        "name": "field-drift",
+        "value": "0.008 units/second",
+        "purpose": "Horizontal drift of the hero bar field; slow enough to read as ambient rather than animated."
+      }
     ],
     "breakpoints": [
-      { "name": "mobile", "value": "620px" },
-      { "name": "compact", "value": "700px" },
-      { "name": "tablet", "value": "900px" },
-      { "name": "navigation", "value": "960px" }
-    ]
+      {
+        "name": "narrow",
+        "value": "700px",
+        "purpose": "Single-column primitives, stacked hero actions, one-line announcement bar."
+      },
+      {
+        "name": "compact",
+        "value": "900px",
+        "purpose": "Feature showcases, compatibility, privacy, and FAQ collapse to one column."
+      },
+      {
+        "name": "tablet",
+        "value": "960px",
+        "purpose": "Desktop nav and header chips give way to the sheet menu."
+      },
+      {
+        "name": "wide",
+        "value": "1100px",
+        "purpose": "Scroll-spy rail flips from a sticky column to a horizontal strip."
+      },
+      {
+        "name": "short-viewport",
+        "value": "780px height",
+        "purpose": "Hero type and padding trim so both actions stay above the fold."
+      },
+      {
+        "name": "very-short-viewport",
+        "value": "620px height",
+        "purpose": "Hero subheading is dropped; headline scales down further."
+      }
+    ],
+    "surfaceFill": {
+      "rule": "The landing hero is min-height: calc(100svh - var(--header-height) - var(--announce-height)).",
+      "note": "The WebGL bar field fills that box exactly at any screen size. Column count derives from the measured CSS width at roughly one bar per 13px (clamped 40-300), so density is constant from a 375px phone to a 3440px ultrawide rather than scaling with aspect ratio. devicePixelRatio is clamped to 1.5 and re-read on display change."
+    }
   },
   "components": [
     {
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "The rare teal conversion action.",
-      "html": "<button class=\"ds-btn-primary\">SEE DOWNLOAD STATUS</button>",
-      "css": ".ds-btn-primary{background:var(--brand-accent);color:var(--on-accent);border:0;border-radius:999px;padding:12px 20px;font:650 14px Inter,sans-serif;transition:transform 180ms cubic-bezier(.16,1,.3,1),background 180ms}.ds-btn-primary:hover{transform:translateY(-2px);background:#5ee7d3}.ds-btn-primary:focus-visible{outline:2px solid #81eadb;outline-offset:4px}"
+      "description": "The single main action. White on black \u2014 colour never signals primacy in this system.",
+      "html": "<button class=\"ds-btn-primary\">Get started</button>",
+      "css": ".ds-btn-primary { display: inline-flex; min-height: 2.5rem; align-items: center; justify-content: center; gap: .5rem; border: 1px solid transparent; border-radius: 999px; padding: 0 1.25rem; background: #FFFFFF; color: #1A1A1A; font: 500 .9375rem/1 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.02em; cursor: pointer; transition: background 160ms cubic-bezier(.16,1,.3,1); } .ds-btn-primary:hover { background: #D9DADD; } .ds-btn-primary:focus-visible { outline: 1px solid #47E1BD; outline-offset: 3px; }"
     },
     {
       "name": "Secondary Button",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "Neutral supporting action with a cool structural edge.",
-      "html": "<button class=\"ds-btn-secondary\">SEE HOW IT WORKS</button>",
-      "css": ".ds-btn-secondary{background:#ffffff09;color:#f4f7f6;border:1px solid #263033;border-radius:999px;padding:12px 20px;font:650 14px Inter,sans-serif;transition:transform 180ms cubic-bezier(.16,1,.3,1),background 180ms}.ds-btn-secondary:hover{transform:translateY(-2px);background:#ffffff0f}.ds-btn-secondary:focus-visible{outline:2px solid #81eadb;outline-offset:4px}"
+      "description": "The paired alternative action: a hairline pill that never competes with the primary.",
+      "html": "<button class=\"ds-btn-secondary\">Read the docs</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; min-height: 2.5rem; align-items: center; justify-content: center; gap: .5rem; border: 1px solid #61646B; border-radius: 999px; padding: 0 1.25rem; background: transparent; color: #FFFFFF; font: 400 .9375rem/1 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.02em; cursor: pointer; transition: border-color 160ms cubic-bezier(.16,1,.3,1), background 160ms cubic-bezier(.16,1,.3,1); } .ds-btn-secondary:hover { border-color: #FFFFFF; background: rgba(255,255,255,.04); } .ds-btn-secondary:focus-visible { outline: 1px solid #47E1BD; outline-offset: 3px; }"
     },
     {
-      "name": "Status Chip",
+      "name": "Two-Tone Lead Heading",
+      "kind": "custom",
+      "refersTo": "lede",
+      "description": "The system's primary typographic signature. Lead clause white, continuation muted grey, both at weight 400.",
+      "html": "<h2 class=\"ds-lede\"><b>The right pieces of your work, packed with their sources.</b> Othie retrieves whole facts that fit the request and a bounded context budget.</h2>",
+      "css": ".ds-lede { margin: 0; max-width: 46rem; color: #797D86; font: 400 clamp(1.85rem, 3.4vw, 3rem)/1.125 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.04em; text-wrap: pretty; } .ds-lede b { color: #FFFFFF; font-weight: 400; }"
+    },
+    {
+      "name": "Mono Label",
       "kind": "chip",
-      "description": "Compact release or recommendation state.",
-      "html": "<span class=\"ds-status\"><i></i>DESKTOP PREVIEW IN DEVELOPMENT</span>",
-      "css": ".ds-status{display:inline-flex;align-items:center;gap:8px;background:#0d1214bf;color:#c0c9c6;border:1px solid #263033;border-radius:999px;padding:6px 12px;font:500 12px 'Geist Mono',monospace}.ds-status i{width:7px;height:7px;border-radius:50%;background:#2dd4bf}"
+      "refersTo": "label",
+      "description": "The eyebrow above every heading, and the only place uppercase appears.",
+      "html": "<span class=\"ds-mono-label\"><i class=\"ds-signal-dot\"></i>Runs locally on your machine</span>",
+      "css": ".ds-mono-label { display: inline-flex; align-items: center; gap: .5rem; color: #C9CBCF; font: 500 .75rem/1 \"Geist Mono\", ui-monospace, SFMono-Regular, monospace; letter-spacing: .01em; text-transform: uppercase; } .ds-signal-dot { width: .4rem; height: .4rem; flex: none; border-radius: 50%; background: #47E1BD; box-shadow: 0 0 0 3px rgba(71,225,189,.1); }"
     },
     {
-      "name": "Showcase Panel",
-      "kind": "card",
-      "description": "Wide mechanism surface for product proof, not a generic feature tile.",
-      "html": "<div class=\"ds-showcase\"><span>CONTEXT PACK</span><strong>Cited facts stay whole.</strong></div>",
-      "css": ".ds-showcase{background:#0d1214;color:#f4f7f6;border:1px solid #263033;border-radius:18px;padding:28px;box-shadow:0 34px 90px rgb(0 0 0 / .25)}.ds-showcase span{display:block;color:#2dd4bf;font:500 12px 'Geist Mono',monospace}.ds-showcase strong{display:block;margin-top:10px;font:560 24px Inter,sans-serif}"
-    },
-    {
-      "name": "Navigation",
+      "name": "Announcement Bar",
       "kind": "nav",
-      "description": "Restrained links that compact into a tonal floating surface after scroll.",
-      "html": "<nav class=\"ds-nav\"><strong>Othie AI</strong><a href=\"#\">Product</a><a href=\"#\">Pricing</a><a href=\"#\">Download</a></nav>",
-      "css": ".ds-nav{display:flex;align-items:center;gap:24px;background:#0e1315db;color:#a2aeaa;border:1px solid #ffffff14;border-radius:18px;padding:10px 14px;font:500 14px Inter,sans-serif}.ds-nav strong{margin-right:auto;color:#f4f7f6}.ds-nav a:hover{color:#f4f7f6}.ds-nav a:focus-visible{outline:2px solid #81eadb;outline-offset:4px}"
+      "refersTo": null,
+      "description": "Full-width rail above the header carrying current release status. Scrolls away; the header does not.",
+      "html": "<div class=\"ds-announce\"><a href=\"#\"><span><b>In development:</b> Desktop preview in development \u2014 no installer is published yet</span><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></a></div>",
+      "css": ".ds-announce { position: relative; display: flex; min-height: 2.5rem; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid #303236; background: #18191B; padding: .5rem 1rem; color: #E4E5E7; font: 400 .8125rem/1.4 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.01em; } .ds-announce::before { content: \"\"; position: absolute; left: 0; top: 0; width: 16rem; height: 100%; background-image: repeating-linear-gradient(90deg, rgba(71,225,189,.5) 0 1px, transparent 1px 4px); mask-image: linear-gradient(to right, #000, transparent); opacity: .45; pointer-events: none; } .ds-announce a { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: .4rem; color: inherit; text-decoration: none; transition: color 160ms cubic-bezier(.16,1,.3,1); } .ds-announce a:hover { color: #47E1BD; } .ds-announce b { color: #FFFFFF; font-weight: 500; }"
+    },
+    {
+      "name": "Header Nav Item",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Primary navigation link. 4px radius with a tonal hover \u2014 the one place a small radius beats a pill.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">Product</a><a href=\"#\">Pricing</a><a href=\"#\">Download</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: .125rem; } .ds-nav a { border-radius: 4px; padding: .4rem .875rem; color: #FFFFFF; font: 400 .9375rem/1.6 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.011em; text-decoration: none; transition: background 140ms cubic-bezier(.16,1,.3,1); } .ds-nav a:hover { background: #18191B; } .ds-nav a:focus-visible { outline: 1px solid #47E1BD; outline-offset: 3px; }"
+    },
+    {
+      "name": "Primitive Preview Panel",
+      "kind": "card",
+      "refersTo": null,
+      "description": "The small dark panel under each primitive in the strip below the hero. Fades out at the bottom rather than ending on a hard edge.",
+      "html": "<div class=\"ds-primitive\"><span class=\"is-live\"><i></i>/work/policies<em>14</em></span><span class=\"is-live\"><i></i>/work/guides<em>6</em></span><span><i></i>/work/.env<em>skipped</em></span><div class=\"ds-bar ds-bar-fill\" style=\"width:72%\"></div><div class=\"ds-bar\" style=\"width:44%\"></div></div>",
+      "css": ".ds-primitive { position: relative; display: grid; height: 8.5rem; overflow: hidden; align-content: start; gap: .4rem; border: 1px solid #242628; border-radius: 4px; background: #0A0A0B; padding: .85rem; } .ds-primitive::after { content: \"\"; position: absolute; inset: auto 0 0 0; height: 3rem; background: linear-gradient(to top, #0A0A0B, transparent); } .ds-primitive span { display: flex; align-items: center; gap: .4rem; color: #61646B; font: 400 .625rem/1.4 \"Geist Mono\", ui-monospace, SFMono-Regular, monospace; } .ds-primitive span i { width: .3rem; height: .3rem; flex: none; border-radius: 50%; background: #2E6A5C; } .ds-primitive span.is-live i { background: #47E1BD; } .ds-primitive span em { margin-left: auto; color: #4B4E54; font-style: normal; } .ds-bar { height: .35rem; border-radius: 1px; background: #18191B; } .ds-bar-fill { background: #2E6A5C; }"
+    },
+    {
+      "name": "Cited Context Fact",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Signature component. A retrieved fact and the source it came from \u2014 the only place accent-coloured text appears at length.",
+      "html": "<div class=\"ds-fact\"><p>Lead with the answer. Use direct language and name the next action.</p><span>[writing-guide.md \u00a7 3 Tone]</span></div>",
+      "css": ".ds-fact { padding: .8rem; border: 1px solid #242628; border-radius: 4px; background: #131415; } .ds-fact p { margin: 0; color: #D4D5D8; font: 400 .8125rem/1.55 Inter, ui-sans-serif, system-ui, sans-serif; } .ds-fact span { display: block; margin-top: .45rem; color: #47E1BD; font: 400 .65rem/1.4 \"Geist Mono\", ui-monospace, SFMono-Regular, monospace; }"
+    },
+    {
+      "name": "Scroll-Spy Rail Item",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Signature component. Sticky rail beside the feature block; the accent dot marks position, not importance.",
+      "html": "<nav class=\"ds-rail\"><span>Mechanism</span><a href=\"#\" aria-current=\"true\">Choose sources</a><a href=\"#\">Carry context</a><a href=\"#\">Preserve the window</a></nav>",
+      "css": ".ds-rail { display: grid; align-content: start; gap: .1rem; width: 13.5rem; } .ds-rail > span { margin-bottom: .9rem; color: #61646B; font: 500 .6875rem/1 \"Geist Mono\", ui-monospace, SFMono-Regular, monospace; letter-spacing: .02em; text-transform: uppercase; } .ds-rail a { display: flex; align-items: center; gap: .65rem; padding: .5rem 0; color: #61646B; font: 400 .84rem/1.6 Inter, ui-sans-serif, system-ui, sans-serif; text-decoration: none; transition: color 180ms cubic-bezier(.16,1,.3,1); } .ds-rail a::before { content: \"\"; width: .3rem; height: .3rem; flex: none; border-radius: 50%; background: currentColor; opacity: .5; transition: background 180ms cubic-bezier(.16,1,.3,1), opacity 180ms cubic-bezier(.16,1,.3,1); } .ds-rail a:hover { color: #94979E; } .ds-rail a[aria-current=\"true\"] { color: #FFFFFF; } .ds-rail a[aria-current=\"true\"]::before { background: #47E1BD; opacity: 1; }"
+    },
+    {
+      "name": "Command Box",
+      "kind": "input",
+      "refersTo": null,
+      "description": "One copyable command on pure black. The prompt glyph is accent; the command itself is not.",
+      "html": "<div class=\"ds-command\"><span>$</span><code>npm run engine -- init --config config.json</code><button class=\"ds-copy\" aria-label=\"Copy command\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\"/><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"/></svg></button></div>",
+      "css": ".ds-command { display: flex; align-items: center; gap: .75rem; border: 1px solid #303236; border-radius: 4px; background: #000000; padding: .85rem .9rem; } .ds-command > span { color: #47E1BD; font: 400 .8125rem/1 \"Geist Mono\", ui-monospace, SFMono-Regular, monospace; } .ds-command code { overflow-x: auto; flex: 1; color: #E4E5E7; font: 400 .8125rem/1 \"Geist Mono\", ui-monospace, SFMono-Regular, monospace; white-space: nowrap; } .ds-copy { display: inline-grid; width: 1.9rem; height: 1.9rem; flex: none; place-items: center; border: 1px solid #242628; border-radius: 3px; background: #18191B; color: #94979E; cursor: pointer; transition: color 140ms cubic-bezier(.16,1,.3,1), border-color 140ms cubic-bezier(.16,1,.3,1); } .ds-copy:hover { border-color: #61646B; color: #FFFFFF; } .ds-copy[data-copied=\"true\"] { color: #47E1BD; border-color: #2E6A5C; }"
     }
   ],
   "narrative": {
     "northStar": "The Context Signal",
-    "overview": "The site feels like a precise desktop instrument seen in a low-lit working session: mostly neutral, calm enough to read, and alive only where information moves. The signature is a restrained diagonal line field that resolves into selected source paths, bounded context, and host destinations.",
-    "keyCharacteristics": ["Dark, cool, matte surfaces with a single rare teal signal", "Large centered language paired with concrete product demonstrations", "Wide showcases, thin rules, compact mono facts, and crisp state labels", "Motion concentrated in the flowing context field and meaningful control changes"],
-    "rules": [
-      { "name": "Rare Signal", "body": "Brand accent should occupy roughly five to ten percent of a viewport and primarily mark the main action, selected state, and live context path.", "section": "colors" },
-      { "name": "Stable Headline", "body": "Headlines do not type, flicker, or cycle. The mechanism moves around a stable value proposition.", "section": "typography" }
+    "overview": "The site reads as instrumentation on a black field: pure black ground, hairline rules, flat tonal panels, and a single rare teal-green that marks live state. Structure comes from alignment and type scale rather than from cards, glow, or tinted glass. The reference is Neon's developer-infrastructure language \u2014 left-set headlines, two-tone paragraph headings, a full-bleed generative hero field, and monospace micro-labels \u2014 carrying Othie's own document-to-context mechanism.",
+    "keyCharacteristics": [
+      "Pure black canvas with flat, near-neutral panels; no tinted or frosted surfaces",
+      "Left-aligned display type at weight 400, never bold, tracked tight at -0.04em",
+      "Two-tone paragraph headings: the lead clause in white, its continuation in muted grey",
+      "A generative field of vertical light bars filling the first viewport, fading to black",
+      "Small radii (4\u20136px) everywhere except pills on buttons and status chips"
     ],
-    "dos": ["Do show Othie's mechanism through clearly labeled illustrative source and citation data.", "Do bind every brand treatment, including canvas/WebGL color, to the central accent token.", "Do let quiet space and typography carry most of the visual weight."],
-    "donts": ["Don't turn the page into a grid of generic feature cards.", "Don't use green body copy, large green panels, gradient text, or pervasive glow.", "Don't imply an illustrative UI, installer, integration, or price already ships."]
+    "rules": [
+      {
+        "name": "The Rare Signal Rule",
+        "body": "The signal (#47E1BD) is never a surface and never a button. It marks live state, selected sources, citation lines, the active rail item, and a small minority of columns in the hero field \u2014 roughly two to five percent of a viewport. It sits deliberately brighter and more teal than the reference's green so the signal reads as Othie's own.",
+        "section": "colors"
+      },
+      {
+        "name": "The White Action Rule",
+        "body": "The primary button is white on black with near-black text. Secondary actions are a 1px hairline pill. Colour is not used to indicate primacy.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Tone Heading Rule",
+        "body": "Section headings are written as a sentence pair. The first clause is wrapped in <b> and renders white at weight 400; the remainder inherits --heading-muted. This is the site's primary typographic signature \u2014 use it for every h2.",
+        "section": "typography"
+      },
+      {
+        "name": "The Stable Headline Rule",
+        "body": "Headlines do not type, flicker, or cycle. The mechanism moves around a stable value proposition.",
+        "section": "typography"
+      },
+      {
+        "name": "The Measure Rule",
+        "body": "Constrain display headings with rem, never ch. A ch measure set on a wrapper resolves against the wrapper's 1rem font size and collapses the heading into a narrow column.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do write every section heading as a two-tone sentence pair with <b> on the lead clause.",
+      "Do show Othie's mechanism through clearly labeled illustrative source and citation data.",
+      "Do bind every brand treatment, including canvas/WebGL colour, to the central accent token.",
+      "Do let hairlines, alignment, and quiet space carry the structure."
+    ],
+    "donts": [
+      "Don't centre body sections or use a teal-tinted near-black ground.",
+      "Don't make the primary button the accent colour, or use the accent as a panel fill.",
+      "Don't set display weights above 400, or use gradient text and pervasive glow.",
+      "Don't turn the page into a grid of generic feature cards.",
+      "Don't imply an illustrative UI, installer, integration, or price already ships."
+    ]
   }
 }
