@@ -18,7 +18,7 @@ export default function SetupPage() {
   return (
     <main className="page-main docs-main" id="main-content">
       <section className="docs-hero page-shell">
-        <div><span className="section-label">Current developer setup</span><h1>Run Othie locally before installers arrive.</h1><p>This is the verified repository workflow, not the planned graphical setup wizard. It requires Node.js 24 LTS and terminal access.</p></div>
+        <div><span className="section-label">Current developer setup</span><h1><b>Run Othie locally before installers arrive.</b></h1><p>This is the verified repository workflow, not the planned graphical setup wizard. It requires Node.js 24 LTS and terminal access.</p></div>
         <div className="docs-status"><TerminalSquare /><span>Repository workflow</span><strong>Available now</strong><small>macOS automated suite recorded; Windows and native-host checks remain release gates.</small></div>
       </section>
 
@@ -31,7 +31,7 @@ export default function SetupPage() {
           <section id="verify"><span className="docs-step">04</span><h2>Verify from the host</h2><p>Enable or trust the server, restart the host if requested, and confirm both Othie tools appear. Then explicitly ask the host to call <code>get_organization_context</code> with a small synthetic source.</p><ul className="docs-checks"><li><CheckCircle2 /> <span><strong>Tool availability</strong><code>get_organization_context</code> and <code>get_context_status</code> are visible.</span></li><li><CheckCircle2 /> <span><strong>Citation update</strong>Edit and delete a synthetic file, then confirm its returned source changes.</span></li><li><CheckCircle2 /> <span><strong>Restart recovery</strong>Restart the engine and call status again from the same host session.</span></li></ul><p className="docs-note">A successful tool check does not prove that the host will call Othie automatically for every prompt.</p></section>
         </div>
       </div>
-      <section className="final-cta page-shell"><h2>Prefer a guided installer?</h2><p>Watch the download page for verified native builds and release metadata.</p><div><Link className="button button--primary button--large" href="/download">Check download status <ArrowRight size={17} /></Link><a className="button button--secondary button--large" href="https://github.com/TilesOS/othie-ai" target="_blank" rel="noreferrer">Open GitHub</a></div></section>
+      <section className="final-cta page-shell"><h2><b>Prefer a guided installer?</b></h2><p>Watch the download page for verified native builds and release metadata.</p><div><Link className="button button--primary button--large" href="/download">Check download status <ArrowRight size={17} /></Link><a className="button button--secondary button--large" href="https://github.com/TilesOS/othie-ai" target="_blank" rel="noreferrer">Open GitHub</a></div></section>
     </main>
   );
 }

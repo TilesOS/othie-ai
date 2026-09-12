@@ -13,7 +13,7 @@ export default function PrivacyPage() {
     <main className="page-main" id="main-content">
       <section className="page-hero page-shell page-hero--left">
         <span className="section-label">Privacy boundary</span>
-        <h1>You choose what Othie can read.</h1>
+        <h1><b>You choose what Othie can read.</b> Everything else stays where it is.</h1>
         <p>Othie is built around selected local sources and bounded export. That does not make every connected AI workflow local.</p>
       </section>
 

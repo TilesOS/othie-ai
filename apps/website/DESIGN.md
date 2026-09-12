@@ -2,53 +2,65 @@
 name: Othie AI
 description: A quiet, local context signal moving from selected documents into the AI tools people already use.
 colors:
-  void: "#090D0F"
-  surface: "#11171A"
-  surface-raised: "#171E21"
-  foreground: "#F4F7F6"
-  muted-foreground: "#A2AEAA"
-  brand-accent: "#2DD4BF"
-  on-accent: "#062923"
-  border: "#263033"
+  void: "#000000"
+  surface: "#0A0A0B"
+  surface-raised: "#131415"
+  surface-bright: "#18191B"
+  foreground: "#FFFFFF"
+  muted-foreground: "#94979E"
+  quiet-foreground: "#61646B"
+  heading-muted: "#797D86"
+  brand-accent: "#34D59A"
+  on-accent: "#06110D"
+  border: "#303236"
+  border-soft: "#242628"
 typography:
   display:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(2.7rem, 7vw, 5.25rem)"
-    fontWeight: 600
-    lineHeight: 0.98
+    fontSize: "clamp(2.5rem, 5vw, 4.25rem)"
+    fontWeight: 400
+    lineHeight: 1.125
+    letterSpacing: "-0.04em"
+  lede:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(1.85rem, 3.4vw, 3rem)"
+    fontWeight: 400
+    lineHeight: 1.125
     letterSpacing: "-0.04em"
   body:
     fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
-    lineHeight: 1.65
+    lineHeight: 1.6
   label:
     fontFamily: "Geist Mono, ui-monospace, SFMono-Regular, monospace"
     fontSize: "0.75rem"
     fontWeight: 500
-    lineHeight: 1.4
-    letterSpacing: "0.04em"
+    lineHeight: 1
+    letterSpacing: "0.01em"
+    textTransform: uppercase
 rounded:
   control: "999px"
-  panel: "14px"
-  showcase: "18px"
+  panel: "4px"
+  showcase: "6px"
 spacing:
   xs: "8px"
   sm: "12px"
   md: "20px"
   lg: "32px"
-  section: "clamp(88px, 12vw, 160px)"
+  section: "clamp(5rem, 9vw, 8.5rem)"
 components:
   button-primary:
-    backgroundColor: "{colors.brand-accent}"
-    textColor: "{colors.on-accent}"
+    backgroundColor: "{colors.foreground}"
+    textColor: "#1A1A1A"
     rounded: "{rounded.control}"
-    padding: "12px 20px"
+    padding: "0 20px"
   button-secondary:
-    backgroundColor: "{colors.surface-raised}"
+    backgroundColor: "transparent"
+    borderColor: "{colors.quiet-foreground}"
     textColor: "{colors.foreground}"
     rounded: "{rounded.control}"
-    padding: "12px 20px"
+    padding: "0 20px"
 ---
 
 # Design System: Othie AI
@@ -57,55 +69,86 @@ components:
 
 **Creative North Star: "The Context Signal"**
 
-The site feels like a precise desktop instrument seen in a low-lit working session: mostly neutral, calm enough to read, and alive only where information moves. The signature is a restrained diagonal line field that resolves into selected source paths, bounded context, and host destinations. It borrows Terax's confidence and spatial restraint without reusing its identity or product chrome.
+The site reads as instrumentation on a black field: pure black ground, hairline rules, flat
+tonal panels, and a single rare green that marks live state. Structure comes from alignment
+and type scale rather than from cards, glow, or tinted glass. The reference is Neon's
+developer-infrastructure language — left-set headlines, two-tone paragraph headings, a
+full-bleed generative hero field, and monospace micro-labels — carrying Othie's own
+document-to-context mechanism.
 
 **Key Characteristics:**
 
-- Dark, cool, matte surfaces with a single rare teal signal
-- Large centered language paired with concrete product demonstrations
-- Wide showcases, thin rules, compact mono facts, and crisp state labels
-- Motion concentrated in a site-wide, pointer-responsive context field and meaningful control changes
+- Pure black canvas with flat, near-neutral panels; no tinted or frosted surfaces
+- Left-aligned display type at weight 400, never bold, tracked tight at -0.04em
+- Two-tone paragraph headings: the lead clause in white, its continuation in muted grey
+- A generative field of vertical light bars anchored to the hero, fading to black
+- Small radii (4–6px) everywhere except pills on buttons and status chips
 
 ## Colors
 
-Cool near-black layers carry nearly the whole page; teal is a signal, not a wash.
+Pure black carries the page. Panels step up through a narrow neutral ramp (#0A0A0B →
+#131415 → #18191B) and are separated by hairline #242628 / #303236 rules rather than shadow.
 
-**The Rare Signal Rule.** Brand accent should occupy roughly five to ten percent of a viewport and primarily mark the main action, selected state, and live context path.
+**The Rare Signal Rule.** Green (#34D59A) is never a surface and never a button. It marks
+live state, selected sources, citation lines, the active rail item, and a small minority of
+columns in the hero field — roughly two to five percent of a viewport.
+
+**The White Action Rule.** The primary button is white on black with near-black text, as on
+Neon. Secondary actions are a 1px hairline pill. Colour is not used to indicate primacy.
 
 ## Typography
 
-Inter carries display and interface copy because the user pinned the Terax reference and its exact typographic authority. Geist Mono is reserved for source names, citations, platform metadata, and measured controls.
+Inter carries display and interface copy at weight 400; there is no bold display type.
+Geist Mono at 12px uppercase is reserved for eyebrows, source names, citations, platform
+metadata, and measured controls.
 
-**The Stable Headline Rule.** Headlines do not type, flicker, or cycle. The mechanism moves around a stable value proposition.
+**The Two-Tone Heading Rule.** Section headings are written as a sentence pair. The first
+clause is wrapped in `<b>` and renders white at weight 400; the remainder inherits
+`--heading-muted`. This is the site's primary typographic signature — use it for every h2.
+
+**The Stable Headline Rule.** Headlines do not type, flicker, or cycle. The mechanism moves
+around a stable value proposition.
+
+**The Measure Rule.** Constrain display headings with `rem`, never `ch`. A `ch` measure set
+on a wrapper resolves against the wrapper's 1rem font size and collapses the heading into a
+narrow column.
 
 ## Layout
 
-The main container sits between 1120 and 1200 pixels with wider controlled product showcases. Sections alternate between centered persuasion and left-to-right demonstrations. The first viewport includes the full offer and the top of the mechanism demonstration. On narrow screens, demonstrations become vertical flows rather than scaled-down desktop canvases.
+A 1408px outer frame carries near-full-bleed sections; reading columns sit at 46rem and
+feature copy at 34rem. The hero is left-set, not centred, with the offer and the top of the
+primitives strip in the first viewport. Feature sections run beside a sticky scroll-spy rail.
 
 ## Elevation & Depth
 
-Depth comes from tonal layering, inset edges, and one soft directional shadow on elevated or floating surfaces. Luminous halos are not structural elevation.
+Depth comes from the tonal ramp and hairline borders alone. Drop shadows and luminous halos
+are not structural elevation and are not used on panels.
 
 ## Shapes
 
-Panels use restrained 14–18 pixel corners with thin cool borders. Small controls and status chips may be pills. Document and context surfaces preserve a slightly squared technical silhouette.
+Panels use 4–6px corners with hairline cool borders. Buttons and status chips are pills.
+Document and context surfaces keep a squared technical silhouette.
 
 ## Components
 
-Primary buttons are compact teal pills with dark text and a restrained lift on hover. Secondary actions stay neutral. Cards appear only where comparison or selection benefits from containment; the page story is carried by open layout and full-width showcases.
-
-Navigation begins as a quiet full-width header, gains a compact floating surface after scrolling, and uses a focus-managed sheet-like menu on mobile. Accordions and segmented controls show state through both shape and text, not color alone.
+The page opens with a full-width announcement rail above a sticky black header with a
+hairline bottom border — not a floating pill. Below the hero, a five-column primitives strip
+pairs a bolded lead-in term with a muted description and a small dark preview panel.
+A terminal command band and a dotted-texture closing CTA bracket the feature sections.
 
 ## Do's and Don'ts
 
 ### Do:
 
+- **Do** write every section heading as a two-tone sentence pair with `<b>` on the lead clause.
 - **Do** show Othie's mechanism through clearly labeled illustrative source and citation data.
-- **Do** bind every brand treatment, including canvas/WebGL color, to the central accent token.
-- **Do** let quiet space and typography carry most of the visual weight.
+- **Do** bind every brand treatment, including canvas/WebGL colour, to the central accent token.
+- **Do** let hairlines, alignment, and quiet space carry the structure.
 
 ### Don't:
 
+- **Don't** centre body sections or use a teal-tinted near-black ground.
+- **Don't** make the primary button green, or use green as a panel fill.
+- **Don't** set display weights above 400, or use gradient text and pervasive glow.
 - **Don't** turn the page into a grid of generic feature cards.
-- **Don't** use green body copy, large green panels, gradient text, or pervasive glow.
 - **Don't** imply an illustrative UI, installer, integration, or price already ships.

@@ -6,6 +6,7 @@ export const siteConfig = {
     "Othie brings selected documents, preferences, and working rules into compatible AI tools with local processing and control over what you share.",
   repository: "https://github.com/TilesOS/othie-ai",
   releaseStage: "Desktop preview in development",
+  nodeVersion: "24 LTS",
   availability: "Installers are not published yet",
   nav: [
     { label: "Product", href: "/#product" },

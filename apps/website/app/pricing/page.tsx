@@ -15,8 +15,8 @@ export default function PricingPage() {
   return (
     <main className="page-main" id="main-content">
       <section className="page-hero page-shell page-hero--pricing">
-        <span className="availability-badge"><span /> Commercial details in progress</span>
-        <h1>Clear terms,<br />when they are real.</h1>
+        <span className="mono-label"><i className="signal-dot" /> Commercial details in progress</span>
+        <h1><b>Clear terms, when they are real.</b> No pretend tiers in the meantime.</h1>
         <p>Othie’s plans and entitlements are still being defined. We will publish pricing alongside the public release—not fill this page with pretend tiers.</p>
       </section>
 
