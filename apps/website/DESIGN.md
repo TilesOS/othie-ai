@@ -206,6 +206,12 @@ the page stays pure black. Those numbers are deliberate — the wash must stay b
 `surface-bright` (27/255) so panels keep their edge against it. The hero paints an opaque
 black ground so only one field is ever visible at a time.
 
+**The Soft Handoff Rule.** The two fields must never meet at a visible seam. An opaque
+curtain sized to the hero and the primitives row covers the ambient wash across both, then
+releases it across `--curtain-fade` so the wash arrives gradually somewhere below the card
+row. The curtain is sized by its own content rather than by a fixed height, so it follows the
+hero cap and the card row automatically.
+
 **The Shallow-Ramp Rule.** Both fields paint gradients that span only a handful of the 255
 available levels, which makes them fragile in ways a normal gradient is not. Three things are
 required, not optional: declare `precision highp float` (`mediump` is genuine fp16 on many

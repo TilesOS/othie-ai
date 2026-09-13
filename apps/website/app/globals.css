@@ -42,6 +42,7 @@
      absolute position it has on a laptop. Physical screen size is not knowable on the
      web; viewport height is the honest proxy, and it also responds to a resized window. */
   --hero-max: 50rem;
+  --curtain-fade: clamp(8rem, 21vh, 22rem);
   --announce-height: 2.5rem;
   --section-space: clamp(5rem, 9vw, 8.5rem);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -122,10 +123,24 @@ button { color: inherit; }
 /* Data voice: anything the engine produced — paths, citations, counts, statuses. */
 .demo-kicker, .mono-meta, .footer-label, .docs-step { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--label-foreground); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; }
 
+/* Occludes the fixed ambient wash across the hero and the primitives row, then hands it
+   over across --curtain-fade so the wash arrives gradually instead of at a hard edge.
+   Sized to its own content, so it follows the hero cap and the card row automatically. */
+.ground-shield { position: relative; }
+.ground-shield::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0 0 calc(-1 * var(--curtain-fade)) 0;
+  background: linear-gradient(to bottom, var(--background) 0%, var(--background) calc(100% - var(--curtain-fade)), transparent 100%);
+  pointer-events: none;
+}
+.ground-shield > * { position: relative; z-index: 1; }
+
 /* ---------- Hero ---------- */
 /* Fills exactly what is visible on load: the viewport less the announcement rail and header.
    svh keeps mobile stable while the browser chrome collapses. */
-.hero { position: relative; z-index: 1; background: var(--background); display: flex; min-height: min(calc(100svh - var(--header-height) - var(--announce-height)), var(--hero-max)); flex-direction: column; justify-content: flex-end; overflow: hidden; padding: clamp(7rem, 20vh, 15rem) 0 clamp(2.5rem, 5vh, 4.5rem); }
+.hero { position: relative; z-index: 1; display: flex; min-height: min(calc(100svh - var(--header-height) - var(--announce-height)), var(--hero-max)); flex-direction: column; justify-content: flex-end; overflow: hidden; padding: clamp(7rem, 20vh, 15rem) 0 clamp(2.5rem, 5vh, 4.5rem); }
 .hero-inner { position: relative; z-index: 2; width: min(calc(100% - 3rem), var(--wide-container)); margin-inline: auto; text-align: left; }
 .hero-eyebrow { margin-bottom: 1.5rem; }
 .hero h1 { max-width: 17em; margin: 0; font-size: clamp(2.5rem, 5vw, 4.25rem); font-weight: 400; line-height: 1.125; letter-spacing: -0.04em; text-wrap: pretty; }
@@ -140,7 +155,7 @@ button { color: inherit; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.25rem; }
 
 /* Primitives strip beneath the hero: bolded lead-in term, muted continuation. */
-.primitives { width: min(calc(100% - 3rem), var(--wide-container)); margin: clamp(3rem, 6vw, 5rem) auto 0; }
+.primitives { width: min(calc(100% - 3rem), var(--wide-container)); margin: clamp(1.25rem, 2.4vw, 2.25rem) auto 0; }
 .primitive-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.5rem; }
 .primitive { display: grid; align-content: start; gap: 1.25rem; }
 .primitive p { margin: 0; color: var(--muted-foreground); font-size: 0.875rem; line-height: 1.55; }

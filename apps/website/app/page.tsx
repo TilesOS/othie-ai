@@ -92,36 +92,40 @@ const primitives = [
 export default function HomePage() {
   return (
     <main id="main-content">
-      <section className="hero" aria-labelledby="hero-title">
-        <BackgroundWaves />
-        <div className="hero-inner">
-          <span className="mono-label hero-eyebrow">
-            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="currentColor"><rect x="0" y="0" width="3" height="12" /><rect x="4.5" y="3" width="3" height="9" /><rect x="9" y="6" width="3" height="6" /></svg>
-            Runs locally on your machine
-          </span>
-          <h1 id="hero-title">
-            AI familiar with your work{" "}
-            <span className="sr-only">{heroPhrases[0]}</span>
-            <TypedPhrases phrases={heroPhrases} />
-          </h1>
-          <p>Othie brings selected documents, preferences, and working rules into compatible AI tools — indexed locally, returned with citations, and bounded by a budget you set.</p>
-          <div className="hero-actions">
-            <Link className="button button--primary button--large" href="/download">Get started</Link>
-            <Link className="button button--secondary button--large" href="/docs/setup">Read the docs</Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="primitives" aria-label="Othie primitives">
-        <div className="primitive-grid">
-          {primitives.map((primitive) => (
-            <div className="primitive" key={primitive.term}>
-              <p><b>{primitive.term}.</b> {primitive.body}</p>
-              <div className="primitive-visual" aria-hidden="true">{primitive.visual}</div>
+      {/* The curtain styled on .ground-shield occludes the ambient wash across these two
+          sections, then releases it gradually rather than at a hard edge. */}
+      <div className="ground-shield">
+        <section className="hero" aria-labelledby="hero-title">
+          <BackgroundWaves />
+          <div className="hero-inner">
+            <span className="mono-label hero-eyebrow">
+              <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="currentColor"><rect x="0" y="0" width="3" height="12" /><rect x="4.5" y="3" width="3" height="9" /><rect x="9" y="6" width="3" height="6" /></svg>
+              Runs locally on your machine
+            </span>
+            <h1 id="hero-title">
+              AI familiar with your work{" "}
+              <span className="sr-only">{heroPhrases[0]}</span>
+              <TypedPhrases phrases={heroPhrases} />
+            </h1>
+            <p>Othie brings selected documents, preferences, and working rules into compatible AI tools — indexed locally, returned with citations, and bounded by a budget you set.</p>
+            <div className="hero-actions">
+              <Link className="button button--primary button--large" href="/download">Get started</Link>
+              <Link className="button button--secondary button--large" href="/docs/setup">Read the docs</Link>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
+
+        <section className="primitives" aria-label="Othie primitives">
+          <div className="primitive-grid">
+            {primitives.map((primitive) => (
+              <div className="primitive" key={primitive.term}>
+                <p><b>{primitive.term}.</b> {primitive.body}</p>
+                <div className="primitive-visual" aria-hidden="true">{primitive.visual}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
 
       <section className="demo-section" id="product" aria-labelledby="product-title">
         <div className="section-intro">
