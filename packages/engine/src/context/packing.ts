@@ -1,10 +1,12 @@
-import { relative, isAbsolute } from "node:path";
+import { realpathSync } from "node:fs";
+import { relative, isAbsolute, resolve } from "node:path";
 import type { OthieProfile } from "../config.js";
 import type { ChunkRecord, ContextBriefV1, ContextCitation, ContextRequest, ContextResult, RuleRecord } from "../types.js";
 import { countTokens, tokenizerIsEstimate } from "../tokenizer.js";
 import { conflictGroups } from "../rules/selection.js";
 import { evidenceUnits } from "../ingestion/sentences.js";
 import { escapeXml, xmlAttr } from "./xml.js";
+import { sha256 } from "../ingestion/chunker.js";
 
 interface Candidates {
   rules: RuleRecord[];
@@ -27,10 +29,13 @@ export function packContext(profileName: string, profile: OthieProfile, request:
   if (request.max_tokens !== undefined && (!Number.isSafeInteger(request.max_tokens) || request.max_tokens <= 0)) throw new Error("max_tokens must be a positive integer");
   const limit = Math.min(profile.token_budget.enabled ? profile.token_budget.max_tokens : Infinity, request.max_tokens ?? Infinity);
   const ruleIds = new Map(set.rules.map((rule, index) => [rule.id, `r${index + 1}`]));
+  const sourceRoots = profile.sources.map((source) => {
+    try { return realpathSync(source.root); } catch { return resolve(source.root); }
+  });
   const citation = (path: string, location: string, quote?: string): ContextCitation => {
-    let source = path;
-    for (const [index, root] of profile.sources.entries()) {
-      const rel = relative(root.root, path);
+    let source = `unmapped/${sha256(path).slice(0, 12)}`;
+    for (const [index, root] of sourceRoots.entries()) {
+      const rel = relative(root, path);
       if (rel && !rel.startsWith("..") && !isAbsolute(rel)) { source = `s${index + 1}/${rel.replaceAll("\\", "/")}`; break; }
     }
     return { source, at: location, ...(quote ? { quote } : {}) };

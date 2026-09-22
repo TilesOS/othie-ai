@@ -37,7 +37,7 @@ export async function admitPath(input: string, profile: OthieProfile, stateDir: 
     if (!inside(root, actual)) continue;
     const rel = relative(root, actual).replaceAll("\\", "/");
     if (profile.exclusions.some((glob) => matchesSimpleGlob(rel, glob))) return undefined;
-    return { path: actual, source };
+    return { path: actual, source: { ...source, root } };
   }
   return undefined;
 }

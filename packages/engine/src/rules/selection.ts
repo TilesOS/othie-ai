@@ -1,7 +1,8 @@
 import type { ChunkRecord, RuleRecord } from "../types.js";
+import { meaningfulTerms } from "../retrieval/terms.js";
 
 export function selectRules(rules: RuleRecord[], query: string, chunks: ChunkRecord[]): RuleRecord[] {
-  const terms = new Set(query.toLowerCase().match(/[\p{L}\p{N}]+/gu)?.filter((term) => term.length > 2) ?? []);
+  const terms = new Set(meaningfulTerms(query));
   return rules.map((rule) => {
     const evidenceRank = chunks.findIndex((chunk) => chunk.revisionId === rule.revisionId && chunk.documentId === rule.documentId && chunk.text.includes(rule.quotation));
     const words = new Set(`${rule.text} ${rule.applicability} ${rule.category}`.toLowerCase().match(/[\p{L}\p{N}]+/gu));

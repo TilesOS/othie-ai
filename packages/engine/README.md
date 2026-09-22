@@ -135,6 +135,11 @@ npm run benchmark
 
 The deterministic suite requires no model downloads. `test:mcp` uses two real SDK clients and two stdio bridge processes against one engine, then restarts the engine. Real-model quality and latency work is deliberately separate. `packages/engine/evaluation/retrieval.jsonl` labels relevance, unsupported claims, lost qualifiers, reference-only evidence, adversarial text, and contradictions. Baseline model identities and reviewed upstream licenses are recorded in [MODELS.md](../../MODELS.md); deployments should replace placeholder revisions with exact artifact digests.
 
+The [model smoke evaluation](evaluation/README.md) uses synthetic policy
+documents to compare no added context, full documents, and Othie's bounded context
+with the same hosted or installed Ollama model. It is a small component test, not a real coding-agent
+benchmark or a substitute for the planned local-model evaluation.
+
 Benchmark output records hardware/model identity, cold startup, warm queries, memory snapshot, and fallback frequency. Record results separately on actual Apple Silicon and Windows x64 hardware; the two-second setting is a synthesis deadline including queue wait, not an end-to-end performance promise.
 
 Operational logs belong on stderr and must contain status/latency metadata only—not prompts or document contents.

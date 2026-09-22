@@ -3,16 +3,19 @@ import type { ManifestStore } from "../storage/manifest.js";
 import type { ProviderRegistry } from "../providers/registry.js";
 import type { LanceIndex } from "./lance-index.js";
 import type { SearchHit } from "../types.js";
+import { hasLexicalOverlap, meaningfulTerms } from "./terms.js";
 
 export interface RetrievalResult { hits: SearchHit[]; keywordAvailable: boolean; vectorAvailable: boolean }
 
 export async function hybridRetrieve(input: { query: string; profileName: string; profile: OthieProfile; config: OthieConfig; store: ManifestStore; lance: LanceIndex; providers: ProviderRegistry }): Promise<RetrievalResult> {
   const limit = input.profile.safeguards.max_candidates;
+  const terms = meaningfulTerms(input.query);
   const activeIds = input.store.listActiveChunks(input.profileName).map((chunk) => chunk.id);
   const eligible = (id: string) => input.store.getChunk(id, input.profileName);
   const sqliteChunks = input.store.keywordSearch(input.profileName,input.query,limit);
-  const lanceIds = await input.lance.keywordIds(input.query,limit,input.profileName,activeIds);
-  const keywordChunks = [...new Map([...sqliteChunks, ...lanceIds.map(eligible).filter((chunk) => chunk !== undefined)].map((chunk) => [chunk.id, chunk])).values()];
+  const lanceIds = terms.length ? await input.lance.keywordIds(terms.join(" "),limit,input.profileName,activeIds) : [];
+  const keywordChunks = [...new Map([...sqliteChunks, ...lanceIds.map(eligible).filter((chunk) => chunk !== undefined)]
+    .filter((chunk) => hasLexicalOverlap(`${chunk.heading} ${chunk.text}`, terms)).map((chunk) => [chunk.id, chunk])).values()];
 
   let vectorIds: string[] = []; let vectorAvailable = false;
   const embedding = input.config.models.embedding;

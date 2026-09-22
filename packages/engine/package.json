@@ -17,6 +17,8 @@
     "test:mcp": "vitest run test/mcp.integration.test.ts test/lifecycle.integration.test.ts",
     "test:models": "vitest run --config vitest.models.config.ts",
     "benchmark": "tsx src/benchmark.ts",
+    "eval:hosted": "npm run build && node dist/src/evaluation/hosted-baseline.js",
+    "eval:local": "npm run build && node dist/src/evaluation/hosted-baseline.js --runtime ollama",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "pretest": "npm run build",
     "pretest:mcp": "npm run build"

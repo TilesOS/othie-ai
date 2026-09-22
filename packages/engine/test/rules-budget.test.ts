@@ -1,4 +1,4 @@
-import { rm } from "node:fs/promises";
+import { rm, symlink, writeFile } from "node:fs/promises";
 import { afterEach, describe, expect, it } from "vitest";
 import { validateExtractedRules } from "../src/rules/extractor.js";
 import { ManifestStore } from "../src/storage/manifest.js";
@@ -6,12 +6,25 @@ import { ContextCompiler } from "../src/context/compiler.js";
 import { LanceIndex } from "../src/retrieval/lance-index.js";
 import { ProviderRegistry } from "../src/providers/registry.js";
 import { countTokens } from "../src/tokenizer.js";
+import { packContext } from "../src/context/packing.js";
+import { admitPath, isGlobalDocument } from "../src/security/paths.js";
 import type { ChunkRecord, RuleRecord } from "../src/types.js";
 import { fixture } from "./helpers.js";
 
 const cleanups:string[]=[];afterEach(async()=>{for(const path of cleanups.splice(0))await rm(path,{recursive:true,force:true});});
 
 describe("rules and whole-item budgets",()=>{
+  it("labels citations relative to canonical source roots and never falls back to absolute paths",async()=>{
+    const f=await fixture();cleanups.push(f.root);const policyPath=`${f.docs}/policy.md`,alias=`${f.root}/source-alias`;
+    await writeFile(policyPath,"Support replies must arrive within four hours.");await symlink(f.docs,alias);
+    f.config.profiles.company!.sources[0]!.root=alias;f.config.profiles.company!.sources[0]!.global_rule_documents=["policy.md"];
+    const admitted=await admitPath(policyPath,f.config.profiles.company!,f.data);expect(admitted?.source.root).toBe(f.docs);expect(isGlobalDocument(admitted!.path,admitted!.source)).toBe(true);
+    const rule:RuleRecord={id:"r",profile:"company",documentId:"d",revisionId:"v",sourcePath:policyPath,text:"Support replies must arrive within four hours.",category:"support",applicability:"all tickets",quotation:"within four hours",location:"paragraph 1",authorityPriority:80,global:true,modelIdentity:"test",promptVersion:"rules-v1"};
+    const result=packContext("company",f.config.profiles.company!,{query:"support"},{rules:[rule],excerpts:[],keywordAvailable:true,vectorAvailable:false},false,{corpus:1,rules:1});
+    expect(result.brief.applicable_rules[0]?.citation.source).toBe("s1/policy.md");expect(result.text).not.toContain(f.root);
+    const unmapped=packContext("company",f.config.profiles.company!,{query:"support"},{rules:[{...rule,sourcePath:"/outside/private-source.md"}],excerpts:[],keywordAvailable:true,vectorAvailable:false},false,{corpus:1,rules:1});
+    expect(unmapped.brief.applicable_rules[0]?.citation.source).toMatch(/^unmapped\/[a-f0-9]{12}$/);expect(unmapped.text).not.toContain("/outside/private-source.md");
+  });
   it("accepts only authoritative, exact source quotations",()=>{
     const chunk:ChunkRecord={id:"c1",documentId:"d1",revisionId:"r1",profile:"company",sourcePath:"policy.md",sourceRole:"authoritative",authorityPriority:80,retrievalWeight:1,heading:"Travel",location:"lines 2-3",text:"Flights must be economy, except when a medical accommodation applies.",contentHash:"h",tokenCount:12};
     const valid=validateExtractedRules({rules:[{text:"Use economy unless a medical accommodation applies.",category:"travel",applicability:"flights",source_id:"c1",quotation:"Flights must be economy, except when a medical accommodation applies."}]},[chunk],false,"mock:model:r1");expect(valid).toHaveLength(1);expect(valid[0]?.quotation).toContain("except");

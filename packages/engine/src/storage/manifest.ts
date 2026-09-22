@@ -2,6 +2,7 @@ import { DatabaseSync } from "node:sqlite";
 import { mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import type { ChunkRecord, ProcessingStatus, RuleRecord } from "../types.js";
+import { meaningfulTerms } from "../retrieval/terms.js";
 
 interface DocumentRow {
   id: string; path: string; profile: string; active_revision_id: string | null; content_hash: string | null;
@@ -193,7 +194,7 @@ export class ManifestStore {
   }
 
   keywordSearch(profile: string, query: string, limit: number): ChunkRecord[] {
-    const sanitized = query.replace(/["'():*+\-^~{}\[\]]/g," ").split(/\s+/).filter((word) => word.length > 1).slice(0,20).map((word) => `"${word}"`).join(" OR ");
+    const sanitized = meaningfulTerms(query).map((word) => `"${word}"`).join(" OR ");
     if (!sanitized) return [];
     const rows = this.db.prepare(`SELECT c.* FROM chunks_fts f JOIN chunks c ON c.id=f.id JOIN documents d ON d.id=c.document_id
       WHERE chunks_fts MATCH ? AND c.profile=? AND d.active_revision_id=c.revision_id AND d.status='active'

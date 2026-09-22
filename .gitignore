@@ -7,6 +7,7 @@ dist/
 coverage/
 *.log
 .othie/
+packages/engine/evaluation/results/
 # Retain protection for state created before the rename.
 .kith/
 

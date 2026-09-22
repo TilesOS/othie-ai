@@ -39,6 +39,27 @@ unchanged Next.js Turbopack build was denied permission to bind its internal hel
 This is recorded as an environment limitation, not a passing root-build result. No manual
 Codex host session, Windows run, or native desktop-host acceptance was performed.
 
+## Model context smoke evaluation
+
+2026-09-22, macOS: root `npm run build`, `npm run typecheck`, `npm test`, and
+`npm run test:mcp` passed after adding a synthetic model comparison and a
+lexical no-op regression. The full deterministic run passed 54 tests (33 engine,
+14 website, and 7 Codex-adapter tests); the existing real-model test remains a TODO.
+The dedicated MCP/process suite passed five tests. The synthetic offline regression
+retrieved cited support-policy evidence and returned an empty result for a
+repository-only coding prompt. Full process tests required Unix-socket access outside
+the restricted command sandbox.
+
+Three repeated local Ollama runs scored baseline 1/4, full documents 3/4, and Othie
+context 4/4 on four synthetic tasks with a 200-token Othie cap. The repository-only
+control returned empty context in every run. The protocol, case results, input-token
+counts, and limitations are recorded in the
+[smoke evaluation report](context-delivery-smoke-evaluation-2026-09-22.md).
+A synthetic `gpt-5.6-terra` extraction request reached the OpenAI API, but returned
+HTTP 429 with `credit_balance_exhausted`, so there is no hosted score. No private
+indexed documents were sent. A funded hosted run and a real tool-using agent benchmark
+remain open. No manual Codex hook acceptance was performed in this pass.
+
 ## Coverage
 
 - Actual LanceDB keyword and vector searches filter both profile and active IDs before
