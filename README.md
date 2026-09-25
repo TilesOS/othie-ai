@@ -1,71 +1,94 @@
-# Othie AI
+# Othie
 
-**Othie** is the product; **Othie AI** is the company and website brand.
-This repository contains the product's npm workspaces, with one Git history and one root lockfile.
+A local context engine for AI assistants, built as a personal engineering project.
+
+Othie watches a folder of documents (Markdown, text, PDF, DOCX), extracts rules with
+citations, and gives AI tools a short, token-bounded summary of what applies to the current
+task. Tools reach it through the [Model Context Protocol](https://modelcontextprotocol.io)
+(MCP). Indexing runs locally, and keyword search works without any model installed.
+
+I built it to learn how retrieval, context packing, and agent tool integration behave
+under real constraints: crash safety, strict token budgets, provenance, and privacy
+boundaries. It is not a commercial product.
+
+## How it works
 
 ```text
-apps/
-  website/             Marketing, pricing, and downloads (ready for implementation)
-  desktop/             Future setup/settings app
-    packaging/         Existing macOS and Windows startup templates
-packages/
-  engine/              Local indexing, retrieval, CLI, and MCP bridge
-  contracts/           Reserved for shared browser-safe types and schemas
-models/
-  manifest.json        Reserved model catalog; no downloadable artifacts yet
-docs/                  Product plans and verification
+documents ──► watcher ──► parser ──► durable job queue ──► rule extraction (local LLM)
+                                                              │
+MCP client ◄── stdio bridge ◄── engine ◄── retrieval + packing ◄─┘
+                                           (keyword FTS, optional vectors)
 ```
 
-The engine is implemented. The website, desktop app, and shared contracts are scaffolds.
-The desktop packaging folder currently contains startup templates, not finished installers.
-Model training code and datasets belong in a separate model-development repository when needed;
-model weights are distributed as release artifacts, not committed here.
+- **Ingestion.** A Chokidar watcher, startup scans, and periodic reconciliation feed a
+  SQLite job queue with retry backoff. Revisions are staged and published atomically, so a
+  crash never exposes a half-indexed document. When a file is deleted or access is lost,
+  its rules become ineligible right away.
+- **Extraction.** A local model (Ollama, Qwen3 4B by default) proposes rules. Each rule is
+  checked against an exact quotation from its source before it is kept. Authoritative
+  sources are kept separate from reference material, and conflicts are reported instead of
+  silently resolved.
+- **Retrieval.** SQLite FTS and LanceDB handle keyword search, with optional vector search.
+  Vector tables are versioned by model identity. If embedding fails, the engine falls back
+  to keyword search.
+- **Packing.** Selection is deterministic. Output is XML-escaped and counted with the
+  exact tokenizer, and it stays under a hard budget (500 tokens by default), including
+  citations and status.
+- **Delivery.** One engine process owns all writes. Lightweight stdio bridges authenticate
+  to it with per-client credentials over a local socket or named pipe. An opt-in
+  [Codex hook prototype](integrations/codex/README.md) injects context at the start of a
+  turn and returns nothing if the engine is slow or unavailable.
 
-## Development
+## Early evaluation
 
-Use Node.js 24. Run these commands from the repository root:
+The engine includes a small synthetic benchmark. Six generated documents and four tasks are
+answered by the same local model (`qwen3.5:4b-mlx`) under three conditions, with Othie
+capped at 200 tokens:
+
+| Condition | Correct (3 runs) | Answer input tokens (4 tasks) |
+| --- | ---: | ---: |
+| Task only | 1/4 each run | n/a |
+| All documents in prompt | 3/4 each run | 2,376 |
+| Othie context | 4/4 each run | ~1,000 |
+
+The fourth task was a control that shouldn't need outside context, and Othie correctly
+returned nothing for it. This fixture set is far too small to support a general claim. It
+is a smoke test that shaped the next step: a benchmark of real, tool-using coding-agent
+tasks. The methodology is in the [evaluation guide](packages/engine/evaluation/README.md).
+
+## Repository layout
+
+```text
+packages/engine/     Indexing, extraction, retrieval, CLI, and MCP bridge (TypeScript)
+integrations/codex/  Opt-in turn-start context hook prototype
+apps/website/        Project landing page (Next.js)
+apps/desktop/        Startup templates for macOS LaunchAgent and Windows scheduled task
+models/              Model catalog placeholder
+```
+
+## Running it
+
+Requires Node.js 24. [Ollama](https://ollama.com) is optional and enables semantic search
+and rule extraction.
 
 ```sh
 npm install
 npm run build
-npm run typecheck
-npm test
-npm run test:mcp
-```
+npm test            # deterministic suite, no model downloads
+npm run test:mcp    # two real MCP clients and bridges against one engine, including a restart
 
-Dependencies belong in the workspace that uses them, e.g. `npm install <dependency> --workspace=@othie/website`.
-Commit only the root `package-lock.json`; do not create nested repositories or lockfiles.
-Workspaces can build and release independently. Root build/typecheck/test scripts run whichever workspaces implement those scripts.
-
-## Engine setup
-
-```sh
 npm run engine -- init --config config.json
 npm run dev:engine -- --config config.json
 ```
 
-`init` references the bundled sample documents with absolute paths and keeps state relative to your config.
-It refuses to overwrite an existing config. Edit its sources to select your own documents.
-Keyword retrieval works without Ollama; see the [engine guide](packages/engine/README.md) for models, credentials, host setup, and privacy boundaries.
-Use `npm run engine -- <command>` for the compiled CLI and `npm run benchmark -- --config config.json` for benchmarking.
-The root commands preserve the root working directory so configuration and state paths stay predictable.
+The [engine guide](packages/engine/README.md) covers MCP host setup, credentials,
+configuration, the CLI, and privacy boundaries. Baseline model choices and their licenses
+are in [MODELS.md](MODELS.md), and the security model is in [SECURITY.md](SECURITY.md).
 
-## Existing setups after this move
+## Status and scope
 
-The compiled CLI is now `packages/engine/dist/src/cli.js` and the MCP bridge is
-`packages/engine/dist/src/mcp/bridge.js`. Stop existing engine/bridge processes, rebuild,
-and regenerate host configuration with `npm run engine -- host-config ...`.
-Update any LaunchAgent or scheduled-task paths too. This reorganization does not edit installed host settings.
-If an existing config points at the old sample `./examples/` directory, change it to
-`./packages/engine/examples/`. Personal source directories need no change.
-Existing local state, credentials, and environment files stay where they are.
-
-## Website handoff
-
-Build in `apps/website` using the [website build brief](docs/website-build-plan.md).
-Keep the engine and desktop implementation separate. Configure the website deployment for
-`apps/website` while using the repository's shared npm lockfile and workspace installation.
-
-See also the [context delivery roadmap](docs/context-delivery-roadmap.md), its
-[near-term implementation handoff](docs/near-term-context-delivery-handoff.md),
-[verification](docs/verification.md), [model notes](MODELS.md), and [security](SECURITY.md).
+This is a working single-user baseline for macOS (Apple Silicon) and Windows x64. Out of
+scope for now: OCR, a review UI, multi-user identity or policy, and guaranteed automatic
+retrieval in MCP hosts. With plain MCP, the host decides whether to call the tool. Local
+processing also doesn't make the whole pipeline private: a host may send Othie's output to
+a cloud model.

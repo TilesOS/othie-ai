@@ -1,6 +1,6 @@
 # Othie engine
 
-**Othie** is the product; **Othie AI** is the company and website brand.
+A personal engineering project. See the [repository README](../../README.md) for an overview.
 
 Othie is a single-user background engine for macOS (Apple Silicon) and Windows x64. It watches configured documents, keeps durable local revisions, retries unfinished provider work, extracts cited rules from authoritative sources, and returns a bounded `<organization_context>` block through MCP.
 
