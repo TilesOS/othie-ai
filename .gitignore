@@ -18,3 +18,6 @@ out/
 # Model artifacts are distributed separately.
 *.gguf
 *.safetensors
+
+# Docs and Agent Handoffs
+docs/
