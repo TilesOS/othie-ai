@@ -127,3 +127,32 @@ answer; adapter execution alone cannot establish that a host/model consumed the 
 Native stdout/stderr transcripts contain synthetic session metadata and may contain host
 paths. Inspect/redact them before publishing. New output directories prevent overwriting
 previous evidence. Temporary engines, credentials, and settings are removed after use.
+
+## Compiler-quality corpus
+
+`npm run eval:quality -- --model qwen3.5:4b-mlx --out /tmp/othie-quality-run` evaluates
+an already installed local model with six authoritative documents and one adversarial
+vendor reference. Seven retrieval cases at both 200 and 500 tokens cover approval and
+medical exceptions, receipt thresholds, contractor entitlements, consent negations,
+opposing CSV rules, reference injection, and a repository-only no-op. This runs actual
+model extraction and rules-only retrieval; excerpts cannot mask extraction failures.
+
+The report preserves input fixtures, raw generations, retained rules, exact-citation
+checks, missing source/qualifier diagnostics, packed briefs, extraction/retrieval latency,
+model digest, prompt version, and artifact license metadata. It refuses to overwrite an
+existing output directory and verifies the model digest again afterward. A separate
+`generations.json` preserves responses if a later evaluation step fails.
+
+Qualifier regexes score compressed rule text and scope separately from supporting
+quotations. They are lexical diagnostics, not semantic entailment or proof that all
+claims are supported. Inspect the raw proposals and retained rules. A missing conflict
+flag is recorded in each brief; this does not imply the limited detector can resolve
+natural-language scope/category differences. Model redistribution license/notice review
+is recorded as pending, not inferred from a model tag or license string.
+
+`RUN_OTHIE_MODEL_TESTS=1 npm run test:models` now executes this corpus instead of a TODO.
+Set `OTHIE_MODEL` for another installed model and `OTHIE_MODEL_RESULTS` to a new output
+directory to retain the report. The opt-in suite gates operational completion, exact
+citations, token accounting, and reference isolation; it prints quality diagnostics
+separately. The evaluation CLI exits nonzero when any source/qualifier diagnostic fails.
+The normal deterministic suite skips the live-model run and requires no model download.

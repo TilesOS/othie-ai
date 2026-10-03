@@ -23,7 +23,8 @@
     "dev:engine": "tsx packages/engine/src/cli.ts engine foreground",
     "benchmark": "tsx packages/engine/src/benchmark.ts",
     "eval:agent": "npm run build --workspace=@othie/engine && node packages/engine/dist/src/evaluation/local-agent.js",
-    "eval:native-hooks": "npm run build --workspace=@othie/engine && npm run build:integrations && node packages/engine/dist/src/evaluation/native-hooks.js"
+    "eval:native-hooks": "npm run build --workspace=@othie/engine && npm run build:integrations && node packages/engine/dist/src/evaluation/native-hooks.js",
+    "eval:quality": "npm run build --workspace=@othie/engine && node packages/engine/dist/src/evaluation/model-quality.js"
   },
   "overrides": {
     "sharp": "0.35.4"
