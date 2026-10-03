@@ -43,6 +43,21 @@ describe("rules and whole-item budgets",()=>{
     f.config.profiles.company!.token_budget.enabled=false;const uncapped=await compiler.get("company",{query:"international flights credentials"});expect(uncapped.text).toContain("&lt;credentials&gt;");expect(uncapped.text).toContain("café");expect(uncapped.status.omittedItems).toBe(0);await lance.close();store.close();
   });
 
+  it("fits verbatim receipt boundaries and replacements at 200 tokens while retaining quoted provenance",async()=>{
+    const f=await fixture();cleanups.push(f.root);
+    const text="Employees must submit receipts for expenses over $25. For expenses of exactly $25 or less, receipts are optional. If a required receipt is lost, employees must submit a written explanation instead.";
+    const rule:RuleRecord={id:"receipts",profile:"company",documentId:"d",revisionId:"v",sourcePath:`${f.docs}/receipts.md`,text,quotation:text,category:"receipts",applicability:"employees",location:"paragraph 1",authorityPriority:80,global:false,modelIdentity:"test",promptVersion:EXTRACTION_PROMPT_VERSION};
+    const result=packContext("company",f.config.profiles.company!,{query:"receipts",max_tokens:200},{rules:[rule],excerpts:[],keywordAvailable:true,vectorAvailable:false},false,{corpus:1,rules:1});
+    expect(result.brief.applicable_rules).toHaveLength(1);
+    expect(result.brief.applicable_rules[0]?.text).toBe(text);
+    expect(result.brief.applicable_rules[0]?.citation.quote).toBe(text);
+    expect(result.text).toContain('<text verbatim="true">');
+    expect(result.status.tokenCount).toBe(countTokens(result.text,"o200k_base"));
+    expect(result.status.tokenCount).toBeLessThanOrEqual(200);
+    const distinct=packContext("company",f.config.profiles.company!,{query:"receipts",max_tokens:500},{rules:[{...rule,text:"Receipts above $25; a written explanation replaces lost receipts."}],excerpts:[],keywordAvailable:true,vectorAvailable:false},false,{corpus:1,rules:1});
+    expect(distinct.text).toContain(`<quote>${text}</quote>`);
+  });
+
   it("normalizes legacy request metadata and represents empty retrieval explicitly",async()=>{
     const f=await fixture();cleanups.push(f.root);const store=new ManifestStore(`${f.data}/manifest.sqlite`);const lance=new LanceIndex(f.data);const providers=new ProviderRegistry(f.config);const compiler=new ContextCompiler(f.config,store,lance,providers);
     const result=await compiler.get("company",{query:"nothing matches"});expect(result.status.mode).toBe("empty");expect(result.brief.schema_version).toBe("1");expect(result.brief.request).toEqual({surface:"unknown",phase:"on_demand"});expect(result.brief.applicable_rules).toEqual([]);expect(result.brief.permitted_excerpts).toEqual([]);expect(result.brief.synthesis).toBeUndefined();expect(result.brief.context_text).toContain("<items></items>");await lance.close();store.close();

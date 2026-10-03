@@ -45,10 +45,13 @@ export function packContext(profileName: string, profile: OthieProfile, request:
   const addRule = (rule: RuleRecord) => {
     const id = ruleIds.get(rule.id)!;
     const evidence = citation(rule.sourcePath, rule.location, rule.quotation);
+    const body = rule.text === rule.quotation
+      ? `<text verbatim="true">${escapeXml(rule.text)}</text>`
+      : `<text>${escapeXml(rule.text)}</text><quote>${escapeXml(rule.quotation)}</quote>`;
     items.push({
       sourceId: rule.id,
       kind: "rule",
-      xml: `<rule id="${id}" category="${xmlAttr(rule.category)}" scope="${xmlAttr(rule.applicability)}" authority="${rule.authorityPriority}"><text>${escapeXml(rule.text)}</text><quote>${escapeXml(rule.quotation)}</quote>${citationXml(evidence)}</rule>`,
+      xml: `<rule id="${id}" category="${xmlAttr(rule.category)}" scope="${xmlAttr(rule.applicability)}" authority="${rule.authorityPriority}">${body}${citationXml(evidence)}</rule>`,
       rule: { id, text: rule.text, category: rule.category, scope: rule.applicability, authority: rule.authorityPriority, citation: evidence },
     });
   };
