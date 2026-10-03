@@ -86,6 +86,7 @@ npm run dev:engine -- --config config.json
 The [engine guide](packages/engine/README.md) covers MCP host setup, credentials,
 configuration, the CLI, and privacy boundaries. Baseline model choices and their licenses
 are in [MODELS.md](MODELS.md), and the security model is in [SECURITY.md](SECURITY.md).
+Current local checks and remaining acceptance work are recorded in [VERIFICATION.md](VERIFICATION.md).
 
 ## Status and scope
 
