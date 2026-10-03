@@ -20,6 +20,7 @@ export interface HookOptions {
   credentialFile: string;
   maxTokens: number;
   deadlineMs: number;
+  diagnosticsJson?: boolean;
 }
 export interface HookDependencies {
   query: (request: ContextQuery, signal: AbortSignal) => Promise<unknown>;
@@ -30,6 +31,7 @@ const MAX_INPUT_BYTES = 1_000_000;
 const MAX_OUTPUT_BYTES = 1_000_000;
 const labels: Record<HookHost, string> = { codex: "Codex", "claude-code": "Claude Code" };
 type Diagnostic = "invalid_event" | "invalid_options" | "invalid_context_response" | "context_unavailable" | "context_timeout";
+type Outcome = Diagnostic | "injected" | "empty";
 const diagnostic = (host: HookHost, code: Diagnostic) => `Othie ${labels[host]} hook: ${code}\n`;
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
 const nonempty = (value: unknown): value is string => typeof value === "string" && value.trim().length > 0;
@@ -45,6 +47,20 @@ function isCitation(value: unknown): boolean {
 }
 
 interface ValidResult { text: string; brief: Record<string, unknown> }
+
+function outcomeResult(host: HookHost, options: HookOptions, started: number, outcome: Outcome, stdout = "", value?: ValidResult): HookRunResult {
+  if (!options.diagnosticsJson) return { stdout, stderr: outcome === "injected" || outcome === "empty" ? "" : diagnostic(host, outcome) };
+  const brief = value?.brief, status = brief?.status as Record<string, unknown> | undefined;
+  // Build an allowlisted event instead of serializing any request/response object.
+  const event = {
+    schema_version: "1", event: "othie_prompt_hook", host, surface: "code", phase: "turn_start", outcome,
+    elapsed_ms: Math.max(0, Math.round(performance.now() - started)),
+    ...(status ? { mode: status.mode, token_count: status.tokenCount, omitted_items: status.omittedItems,
+      rule_count: (brief!.applicable_rules as unknown[]).length, excerpt_count: (brief!.permitted_excerpts as unknown[]).length,
+      synthesis_count: brief!.synthesis ? 1 : 0, conflict_count: status.conflicts } : {}),
+  };
+  return { stdout, stderr: `${JSON.stringify(event)}\n` };
+}
 function validContextResult(value: unknown, request: ContextQuery): value is ValidResult {
   if (!isRecord(value) || !nonempty(value.text) || Buffer.byteLength(value.text) > MAX_OUTPUT_BYTES || !isRecord(value.brief)) return false;
   const brief = value.brief;
@@ -56,6 +72,7 @@ function validContextResult(value: unknown, request: ContextQuery): value is Val
   if (!["tokenCount", "omittedItems", "conflicts", "corpusRevision", "ruleRevision"].every((field) => nonnegativeInteger(status[field]))) return false;
   if (!nonempty(status.profile) || !["tokenizerEstimate", "keywordAvailable", "vectorAvailable", "synthesisAttempted"].every((field) => typeof status[field] === "boolean")) return false;
   if (status.tokenizer !== "o200k_base" && status.tokenizer !== "cl100k_base") return false;
+  if (Number(status.tokenCount) > request.maxTokens) return false;
   const measured = status.tokenizer === "o200k_base" ? countO200k(value.text) : countCl100k(value.text);
   if (measured !== status.tokenCount || measured > request.maxTokens) return false;
   // When the CLI supplies top-level status, it must agree with the packed brief.
@@ -81,24 +98,29 @@ function parseEvent(raw: string): { prompt: string; cwd: string } | undefined {
   } catch { return undefined; }
 }
 
-export async function runPromptHook(host: HookHost, rawInput: string, options: HookOptions, dependencies?: HookDependencies): Promise<HookRunResult> {
+export async function runPromptHook(host: HookHost, rawInput: string, options: HookOptions, dependencies?: HookDependencies, started = performance.now()): Promise<HookRunResult> {
+  const finish = (outcome: Outcome, stdout = "", value?: ValidResult) => outcomeResult(host, options, started, outcome, stdout, value);
   const event = parseEvent(rawInput);
-  if (!event) return { stdout: "", stderr: diagnostic(host, "invalid_event") };
+  if (!event) return finish("invalid_event");
   if (!Number.isSafeInteger(options.maxTokens) || options.maxTokens <= 0 || !Number.isSafeInteger(options.deadlineMs) || options.deadlineMs <= 0 || options.deadlineMs > 2_147_483_647) {
-    return { stdout: "", stderr: diagnostic(host, "invalid_options") };
+    return finish("invalid_options");
   }
   const controller = new AbortController();
+  const expiresAt = performance.now() + options.deadlineMs;
   const timer = setTimeout(() => controller.abort(), options.deadlineMs);
   const deadline = new Promise<never>((_, reject) => controller.signal.addEventListener("abort", () => reject(new Error("deadline")), { once: true }));
   try {
     const request: ContextQuery = { query: event.prompt, workspaceRoot: event.cwd, surface: "code", phase: "turn_start", host, maxTokens: options.maxTokens };
     const result = await Promise.race([(dependencies?.query ?? ((query, signal) => queryThroughCli(query, options, signal)))(request, controller.signal), deadline]);
-    if (!validContextResult(result, request)) return { stdout: "", stderr: diagnostic(host, "invalid_context_response") };
-    if ((result.brief.status as Record<string, unknown>).mode === "empty") return { stdout: "", stderr: "" };
+    const valid = validContextResult(result, request);
+    // Synchronous validation can delay the timer callback. Check wall time too.
+    if (performance.now() >= expiresAt) { controller.abort(); return finish("context_timeout"); }
+    if (!valid) return finish("invalid_context_response");
+    if ((result.brief.status as Record<string, unknown>).mode === "empty") return finish("empty", "", result);
     const additionalContext = `Othie context brief (source-backed; preserve the included citations):\n${result.text}`;
-    return { stdout: `${JSON.stringify({ hookSpecificOutput: { hookEventName: "UserPromptSubmit", additionalContext } })}\n`, stderr: "" };
+    return finish("injected", `${JSON.stringify({ hookSpecificOutput: { hookEventName: "UserPromptSubmit", additionalContext } })}\n`, result);
   } catch {
-    return { stdout: "", stderr: diagnostic(host, controller.signal.aborted ? "context_timeout" : "context_unavailable") };
+    return finish(controller.signal.aborted ? "context_timeout" : "context_unavailable");
   } finally { clearTimeout(timer); }
 }
 
@@ -151,6 +173,7 @@ export function hookOptionsFromProcess(host: HookHost, entryUrl: string): HookOp
     credentialFile: resolve(arg("credential-file") ?? process.env.OTHIE_BRIDGE_CREDENTIAL_FILE ?? `.othie/bridge-${host}.credential`),
     maxTokens: positiveInteger(arg("max-tokens") ?? process.env[`${envPrefix}_MAX_TOKENS`], 500),
     deadlineMs: positiveInteger(arg("deadline-ms") ?? process.env[`${envPrefix}_DEADLINE_MS`], 2000),
+    diagnosticsJson: process.argv.includes("--diagnostics-json") || process.env[`${envPrefix}_DIAGNOSTICS_JSON`] === "1",
   };
 }
 
@@ -181,14 +204,14 @@ function readHookStdin(deadlineMs: number): Promise<string> {
 }
 
 export async function hookMain(host: HookHost, entryUrl: string): Promise<void> {
+  const options = hookOptionsFromProcess(host, entryUrl), started = performance.now();
   try {
-    const options = hookOptionsFromProcess(host, entryUrl), started = performance.now();
     const raw = await readHookStdin(options.deadlineMs);
     const remainingMs = Math.floor(options.deadlineMs - (performance.now() - started));
-    const result = remainingMs > 0 ? await runPromptHook(host, raw, { ...options, deadlineMs: remainingMs }) : { stdout: "", stderr: diagnostic(host, "context_timeout") };
+    const result = remainingMs > 0 ? await runPromptHook(host, raw, { ...options, deadlineMs: remainingMs }, undefined, started) : outcomeResult(host, options, started, "context_timeout");
     if (result.stdout) process.stdout.write(result.stdout);
     if (result.stderr) process.stderr.write(result.stderr);
   } catch (error) {
-    process.stderr.write(diagnostic(host, error instanceof HookInputError ? error.code : "context_unavailable"));
+    process.stderr.write(outcomeResult(host, options, started, error instanceof HookInputError ? error.code : "context_unavailable").stderr);
   }
 }

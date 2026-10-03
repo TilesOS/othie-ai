@@ -36,8 +36,9 @@ MCP client ◄── stdio bridge ◄── engine ◄── retrieval + packing
   citations and status.
 - **Delivery.** One engine process owns all writes. Lightweight stdio bridges authenticate
   to it with per-client credentials over a local socket or named pipe. An opt-in
-  [Codex hook prototype](integrations/codex/README.md) injects context at the start of a
-  turn and returns nothing if the engine is slow or unavailable.
+  [Codex](integrations/codex/README.md) and [Claude Code](integrations/claude-code/README.md)
+  prompt hooks inject context at the start of a turn and return nothing if the engine is
+  slow or unavailable. Both verify the context cap and support content-free local diagnostics.
 
 ## Early evaluation
 
@@ -60,7 +61,8 @@ tasks. The methodology is in the [evaluation guide](packages/engine/evaluation/R
 
 ```text
 packages/engine/     Indexing, extraction, retrieval, CLI, and MCP bridge (TypeScript)
-integrations/codex/  Opt-in turn-start context hook prototype
+packages/hooks/      Shared authenticated prompt-hook runtime
+integrations/       Opt-in Codex and Claude Code turn-start adapters
 apps/website/        Project landing page (Next.js)
 apps/desktop/        Startup templates for macOS LaunchAgent and Windows scheduled task
 models/              Model catalog placeholder

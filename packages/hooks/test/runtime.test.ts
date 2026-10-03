@@ -73,4 +73,37 @@ describe("shared prompt-hook safety", () => {
     expect(result).toEqual({ stdout: "", stderr: "Othie Codex hook: context_timeout\n" });
     resolveLate(await fixture());
   });
+
+  it("discards a response when synchronous work delays the deadline callback", async () => {
+    const value = await fixture();
+    const result = await runPromptHook("codex", event, { ...options, deadlineMs: 5 }, { query: async () => {
+      const until = performance.now() + 15;
+      while (performance.now() < until) { /* Simulate synchronous provider work. */ }
+      return value;
+    } });
+    expect(result).toEqual({ stdout: "", stderr: "Othie Codex hook: context_timeout\n" });
+  });
+
+  it("emits only allowlisted JSON diagnostics for useful context", async () => {
+    const result = await run(await fixture(), { diagnosticsJson: true });
+    const metadata = JSON.parse(result.stderr);
+    expect(metadata).toEqual({ schema_version: "1", event: "othie_prompt_hook", host: "codex", surface: "code", phase: "turn_start", outcome: "injected", elapsed_ms: expect.any(Number), mode: "deterministic", token_count: expect.any(Number), omitted_items: 0, rule_count: 0, excerpt_count: 1, synthesis_count: 0, conflict_count: 0 });
+    expect(result.stderr).not.toMatch(/PRIVATE|workspace|company|support|source|credential|session/);
+    expect(result.stdout).toContain("Support replies");
+  });
+
+  it("makes empty results observable only when diagnostics are enabled", async () => {
+    const value = await fixture("codex", "empty-result");
+    expect(await run(value)).toEqual({ stdout: "", stderr: "" });
+    const result = await run(value, { diagnosticsJson: true });
+    expect(result.stdout).toBe("");
+    expect(JSON.parse(result.stderr)).toMatchObject({ outcome: "empty", mode: "empty", rule_count: 0, excerpt_count: 0 });
+  });
+
+  it("excludes unvalidated fields and errors from failure diagnostics", async () => {
+    const result = await runPromptHook("claude-code", event, { ...options, diagnosticsJson: true }, { query: async () => { throw new Error("PRIVATE_PROMPT PRIVATE_SECRET"); } });
+    expect(result.stdout).toBe("");
+    expect(JSON.parse(result.stderr)).toEqual({ schema_version: "1", event: "othie_prompt_hook", host: "claude-code", surface: "code", phase: "turn_start", outcome: "context_unavailable", elapsed_ms: expect.any(Number) });
+    expect(result.stderr).not.toMatch(/PRIVATE|token_count|profile/);
+  });
 });

@@ -16,3 +16,8 @@ two-second deadline covers stdin reading and the CLI request after module initia
 the host's outer timeout also bounds process startup. Timed-out CLI children are killed.
 Diagnostics contain fixed error codes only. The adapters neither read host transcripts nor
 alter host settings. See the individual integration guides for setup and removal.
+
+`--diagnostics-json` opts into a single content-free JSON event on stderr for injection,
+empty results, or failure. It records host/surface/phase, request elapsed time, outcome,
+and counts from validated responses. No prompt, text, path, profile, citation, credential,
+or session identifier is included. Othie does not store these events or send them anywhere.

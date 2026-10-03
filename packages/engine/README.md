@@ -102,6 +102,12 @@ credential-checked Othie CLI/IPC request, has a configurable two-second internal
 and fails open with no injected context when Othie is empty, unavailable, late, or invalid.
 It does not edit user or global Codex configuration.
 
+[`integrations/claude-code`](../../integrations/claude-code/README.md) adds a second
+`UserPromptSubmit` adapter on the same shared runtime. Both remeasure XML tokens before
+delivery and can emit opt-in content-free JSON diagnostics on stderr. They never read
+host transcripts or block prompts. The [compatibility matrix](../../integrations/README.md)
+distinguishes automated contract checks from native-host acceptance.
+
 ## CLI
 
 ```text

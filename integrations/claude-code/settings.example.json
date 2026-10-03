@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/absolute/path/to/node",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/integrations/claude-code/dist/src/user-prompt-submit.js",
+              "--cli", "${CLAUDE_PROJECT_DIR}/packages/engine/dist/src/cli.js",
+              "--config", "${CLAUDE_PROJECT_DIR}/config.json",
+              "--bridge", "claude-code",
+              "--credential-file", "${CLAUDE_PROJECT_DIR}/.othie/bridge-claude-code.credential",
+              "--max-tokens", "500",
+              "--deadline-ms", "2000"
+            ],
+            "timeout": 3,
+            "statusMessage": "Loading Othie context"
+          }
+        ]
+      }
+    ]
+  }
+}
