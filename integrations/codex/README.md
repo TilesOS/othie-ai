@@ -58,6 +58,8 @@ or modify `~/.codex`.
 To remove the prototype, delete its `UserPromptSubmit` handler from `.codex/hooks.json`
 (or delete that file if it contains nothing else). The MCP tools continue to work
 independently of the hook.
+Run `npm run engine -- credential revoke --config config.json --bridge codex` when
+the host's grant is no longer needed. Delete the local credential file separately.
 
 ## Privacy and behavior boundary
 

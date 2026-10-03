@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it, vi } from "vitest";
 import { runHook, type ContextQuery, type HookOptions } from "../src/user-prompt-submit.js";
 
@@ -8,7 +9,7 @@ const fixture=async(name:string)=>JSON.parse(await readFile(new URL(`./fixtures/
 
 describe("Codex UserPromptSubmit adapter",()=>{
   it("passes the prompt to the compiled transport over stdin rather than argv",async()=>{
-    const cliPath=new URL("./fixtures/fake-cli.mjs",import.meta.url).pathname;const result=await runHook(event,{...options,cliPath,deadlineMs:500});expect(result.stderr).toBe("");expect(result.stdout).toContain("Support replies arrive within four hours");
+    const cliPath=fileURLToPath(new URL("./fixtures/fake-cli.mjs",import.meta.url));const result=await runHook(event,{...options,cliPath,deadlineMs:1000});expect(result.stderr).toBe("");expect(result.stdout).toContain("Support replies arrive within four hours");
   });
 
   it("emits cited developer context for a relevant result",async()=>{

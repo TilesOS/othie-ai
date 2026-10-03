@@ -2,9 +2,9 @@ import { spawn } from "node:child_process";
 import { describe, expect, it } from "vitest";
 
 const event = JSON.stringify({ hook_event_name: "UserPromptSubmit", cwd: "/workspace", prompt: "PRIVATE_PROMPT", transcript_path: "PRIVATE_TRANSCRIPT" });
-function invoke(input: string | undefined, extraArgs: string[] = []) {
+function invoke(input: string | undefined, extraArgs: string[] = [], deadlineMs = 100) {
   return new Promise<{ code: number | null; stdout: string; stderr: string }>((resolveResult, reject) => {
-    const child = spawn(process.execPath, ["dist/src/user-prompt-submit.js", "--deadline-ms", "100", ...extraArgs], { stdio: "pipe" });
+    const child = spawn(process.execPath, ["dist/src/user-prompt-submit.js", "--deadline-ms", String(deadlineMs), ...extraArgs], { stdio: "pipe" });
     let stdout = "", stderr = "";
     const timer = setTimeout(() => { child.kill("SIGKILL"); reject(new Error("hook process did not exit")); }, 3000);
     child.stdout.setEncoding("utf8").on("data", (chunk) => { stdout += chunk; });
@@ -26,7 +26,7 @@ describe("compiled Codex hook process", () => {
     expect(await invoke(raw)).toEqual({ code: 0, stdout: "", stderr: "Othie Codex hook: invalid_event\n" });
   });
   it("does not expose subprocess errors when the CLI is missing", async () => {
-    const result = await invoke(event, ["--cli", "/PRIVATE_MISSING_CLI"]);
+    const result = await invoke(event, ["--cli", "/PRIVATE_MISSING_CLI"], 1000);
     expect(result).toEqual({ code: 0, stdout: "", stderr: "Othie Codex hook: context_unavailable\n" });
   });
 });

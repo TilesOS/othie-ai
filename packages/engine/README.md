@@ -48,6 +48,18 @@ The engine resolves real paths before admission, rejects symlink/junction escape
 
 Bridge secrets are not stored in `config.json`. `credential create` stores a SHA-256 verifier in the protected state directory and writes the random credential to the requested mode-0600 file. A same-user malicious process is outside this isolation boundary. Rely on OS account permissions and enable FileVault or BitLocker for data at rest.
 
+Use `credential list --config config.json` to inspect bridge IDs and grants without
+printing secrets or verifiers. `credential revoke --config config.json --bridge NAME`
+removes a host's grant; its next request is rejected without an engine restart. Repeating
+revocation is safe. The command leaves the credential file and host settings in place so
+you can remove their references separately. Requests authorized before revocation may
+already be in flight. Creating a credential for the same bridge rotates its secret.
+
+Grant updates use an exclusive update lock and atomically replace a synced temporary
+file; malformed or unreadable stores are never overwritten with an empty store. Concurrent
+updates fail with a retry message. After a crashed writer, inspect and remove only its
+`<credentials_file>.update-lock` directory when no credential writer is running.
+
 Remote endpoints must use HTTPS unless they are loopback. Redirects are rejected; configure the final approved endpoint. Credentials are read from named environment variables, including `OPENAI_API_KEY`, never from Othie configuration. Authorize a remote provider separately for each profile operation (`embeddings`, `extraction`, `synthesis`).
 
 ## MCP host setup
@@ -114,6 +126,8 @@ distinguishes automated contract checks from native-host acceptance.
 othie init --config config.json
 othie engine foreground --config config.json
 othie credential create --config config.json --bridge NAME --profiles p1,p2 [--default-profile p1] [--admin] --out FILE
+othie credential list --config config.json
+othie credential revoke --config config.json --bridge NAME
 othie status --config config.json --bridge NAME --credential-file FILE
 othie query --config config.json --bridge NAME --credential-file FILE --query "..." [--profile NAME] [--max-tokens 200] [--synthesize]
 othie rebuild --config config.json --bridge ADMIN --credential-file FILE
@@ -170,8 +184,8 @@ Document text is untrusted data. Structured output, source-ID validation, exact 
 
 ## Stabilization and release gates
 
-See [MVP verification](../../docs/verification.md) for regression coverage, database upgrade
-behavior, Windows CI, and the native-host acceptance procedure. The current conflict
+See [current verification](../../VERIFICATION.md) for regression coverage, local results,
+and remaining Windows/native-host acceptance work. The current conflict
 check recognizes explicit opposing modalities for the same scoped action; it does not
 interpret every difference between two policies as a contradiction.
 

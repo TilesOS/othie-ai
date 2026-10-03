@@ -35,6 +35,8 @@ Claude Code session and Windows native-host run remain separate acceptance check
 
 Remove only this handler from `hooks.UserPromptSubmit` to disable delivery, retaining any
 other handlers. MCP tool access continues independently.
+Run `npm run engine -- credential revoke --config config.json --bridge claude-code`
+when the host's grant is no longer needed. Delete the local credential file separately.
 
 ## Controls and privacy
 

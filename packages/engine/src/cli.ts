@@ -3,7 +3,7 @@ import { chmod, mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve, join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { configSchema, loadConfig } from "./config.js";
-import { createCredential } from "./engine/credentials.js";
+import { createCredential, listCredentials, revokeCredential } from "./engine/credentials.js";
 import { requestEngine } from "./engine/ipc.js";
 import { runEngine } from "./engine/lifecycle.js";
 import { defaultDataDir, defaultIpcPath } from "./paths.js";
@@ -51,6 +51,14 @@ export async function main():Promise<void>{
     const defaultProfile=flag("default-profile");if(defaultProfile&&!profiles.includes(defaultProfile))throw new Error("Default profile must be authorized");const token=await createCredential(paths.credentialsPath,bridgeId,profiles,defaultProfile,has("admin"));
     const output=resolve(flag("out")??join(paths.dataDir,`bridge-${bridgeId}.credential`));await mkdir(resolve(output,".."),{recursive:true,mode:0o700});await writeFile(output,`${token}\n`,{mode:0o600});await chmod(output,0o600).catch(()=>{});process.stdout.write(`Credential written to ${output}\n`);return;
   }
+  if(command==="credential"&&subcommand==="list"){
+    process.stdout.write(`${JSON.stringify(await listCredentials(paths.credentialsPath),null,2)}\n`);return;
+  }
+  if(command==="credential"&&subcommand==="revoke"){
+    const bridgeId=flag("bridge");if(!bridgeId)throw new Error("--bridge is required");
+    const revoked=await revokeCredential(paths.credentialsPath,bridgeId);
+    process.stdout.write(revoked?"Bridge credential revoked\n":"Bridge credential was already absent\n");return;
+  }
   const identity=await clientIdentity();
   if(command==="status"){const result=await requestEngine<Record<string,unknown>>(paths.ipcPath,{...identity,method:"status"});process.stdout.write(`${JSON.stringify(result,null,2)}\n`);return;}
   if(command==="query"){
@@ -61,7 +69,7 @@ export async function main():Promise<void>{
     };const result=await requestEngine<ContextResult>(paths.ipcPath,{...identity,method:"context",params});process.stdout.write(has("json")?`${JSON.stringify(result)}\n`:`${result.text}\n`);return;
   }
   if(command==="rebuild"||command==="purge"){await requestEngine(paths.ipcPath,{...identity,method:command});process.stdout.write(`${command} accepted\n`);return;}
-  throw new Error("Usage: othie init | engine foreground | credential create | host-config | status | query | rebuild | purge");
+  throw new Error("Usage: othie init | engine foreground | credential create|list|revoke | host-config | status | query | rebuild | purge");
 }
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)main().catch((error)=>{process.stderr.write(`${error instanceof Error?error.message:String(error)}\n`);process.exitCode=1;});
