@@ -22,11 +22,11 @@ describe("native hook acceptance recorder", () => {
         child.stdout.setEncoding("utf8").on("data", (chunk) => stdout += chunk);
         child.stderr.setEncoding("utf8").on("data", (chunk) => stderr += chunk);
         child.once("error", reject); child.once("close", (code) => done({ stdout, stderr, code }));
-        child.stdin.end(JSON.stringify({ hook_event_name: "UserPromptSubmit", prompt: "synthetic prompt", session_id: "PRIVATE_SESSION", transcript_path: "PRIVATE_TRANSCRIPT", cwd: "PRIVATE_CWD" }));
+        child.stdin.end(JSON.stringify({ hook_event_name: "UserPromptSubmit", prompt: "synthetic prompt", model: "synthetic-model", session_id: "PRIVATE_SESSION", transcript_path: "PRIVATE_TRANSCRIPT", cwd: "PRIVATE_CWD" }));
       });
       const saved = await readFile(receipt, "utf8");
       expect(saved).not.toMatch(/PRIVATE_|synthetic prompt/);
-      expect(JSON.parse(saved)).toMatchObject({ event: "UserPromptSubmit", code: 0, input_fields: ["cwd", "hook_event_name", "prompt", "session_id", "transcript_path"] });
+      expect(JSON.parse(saved)).toMatchObject({ event: "UserPromptSubmit", model: "synthetic-model", code: 0, input_fields: ["cwd", "hook_event_name", "model", "prompt", "session_id", "transcript_path"] });
       expect(JSON.parse(output.stdout)).toEqual({ prompt_received: true });
       expect(JSON.parse(output.stderr)).toEqual({ outcome: "injected" }); expect(output.code).toBe(0);
     } finally { await rm(root, { recursive: true, force: true }); }

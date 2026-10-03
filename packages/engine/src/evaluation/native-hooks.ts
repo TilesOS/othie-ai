@@ -1,6 +1,7 @@
 import { spawn } from "node:child_process";
+import { createHash } from "node:crypto";
 import { mkdir, mkdtemp, readFile, realpath, rm, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { configSchema } from "../config.js";
@@ -11,7 +12,9 @@ export type NativeHost = "codex" | "claude-code";
 export function shellQuote(value: string): string { return `'${value.replaceAll("'", "'\\''")}'`; }
 async function processOutput(command: string, args: string[], cwd: string, timeoutMs = 120_000) {
   return new Promise<{ code: number | null; stdout: string; stderr: string; timed_out: boolean }>((done, reject) => {
-    const child = spawn(command, args, { cwd, stdio: ["ignore", "pipe", "pipe"] });
+    // Keep a native acceptance session independent of the calling desktop thread.
+    const env = Object.fromEntries(Object.entries(process.env).filter(([name]) => !name.startsWith("CODEX_") || name === "CODEX_HOME"));
+    const child = spawn(command, args, { cwd, env, stdio: ["ignore", "pipe", "pipe"] });
     let stdout = "", stderr = "", timedOut = false;
     const timer = setTimeout(() => { timedOut = true; child.kill("SIGKILL"); }, timeoutMs);
     child.stdout.setEncoding("utf8").on("data", (chunk: string) => { stdout += chunk; if (stdout.length > 2_000_000) child.kill("SIGKILL"); });
@@ -36,17 +39,19 @@ child.stdin.on('error', () => {});
 child.on('error', () => process.exitCode = 1);
 child.on('close', async code => {
   const input = JSON.parse(event);
-  await writeFile(${JSON.stringify(receipt)}, JSON.stringify({event: input.hook_event_name, input_fields: Object.keys(input).sort(), stdout, stderr, code}), {mode:0o600});
+  await writeFile(${JSON.stringify(receipt)}, JSON.stringify({event: input.hook_event_name, input_fields: Object.keys(input).sort(), model: typeof input.model === 'string' ? input.model : null, stdout, stderr, code}), {mode:0o600});
   process.stdout.write(stdout); process.stderr.write(stderr); process.exitCode = code ?? 1;
 });
 child.stdin.end(event);
 `;
 }
 
-export async function runNativeHookAcceptance(host: NativeHost, out: string, localModel?: string) {
+export async function runNativeHookAcceptance(host: NativeHost, out: string, localModel?: string, codexHooks: "session" | "project" = "session") {
   if (process.platform === "win32" && host === "codex") throw new Error("Windows Codex command quoting needs native acceptance before use");
   await mkdir(out, { mode: 0o700 });
   const root = await realpath(await mkdtemp(join(tmpdir(), "othie-native-hook-")));
+  let running: Awaited<ReturnType<typeof runEngine>> | undefined;
+  try {
   const workspace = join(root, "workspace with spaces"), docs = join(root, "docs"), state = join(root, "state");
   await mkdir(workspace); await mkdir(docs); await mkdir(state);
   await writeFile(join(docs, "canary.md"), "Canary enterprise support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.\n");
@@ -74,7 +79,7 @@ export async function runNativeHookAcceptance(host: NativeHost, out: string, loc
   await writeFile(settingsPath, JSON.stringify(hooks)); await writeFile(mcpPath, JSON.stringify({ mcpServers: {} }));
   if (host === "codex") {
     await mkdir(join(workspace, ".codex"));
-    // Supply the inspected hook as an invocation-local config layer.
+    if (codexHooks === "project") await writeFile(join(workspace, ".codex", "hooks.json"), JSON.stringify(hooks));
     // No persisted global hook trust or host configuration is changed.
     await writeFile(join(workspace, ".codex", "config.toml"), "");
     const init = await processOutput("git", ["init", "--quiet"], workspace);
@@ -82,9 +87,7 @@ export async function runNativeHookAcceptance(host: NativeHost, out: string, loc
   }
   const executable = host === "codex" ? "codex" : "claude";
   const version = await processOutput(executable, ["--version"], workspace, 10_000);
-  let running: Awaited<ReturnType<typeof runEngine>> | undefined;
   const records: Array<Record<string, unknown>> = [];
-  try {
     running = await runEngine(config);
     const deadline = Date.now() + 10_000;
     while (!running.engine.store.listActiveChunks("company").length) {
@@ -101,14 +104,14 @@ export async function runNativeHookAcceptance(host: NativeHost, out: string, loc
       const args = host === "codex"
         ? ["exec", "--ignore-user-config", "--ephemeral", "--json", "--sandbox", "read-only", "--dangerously-bypass-hook-trust",
           "-c", `projects.${JSON.stringify(workspace)}.trust_level=\"trusted\"`,
-          "-c", `hooks.UserPromptSubmit=[{hooks=[{type=\"command\",command=${JSON.stringify((handler as {command: string}).command)},timeout=3,additionalContextLimit=600}]}]`,
+          ...(codexHooks === "session" ? ["-c", `hooks.UserPromptSubmit=[{hooks=[{type=\"command\",command=${JSON.stringify((handler as {command: string}).command)},timeout=3,additionalContextLimit=600}]}]`] : []),
           "--disable", "plugins", "--enable", "skip_host_skill_discovery",
           ...(localModel ? ["--oss", "--local-provider", "ollama", "--model", localModel] : []), prompt]
         : ["--print", "--verbose", "--output-format", "stream-json", "--include-hook-events", "--no-session-persistence",
           "--setting-sources", "project,local", "--settings", settingsPath, "--strict-mcp-config", "--mcp-config", mcpPath,
           "--tools", "", "--permission-mode", "dontAsk", "--max-budget-usd", "2", prompt];
       const response = await processOutput(executable, args, workspace);
-      const receipt = await readFile(receiptPath, "utf8").then((text) => JSON.parse(text) as { event: string; stdout: string; stderr: string; code: number }, () => null);
+      const receipt = await readFile(receiptPath, "utf8").then((text) => JSON.parse(text) as { event: string; model?: string | null; stdout: string; stderr: string; code: number }, () => null);
       const events = response.stdout.split("\n").filter(Boolean).flatMap((line) => { try { return [JSON.parse(line) as Record<string, unknown>]; } catch { return []; } });
       const answers = events.flatMap((event) => {
         const item = event.item as { type?: string; text?: string } | undefined;
@@ -122,15 +125,18 @@ export async function runNativeHookAcceptance(host: NativeHost, out: string, loc
       try { outcome = receipt ? JSON.parse(receipt.stderr).outcome as string : null; } catch { /* Failed adapters are recorded, never accepted. */ }
       const delivery = condition === "positive" ? outcome === "injected" && receipt?.stdout.includes("eleven hours")
         : outcome === (condition === "irrelevant" ? "empty" : "context_unavailable") && receipt?.stdout === "";
-      const redact = (text: string) => text.replaceAll(root, "<temporary-fixture>").replaceAll(repository, "<othie-repository>");
-      const record = { host, condition, prompt, expected, answer, response: { ...response, stdout: redact(response.stdout), stderr: redact(response.stderr) },
+      const redact = (text: string) => text.replaceAll(root, "<temporary-fixture>").replaceAll(repository, "<othie-repository>").replaceAll(homedir(), "<user-home>");
+      const hostModel = receipt?.model ?? events.find((event) => event.type === "system" && event.subtype === "init")?.model ?? null;
+      const record = { host, host_model: hostModel, condition, prompt, expected, answer, response: { ...response, stdout: redact(response.stdout), stderr: redact(response.stderr) },
         receipt, delivery_passed: !!delivery, passed: !!delivery && response.code === 0 && !response.timed_out && answer === expected };
       await writeFile(join(out, `${condition}.json`), JSON.stringify(record, null, 2) + "\n", { flag: "wx", mode: 0o600 });
       records.push(record);
       process.stderr.write(`Native ${host} / ${condition}: delivery=${!!delivery}, answer=${answer === expected}\n`);
     }
     const report = { recorded_at: new Date().toISOString(), synthetic_only: true, platform: process.platform, node: process.version,
-      host, host_version: version.stdout.trim(), model: localModel ?? "host default", context_token_cap: 500,
+      host, host_version: version.stdout.trim(), hook_configuration: host === "codex" ? codexHooks : "explicit-settings", requested_model: localModel ?? "host default",
+      observed_models: [...new Set(records.map((record) => record.host_model).filter(Boolean))],
+      hook_adapter_sha256: createHash("sha256").update(await readFile(adapter)).digest("hex"), context_token_cap: 500,
       trust: host === "codex" ? "Invocation-local generated hook; one-shot trust bypass; user config ignored; plugins disabled; experimental host-skill-discovery suppression" : "Explicit generated settings; no tools; no global settings changed",
       limitations: "Native noninteractive CLI sessions only. Does not establish desktop UI trust, Windows behavior, startup, model quality, or installer acceptance.",
       passed: records.every((record) => record.passed), records: records.map(({ response, receipt, ...record }) => record) };
@@ -145,7 +151,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   if (host !== "codex" && host !== "claude-code") throw new Error("--host must be codex or claude-code");
   const out = resolve(argument("out") ?? `packages/engine/evaluation/results/native-${host}-${Date.now()}`);
   await mkdir(resolve(out, ".."), { recursive: true });
-  void runNativeHookAcceptance(host, out, argument("local-model")).then((report) => {
+  const codexHooks = argument("codex-hooks") ?? "session";
+  if (codexHooks !== "session" && codexHooks !== "project") throw new Error("--codex-hooks must be session or project");
+  void runNativeHookAcceptance(host, out, argument("local-model"), codexHooks).then((report) => {
     process.stdout.write(JSON.stringify({ report: join(out, "summary.json"), passed: report.passed }) + "\n");
     if (!report.passed) process.exitCode = 1;
   }).catch(() => { process.stderr.write("Native hook acceptance failed; inspect preserved records.\n"); process.exitCode = 1; });

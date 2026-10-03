@@ -115,13 +115,13 @@ For Codex, pass `--host codex`, optionally with `--local-model qwen3.5:4b-mlx` t
 installed loopback Ollama model. Codex receives an invocation-local hook configuration,
 ignores user configuration, disables plugins, uses read-only tool permissions, and does
 not persist its session. One-shot hook trust is bypassed only for the generated,
-inspected acceptance hook; this does not test persisted `/hooks` trust or project-file
-discovery. Host skill discovery is suppressed through the installed CLI's experimental
+inspected acceptance hook; this does not test persisted `/hooks` trust. Pass
+`--codex-hooks project` to probe `.codex/hooks.json` discovery instead of session configuration. Host skill discovery is suppressed through the installed CLI's experimental
 feature switch; that behavior is version-dependent. The Codex runner currently rejects
 Windows because command quoting has not had native Windows acceptance.
 
 The wrapper forwards the native host event unchanged to the compiled adapter and stores
-only its event name, field names, adapter output, and content-free diagnostics. The
+only its event name, field names, public model identity, adapter output, and content-free diagnostics. The
 report separately requires correct adapter delivery and the expected native model
 answer; adapter execution alone cannot establish that a host/model consumed the context.
 Native stdout/stderr transcripts contain synthetic session metadata and may contain host
