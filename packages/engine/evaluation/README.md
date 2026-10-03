@@ -100,3 +100,30 @@ or a general performance claim. Repeats at temperature zero are not independent 
 Code grading uses a separate resource-limited Node process with permissions enabled,
 no inherited environment, and a VM without host objects. That is defense in depth for
 synthetic local experiments, not a general sandbox for arbitrary untrusted programs.
+
+## Native prompt-hook acceptance
+
+`npm run eval:native-hooks -- --host claude-code --out /tmp/othie-native-claude` launches
+the installed native host in noninteractive mode against an isolated synthetic engine.
+The four sessions cover positive cited delivery, a repository-only no-op, live credential
+revocation, and an unavailable engine. The default host model and existing host login
+are used; host sessions may use the subscription/provider configured for that host.
+No global hook configuration is changed. Claude Code receives explicit settings,
+disables tools and MCP servers, and does not persist sessions.
+
+For Codex, pass `--host codex`, optionally with `--local-model qwen3.5:4b-mlx` to use an
+installed loopback Ollama model. Codex receives an invocation-local hook configuration,
+ignores user configuration, disables plugins, uses read-only tool permissions, and does
+not persist its session. One-shot hook trust is bypassed only for the generated,
+inspected acceptance hook; this does not test persisted `/hooks` trust or project-file
+discovery. Host skill discovery is suppressed through the installed CLI's experimental
+feature switch; that behavior is version-dependent. The Codex runner currently rejects
+Windows because command quoting has not had native Windows acceptance.
+
+The wrapper forwards the native host event unchanged to the compiled adapter and stores
+only its event name, field names, adapter output, and content-free diagnostics. The
+report separately requires correct adapter delivery and the expected native model
+answer; adapter execution alone cannot establish that a host/model consumed the context.
+Native stdout/stderr transcripts contain synthetic session metadata and may contain host
+paths. Inspect/redact them before publishing. New output directories prevent overwriting
+previous evidence. Temporary engines, credentials, and settings are removed after use.
