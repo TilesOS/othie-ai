@@ -20,6 +20,11 @@ function proposition(text: string): { subject: string; action: string; negative:
   return { subject: match[1]!.trim(), action: match[3]!.trim(), negative: /not|cannot/.test(match[2]!) };
 }
 
+function opposed(left: string, right: string): boolean {
+  const p = proposition(left), q = proposition(right);
+  return !!(p && q && p.subject && p.subject === q.subject && p.action === q.action && p.negative !== q.negative);
+}
+
 /** Deliberately conservative: only explicit opposing modalities for the same scoped action.
  * Different rules in a category are not evidence of a contradiction. Unrecognized differences
  * remain separate rules; this is not a general natural-language contradiction detector.
@@ -28,9 +33,12 @@ export function conflictGroups(rules: RuleRecord[]): string[][] {
   const result: string[][] = [];
   for (let a = 0; a < rules.length; a++) for (let b = a + 1; b < rules.length; b++) {
     const left = rules[a]!, right = rules[b]!;
-    if (left.category.trim().toLowerCase() !== right.category.trim().toLowerCase() || left.applicability.trim().toLowerCase() !== right.applicability.trim().toLowerCase()) continue;
-    const p = proposition(left.text), q = proposition(right.text);
-    if (p && q && p.subject === q.subject && p.action === q.action && p.negative !== q.negative) result.push([left.id, right.id]);
+    // Exact evidence carries its own scope. Generated category/applicability labels
+    // must not hide opposition between otherwise identical supporting statements.
+    const evidenceOpposed = opposed(left.quotation, right.quotation);
+    const labelsMatch = left.category.trim().toLowerCase() === right.category.trim().toLowerCase()
+      && left.applicability.trim().toLowerCase() === right.applicability.trim().toLowerCase();
+    if (evidenceOpposed || (labelsMatch && opposed(left.text, right.text))) result.push([left.id, right.id]);
   }
   return result;
 }

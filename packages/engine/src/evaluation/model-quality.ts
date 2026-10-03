@@ -83,15 +83,17 @@ export async function runModelQuality(model: string, out: string) {
         const lost = missingPatterns(compressed, scenario.patterns);
         const budgetValid = context.status.tokenCount === countTokens(context.text, "o200k_base") && context.status.tokenCount <= cap;
         const noOp = scenario.sources.length === 0;
+        const conflictValid = scenario.expected_conflicts === undefined || context.status.conflicts === scenario.expected_conflicts;
         results.push({ id: scenario.id, cap, expected_sources: scenario.sources, actual_sources: actualSources,
           missing_sources: missingSources, missing_qualifier_patterns: lost, budget_valid: budgetValid,
-          correct: completed && budgetValid && (noOp ? selected.length === 0 : missingSources.length === 0 && lost.length === 0),
+          expected_conflicts: scenario.expected_conflicts ?? null, actual_conflicts: context.status.conflicts, conflict_valid: conflictValid,
+          correct: completed && budgetValid && conflictValid && (noOp ? selected.length === 0 : missingSources.length === 0 && lost.length === 0),
           retrieval_ms: Math.round(performance.now() - began), brief: context.brief });
       }
     }
     const endTags = await local("/api/tags") as typeof tags;
     const modelUnchanged = endTags.models?.find((item) => item.name === identity.name)?.digest === identity.digest;
-    const report = { recorded_at: recordedAt, synthetic_only: true, protocol_version: "quality-v1", completed, model_unchanged: modelUnchanged,
+    const report = { recorded_at: recordedAt, synthetic_only: true, protocol_version: "quality-v2", completed, model_unchanged: modelUnchanged,
       model: identity, runtime: await local("/api/version"), platform: process.platform, node: process.version, prompt_version: EXTRACTION_PROMPT_VERSION,
       fixture_sha256: createHash("sha256").update(JSON.stringify({ qualityDocuments, qualityCases })).digest("hex"),
       license: { artifact_details: metadata.details ?? null, license_present: !!metadata.license,
