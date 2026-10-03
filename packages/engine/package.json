@@ -14,14 +14,14 @@
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/cli.ts engine foreground",
     "test": "vitest run",
-    "test:mcp": "vitest run test/mcp.integration.test.ts test/lifecycle.integration.test.ts",
+    "test:mcp": "vitest run test/mcp.integration.test.ts test/lifecycle.integration.test.ts test/hook-delivery.integration.test.ts",
     "test:models": "vitest run --config vitest.models.config.ts",
     "benchmark": "tsx src/benchmark.ts",
     "eval:hosted": "npm run build && node dist/src/evaluation/hosted-baseline.js",
     "eval:local": "npm run build && node dist/src/evaluation/hosted-baseline.js --runtime ollama",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "pretest": "npm run build",
-    "pretest:mcp": "npm run build"
+    "pretest": "npm run build && npm run build:integrations --prefix ../..",
+    "pretest:mcp": "npm run build && npm run build:integrations --prefix ../.."
   },
   "dependencies": {
     "@lancedb/lancedb": "0.38.0",

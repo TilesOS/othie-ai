@@ -6,8 +6,8 @@ when Othie is empty, unavailable, late, or returns an invalid response.
 
 | Host | Delivery | Setup location | Automated coverage | Native-host acceptance |
 | --- | --- | --- | --- | --- |
-| Codex | `UserPromptSubmit` command hook | Project `.codex/hooks.json` | Relevant/empty/invalid/timeout fixtures and compiled-process behavior | Not recorded |
-| Claude Code | `UserPromptSubmit` command hook | Project `.claude/settings.local.json` | Same shared contract and host-specific fixture/setup checks | Not recorded |
+| Codex | `UserPromptSubmit` command hook | Project `.codex/hooks.json` | Fixtures, compiled-process behavior, and live-engine credential/revocation/restart tests | Not recorded |
+| Claude Code | `UserPromptSubmit` command hook | Project `.claude/settings.local.json` | Same shared contract, setup checks, and live-engine credential/revocation/restart tests | Not recorded |
 | Claude Desktop | MCP stdio bridge | Host MCP configuration printed by `host-config --host claude` | Engine/bridge SDK process tests and configuration tests | Not recorded |
 | Cursor | MCP stdio bridge | Host MCP configuration printed by `host-config --host cursor` | Configuration tests and shared bridge tests | Not recorded |
 | VS Code | MCP stdio bridge | Host MCP configuration printed by `host-config --host vscode` | Compiled configuration tests and shared bridge tests | Not recorded |
@@ -25,3 +25,11 @@ See [Codex setup](codex/README.md), [Claude Code setup](claude-code/README.md), 
 [engine MCP guide](../packages/engine/README.md). The shared runtime also supports opt-in
 content-free JSON diagnostics on stderr. Hosted ChatGPT prompt hooks, post-discovery
 refreshes, and generated navigation hints remain planned.
+
+`npm run test:mcp` builds both adapters and runs the shared live-engine acceptance test
+alongside the MCP and lifecycle suites. It requires local socket/named-pipe access and
+uses synthetic documents with unavailable model providers. The test compares both hosts'
+exact injected context, checks irrelevant-task no-ops, excludes another profile's sources
+even when the event's working directory points at them, revokes deleted evidence, starts
+the engine again with changed evidence, and rejects invalid credentials. It runs compiled
+hook processes; it does not launch the native Codex or Claude Code applications.
