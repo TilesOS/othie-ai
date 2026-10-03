@@ -1,20 +1,16 @@
 {
-  "name": "@othie/codex-integration",
+  "name": "@othie/hooks",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": {
-    "node": ">=24 <25"
-  },
+  "engines": { "node": ">=24 <25" },
+  "exports": { ".": { "types": "./dist/src/index.d.ts", "default": "./dist/src/index.js" } },
   "scripts": {
-    "prebuild": "npm run build --workspace=@othie/hooks",
     "build": "tsc -p tsconfig.json",
-    "pretypecheck": "npm run build --workspace=@othie/hooks",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "pretest": "npm run build",
     "test": "vitest run test"
   },
-  "dependencies": { "@othie/hooks": "0.1.0" },
+  "dependencies": { "gpt-tokenizer": "4.0.0" },
   "devDependencies": {
     "@types/node": "24.13.3",
     "typescript": "7.0.2",
