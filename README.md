@@ -24,8 +24,8 @@ MCP client ◄── stdio bridge ◄── engine ◄── retrieval + packing
   SQLite job queue with retry backoff. Revisions are staged and published atomically, so a
   crash never exposes a half-indexed document. When a file is deleted or access is lost,
   its rules become ineligible right away.
-- **Extraction.** A local model (Ollama, Qwen3 4B by default) proposes rules. Each rule is
-  checked against an exact quotation from its source before it is kept. Authoritative
+- **Extraction.** A local model (Ollama, Qwen3 4B by default) selects numbered source
+  sentence ranges. The engine copies rule text and quotations from those original spans. Authoritative
   sources are kept separate from reference material, and conflicts are reported instead of
   silently resolved.
 - **Retrieval.** SQLite FTS and LanceDB handle keyword search, with optional vector search.

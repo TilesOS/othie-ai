@@ -1,5 +1,9 @@
 # October 3 acceptance records
 
+Later [compiler follow-up records](compiler-followup/README.md) contain seven additional
+runs, source-span recovery, and three final repeated measurements. The compiler section
+below retains the original `rules-v1`/`rules-v2` observations.
+
 All documents, tasks, and model outputs in this directory are synthetic. The benchmark
 started October 2 local time and the native/model follow-ups completed October 3. These
 are local macOS observations, not Windows or desktop UI acceptance.

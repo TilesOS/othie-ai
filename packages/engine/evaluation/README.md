@@ -143,10 +143,11 @@ model digest, prompt version, and artifact license metadata. It refuses to overw
 existing output directory and verifies the model digest again afterward. A separate
 `generations.json` preserves responses if a later evaluation step fails.
 
-Qualifier regexes score compressed rule text and scope separately from supporting
+Qualifier regexes score rule text and scope separately from supporting
 quotations. They are lexical diagnostics, not semantic entailment or proof that all
-claims are supported. Inspect the raw proposals and retained rules. A missing conflict
-flag is recorded in each brief; this does not imply the limited detector can resolve
+claims are supported. Inspect the raw selections and retained rules. Protocol `quality-v2`
+also requires an explicit conflict flag for the opposing-export case; old `quality-v1`
+reports did not include that flag in their pass/fail score. This does not imply the limited detector can resolve
 natural-language scope/category differences. Model redistribution license/notice review
 is recorded as pending, not inferred from a model tag or license string.
 
@@ -154,5 +155,5 @@ is recorded as pending, not inferred from a model tag or license string.
 Set `OTHIE_MODEL` for another installed model and `OTHIE_MODEL_RESULTS` to a new output
 directory to retain the report. The opt-in suite gates operational completion, exact
 citations, token accounting, and reference isolation; it prints quality diagnostics
-separately. The evaluation CLI exits nonzero when any source/qualifier diagnostic fails.
+separately. The evaluation CLI exits nonzero when any source/qualifier/conflict diagnostic fails.
 The normal deterministic suite skips the live-model run and requires no model download.

@@ -9,14 +9,14 @@ synthetic documents and provider fixtures; it requires no model training or down
 | --- | --- |
 | `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 102 passing tests; one opt-in real-model test skipped |
-| `npm run test:mcp` | Six MCP/lifecycle/cross-host process tests pass |
+| `npm test` | 113 passing tests; one opt-in real-model test skipped |
+| MCP/lifecycle/cross-host tests within `npm test` | Six process tests pass |
 | `npm run lint --workspace=@othie/website` | Pass |
-| `RUN_OTHIE_MODEL_TESTS=1 npm run test:models` | Operational/safety checks pass; source/qualifier diagnostics 7/14, quality acceptance fails |
+| Local compiler-quality evaluator, three final runs | Operational/safety checks pass; diagnostics 11/14, 10/14, 11/14; quality acceptance fails at 200 tokens |
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
-The full suite comprises 48 engine, 23 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 59 engine, 23 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -110,6 +110,39 @@ loss, and differing conflict labels remain failures. The opt-in test gates safet
 operational completion, separately reporting quality failures. Prompt changes now trigger
 startup reindexing rather than leaving unchanged documents with obsolete extraction.
 
+## Compiler follow-up
+
+The [compiler follow-up records](packages/engine/evaluation/records/2026-10-03/compiler-followup/README.md)
+preserve seven additional synthetic runs, including failures found during iteration.
+The final implementation uses numbered sentence selection with short invocation-local
+source IDs (`rules-v4`). Rule text and quotations are recovered from original source
+spans, and syntactically marked follow-up qualifications remain attached. Verbatim XML
+includes identical rule text and evidence once; structured citations still retain the
+full quotation. Invalid ranges and oversized spans are rejected without truncation.
+
+Exact opposing source statements now produce a conflict even when generated category
+and scope labels differ. Quality protocol `quality-v2` requires that flag, whereas the
+older reports did not score it. Repeated evaluation also uncovered an unrelated-query
+injection through the generated word "invalid" and a dropped travel policy caused by
+a mistyped 64-character source ID. Lexical rule selection now uses rule text/evidence
+instead of generated labels, and extraction uses short source aliases. Regression tests
+cover these failures, source provenance, whitespace, qualification attachment, citation
+integrity, and complete receipt evidence at a 200-token cap.
+
+Three final runs with the same installed `qwen3.5:4b-mlx` digest pass 11/14, 10/14,
+and 11/14 diagnostics (32/42 total). All 21 diagnostics at 500 tokens pass, including
+both no-op controls and opposing-rule detection. At 200 tokens, only 11/21 pass:
+whole-item packing still omits needed evidence, and generated label length/rule grouping
+vary. Each run completes with exact retained citations, no reference rules promoted,
+unchanged model identity, and accurate hard caps. These are repeated observations of
+one small fixed corpus and one model, not statistical evidence or a semantic proof.
+
+The full workspace build, typechecks, website lint, and production dependency audit
+pass. All 113 deterministic tests pass with local socket access. A sandboxed attempt
+failed to bind integration sockets and stalled the Next.js build; rerunning with the
+required local access passed. No native host/desktop/Windows acceptance was repeated
+for these compiler changes, and no model artifacts were downloaded or distributed.
+
 ## Remaining acceptance work
 
 - Codex project-file discovery and persisted interactive hook-trust acceptance; Claude
@@ -119,9 +152,12 @@ startup reindexing rather than leaving unchanged documents with obsolete extract
   suite; the new changes also need current Windows CI verification.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
-- Compiler quality improvements for omitted qualifiers, exact quotation generation, and
-  conflict categorization; embeddings, synthesis, semantic entailment, and repeated
-  model comparisons remain unevaluated by the new corpus.
+- Compiler quality at 200 tokens: retain linked statements/exceptions and both conflict
+  sides within the cap, and reduce packing sensitivity to generated label lengths and
+  rule grouping. Exact quotation generation is replaced by original-span recovery;
+  conflict detection covers explicit source opposition across generated labels.
+  Selection completeness, label entailment, embeddings, synthesis, semantic grading,
+  and comparisons across multiple models still need evaluation.
 - Signed desktop installers, guided onboarding, and model artifact distribution. Native
   Windows hardware/session access, signing identities, and reviewed redistributable model
   artifacts are not available as established acceptance inputs in this run.
