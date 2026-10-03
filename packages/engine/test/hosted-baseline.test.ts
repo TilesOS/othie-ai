@@ -1,3 +1,4 @@
+import { EXTRACTION_PROMPT_VERSION } from "../src/rules/extractor.js";
 import { describe, expect, it } from "vitest";
 import { writeFile, rm } from "node:fs/promises";
 import { join } from "node:path";
@@ -25,7 +26,7 @@ describe("hosted baseline scoring", () => {
   });
 
   it("does not select a policy rule on generic coding-prompt words", () => {
-    const rule: RuleRecord = { id: "r1", profile: "company", documentId: "d1", revisionId: "v1", sourcePath: "/synthetic/refunds.md", text: "Acme annual-plan refunds are allowed only within seven days.", category: "refund", applicability: "Acme annual plans", quotation: "within seven days", location: "paragraph 1", authorityPriority: 80, global: false, modelIdentity: "openai:test:v1", promptVersion: "rules-v1" };
+    const rule: RuleRecord = { id: "r1", profile: "company", documentId: "d1", revisionId: "v1", sourcePath: "/synthetic/refunds.md", text: "Acme annual-plan refunds are allowed only within seven days.", category: "refund", applicability: "Acme annual plans", quotation: "within seven days", location: "paragraph 1", authorityPriority: 80, global: false, modelIdentity: "openai:test:v1", promptVersion: EXTRACTION_PROMPT_VERSION };
     expect(selectRules([rule], cases[3]!.task, [])).toEqual([]);
     expect(selectRules([rule], cases[0]!.task, [])).toEqual([]);
     expect(selectRules([rule], cases[1]!.task, [])).toHaveLength(1);

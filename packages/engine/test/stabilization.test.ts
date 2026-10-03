@@ -1,3 +1,4 @@
+import { EXTRACTION_PROMPT_VERSION } from "../src/rules/extractor.js";
 import { mkdir, readFile, rm, writeFile, unlink } from "node:fs/promises";
 import { join } from "node:path";
 import { describe, expect, it, vi } from "vitest";
@@ -16,7 +17,7 @@ function seed(engine: OthieEngine, profile: string, id: string, text: string, pa
   return chunk;
 }
 function rule(chunk: ChunkRecord, text = chunk.text): RuleRecord {
-  return { id: `${chunk.id}-rule`, profile: chunk.profile, documentId: chunk.documentId, revisionId: chunk.revisionId, sourcePath: chunk.sourcePath, text, quotation: chunk.text, category: "leave", applicability: "employees", location: chunk.location, authorityPriority: 50, global: false, modelIdentity: "ollama:qwen3:4b:test", promptVersion: "rules-v1" };
+  return { id: `${chunk.id}-rule`, profile: chunk.profile, documentId: chunk.documentId, revisionId: chunk.revisionId, sourcePath: chunk.sourcePath, text, quotation: chunk.text, category: "leave", applicability: "employees", location: chunk.location, authorityPriority: 50, global: false, modelIdentity: "ollama:qwen3:4b:test", promptVersion: EXTRACTION_PROMPT_VERSION };
 }
 async function idle(engine: OthieEngine): Promise<void> {
   await waitFor(() => Number((engine.store.db.prepare("SELECT COUNT(*) AS n FROM jobs WHERE state IN ('pending','processing')").get() as {n:number}).n) === 0);
