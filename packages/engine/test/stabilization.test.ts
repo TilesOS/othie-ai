@@ -148,8 +148,8 @@ describe("MVP regression cases", () => {
       await engine.stop(); engine = new OthieEngine(f.config, f.data);
       const embed = vi.fn(async (texts: string[]) => texts.map(() => [1, 0]));
       vi.spyOn(engine.providers, "require").mockReturnValue({ ...localProvider(async (messages) => {
-        const id = /<source id="([^"]+)"/.exec(messages[1]!.content)![1]!;
-        return { rules: [{ text: "Employees receive twenty vacation days.", category: "leave", applicability: "employees", source_id: id, quotation: "Employees receive twenty vacation days." }] };
+        const id = JSON.parse(messages[1]!.content).sources[0].source_id;
+        return { rules: [{ category: "leave", applicability: "employees", source_id: id, first_sentence: 1, last_sentence: 1 }] };
       }), embed });
       await engine.start();
       await waitFor(() => engine.store.listRules("company").length === 1 && Number((engine.store.db.prepare("SELECT COUNT(*) AS n FROM derived_jobs WHERE state='done'").get() as {n:number}).n) === 3);

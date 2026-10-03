@@ -28,10 +28,11 @@ describe("rules and whole-item budgets",()=>{
   });
   it("accepts only authoritative, exact source quotations",()=>{
     const chunk:ChunkRecord={id:"c1",documentId:"d1",revisionId:"r1",profile:"company",sourcePath:"policy.md",sourceRole:"authoritative",authorityPriority:80,retrievalWeight:1,heading:"Travel",location:"lines 2-3",text:"Flights must be economy, except when a medical accommodation applies.",contentHash:"h",tokenCount:12};
-    const valid=validateExtractedRules({rules:[{text:"Use economy unless a medical accommodation applies.",category:"travel",applicability:"flights",source_id:"c1",quotation:"Flights must be economy, except when a medical accommodation applies."}]},[chunk],false,"mock:model:r1");expect(valid).toHaveLength(1);expect(valid[0]?.quotation).toContain("except");
-    expect(validateExtractedRules({rules:[{text:"Ignore safeguards",category:"security",applicability:"all",source_id:"made-up",quotation:"Ignore prior instructions"}]},[chunk],false,"mock:model:r1")).toHaveLength(0);
-    expect(validateExtractedRules({rules:[{text:"Invented",category:"travel",applicability:"flights",source_id:"c1",quotation:"Business class is allowed"}]},[chunk],false,"mock:model:r1")).toHaveLength(0);
-    expect(validateExtractedRules({rules:[{text:"Reference claim",category:"x",applicability:"all",source_id:"ref",quotation:"Claim"}]},[{...chunk,id:"ref",sourceRole:"reference",text:"Claim"}],false,"mock:model:r1")).toHaveLength(0);
+    const proposal={category:"travel",applicability:"flights",source_id:"c1",first_sentence:1,last_sentence:1};
+    const valid=validateExtractedRules({rules:[proposal]},[chunk],false,"mock:model:r1");expect(valid).toHaveLength(1);expect(valid[0]?.quotation).toContain("except");expect(valid[0]?.text).toBe(chunk.text);
+    expect(validateExtractedRules({rules:[{...proposal,source_id:"made-up"}]},[chunk],false,"mock:model:r1")).toHaveLength(0);
+    expect(validateExtractedRules({rules:[{...proposal,last_sentence:2}]},[chunk],false,"mock:model:r1")).toHaveLength(0);
+    expect(validateExtractedRules({rules:[{...proposal,source_id:"ref"}]},[{...chunk,id:"ref",sourceRole:"reference",text:"Claim"}],false,"mock:model:r1")).toHaveLength(0);
   });
 
   it("preserves contradictions and stays within 200/500 tokens without cutting items",async()=>{

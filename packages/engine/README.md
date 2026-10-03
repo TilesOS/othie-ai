@@ -170,7 +170,16 @@ SQLite's active revision is the publication authority. New records are staged un
 
 LanceDB maintains an explicit full-text index and separate vector tables keyed by provider/model revision/dimensions. SQLite FTS is an intentional lexical safety net. Reciprocal-rank fusion combines available text/vector ranks, then applies retrieval weights. Authority is retained separately and contradictions are emitted rather than silently merged.
 
-Document text is untrusted data. Structured output, source-ID validation, exact quotation matching, and XML escaping reduce specific failure modes; none is a general prompt-injection defense.
+Extraction uses numbered sentence ranges (`rules-v3`). The model selects authoritative
+evidence and supplies category/scope labels; the engine recovers both rule text and its
+quotation from the original contiguous source span. Invalid ranges and spans over 2,000
+characters are dropped without truncation. Syntactically marked follow-up qualifications
+stay attached. Selection completeness and generated scope labels still need semantic
+evaluation. The prompt version change triggers startup reindexing of existing sources.
+
+Document text is untrusted data. Structured output, source-ID/range validation, original
+evidence recovery, and XML escaping reduce specific failure modes; none is a general
+prompt-injection defense.
 
 ## Primary references
 
@@ -186,7 +195,8 @@ Document text is untrusted data. Structured output, source-ID validation, exact 
 
 See [current verification](../../VERIFICATION.md) for regression coverage, local results,
 and remaining Windows/native-host acceptance work. The current conflict
-check recognizes explicit opposing modalities for the same scoped action; it does not
+check recognizes explicit opposing modalities for the same scoped action, including
+opposing exact quotations with different generated category/scope labels; it does not
 interpret every difference between two policies as a contradiction.
 
 Use `othie host-config --host claude|cursor|vscode --config config.json --bridge NAME
