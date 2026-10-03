@@ -59,3 +59,44 @@ new report file. The runner refuses to overwrite an existing report and deletes 
 temporary source/index state after the run. Only synthetic documents and prompts are
 sent to the selected model. Hosted and local responses use their respective APIs,
 so compare answer correctness and context size before comparing runtime token counts.
+
+## Tool-using coding-agent evaluation
+
+`npm run eval:agent` runs an installed Ollama model against four fixed JavaScript tasks
+under `baseline`, `full_documents`, and `othie` conditions. It never downloads a model,
+uses no hosted API, and sends only synthetic fixtures to loopback Ollama. The default
+model is `qwen3.5:4b-mlx`.
+
+```sh
+npm run eval:agent -- --repeats 3 --context-tokens 500 --out /tmp/othie-agent-run
+```
+
+Each condition receives a fresh two-file workspace. The model repeatedly calls
+`read_file`, `write_file`, and `run_tests` through a JSON action protocol, then finishes.
+It cannot access company documents through tools, alter tests, or execute shell commands.
+Public probes check the interface; separate hidden probes check behavior, numeric
+boundaries, exceptions, consent negations, and preservation of input arguments. A run
+that hits the turn limit or loses its model request fails even if its final code happens
+to pass. The repository-only sorting task is an explicit retrieval no-op control.
+
+The runner fixes model digest, fixture hash, generation options, and per-repeat seed.
+It rotates condition order to distribute warm-model effects, recounts engine XML against
+the requested cap, and verifies that the installed model digest has not changed. For
+this first benchmark, Othie uses real indexing, lexical retrieval, and cited excerpt
+packing with model extraction, embeddings, and synthesis disabled. This isolates context
+selection from compiler-model quality. Navigation hints have no verified producer yet,
+so the planned fourth condition is deferred.
+
+The output directory must be new. `protocol.json` preserves fixtures, hidden probes,
+model identity, and limitations. Each trajectory is saved immediately with initial
+messages, raw model actions, tool results, final code, objective scores, input/output
+tokens, tool calls, and elapsed time. `summary.json` is written only after all trajectories
+complete. Incomplete evidence remains available after failure; temporary source/index
+and code workspaces are removed. Token totals are cumulative model-reported prompt
+counts across tool turns, not a single prompt's size; missing usage is `null`.
+
+This is a small constrained-tool agent benchmark, not native Codex/Claude Code acceptance
+or a general performance claim. Repeats at temperature zero are not independent samples.
+Code grading uses a separate resource-limited Node process with permissions enabled,
+no inherited environment, and a VM without host objects. That is defense in depth for
+synthetic local experiments, not a general sandbox for arbitrary untrusted programs.

@@ -21,7 +21,8 @@
     "engine": "node packages/engine/dist/src/cli.js",
     "dev": "npm run dev:engine",
     "dev:engine": "tsx packages/engine/src/cli.ts engine foreground",
-    "benchmark": "tsx packages/engine/src/benchmark.ts"
+    "benchmark": "tsx packages/engine/src/benchmark.ts",
+    "eval:agent": "npm run build --workspace=@othie/engine && node packages/engine/dist/src/evaluation/local-agent.js"
   },
   "overrides": {
     "sharp": "0.35.4"
