@@ -48,15 +48,18 @@ it("sends numbered body sentences only and never exports reference evidence for 
   let sent = "";
   const providers = { require: () => ({ generateJson: async (messages: Array<{ content: string }>) => {
     sent = messages[1]!.content;
-    return { rules: [proposal] };
+    return { rules: [{ ...proposal, source_id: "s1" }] };
   } }) };
   const rules = await extractRules({ chunks: [chunk, { ...chunk, id: "reference", sourceRole: "reference", text: "PRIVATE_REFERENCE_CANARY" }],
     config, profile: config.profiles.company!, providers: providers as never, global: true });
-  expect(JSON.parse(sent).sources).toEqual([{ source_id: "policy", sentences: [
+  expect(JSON.parse(sent).sources).toEqual([{ source_id: "s1", sentences: [
     { number: 1, text: "Employees receive twenty days." },
     { number: 2, text: "Except contractors, who receive ten." },
     { number: 3, text: "Unused days do not carry over." },
   ] }]);
   expect(sent).not.toContain("PRIVATE_REFERENCE_CANARY");
   expect(rules[0]?.global).toBe(true);
+  expect(rules[0]?.documentId).toBe(chunk.documentId);
+  expect(rules[0]?.revisionId).toBe(chunk.revisionId);
+  expect(rules[0]?.sourcePath).toBe(chunk.sourcePath);
 });

@@ -5,7 +5,7 @@ import { isQualificationSentence } from "../ingestion/sentences.js";
 import type { ProviderRegistry } from "../providers/registry.js";
 import type { ChunkRecord, RuleRecord } from "../types.js";
 
-export const EXTRACTION_PROMPT_VERSION = "rules-v3";
+export const EXTRACTION_PROMPT_VERSION = "rules-v4";
 
 const extractedSchema = z.object({
   rules: z.array(z.object({
@@ -63,7 +63,10 @@ export function validateExtractedRules(raw: unknown, chunks: ChunkRecord[], glob
 export async function extractRules(input: {
   chunks: ChunkRecord[]; profile: OthieProfile; config: OthieConfig; providers: ProviderRegistry; global: boolean; signal?: AbortSignal;
 }): Promise<RuleRecord[]> {
-  const authoritative = input.chunks.filter((chunk) => chunk.sourceRole === "authoritative");
+  // Invocation-local aliases avoid asking the model to reproduce a long hash.
+  // The complete original source metadata remains attached to each alias.
+  const authoritative = input.chunks.filter((chunk) => chunk.sourceRole === "authoritative")
+    .map((chunk, index) => ({ ...chunk, id: `s${index + 1}` }));
   if (!authoritative.length) return [];
   const model = input.config.models.compiler;
   const provider = input.providers.require(input.profile, "extraction", model.provider);
