@@ -5,7 +5,9 @@ export function selectRules(rules: RuleRecord[], query: string, chunks: ChunkRec
   const terms = new Set(meaningfulTerms(query));
   return rules.map((rule) => {
     const evidenceRank = chunks.findIndex((chunk) => chunk.revisionId === rule.revisionId && chunk.documentId === rule.documentId && chunk.text.includes(rule.quotation));
-    const words = new Set(`${rule.text} ${rule.applicability} ${rule.category}`.toLowerCase().match(/[\p{L}\p{N}]+/gu));
+    // Generated scope/category labels can contain terms absent from the evidence.
+    // They must not create a lexical match for an unrelated request.
+    const words = new Set(`${rule.text} ${rule.quotation}`.toLowerCase().match(/[\p{L}\p{N}]+/gu));
     const lexical = [...terms].filter((term) => words.has(term)).length;
     return { rule, relevant: evidenceRank >= 0 || lexical > 0, score: (evidenceRank >= 0 ? 1 / (1 + evidenceRank) : 0) + lexical / 100 };
   }).filter(({ rule, relevant }) => rule.global || relevant)

@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { conflictGroups } from "../src/rules/selection.js";
+import { conflictGroups, selectRules } from "../src/rules/selection.js";
 import type { RuleRecord } from "../src/types.js";
 
 function rule(id: string, quotation: string, overrides: Partial<RuleRecord> = {}): RuleRecord {
@@ -28,4 +28,13 @@ it("does not mistake compatible evidence for opposition when labels differ", () 
   const allow = rule("allow", "Employees may export customer records as CSV for the migration project.");
   expect(conflictGroups([allow, rule("receipt", "Employees must submit receipts.")])).toEqual([]);
   expect(conflictGroups([allow, rule("also-allow", allow.quotation)])).toEqual([]);
+});
+
+it("does not retrieve a rule solely through generated scope or category wording", () => {
+  const telemetry = rule("telemetry", "A missing consent value is not explicit consent.", {
+    applicability: "Missing or implied consent is invalid", category: "Vendor product validation",
+  });
+  expect(selectRules([telemetry], "vendor product example.invalid indexed documents", [])).toEqual([]);
+  expect(selectRules([telemetry], "missing consent", [])).toEqual([telemetry]);
+  expect(selectRules([{ ...telemetry, global: true }], "repository comparator", [])).toHaveLength(1);
 });
