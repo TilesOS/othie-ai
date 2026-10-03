@@ -36,7 +36,7 @@ describe("authenticated cross-host prompt delivery", () => {
     f.config.profiles.private = { ...f.config.profiles.company!, sources: [{ root: privateDocs, role: "reference", authority_priority: 50, retrieval_weight: 1, global_rule_documents: [] }] };
     await writeFile(f.configPath, JSON.stringify(f.config));
     const source = join(f.docs, "support.md");
-    await writeFile(source, "Canary support policy requires replies within four hours.");
+    await writeFile(source, "Canary support policy requires replies within four hours. This is not a resolution deadline.");
     await writeFile(join(privateDocs, "support.md"), "Canary support policy requires PRIVATE_OTHER_PROFILE_SECRET.");
     const files = new Map<Host, string>();
     for (const host of ["codex", "claude-code"] as const) {
@@ -61,7 +61,7 @@ describe("authenticated cross-host prompt delivery", () => {
         expect(result.stderr).not.toMatch(/PRIVATE|support|company|credential|session|workspace|s1\//);
         expect(JSON.parse(result.stderr)).toMatchObject({ host, outcome: "injected", mode: "fallback" });
         expect(JSON.parse(result.stderr).token_count).toBeLessThanOrEqual(500);
-        const empty = await invoke(host, f.configPath, files.get(host)!, workspace, "refactor javascript sorting comparator");
+        const empty = await invoke(host, f.configPath, files.get(host)!, workspace, "refactor javascript sorting comparator. Do not use tools.");
         expect(empty.code).toBe(0); expect(empty.stdout).toBe("");
         expect(JSON.parse(empty.stderr)).toMatchObject({ host, outcome: "empty", mode: "empty" });
       }

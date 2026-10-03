@@ -1,5 +1,5 @@
 const stopwords = new Set([
-  "a", "according", "an", "and", "are", "as", "at", "be", "by", "can", "company", "could", "do", "does", "for", "from", "had", "has", "have", "how", "i", "if", "in", "is", "it", "many", "may", "must", "number", "of", "on", "only", "or", "our", "policy", "return", "should", "that", "the", "their", "them", "there", "these", "this", "those", "to", "was", "were", "what", "when", "where", "which", "who", "why", "will", "with", "would", "you", "your",
+  "a", "according", "an", "and", "are", "as", "at", "be", "by", "can", "company", "could", "do", "does", "for", "from", "had", "has", "have", "how", "i", "if", "in", "is", "it", "many", "may", "must", "not", "number", "of", "on", "only", "or", "our", "policy", "return", "should", "that", "the", "their", "them", "there", "these", "this", "those", "to", "was", "were", "what", "when", "where", "which", "who", "why", "will", "with", "would", "you", "your",
 ]);
 
 export function meaningfulTerms(query: string): string[] {
