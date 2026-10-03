@@ -57,6 +57,13 @@ returned nothing for it. This fixture set is far too small to support a general 
 is a smoke test that shaped the next step: a benchmark of real, tool-using coding-agent
 tasks. The methodology is in the [evaluation guide](packages/engine/evaluation/README.md).
 
+The [October 3 tool-using benchmark](packages/engine/evaluation/records/2026-10-03/README.md)
+adds fresh code workspaces, read/edit/test tools, hidden behavioral checks, and preserved
+transcripts. Full documents and bounded Othie context each passed 9/12 tasks across three
+repeats, with no token savings on that small corpus. The expanded compiler evaluation
+still fails quality acceptance despite passing citation, budget, and reference-isolation
+checks. Native Codex and Claude Code CLI delivery sessions are recorded separately.
+
 ## Repository layout
 
 ```text

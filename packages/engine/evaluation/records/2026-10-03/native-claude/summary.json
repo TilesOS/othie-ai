@@ -1,0 +1,60 @@
+{
+  "recorded_at": "2026-10-03T04:14:04.674Z",
+  "synthetic_only": true,
+  "platform": "darwin",
+  "node": "v24.18.0",
+  "host": "claude-code",
+  "host_version": "2.1.283 (Claude Code)",
+  "hook_configuration": "explicit-settings",
+  "requested_model": "host default",
+  "observed_models": [
+    "claude-opus-5-5"
+  ],
+  "hook_adapter_sha256": "dbbef2fad3f47b69bbc9d8f19c994f5f88e3eee7ab99097301c76439bc39d9e4",
+  "context_token_cap": 500,
+  "trust": "Explicit generated settings; no tools; no global settings changed",
+  "limitations": "Native noninteractive CLI sessions only. Does not establish desktop UI trust, Windows behavior, startup, model quality, or installer acceptance.",
+  "passed": true,
+  "records": [
+    {
+      "host": "claude-code",
+      "host_model": "claude-opus-5-5",
+      "condition": "positive",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "11",
+      "answer": "11",
+      "delivery_passed": true,
+      "passed": true
+    },
+    {
+      "host": "claude-code",
+      "host_model": "claude-opus-5-5",
+      "condition": "irrelevant",
+      "prompt": "The repository function double(n) returns n * 2. What is double(21)? Reply with the number only. Do not use tools.",
+      "expected": "42",
+      "answer": "42",
+      "delivery_passed": true,
+      "passed": true
+    },
+    {
+      "host": "claude-code",
+      "host_model": "claude-opus-5-5",
+      "condition": "revoked",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "unknown",
+      "answer": "unknown",
+      "delivery_passed": true,
+      "passed": true
+    },
+    {
+      "host": "claude-code",
+      "host_model": "claude-opus-5-5",
+      "condition": "unavailable",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "unknown",
+      "answer": "unknown",
+      "delivery_passed": true,
+      "passed": true
+    }
+  ]
+}

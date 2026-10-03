@@ -1,0 +1,58 @@
+{
+  "recorded_at": "2026-10-03T04:14:10.335Z",
+  "synthetic_only": true,
+  "platform": "darwin",
+  "node": "v24.18.0",
+  "host": "codex",
+  "host_version": "codex-cli 0.156.1",
+  "hook_configuration": "project",
+  "requested_model": "host default",
+  "observed_models": [],
+  "hook_adapter_sha256": "f509052788ddea2779ebf8988000e12d51ba1f64bb8eb2267aa7623fd34ea7a4",
+  "context_token_cap": 500,
+  "trust": "Invocation-local generated hook; one-shot trust bypass; user config ignored; plugins disabled; experimental host-skill-discovery suppression",
+  "limitations": "Native noninteractive CLI sessions only. Does not establish desktop UI trust, Windows behavior, startup, model quality, or installer acceptance.",
+  "passed": false,
+  "records": [
+    {
+      "host": "codex",
+      "host_model": null,
+      "condition": "positive",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "11",
+      "answer": "unknown",
+      "delivery_passed": false,
+      "passed": false
+    },
+    {
+      "host": "codex",
+      "host_model": null,
+      "condition": "irrelevant",
+      "prompt": "The repository function double(n) returns n * 2. What is double(21)? Reply with the number only. Do not use tools.",
+      "expected": "42",
+      "answer": "42",
+      "delivery_passed": false,
+      "passed": false
+    },
+    {
+      "host": "codex",
+      "host_model": null,
+      "condition": "revoked",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "unknown",
+      "answer": "unknown",
+      "delivery_passed": false,
+      "passed": false
+    },
+    {
+      "host": "codex",
+      "host_model": null,
+      "condition": "unavailable",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "unknown",
+      "answer": "unknown",
+      "delivery_passed": false,
+      "passed": false
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "recorded_at": "2026-10-03T04:15:19.142Z",
+  "synthetic_only": true,
+  "platform": "darwin",
+  "node": "v24.18.0",
+  "host": "codex",
+  "host_version": "codex-cli 0.156.1",
+  "hook_configuration": "session",
+  "requested_model": "host default",
+  "observed_models": [
+    "gpt-6-astra"
+  ],
+  "hook_adapter_sha256": "f509052788ddea2779ebf8988000e12d51ba1f64bb8eb2267aa7623fd34ea7a4",
+  "context_token_cap": 500,
+  "trust": "Invocation-local generated hook; one-shot trust bypass; user config ignored; plugins disabled; experimental host-skill-discovery suppression",
+  "limitations": "Native noninteractive CLI sessions only. Does not establish desktop UI trust, Windows behavior, startup, model quality, or installer acceptance.",
+  "passed": true,
+  "records": [
+    {
+      "host": "codex",
+      "host_model": "gpt-6-astra",
+      "condition": "positive",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "11",
+      "answer": "11",
+      "delivery_passed": true,
+      "passed": true
+    },
+    {
+      "host": "codex",
+      "host_model": "gpt-6-astra",
+      "condition": "irrelevant",
+      "prompt": "The repository function double(n) returns n * 2. What is double(21)? Reply with the number only. Do not use tools.",
+      "expected": "42",
+      "answer": "42",
+      "delivery_passed": true,
+      "passed": true
+    },
+    {
+      "host": "codex",
+      "host_model": "gpt-6-astra",
+      "condition": "revoked",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "unknown",
+      "answer": "unknown",
+      "delivery_passed": true,
+      "passed": true
+    },
+    {
+      "host": "codex",
+      "host_model": "gpt-6-astra",
+      "condition": "unavailable",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "unknown",
+      "answer": "unknown",
+      "delivery_passed": true,
+      "passed": true
+    }
+  ]
+}

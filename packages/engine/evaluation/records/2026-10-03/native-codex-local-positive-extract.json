@@ -1,0 +1,31 @@
+{
+  "host": "codex",
+  "condition": "positive",
+  "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+  "expected": "11",
+  "answer": "unknown",
+  "response": {
+    "code": 0,
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"01a0ffef-8824-7c80-bf56-3c7922ccfc39\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"`--dangerously-bypass-hook-trust` is enabled. Enabled hooks may run without review for this invocation.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"error\",\"message\":\"`--dangerously-bypass-hook-trust` is enabled. Enabled hooks may run without review for this invocation.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in <user-home>/.codex/config.toml.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"error\",\"message\":\"Model metadata for `qwen3.5:4b-mlx` not found. Defaulting to fallback metadata; this can degrade performance and cause issues.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_4\",\"type\":\"reasoning\",\"text\":\"The user is asking me about Canary enterprise support policy regarding weekend first-response targets in hours. They want me to use only supplied context and reply with just the number if missing.\\n\\nLooking at my available tools, I don't see any that would help me access corporate policies or enterprise support information. The user is explicitly asking me NOT to use tools and to use only supplied context.\\n\\nI have no access to any supplyed context about Canary enterprise support policy in this conversation. This information hasn't been provided to me.\\n\\nAccording to the user's instruction: \\\"Use only supplied context; if missing reply unknown.\\\"\\n\\nSince there's no supplied context available, I should respond with \\\"unknown\\\" as the user requested.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_5\",\"type\":\"agent_message\",\"text\":\"unknown\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":100066,\"cached_input_tokens\":3,\"cache_write_input_tokens\":0,\"output_tokens\":148,\"reasoning_output_tokens\":0}}\n",
+    "stderr": "Local-runtime telemetry omitted from this published extract; the complete raw record remains in the local experiment output.",
+    "timed_out": false
+  },
+  "receipt": {
+    "event": "UserPromptSubmit",
+    "input_fields": [
+      "cwd",
+      "hook_event_name",
+      "model",
+      "permission_mode",
+      "prompt",
+      "session_id",
+      "transcript_path",
+      "turn_id"
+    ],
+    "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"Othie context brief (source-backed; preserve the included citations):\\n<organization_context profile=\\\"company\\\" mode=\\\"fallback\\\"><items><excerpt>Canary enterprise support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.<citation source=\\\"s1/canary.md\\\" at=\\\"lines 1-2\\\"/></excerpt></items><conflicts count=\\\"0\\\" detection=\\\"explicit_opposition_only\\\"></conflicts><status tokenizer=\\\"o200k_base\\\" tokenizer_estimate=\\\"false\\\" tokens=\\\"123\\\" omitted=\\\"0\\\" keyword=\\\"true\\\" vector=\\\"false\\\" corpus_revision=\\\"3\\\" rule_revision=\\\"0\\\"/></organization_context>\"}}\n",
+    "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"codex\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"injected\",\"elapsed_ms\":185,\"mode\":\"fallback\",\"token_count\":123,\"omitted_items\":0,\"rule_count\":0,\"excerpt_count\":1,\"synthesis_count\":0,\"conflict_count\":0}\n",
+    "code": 0
+  },
+  "delivery_passed": true,
+  "passed": false
+}

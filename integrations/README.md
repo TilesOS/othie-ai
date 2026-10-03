@@ -6,8 +6,8 @@ when Othie is empty, unavailable, late, or returns an invalid response.
 
 | Host | Delivery | Setup location | Automated coverage | Native-host acceptance |
 | --- | --- | --- | --- | --- |
-| Codex | `UserPromptSubmit` command hook | Project `.codex/hooks.json` | Fixtures, compiled-process behavior, and live-engine credential/revocation/restart tests | Not recorded |
-| Claude Code | `UserPromptSubmit` command hook | Project `.claude/settings.local.json` | Same shared contract, setup checks, and live-engine credential/revocation/restart tests | Not recorded |
+| Codex | `UserPromptSubmit` command hook | Project `.codex/hooks.json` | Fixtures, compiled-process behavior, and live-engine credential/revocation/restart tests | CLI invocation-local hooks: four conditions pass; project discovery/trust remains open |
+| Claude Code | `UserPromptSubmit` command hook | Project `.claude/settings.local.json` | Same shared contract, setup checks, and live-engine credential/revocation/restart tests | CLI explicit settings: four conditions pass; project discovery/UI remains open |
 | Claude Desktop | MCP stdio bridge | Host MCP configuration printed by `host-config --host claude` | Engine/bridge SDK process tests and configuration tests | Not recorded |
 | Cursor | MCP stdio bridge | Host MCP configuration printed by `host-config --host cursor` | Configuration tests and shared bridge tests | Not recorded |
 | VS Code | MCP stdio bridge | Host MCP configuration printed by `host-config --host vscode` | Compiled configuration tests and shared bridge tests | Not recorded |
@@ -33,3 +33,8 @@ exact injected context, checks irrelevant-task no-ops, excludes another profile'
 even when the event's working directory points at them, revokes deleted evidence, starts
 the engine again with changed evidence, and rejects invalid credentials. It runs compiled
 hook processes; it does not launch the native Codex or Claude Code applications.
+
+Native macOS acceptance is recorded in the [October 3 evidence](../packages/engine/evaluation/records/2026-10-03/README.md).
+These noninteractive sessions prove the tested configuration paths and model responses,
+not desktop UI or persisted hook trust. Codex project-hook discovery and local-model
+consumption remain open after failed probes. Windows native-host acceptance is unrecorded.
