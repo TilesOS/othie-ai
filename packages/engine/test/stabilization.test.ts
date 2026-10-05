@@ -164,8 +164,9 @@ describe("MVP regression cases", () => {
       expect((await engine.context("company", { query: "vacation" })).text).toContain("twenty vacation days");
       await engine.stop(); engine = new OthieEngine(f.config, f.data);
       const embed = vi.fn(async (texts: string[]) => texts.map(() => [1, 0]));
-      vi.spyOn(engine.providers, "require").mockReturnValue({ ...localProvider(async (messages) => {
+      vi.spyOn(engine.providers, "require").mockReturnValue({ ...localProvider(async (messages, _model, schema) => {
         const id = JSON.parse(messages[1]!.content).sources[0].source_id;
+        if ((schema.properties as Record<string, unknown>).sentences) return { sentences: [{ source_id: id, sentence: 1, explanation: "An employee entitlement.", kind: "policy" }] };
         return { rules: [{ category: "leave", applicability: "employees", source_id: id, first_sentence: 1, last_sentence: 1 }], non_policy_sentences: [] };
       }), embed });
       await engine.start();
@@ -197,8 +198,9 @@ describe("MVP regression cases", () => {
     await writeFile(path, "EU telemetry requires explicit consent. Outside the EU, telemetry defaults to enabled unless consent is explicitly false.");
     const engine = new OthieEngine(f.config, f.data);
     let complete = false;
-    vi.spyOn(engine.providers, "require").mockReturnValue(localProvider(async (messages) => {
+    vi.spyOn(engine.providers, "require").mockReturnValue(localProvider(async (messages, _model, schema) => {
       const id = JSON.parse(messages[1]!.content).sources[0].source_id;
+      if ((schema.properties as Record<string, unknown>).sentences) return { sentences: [1, 2].map((sentence) => ({ source_id: id, sentence, explanation: "A consent requirement or default.", kind: "policy" })) };
       return { rules: [{ category: "telemetry", applicability: "users", source_id: id, first_sentence: 1, last_sentence: complete ? 2 : 1 }], non_policy_sentences: [] };
     }));
     try {

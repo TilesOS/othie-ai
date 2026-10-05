@@ -46,8 +46,9 @@ it("deduplicates the same selected span even when generated labels differ", () =
 it("sends numbered body sentences only and never exports reference evidence for extraction", async () => {
   const config = configSchema.parse({ version: 1, profiles: { company: { sources: [{ root: "/synthetic", role: "authoritative" }] } } });
   let sent = "";
-  const providers = { require: () => ({ generateJson: async (messages: Array<{ content: string }>) => {
+  const providers = { require: () => ({ generateJson: async (messages: Array<{ content: string }>, _model: string, schema: any) => {
     sent = messages[1]!.content;
+    if (schema.properties.sentences) return { sentences: [1, 2, 3].map((sentence) => ({ source_id: "s1", sentence, explanation: "An entitlement or boundary.", kind: "policy" })) };
     return { rules: [{ ...proposal, source_id: "s1", last_sentence: 3 }], non_policy_sentences: [] };
   } }) };
   const rules = await extractRules({ chunks: [chunk, { ...chunk, id: "reference", sourceRole: "reference", text: "PRIVATE_REFERENCE_CANARY" }],
@@ -68,6 +69,11 @@ it("constrains generation to invocation-local source IDs and still rejects fabri
   const config = configSchema.parse({ version: 1, profiles: { company: { sources: [{ root: "/synthetic", role: "authoritative" }] } } });
   const enums: string[][] = [];
   const providers = { require: () => ({ generateJson: async (_messages: unknown, _model: string, schema: any) => {
+    if (schema.properties.sentences) {
+      const ids = schema.properties.sentences.items.properties.source_id.enum as string[];
+      expect(schema.properties.sentences.minItems).toBe(ids.length * 3);
+      return { sentences: ids.flatMap((source_id) => [1, 2, 3].map((sentence) => ({ source_id, sentence, explanation: "An entitlement or boundary.", kind: "policy" }))) };
+    }
     enums.push(schema.properties.rules.items.properties.source_id.enum);
     expect(schema.properties.non_policy_sentences.items.properties.source_id.enum).toEqual(schema.properties.rules.items.properties.source_id.enum);
     return { rules: [{ ...proposal, source_id: "s3" }], non_policy_sentences: [] };
