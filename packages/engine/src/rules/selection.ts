@@ -1,10 +1,12 @@
 import type { ChunkRecord, RuleRecord } from "../types.js";
 import { meaningfulTerms } from "../retrieval/terms.js";
 
-export function selectRules(rules: RuleRecord[], query: string, chunks: ChunkRecord[]): RuleRecord[] {
+export function selectRules(rules: RuleRecord[], query: string, semanticChunks: ChunkRecord[]): RuleRecord[] {
   const terms = new Set(meaningfulTerms(query));
   return rules.map((rule) => {
-    const evidenceRank = chunks.findIndex((chunk) => chunk.revisionId === rule.revisionId && chunk.documentId === rule.documentId && chunk.text.includes(rule.quotation));
+    // Only semantic hits can select evidence without matching its own words. A
+    // keyword hit elsewhere in a mixed source must not promote unrelated rules.
+    const evidenceRank = semanticChunks.findIndex((chunk) => chunk.revisionId === rule.revisionId && chunk.documentId === rule.documentId && chunk.text.includes(rule.quotation));
     // Generated scope/category labels can contain terms absent from the evidence.
     // They must not create a lexical match for an unrelated request.
     const words = new Set(`${rule.text} ${rule.quotation}`.toLowerCase().match(/[\p{L}\p{N}]+/gu));

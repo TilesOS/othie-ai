@@ -75,6 +75,23 @@ describe("MVP regression cases", () => {
     } finally { await engine.stop(); await rm(f.root, { recursive: true, force: true }); }
   });
 
+  it("does not promote unrelated rules when keyword retrieval matches only an excluded source sentence", async () => {
+    const f = await fixture();
+    f.config.profiles.company!.permitted_exports = "rules_only";
+    f.config.profiles.company!.providers = { embeddings: [], extraction: [], synthesis: [] };
+    const engine = new OthieEngine(f.config, f.data);
+    try {
+      const source = seed(engine, "company", "mixed", "The maintenance newsletter uses a cobalt masthead. Production maintenance must be announced 48 hours in advance.");
+      const policy = "Production maintenance must be announced 48 hours in advance.";
+      engine.store.replaceRules(source.documentId, source.revisionId, [{ ...rule(source, policy), quotation: policy }]);
+      await engine.lance.addText([source]);
+      const noOp = await engine.context("company", { query: "cobalt masthead newsletter" });
+      expect(noOp.status.mode).toBe("empty");
+      expect(noOp.brief.applicable_rules).toEqual([]);
+      expect((await engine.context("company", { query: "production maintenance announcement" })).text).toContain("48 hours");
+    } finally { await engine.stop(); await rm(f.root, { recursive: true, force: true }); }
+  });
+
   it("preserves useful evidence and attached exceptions within 200 and 500 tokens", async () => {
     const f = await fixture(); const engine = new OthieEngine(f.config, f.data);
     try {

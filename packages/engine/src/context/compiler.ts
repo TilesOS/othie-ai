@@ -51,7 +51,7 @@ export class ContextCompiler {
     const retrieval=await hybridRetrieve({query:request.query,profileName,profile,config:this.config,store:this.store,lance:this.lance,providers:this.providers});
     const model=this.config.models.compiler;
     const currentIdentity=`${model.provider}:${model.model}:${model.revision}`;
-    const rules=selectRules(this.store.listRules(profileName).filter((rule)=>rule.modelIdentity===currentIdentity&&rule.promptVersion===EXTRACTION_PROMPT_VERSION),request.query,retrieval.hits.map((hit)=>hit.chunk));
+    const rules=selectRules(this.store.listRules(profileName).filter((rule)=>rule.modelIdentity===currentIdentity&&rule.promptVersion===EXTRACTION_PROMPT_VERSION),request.query,retrieval.hits.filter((hit)=>hit.vectorRank!==undefined).map((hit)=>hit.chunk));
     const excerpts=profile.permitted_exports==="rules_and_excerpts" ? retrieval.hits.map((hit)=>hit.chunk) : [];
     const set:CandidateSet={rules,excerpts,keywordAvailable:retrieval.keywordAvailable,vectorAvailable:retrieval.vectorAvailable};
     if (request.synthesize && (rules.length||excerpts.length)) {
