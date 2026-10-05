@@ -7,7 +7,7 @@ import { configSchema } from "../config.js";
 import { OthieEngine } from "../engine/service.js";
 import { countTokens } from "../tokenizer.js";
 import { EXTRACTION_PROMPT_VERSION } from "../rules/extractor.js";
-import { qualityCases, qualityDocuments } from "./quality-cases.js";
+import { qualityCorpus, type QualityDocument } from "./quality-cases.js";
 import type { ContextBriefV1 } from "../types.js";
 
 export function missingPatterns(text: string, patterns: readonly string[]): string[] {
@@ -19,7 +19,22 @@ export function missingEvidencePatterns(rules: ContextBriefV1["applicable_rules"
   const evidence = sources ? rules.filter((rule) => sources.includes(basename(rule.citation.source))) : rules;
   return missingPatterns(evidence.map((rule) => `${rule.text}\n${rule.citation.quote ?? ""}`).join("\n"), patterns);
 }
-export async function runModelQuality(model: string, out: string) {
+export function extractionCoverage(documents: readonly QualityDocument[], rules: readonly { source: string; quotation: string }[]) {
+  return documents.map((doc) => {
+    const sentences = [...new Intl.Segmenter("en", { granularity: "sentence" }).segment(doc.text)].map(({ segment }) => segment.trim()).filter(Boolean);
+    const expected = new Set(doc.role === "reference" ? [] : doc.policy_sentences ?? sentences.map((_, index) => index + 1));
+    const evidence = new Set(rules.filter((rule) => rule.source === doc.name).flatMap((rule) =>
+      [...new Intl.Segmenter("en", { granularity: "sentence" }).segment(rule.quotation)].map(({ segment }) => segment.trim())));
+    const retained = sentences.flatMap((sentence, index) => evidence.has(sentence) ? [index + 1] : []);
+    return { source: doc.name, expected_policy_sentences: [...expected], retained_sentences: retained,
+      missing_policy_sentences: [...expected].filter((number) => !retained.includes(number)),
+      unexpected_retained_sentences: retained.filter((number) => !expected.has(number)) };
+  });
+}
+
+export async function runModelQuality(model: string, out: string, corpusName = "standard") {
+  const corpus = qualityCorpus(corpusName);
+  const qualityDocuments = corpus.documents, qualityCases = corpus.cases;
   await mkdir(out, { recursive: false, mode: 0o700 });
   const local = async (path: string, body?: unknown) => {
     const response = await fetch(`http://127.0.0.1:11434${path}`, { ...(body ? { method: "POST", body: JSON.stringify(body), headers: { "content-type": "application/json" } } : {}),
@@ -67,7 +82,7 @@ export async function runModelQuality(model: string, out: string) {
     const deadline = Date.now() + 180_000;
     while (Date.now() < deadline) {
       const done = engine.store.db.prepare("SELECT COUNT(*) AS n FROM derived_jobs WHERE operation='extraction' AND state='done'").get() as { n: number };
-      if (engine.store.listDocuments("company").filter((doc) => doc.status === "active").length === qualityDocuments.length && done.n === 6) { completed = true; break; }
+      if (engine.store.listDocuments("company").filter((doc) => doc.status === "active").length === qualityDocuments.length && done.n === qualityDocuments.filter((doc) => doc.role === "authoritative").length) { completed = true; break; }
       const failed = engine.store.db.prepare("SELECT COUNT(*) AS n FROM derived_jobs WHERE operation='extraction' AND state='failed'").get() as { n: number };
       if (failed.n > 0) break;
       await new Promise((doneWaiting) => setTimeout(doneWaiting, 100));
@@ -77,6 +92,9 @@ export async function runModelQuality(model: string, out: string) {
       source: basename(rule.sourcePath), text: rule.text, scope: rule.applicability, category: rule.category, quotation: rule.quotation,
       citation_exact: qualityDocuments.find((doc) => doc.name === basename(rule.sourcePath) && doc.role === "authoritative")?.text.includes(rule.quotation) ?? false,
     }));
+    const coverage = extractionCoverage(qualityDocuments, rules);
+    const coverageValid = coverage.every((doc) => doc.missing_policy_sentences.length === 0 && doc.unexpected_retained_sentences.length === 0);
+    const extractionJobs = engine.store.db.prepare(`SELECT d.path,j.state,j.attempts,j.error FROM derived_jobs j JOIN documents d ON d.id=j.document_id WHERE j.operation='extraction' ORDER BY d.path`).all() as Array<{ path: string; state: string; attempts: number; error: string | null }>;
     const results = [];
     for (const scenario of qualityCases) {
       for (const cap of [200, 500]) {
@@ -98,16 +116,18 @@ export async function runModelQuality(model: string, out: string) {
     }
     const endTags = await local("/api/tags") as typeof tags;
     const modelUnchanged = endTags.models?.find((item) => item.name === identity.name)?.digest === identity.digest;
-    const report = { recorded_at: recordedAt, synthetic_only: true, protocol_version: "quality-v4", completed, model_unchanged: modelUnchanged,
+    const report = { recorded_at: recordedAt, synthetic_only: true, protocol_version: "quality-v5", corpus: corpus.name, completed, model_unchanged: modelUnchanged,
       model: identity, runtime: await local("/api/version"), platform: process.platform, node: process.version, prompt_version: EXTRACTION_PROMPT_VERSION,
       fixture_sha256: createHash("sha256").update(JSON.stringify({ qualityDocuments, qualityCases })).digest("hex"),
       license: { artifact_details: metadata.details ?? null, license_present: !!metadata.license,
         license_sha256: metadata.license ? createHash("sha256").update(metadata.license).digest("hex") : null,
         review: "Artifact redistribution license/notice review pending; this experiment redistributes no model weights." },
       documents: qualityDocuments, cases: qualityCases, generations, rules, extraction_ms: extractionMs,
+      extraction_coverage: coverage, extraction_coverage_valid: coverageValid,
+      extraction_jobs: extractionJobs.map((job) => ({ source: basename(job.path), state: job.state, attempts: job.attempts, error_present: job.error !== null })),
       all_retained_citations_exact: rules.every((rule) => rule.citation_exact), reference_promoted: rules.some((rule) => rule.source === "vendor-guide.md"),
-      results, passed: completed && modelUnchanged && results.every((result) => result.correct) && rules.every((rule) => rule.citation_exact),
-      limitations: "Seven small synthetic cases. Regex qualifier checks are lexical diagnostics, not semantic entailment or unsupported-claim proof. Raw generations and retained rules require review. Embeddings and synthesis disabled. Conflicts are explicit-opposition diagnostics only. No statistical generalization or model redistribution license approval.",
+      results, passed: completed && modelUnchanged && coverageValid && results.every((result) => result.correct) && rules.every((rule) => rule.citation_exact),
+      limitations: "Small fixed synthetic corpus. Expected policy sentence coverage is fixture-specific, not a general semantic classifier. Regex qualifier checks are lexical diagnostics, not semantic entailment or unsupported-claim proof. Raw generations, explicit exclusions, and retained rules require review. Embeddings and synthesis disabled. Conflicts are explicit-opposition diagnostics only. No statistical generalization or model redistribution license approval.",
     };
     await writeFile(join(out, "quality.json"), JSON.stringify(report, null, 2) + "\n", { flag: "wx", mode: 0o600 });
     return report;
@@ -122,7 +142,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const arg = (name: string) => { const index = process.argv.indexOf(`--${name}`); return index < 0 ? undefined : process.argv[index + 1]; };
   const out = resolve(arg("out") ?? `packages/engine/evaluation/results/quality-${Date.now()}`);
   await mkdir(resolve(out, ".."), { recursive: true });
-  void runModelQuality(arg("model") ?? "qwen3.5:4b-mlx", out).then((report) => {
+  void runModelQuality(arg("model") ?? "qwen3.5:4b-mlx", out, arg("corpus")).then((report) => {
     process.stdout.write(JSON.stringify({ report: join(out, "quality.json"), passed: report.passed, correct: report.results.filter((result) => result.correct).length, total: report.results.length }) + "\n");
     if (!report.passed) process.exitCode = 1;
   }).catch(() => { process.stderr.write("Model quality evaluation failed; inspect preserved generations.\n"); process.exitCode = 1; });

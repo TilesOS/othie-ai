@@ -143,7 +143,31 @@ model digest, prompt version, and artifact license metadata. It refuses to overw
 existing output directory and verifies the model digest again afterward. A separate
 `generations.json` preserves responses if a later evaluation step fails.
 
-Protocol `quality-v4` scores qualifier regexes against packed rule text and supporting
+Protocol `quality-v5` additionally compares retained original sentences with the fixed
+corpus's expected policy sentences. Every authoritative sentence in the standard corpus
+is expected; extended mixed-policy documents declare their policy sentence numbers.
+Missing policy or retained non-policy/reference sentences fail this diagnostic independently
+of the retrieval cases. This is fixture-specific coverage, not a general semantic classifier.
+Reports include durable extraction-job states and attempt counts, so successful retries
+are visible. The `rules-v6` extractor requires a selected rule or an explicit non-policy
+disposition for every supplied sentence before publishing work. Its explicit exclusions
+still need semantic review and can misclassify policy.
+
+The default `--corpus standard` preserves the original seven-case input. Pass
+`--corpus extended` to add four authoritative documents and six cases covering regional
+defaults, descriptive facts and model instructions embedded in authoritative sources,
+linked access extensions, long whole-rule evidence, and two additional no-op controls:
+
+```sh
+npm run eval:quality -- --corpus extended --out /tmp/othie-quality-extended
+```
+
+The extended corpus deliberately probes the 200-token cap with a long incident-report
+requirement. A hard cap can correctly omit that complete rule while the quality diagnostic
+fails; passing token accounting does not establish evidence completeness. Both corpora
+use actual extraction and the same 200/500-token retrieval path.
+
+Protocol `quality-v4` introduced qualifier regexes against packed rule text and supporting
 quotations from the case's expected sources, excluding generated category/scope labels.
 Numeric words use boundaries so "written" cannot satisfy "ten". The intermediate
 `quality-v3` excluded labels but still allowed unrelated sources to satisfy qualifiers.
