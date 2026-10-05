@@ -9,14 +9,14 @@ synthetic documents and provider fixtures; it requires no model training or down
 | --- | --- |
 | `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 128 passing tests; one opt-in real-model test skipped |
+| `npm test` | 136 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host tests within `npm test` | Six process tests pass |
 | `npm run lint --workspace=@othie/website` | Pass |
-| Local compiler-quality evaluator, final coverage follow-up | Standard: 42/42 diagnostics and complete fixture coverage; extended: 19/26 each repeat, with non-policy promotion and long-evidence budget failures |
+| Local compiler-quality evaluator, classification follow-up | Standard: 42/42; extended: 75/78 with complete fixture coverage; adversarial acceptance fails on completion, classification, relevance, and packing |
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
-The full suite comprises 74 engine, 23 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 82 engine, 23 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -27,7 +27,7 @@ Windows fixture used `URL.pathname` to launch a local CLI; it now uses `fileURLT
 The [GitHub Actions run for commit 19a9dfe](https://github.com/TilesOS/othie-ai/actions/runs/37260102983)
 also passes on both runners with the then-current 118 deterministic tests, typechecks,
 clean installation, and Windows startup-script syntax check. This verifies the previous
-October 3–4 changes on Windows. The newer coverage/relevance changes through `41df142`
+October 3–4 changes on Windows. The newer coverage/relevance/classification changes through `444421a`
 have local macOS verification only. Those automated runner results do not establish
 native desktop-host or logon-startup acceptance.
 
@@ -220,6 +220,56 @@ dependency audit is clean. No model artifacts were downloaded or distributed. Na
 host/desktop acceptance was not repeated; CI for the preceding head passes on macOS and
 Windows, while the new local commits still need their own Windows CI.
 
+## October 5 compiler classification follow-up
+
+The [classification follow-up records](packages/engine/evaluation/records/2026-10-05/classification-followup/README.md)
+preserve 11 full synthetic evaluations and two isolated probes, including failed runs.
+`rules-v9` first classifies each original sentence with an inspection explanation, then
+selects complete policy ranges. The engine requires complete classifications and rejects
+recovered evidence or exclusions that contradict them. Qualification attachment stops at
+classified non-policy boundaries. Explanations never become policy evidence. Both model
+requests use the same approved extraction provider and share a deadline and shutdown
+signal; all-non-policy sources skip selection. The prompt upgrade triggers startup reindexing.
+Tests cover identities, coverage, exclusions, qualification boundaries, cancellation,
+and durable recovery without publishing an instruction swallowed by a rejected range.
+
+Three fresh standard repeats pass 42/42 diagnostics. Three extended repeats pass 75/78,
+with complete expected policy/non-policy coverage in every run: 36/39 at 200 tokens and
+39/39 at 500. Each excludes the maintenance source's descriptions and instruction. Only
+long incident-report evidence still fails at 200 tokens. Standard/extended fixture hashes
+and `quality-v5` scoring are unchanged from the preceding records. The extra classification
+request adds indexing work; this result does not establish general semantic acceptance.
+
+A separately scored adversarial superset adds six authoritative documents and eight cases,
+for 16 authoritative documents, 36 expected policy sentences, 13 expected non-policy
+sentences, and 21 retrieval cases. It probes history, a quoted display title containing
+"must", varied model instructions, legitimate assistant-use policies, qualification
+boundaries, and an all-non-policy source. New evaluator metadata records schemas/options
+alongside messages and raw outputs; early repeats lack these additive fields.
+
+Adversarial repeat 1 reaches the 180-second evaluator deadline with one extraction job
+pending after seven attempts; operational gating makes all 42 diagnostic scores false.
+It also promotes the quoted display title. Repeat 2 completes at 38/42 with that title
+still retained. Repeat 3 completes at 38/42 with exact expected sentence coverage. Both
+completed repeats lose maintenance notice and long incident evidence during 200-token
+packing among overlapping policy vocabularies. Their descriptive no-op fails at both caps:
+even with correct classification, "seventeen minutes" matches a support policy on the
+single word "minutes". Their instruction and all-non-policy controls pass. Generated
+selection can ignore correct classifications, causing rejection and repeated work.
+
+The old `rules-v6` extractor, evaluated once in an isolated temporary build with the same
+new fixtures/scoring/retrieval, completes at 28/42 while retaining non-policy or model
+instructions from five authoritative documents. This is one unseeded comparison, not a
+causal quality or latency estimate. A shorter selector prompt tested on three failed
+sources still crosses exclusions and is not retained. All failures remain recorded.
+
+Every full report preserves exact retained citations, vendor reference isolation,
+accurate hard caps, and unchanged installed model digest, including the incomplete run.
+These checks cannot reject a semantically incorrect classification. Full workspace build,
+typechecks, website lint, production audit, and all 136 deterministic tests pass locally
+with process/socket access. Native host/desktop acceptance and current Windows CI were
+not repeated; no model artifacts were downloaded or distributed.
+
 ## Remaining acceptance work
 
 - Codex project-file discovery and persisted interactive hook-trust acceptance; Claude
@@ -229,12 +279,14 @@ Windows, while the new local commits still need their own Windows CI.
   suite; the new changes also need current Windows CI verification.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
-- Compiler semantic classification and selection completeness: explicit dispositions
-  prevent unaccounted sentences, but can label policy as descriptive or promote model
-  instructions and non-policy facts. Final standard repeats pass; every extended repeat
-  still fails classification/no-op checks and long whole-evidence packing at 200 tokens.
-  Larger corpora must evaluate source lengths, rule grouping, and linked evidence. Label
-  entailment, embeddings, synthesis, semantic grading, and comparisons across models remain open.
+- Compiler classification, selection reliability, relevance, and packing: final standard
+  repeats pass; extended repeats exclude the observed non-policy/instruction promotion,
+  but still lose long whole-evidence context at 200 tokens. Adversarial runs expose quoted
+  history misclassification, selector disagreement/retries, generic word false positives,
+  and packing losses among overlapping rules. Next evaluate structurally constrained or
+  deterministic selections from explicit classifications and tighter relevance, keeping
+  these failures and expected coverage visible. Larger corpora, linked evidence, label
+  entailment, embeddings, synthesis, semantic grading, and additional models remain open.
 - Signed desktop installers, guided onboarding, and model artifact distribution. Native
   Windows hardware/session access, signing identities, and reviewed redistributable model
   artifacts are not available as established acceptance inputs in this run.

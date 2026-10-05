@@ -212,3 +212,12 @@ pass 42/42 retrieval diagnostics with every expected policy sentence retained. F
 extended repeats each pass 19/26; non-policy/model-instruction promotion fails no-op checks
 at both caps, and long whole-rule evidence fails at 200 tokens. Passing bookkeeping and
 the standard corpus do not establish semantic classification acceptance.
+
+The [October 5 classification records](records/2026-10-05/classification-followup/README.md)
+preserve 11 full evaluations and two isolated probes. `rules-v9` standard repeats pass
+42/42 and extended repeats pass 75/78 with exact expected sentence coverage. The larger
+adversarial corpus still fails on operational completion, quoted-history classification,
+generic word relevance, and crowded 200-token packing. A single previous-extractor
+comparison scores 28/42 versus 38/42 in each completed new-extractor repeat; an additional
+new-extractor repeat reaches the deadline. These observations do not establish reliable
+general classification or a controlled latency/quality advantage.

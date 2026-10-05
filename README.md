@@ -77,6 +77,14 @@ authoritative source, and loses long whole-rule evidence at 200 tokens. Those fa
 including unsuccessful classification trials, remain recorded rather than hidden by
 the smaller passing corpus.
 
+The [October 5 classification follow-up](packages/engine/evaluation/records/2026-10-05/classification-followup/README.md)
+adds a separate sentence classification step and rejects selections that contradict it.
+Fresh standard repeats pass 42/42 diagnostics; extended repeats improve to 75/78, losing
+only long evidence at 200 tokens. A larger adversarial corpus still fails: retries can
+reach the evaluator deadline, quoted history can become policy, and generic word matches
+and crowded budgets can deliver incomplete or irrelevant context. All unsuccessful runs
+are preserved alongside the smaller passing results.
+
 ## Repository layout
 
 ```text
