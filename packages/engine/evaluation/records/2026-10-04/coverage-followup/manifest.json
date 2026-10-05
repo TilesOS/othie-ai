@@ -1,0 +1,582 @@
+{
+  "synthetic_only": true,
+  "records": [
+    {
+      "name": "coverage-initial",
+      "code": "906d8da",
+      "stage": "Initial coverage guard",
+      "protocol": "quality-v4",
+      "prompt": "rules-v6",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "passed": true,
+      "completed": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 9,
+      "coverage_failures": null,
+      "retried_jobs": null
+    },
+    {
+      "name": "coverage-final-1",
+      "code": "361464e",
+      "stage": "Coverage standard repeat 1",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "passed": true,
+      "completed": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 12,
+      "coverage_failures": [],
+      "retried_jobs": []
+    },
+    {
+      "name": "coverage-final-2",
+      "code": "361464e",
+      "stage": "Coverage standard repeat 2",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "passed": true,
+      "completed": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 8,
+      "coverage_failures": [],
+      "retried_jobs": []
+    },
+    {
+      "name": "coverage-final-3",
+      "code": "361464e",
+      "stage": "Coverage standard repeat 3",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "passed": true,
+      "completed": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 9,
+      "coverage_failures": [],
+      "retried_jobs": []
+    },
+    {
+      "name": "coverage-extended-1",
+      "code": "361464e",
+      "stage": "Initial extended repeat 1",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "passed": false,
+      "completed": true,
+      "correct_200": 9,
+      "correct_500": 10,
+      "cases": 13,
+      "rules": 20,
+      "coverage_failures": [
+        {
+          "source": "maintenance.md",
+          "expected_policy_sentences": [
+            2,
+            4
+          ],
+          "retained_sentences": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "missing_policy_sentences": [],
+          "unexpected_retained_sentences": [
+            1,
+            3,
+            5
+          ]
+        }
+      ],
+      "retried_jobs": []
+    },
+    {
+      "name": "coverage-extended-2",
+      "code": "361464e",
+      "stage": "Initial extended repeat 2",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "passed": false,
+      "completed": true,
+      "correct_200": 9,
+      "correct_500": 10,
+      "cases": 13,
+      "rules": 14,
+      "coverage_failures": [
+        {
+          "source": "maintenance.md",
+          "expected_policy_sentences": [
+            2,
+            4
+          ],
+          "retained_sentences": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "missing_policy_sentences": [],
+          "unexpected_retained_sentences": [
+            1,
+            3,
+            5
+          ]
+        }
+      ],
+      "retried_jobs": []
+    },
+    {
+      "name": "coverage-extended-3",
+      "code": "361464e",
+      "stage": "Initial extended repeat 3",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "passed": false,
+      "completed": true,
+      "correct_200": 8,
+      "correct_500": 9,
+      "cases": 13,
+      "rules": 20,
+      "coverage_failures": [
+        {
+          "source": "telemetry.md",
+          "expected_policy_sentences": [
+            1,
+            2,
+            3
+          ],
+          "retained_sentences": [
+            1,
+            2
+          ],
+          "missing_policy_sentences": [
+            3
+          ],
+          "unexpected_retained_sentences": []
+        },
+        {
+          "source": "maintenance.md",
+          "expected_policy_sentences": [
+            2,
+            4
+          ],
+          "retained_sentences": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "missing_policy_sentences": [],
+          "unexpected_retained_sentences": [
+            1,
+            3
+          ]
+        }
+      ],
+      "retried_jobs": [
+        {
+          "source": "current-export.md",
+          "state": "done",
+          "attempts": 2,
+          "error_present": false
+        }
+      ]
+    },
+    {
+      "name": "classification-initial",
+      "code": "361464e + uncommitted rules-v7 prompt/schema order",
+      "stage": "Prompt-only classification trial",
+      "protocol": "quality-v5",
+      "prompt": "rules-v7",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "passed": false,
+      "completed": true,
+      "correct_200": 9,
+      "correct_500": 10,
+      "cases": 13,
+      "rules": 18,
+      "coverage_failures": [
+        {
+          "source": "maintenance.md",
+          "expected_policy_sentences": [
+            2,
+            4
+          ],
+          "retained_sentences": [
+            2,
+            3,
+            4
+          ],
+          "missing_policy_sentences": [],
+          "unexpected_retained_sentences": [
+            3
+          ]
+        }
+      ],
+      "retried_jobs": []
+    },
+    {
+      "name": "sentences-initial",
+      "code": "07910f5 + uncommitted rules-v8 extraction format",
+      "stage": "Sentence-only extended trial",
+      "protocol": "quality-v5",
+      "prompt": "rules-v8",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "passed": false,
+      "completed": true,
+      "correct_200": 9,
+      "correct_500": 10,
+      "cases": 13,
+      "rules": 22,
+      "coverage_failures": [
+        {
+          "source": "travel.md",
+          "expected_policy_sentences": [
+            1,
+            2,
+            3
+          ],
+          "retained_sentences": [
+            2,
+            3
+          ],
+          "missing_policy_sentences": [
+            1
+          ],
+          "unexpected_retained_sentences": []
+        },
+        {
+          "source": "leave.md",
+          "expected_policy_sentences": [
+            1,
+            2,
+            3
+          ],
+          "retained_sentences": [
+            1,
+            2
+          ],
+          "missing_policy_sentences": [
+            3
+          ],
+          "unexpected_retained_sentences": []
+        },
+        {
+          "source": "maintenance.md",
+          "expected_policy_sentences": [
+            2,
+            4
+          ],
+          "retained_sentences": [
+            2,
+            3,
+            4
+          ],
+          "missing_policy_sentences": [],
+          "unexpected_retained_sentences": [
+            3
+          ]
+        }
+      ],
+      "retried_jobs": [
+        {
+          "source": "receipts.md",
+          "state": "done",
+          "attempts": 2,
+          "error_present": false
+        },
+        {
+          "source": "telemetry.md",
+          "state": "done",
+          "attempts": 2,
+          "error_present": false
+        }
+      ]
+    },
+    {
+      "name": "sentences-standard-1",
+      "code": "07910f5 + uncommitted rules-v8 extraction format",
+      "stage": "Sentence-only standard repeat 1",
+      "protocol": "quality-v5",
+      "prompt": "rules-v8",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "passed": false,
+      "completed": true,
+      "correct_200": 6,
+      "correct_500": 6,
+      "cases": 7,
+      "rules": 11,
+      "coverage_failures": [
+        {
+          "source": "leave.md",
+          "expected_policy_sentences": [
+            1,
+            2,
+            3
+          ],
+          "retained_sentences": [],
+          "missing_policy_sentences": [
+            1,
+            2,
+            3
+          ],
+          "unexpected_retained_sentences": []
+        }
+      ],
+      "retried_jobs": []
+    },
+    {
+      "name": "sentences-standard-2",
+      "code": "07910f5 + uncommitted rules-v8 extraction format",
+      "stage": "Sentence-only standard repeat 2",
+      "protocol": "quality-v5",
+      "prompt": "rules-v8",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "passed": true,
+      "completed": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 14,
+      "coverage_failures": [],
+      "retried_jobs": [
+        {
+          "source": "receipts.md",
+          "state": "done",
+          "attempts": 2,
+          "error_present": false
+        }
+      ]
+    },
+    {
+      "name": "sentences-standard-3",
+      "code": "07910f5 + uncommitted rules-v8 extraction format",
+      "stage": "Sentence-only standard repeat 3",
+      "protocol": "quality-v5",
+      "prompt": "rules-v8",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "passed": true,
+      "completed": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 14,
+      "coverage_failures": [],
+      "retried_jobs": []
+    },
+    {
+      "name": "reviewed-standard-1",
+      "code": "41df142",
+      "stage": "Retained code standard repeat 1",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "passed": true,
+      "completed": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 11,
+      "coverage_failures": [],
+      "retried_jobs": [
+        {
+          "source": "telemetry.md",
+          "state": "done",
+          "attempts": 2,
+          "error_present": false
+        },
+        {
+          "source": "travel.md",
+          "state": "done",
+          "attempts": 2,
+          "error_present": false
+        }
+      ]
+    },
+    {
+      "name": "reviewed-standard-2",
+      "code": "41df142",
+      "stage": "Retained code standard repeat 2",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "passed": true,
+      "completed": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 11,
+      "coverage_failures": [],
+      "retried_jobs": []
+    },
+    {
+      "name": "reviewed-standard-3",
+      "code": "41df142",
+      "stage": "Retained code standard repeat 3",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "passed": true,
+      "completed": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 10,
+      "coverage_failures": [],
+      "retried_jobs": []
+    },
+    {
+      "name": "reviewed-extended-1",
+      "code": "41df142",
+      "stage": "Retained code extended repeat 1",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "passed": false,
+      "completed": true,
+      "correct_200": 9,
+      "correct_500": 10,
+      "cases": 13,
+      "rules": 20,
+      "coverage_failures": [
+        {
+          "source": "maintenance.md",
+          "expected_policy_sentences": [
+            2,
+            4
+          ],
+          "retained_sentences": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "missing_policy_sentences": [],
+          "unexpected_retained_sentences": [
+            1,
+            3,
+            5
+          ]
+        }
+      ],
+      "retried_jobs": [
+        {
+          "source": "maintenance.md",
+          "state": "done",
+          "attempts": 3,
+          "error_present": false
+        }
+      ]
+    },
+    {
+      "name": "reviewed-extended-2",
+      "code": "41df142",
+      "stage": "Retained code extended repeat 2",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "passed": false,
+      "completed": true,
+      "correct_200": 9,
+      "correct_500": 10,
+      "cases": 13,
+      "rules": 20,
+      "coverage_failures": [
+        {
+          "source": "maintenance.md",
+          "expected_policy_sentences": [
+            2,
+            4
+          ],
+          "retained_sentences": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "missing_policy_sentences": [],
+          "unexpected_retained_sentences": [
+            1,
+            3,
+            5
+          ]
+        }
+      ],
+      "retried_jobs": [
+        {
+          "source": "telemetry.md",
+          "state": "done",
+          "attempts": 2,
+          "error_present": false
+        }
+      ]
+    },
+    {
+      "name": "reviewed-extended-3",
+      "code": "41df142",
+      "stage": "Retained code extended repeat 3",
+      "protocol": "quality-v5",
+      "prompt": "rules-v6",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "passed": false,
+      "completed": true,
+      "correct_200": 9,
+      "correct_500": 10,
+      "cases": 13,
+      "rules": 22,
+      "coverage_failures": [
+        {
+          "source": "maintenance.md",
+          "expected_policy_sentences": [
+            2,
+            4
+          ],
+          "retained_sentences": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "missing_policy_sentences": [],
+          "unexpected_retained_sentences": [
+            1,
+            3,
+            5
+          ]
+        }
+      ],
+      "retried_jobs": [
+        {
+          "source": "receipts.md",
+          "state": "done",
+          "attempts": 2,
+          "error_present": false
+        },
+        {
+          "source": "telemetry.md",
+          "state": "done",
+          "attempts": 2,
+          "error_present": false
+        }
+      ]
+    }
+  ]
+}

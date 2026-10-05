@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated October 4, 2026 on macOS with Node.js 24.18.0. The deterministic suite uses
+Updated October 5, 2026 on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
 
 ## Checks run
@@ -9,14 +9,14 @@ synthetic documents and provider fixtures; it requires no model training or down
 | --- | --- |
 | `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 118 passing tests; one opt-in real-model test skipped |
+| `npm test` | 128 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host tests within `npm test` | Six process tests pass |
 | `npm run lint --workspace=@othie/website` | Pass |
-| Local compiler-quality evaluator, three October 4 final runs | Operational/safety checks pass; diagnostics 14/14, 12/14, 14/14; one repeat fails extraction completeness at both caps |
+| Local compiler-quality evaluator, final coverage follow-up | Standard: 42/42 diagnostics and complete fixture coverage; extended: 19/26 each repeat, with non-policy promotion and long-evidence budget failures |
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
-The full suite comprises 64 engine, 23 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 74 engine, 23 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -24,8 +24,11 @@ The [GitHub Actions run for code commit 504c27f](https://github.com/TilesOS/othi
 also passes on `macos-14` and `windows-latest`: clean `npm ci`, all workspace typechecks,
 the then-current 93 tests, and the Windows startup-script syntax check. A pre-existing
 Windows fixture used `URL.pathname` to launch a local CLI; it now uses `fileURLToPath`.
-The October 3–4 changes have local macOS verification only; that historical CI run
-does not verify these changes on Windows. Those automated runner results do not establish
+The [GitHub Actions run for commit 19a9dfe](https://github.com/TilesOS/othie-ai/actions/runs/37260102983)
+also passes on both runners with the then-current 118 deterministic tests, typechecks,
+clean installation, and Windows startup-script syntax check. This verifies the previous
+October 3–4 changes on Windows. The newer coverage/relevance changes through `41df142`
+have local macOS verification only. Those automated runner results do not establish
 native desktop-host or logon-startup acceptance.
 
 ## Delivery and credential coverage
@@ -174,6 +177,49 @@ typechecks, website lint, production dependency audit, and 118 deterministic tes
 locally with the required process/socket access. No model weights were downloaded or
 distributed. Native host/desktop acceptance and Windows verification were not repeated.
 
+## October 4 sentence coverage and mixed-source follow-up
+
+The [coverage follow-up records](packages/engine/evaluation/records/2026-10-04/coverage-followup/README.md)
+preserve 18 synthetic evaluations, including unsuccessful classification trials and six
+final retained-code repeats. `rules-v6` requires every authoritative sentence to appear
+in recovered rule evidence or an explicit non-policy disposition. Unknown IDs, invalid
+or oversized selections, incomplete coverage, and contradictory/duplicate exclusions
+reject the complete response; the durable queue retries without publishing partial rules.
+Tests verify recovery after an incomplete response and reject policy ranges swallowing
+an explicitly excluded model instruction. Prompt upgrades still trigger startup reindexing.
+
+`quality-v5` now scores every expected policy sentence in the fixed fixtures independently
+of retrieval diagnostics, and detects retained non-policy/reference sentences. Job attempt
+counts expose retries. The standard corpus preserves the original seven cases; an extended
+corpus adds four authoritative documents and six cases for regional defaults, mixed-source
+classification, linked access exceptions, long evidence, and two additional no-op controls.
+Keyword hits in unrelated source sentences no longer promote a rule: each rule must match
+the query in its own evidence. Actual vector hits and global rules retain their existing
+behavior. A deterministic mixed-source regression reproduces and verifies this relevance fix.
+
+Final code `41df142` passes 14/14 standard diagnostics in all three repeats (42/42), with
+every expected policy sentence retained. One repeat recovers telemetry and travel after
+rejected extraction responses. All three extended repeats score 19/26 (9/13 at 200 tokens,
+10/13 at 500). They retain all expected policy but also promote the maintenance source's
+two descriptive sentences and model-directed instruction. Three no-op cases fail at both
+caps. The long incident requirement is extracted but omitted at 200 tokens; its diagnostic
+passes at 500. No scoring exception or truncated evidence masks these failures.
+
+An initial extended repeat explicitly classified the non-EU telemetry default as descriptive,
+which coverage bookkeeping alone cannot reject. Prompt-only and sentence-only classification
+trials also misclassified evidence; one sentence-only repeat excluded the whole leave policy.
+Those trials are preserved but not retained in code. Semantic classification and general
+selection completeness therefore remain open despite the final standard corpus passing.
+
+All 18 runs complete with unchanged installed model digest, exact retained citations,
+no vendor reference rules promoted, and accurate hard caps. Instruction promotion within
+an authoritative source is a separate observed failure. These fixed, unseeded local runs
+provide no statistical or general quality claim. Full build, typechecks, website lint,
+and 128 deterministic tests pass locally with process/socket access; the production
+dependency audit is clean. No model artifacts were downloaded or distributed. Native
+host/desktop acceptance was not repeated; CI for the preceding head passes on macOS and
+Windows, while the new local commits still need their own Windows CI.
+
 ## Remaining acceptance work
 
 - Codex project-file discovery and persisted interactive hook-trust acceptance; Claude
@@ -183,12 +229,12 @@ distributed. Native host/desktop acceptance and Windows verification were not re
   suite; the new changes also need current Windows CI verification.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
-- Compiler selection completeness: the final October 4 repeat set still includes an
-  omitted non-EU telemetry default, failing at both caps. The fixed 200-token cases now
-  retain required linked statements/exceptions when extracted, and both conflict sides
-  fit in every repeat. Larger corpora must still evaluate budget sensitivity to source
-  lengths, rule grouping, and linked evidence. Label entailment, embeddings, synthesis,
-  semantic grading, and comparisons across multiple models remain open.
+- Compiler semantic classification and selection completeness: explicit dispositions
+  prevent unaccounted sentences, but can label policy as descriptive or promote model
+  instructions and non-policy facts. Final standard repeats pass; every extended repeat
+  still fails classification/no-op checks and long whole-evidence packing at 200 tokens.
+  Larger corpora must evaluate source lengths, rule grouping, and linked evidence. Label
+  entailment, embeddings, synthesis, semantic grading, and comparisons across models remain open.
 - Signed desktop installers, guided onboarding, and model artifact distribution. Native
   Windows hardware/session access, signing identities, and reviewed redistributable model
   artifacts are not available as established acceptance inputs in this run.

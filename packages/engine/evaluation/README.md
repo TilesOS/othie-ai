@@ -191,3 +191,10 @@ The [October 4 compiler records](records/2026-10-04/compiler-followup/README.md)
 five runs, including three final `quality-v4` repeats (14/14, 12/14, 14/14). Both conflict
 sides fit at 200 tokens in every final repeat. The failed repeat omits the non-EU telemetry
 default during extraction, failing at both caps; consistent selection remains open.
+
+The [coverage follow-up records](records/2026-10-04/coverage-followup/README.md) preserve
+18 further evaluations and the retained `rules-v6` implementation. Final standard repeats
+pass 42/42 retrieval diagnostics with every expected policy sentence retained. Final
+extended repeats each pass 19/26; non-policy/model-instruction promotion fails no-op checks
+at both caps, and long whole-rule evidence fails at 200 tokens. Passing bookkeeping and
+the standard corpus do not establish semantic classification acceptance.

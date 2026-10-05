@@ -69,6 +69,14 @@ fits both conflict sides at 200 tokens and scores 14/14, 12/14, and 14/14 across
 fresh extractions with stricter source-specific diagnostics. The failing repeat omits a
 telemetry default during extraction at both caps, so consistent selection remains open.
 
+The [sentence coverage follow-up](packages/engine/evaluation/records/2026-10-04/coverage-followup/README.md)
+rejects unaccounted sentences and keyword matches outside a rule's evidence. Three final
+standard-corpus repeats pass 42/42 diagnostics with complete fixture coverage. A separate
+13-case stress corpus still promotes non-policy text and model instructions from an
+authoritative source, and loses long whole-rule evidence at 200 tokens. Those failures,
+including unsuccessful classification trials, remain recorded rather than hidden by
+the smaller passing corpus.
+
 ## Repository layout
 
 ```text
