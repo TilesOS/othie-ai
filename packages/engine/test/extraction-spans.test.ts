@@ -63,3 +63,16 @@ it("sends numbered body sentences only and never exports reference evidence for 
   expect(rules[0]?.revisionId).toBe(chunk.revisionId);
   expect(rules[0]?.sourcePath).toBe(chunk.sourcePath);
 });
+
+it("constrains generation to invocation-local source IDs and still rejects fabricated IDs", async () => {
+  const config = configSchema.parse({ version: 1, profiles: { company: { sources: [{ root: "/synthetic", role: "authoritative" }] } } });
+  const enums: string[][] = [];
+  const providers = { require: () => ({ generateJson: async (_messages: unknown, _model: string, schema: any) => {
+    enums.push(schema.properties.rules.items.properties.source_id.enum);
+    return { rules: [{ ...proposal, source_id: "s3" }] };
+  } }) };
+  const input = { config, profile: config.profiles.company!, providers: providers as never, global: false };
+  expect(await extractRules({ ...input, chunks: [chunk, { ...chunk, id: "second", documentId: "other" }, { ...chunk, id: "reference", sourceRole: "reference" }] })).toEqual([]);
+  expect(await extractRules({ ...input, chunks: [chunk] })).toEqual([]);
+  expect(enums).toEqual([["s1", "s2"], ["s1"]]);
+});
