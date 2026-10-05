@@ -63,6 +63,31 @@ describe("rules and whole-item budgets",()=>{
     const result=await compiler.get("company",{query:"nothing matches"});expect(result.status.mode).toBe("empty");expect(result.brief.schema_version).toBe("1");expect(result.brief.request).toEqual({surface:"unknown",phase:"on_demand"});expect(result.brief.applicable_rules).toEqual([]);expect(result.brief.permitted_excerpts).toEqual([]);expect(result.brief.synthesis).toBeUndefined();expect(result.brief.context_text).toContain("<items></items>");await lance.close();store.close();
   });
 
+  it("fits both opposing verbatim rules at 200 tokens independently of generated label lengths", async () => {
+    const f = await fixture(); cleanups.push(f.root);
+    const base = { profile: "company", category: "permission", applicability: "employees", location: "lines 1-1",
+      authorityPriority: 80, global: false, modelIdentity: "test", promptVersion: EXTRACTION_PROMPT_VERSION };
+    const rules: RuleRecord[] = [
+      { ...base, id: "allow", documentId: "a", revisionId: "av", sourcePath: `${f.docs}/current-export.md`,
+        text: "Employees may export customer records as CSV for the migration project.", quotation: "Employees may export customer records as CSV for the migration project." },
+      { ...base, id: "deny", documentId: "b", revisionId: "bv", sourcePath: `${f.docs}/legacy-export.md`,
+        text: "Employees must not export customer records as CSV for the migration project.", quotation: "Employees must not export customer records as CSV for the migration project." },
+    ];
+    const pack = (rules: RuleRecord[]) => packContext("company", f.config.profiles.company!, { query: "CSV migration", max_tokens: 200 },
+      { rules, excerpts: [], keywordAvailable: true, vectorAvailable: false }, false, { corpus: 1, rules: 1 });
+    const result = pack(rules);
+    expect(result.brief.applicable_rules.map((rule) => rule.text)).toEqual(rules.map((rule) => rule.text));
+    expect(result.brief.conflicts[0]?.rule_ids).toEqual(["r1", "r2"]);
+    expect(result.text).toContain('omitted="false"');
+    expect(result.status.omittedItems).toBe(0);
+    expect(result.status.tokenCount).toBe(countTokens(result.text, "o200k_base"));
+    expect(result.status.tokenCount).toBeLessThanOrEqual(200);
+    const long = pack(rules.map((rule) => ({ ...rule, category: "unverified label ".repeat(5), applicability: "unverified scope ".repeat(50) })));
+    expect(long.text).toBe(result.text);
+    expect(long.brief.applicable_rules[0]?.scope).toContain("unverified scope");
+    expect(long.text).not.toContain("unverified");
+  });
+
   it("coalesces and caches synthesis, then invalidates on rule and policy revision",async()=>{
     const f=await fixture();cleanups.push(f.root);const store=new ManifestStore(`${f.data}/manifest.sqlite`);const doc="d",rev="r";store.beginReplacement({documentId:doc,revisionId:rev,path:`${f.docs}/policy.md`,profile:"company",role:"authoritative",authority:90,weight:1,contentHash:"h",parserVersion:"1",chunkerVersion:"1",mtimeMs:1,size:1});store.publishReplacement(doc,rev,"h",[]);const rule:RuleRecord={id:"rule-1",profile:"company",documentId:doc,revisionId:rev,sourcePath:`${f.docs}/policy.md`,text:"Support replies must arrive within four hours.",category:"support",applicability:"all tickets",quotation:"within four hours",location:"paragraph 1",authorityPriority:90,global:true,modelIdentity:"ollama:qwen3:4b:test",promptVersion:EXTRACTION_PROMPT_VERSION};store.replaceRules(doc,rev,[rule]);let generations=0;const fakeProvider={id:"ollama",remote:false,embed:async()=>[Array(768).fill(0.01)],generateJson:async()=>{generations++;await new Promise((resolve)=>setTimeout(resolve,20));return{text:"Reply within four hours.",citation_ids:["rule-1"]};}};const fakeProviders={require:()=>fakeProvider};const fakeLance={keywordIds:async()=>[],vectorIds:async()=>[]};const compiler=new ContextCompiler(f.config,store,fakeLance as never,fakeProviders as never);const [synthesized]=await Promise.all([compiler.get("company",{query:"support",synthesize:true}),compiler.get("company",{query:"support",synthesize:true})]);expect(generations).toBe(1);expect(synthesized.brief.synthesis).toEqual({text:"Reply within four hours.",citations:[{source:"s1/policy.md",at:"paragraph 1"}]});expect(synthesized.text).toContain("<synthesis>");await compiler.get("company",{query:"support",synthesize:true});expect(generations).toBe(1);store.replaceRules(doc,rev,[rule]);await compiler.get("company",{query:"support",synthesize:true});expect(generations).toBe(2);f.config.profiles.company!.permitted_exports="rules_only";await compiler.get("company",{query:"support",synthesize:true});expect(generations).toBe(3);store.close();
   });

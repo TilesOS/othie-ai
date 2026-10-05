@@ -48,10 +48,13 @@ export function packContext(profileName: string, profile: OthieProfile, request:
     const body = rule.text === rule.quotation
       ? `<text verbatim="true">${escapeXml(rule.text)}</text>`
       : `<text>${escapeXml(rule.text)}</text><quote>${escapeXml(rule.quotation)}</quote>`;
+    // Verbatim evidence states its own conditions and scope. Generated labels
+    // must not crowd out that evidence or add unsupported claims to host prompts.
+    const labels = rule.text === rule.quotation ? "" : ` category="${xmlAttr(rule.category)}" scope="${xmlAttr(rule.applicability)}"`;
     items.push({
       sourceId: rule.id,
       kind: "rule",
-      xml: `<rule id="${id}" category="${xmlAttr(rule.category)}" scope="${xmlAttr(rule.applicability)}" authority="${rule.authorityPriority}">${body}${citationXml(evidence)}</rule>`,
+      xml: `<rule id="${id}"${labels} authority="${rule.authorityPriority}">${body}${citationXml(evidence)}</rule>`,
       rule: { id, text: rule.text, category: rule.category, scope: rule.applicability, authority: rule.authorityPriority, citation: evidence },
     });
   };

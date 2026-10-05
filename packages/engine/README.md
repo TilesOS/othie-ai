@@ -101,6 +101,9 @@ Successful context calls return both the existing XML `TextContent` and a
 `structuredContent` `ContextBriefV1`. The brief contains the same packed rules,
 sentence-level excerpts, synthesis, safe citation labels, conflicts, and status as the
 XML result; omitted or over-budget candidates are not copied into the structured form.
+For verbatim rules, XML omits generated category/scope labels: the original evidence
+states the conditions and scope. The brief retains these labels as descriptive metadata;
+they are not verified policy claims and do not consume the host's text budget.
 External facts, navigation hints, and verification checks remain explicit empty arrays
 until trustworthy producers exist. Legacy callers can continue reading the text block.
 
