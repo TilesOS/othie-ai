@@ -88,6 +88,30 @@ describe("rules and whole-item budgets",()=>{
     expect(long.text).not.toContain("unverified");
   });
 
+  it("shares citation overhead for whole verbatim statements without mixing locations or revisions", async () => {
+    const f = await fixture(); cleanups.push(f.root);
+    const texts = ["EU users must not have telemetry enabled without explicit consent.",
+      "A missing consent value is not explicit consent.", "Outside the EU, telemetry defaults to enabled unless consent is explicitly false."];
+    const rules: RuleRecord[] = texts.map((text, index) => ({ id: `telemetry-${index}`, profile: "company", documentId: "d", revisionId: "v",
+      sourcePath: `${f.docs}/telemetry.md`, location: "lines 1-1", category: "telemetry", applicability: "users", authorityPriority: 80,
+      text, quotation: text, global: false, modelIdentity: "test", promptVersion: EXTRACTION_PROMPT_VERSION }));
+    const pack = (rules: RuleRecord[], max_tokens = 200) => packContext("company", f.config.profiles.company!, { query: "telemetry consent", max_tokens },
+      { rules, excerpts: [], keywordAvailable: true, vectorAvailable: false }, false, { corpus: 1, rules: 1 });
+    const result = pack(rules);
+    expect(result.brief.applicable_rules.map((rule) => rule.text)).toEqual(texts);
+    expect(result.text.match(/<citation /g)).toHaveLength(1);
+    expect(result.text).toContain('<rule_group authority="80">');
+    expect(result.brief.applicable_rules.every((rule) => rule.citation.source === "s1/telemetry.md" && rule.citation.quote === rule.text)).toBe(true);
+    expect(result.status.omittedItems).toBe(0);
+    expect(result.status.tokenCount).toBe(countTokens(result.text, "o200k_base"));
+    expect(result.status.tokenCount).toBeLessThanOrEqual(200);
+    for (const change of [{ revisionId: "other" }, { documentId: "other" }, { location: "lines 2-2" }, { authorityPriority: 20 }, { sourcePath: `${f.docs}/other.md` }]) {
+      const separated = pack(rules.map((rule, index) => index === 1 ? { ...rule, ...change } : rule), 500);
+      expect(separated.text).not.toContain("<rule_group");
+      expect(separated.text.match(/<citation /g)).toHaveLength(3);
+    }
+  });
+
   it("coalesces and caches synthesis, then invalidates on rule and policy revision",async()=>{
     const f=await fixture();cleanups.push(f.root);const store=new ManifestStore(`${f.data}/manifest.sqlite`);const doc="d",rev="r";store.beginReplacement({documentId:doc,revisionId:rev,path:`${f.docs}/policy.md`,profile:"company",role:"authoritative",authority:90,weight:1,contentHash:"h",parserVersion:"1",chunkerVersion:"1",mtimeMs:1,size:1});store.publishReplacement(doc,rev,"h",[]);const rule:RuleRecord={id:"rule-1",profile:"company",documentId:doc,revisionId:rev,sourcePath:`${f.docs}/policy.md`,text:"Support replies must arrive within four hours.",category:"support",applicability:"all tickets",quotation:"within four hours",location:"paragraph 1",authorityPriority:90,global:true,modelIdentity:"ollama:qwen3:4b:test",promptVersion:EXTRACTION_PROMPT_VERSION};store.replaceRules(doc,rev,[rule]);let generations=0;const fakeProvider={id:"ollama",remote:false,embed:async()=>[Array(768).fill(0.01)],generateJson:async()=>{generations++;await new Promise((resolve)=>setTimeout(resolve,20));return{text:"Reply within four hours.",citation_ids:["rule-1"]};}};const fakeProviders={require:()=>fakeProvider};const fakeLance={keywordIds:async()=>[],vectorIds:async()=>[]};const compiler=new ContextCompiler(f.config,store,fakeLance as never,fakeProviders as never);const [synthesized]=await Promise.all([compiler.get("company",{query:"support",synthesize:true}),compiler.get("company",{query:"support",synthesize:true})]);expect(generations).toBe(1);expect(synthesized.brief.synthesis).toEqual({text:"Reply within four hours.",citations:[{source:"s1/policy.md",at:"paragraph 1"}]});expect(synthesized.text).toContain("<synthesis>");await compiler.get("company",{query:"support",synthesize:true});expect(generations).toBe(1);store.replaceRules(doc,rev,[rule]);await compiler.get("company",{query:"support",synthesize:true});expect(generations).toBe(2);f.config.profiles.company!.permitted_exports="rules_only";await compiler.get("company",{query:"support",synthesize:true});expect(generations).toBe(3);store.close();
   });

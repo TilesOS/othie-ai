@@ -22,6 +22,25 @@ interface Item {
   rule?: ContextBriefV1["applicable_rules"][number];
   excerpt?: ContextBriefV1["permitted_excerpts"][number];
   synthesis?: NonNullable<ContextBriefV1["synthesis"]>;
+  evidenceGroup?: string;
+  groupedXml?: string;
+}
+
+function renderItems(items: Item[]): string {
+  const output: string[] = [];
+  for (let index = 0; index < items.length;) {
+    const first = items[index]!;
+    let end = index + 1;
+    if (first.evidenceGroup) while (items[end]?.evidenceGroup === first.evidenceGroup) end++;
+    if (end - index > 1) {
+      const rule = first.rule!;
+      // All children retain whole verbatim evidence and inherit this citation
+      // and authority. Grouping is confined to one original document revision.
+      output.push(`<rule_group authority="${rule.authority}"><citation source="${xmlAttr(rule.citation.source)}" at="${xmlAttr(rule.citation.at)}"/>${items.slice(index, end).map((item) => item.groupedXml).join("")}</rule_group>`);
+    } else output.push(first.xml);
+    index = end;
+  }
+  return output.join("");
 }
 
 export function packContext(profileName: string, profile: OthieProfile, request: ContextRequest, set: Candidates, degraded: boolean, revisions: { corpus: number; rules: number }): ContextResult {
@@ -56,6 +75,10 @@ export function packContext(profileName: string, profile: OthieProfile, request:
       kind: "rule",
       xml: `<rule id="${id}"${labels} authority="${rule.authorityPriority}">${body}${citationXml(evidence)}</rule>`,
       rule: { id, text: rule.text, category: rule.category, scope: rule.applicability, authority: rule.authorityPriority, citation: evidence },
+      ...(rule.text === rule.quotation ? {
+        evidenceGroup: JSON.stringify([rule.profile, rule.documentId, rule.revisionId, rule.sourcePath, rule.location, rule.authorityPriority]),
+        groupedXml: `<rule id="${id}">${body}</rule>`,
+      } : {}),
     });
   };
   set.rules.filter((rule) => rule.global).forEach(addRule);
@@ -90,7 +113,7 @@ export function packContext(profileName: string, profile: OthieProfile, request:
   const render = (selection: Item[], tokens: number) => {
     const detected = relevantConflicts(selection);
     const warnings = detected.map((group) => `<conflict rules="${group.map((id) => ruleIds.get(id)).join(" ")}" omitted="${group.some((id) => !selection.some((item) => item.sourceId === id))}"/>`).join("");
-    return `<organization_context profile="${xmlAttr(profileName)}" mode="${mode(selection)}"><items>${selection.map((item) => item.xml).join("")}</items><conflicts count="${detected.length}" detection="explicit_opposition_only">${warnings}</conflicts><status tokenizer="${tokenizer}" tokenizer_estimate="${tokenizerIsEstimate(profile.token_budget.host_model, tokenizer)}" tokens="${tokens}" omitted="${items.length - selection.length}" keyword="${set.keywordAvailable}" vector="${set.vectorAvailable}" corpus_revision="${revisions.corpus}" rule_revision="${revisions.rules}"/></organization_context>`;
+    return `<organization_context profile="${xmlAttr(profileName)}" mode="${mode(selection)}"><items>${renderItems(selection)}</items><conflicts count="${detected.length}" detection="explicit_opposition_only">${warnings}</conflicts><status tokenizer="${tokenizer}" tokenizer_estimate="${tokenizerIsEstimate(profile.token_budget.host_model, tokenizer)}" tokens="${tokens}" omitted="${items.length - selection.length}" keyword="${set.keywordAvailable}" vector="${set.vectorAvailable}" corpus_revision="${revisions.corpus}" rule_revision="${revisions.rules}"/></organization_context>`;
   };
   const measured = (selection: Item[]) => {
     let count = 0;

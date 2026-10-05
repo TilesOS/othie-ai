@@ -104,6 +104,9 @@ XML result; omitted or over-budget candidates are not copied into the structured
 For verbatim rules, XML omits generated category/scope labels: the original evidence
 states the conditions and scope. The brief retains these labels as descriptive metadata;
 they are not verified policy claims and do not consume the host's text budget.
+Consecutive verbatim rules from the same document revision, location, and authority
+share a `<rule_group>` citation and authority in XML. Each child remains whole, and each
+structured rule retains its own complete citation and quotation.
 External facts, navigation hints, and verification checks remain explicit empty arrays
 until trustworthy producers exist. Legacy callers can continue reading the text block.
 
