@@ -62,15 +62,15 @@ export async function runModelQuality(model: string, out: string, corpusName = "
   const engine = new OthieEngine(config, state);
   const provider = engine.providers.require(config.profiles.company!, "extraction", "ollama");
   const generate = provider.generateJson.bind(provider);
-  const generations: Array<{ messages: unknown; raw: unknown; wall_ms: number; error?: string }> = [];
+  const generations: Array<{ messages: unknown; schema: unknown; options: unknown; raw: unknown; wall_ms: number; error?: string }> = [];
   provider.generateJson = async (...args) => {
     const start = performance.now();
     try {
       const raw = await generate(...args);
-      generations.push({ messages: args[0], raw, wall_ms: Math.round(performance.now() - start) });
+      generations.push({ messages: args[0], schema: args[2], options: args[4] ?? null, raw, wall_ms: Math.round(performance.now() - start) });
       return raw;
     } catch (error) {
-      generations.push({ messages: args[0], raw: null, wall_ms: Math.round(performance.now() - start), error: "generation_failed" });
+      generations.push({ messages: args[0], schema: args[2], options: args[4] ?? null, raw: null, wall_ms: Math.round(performance.now() - start), error: "generation_failed" });
       throw error;
     }
   };

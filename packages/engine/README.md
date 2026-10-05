@@ -181,18 +181,27 @@ in another sentence of the same source cannot promote an unrelated rule. Vector 
 can still select source-backed rules without literal overlap; globally configured rules
 remain unconditional. These are relevance heuristics, not semantic applicability proof.
 
-Extraction uses numbered sentence ranges and short invocation-local source IDs (`rules-v6`).
+Extraction uses two model requests under one deadline (`rules-v9`). The first classifies
+each numbered sentence as policy, descriptive text, or a model instruction and gives a
+short explanation for inspection. The second selects complete policy ranges using those
+classifications. Both requests use the profile's approved extraction provider; the
+classification explanations are never exported as policy evidence.
+
+Numbered sentence ranges use short invocation-local source IDs.
 The response schema limits source IDs to the current invocation's authoritative sources;
 unknown IDs are still rejected rather than repaired. The model selects authoritative
 evidence and supplies category/scope labels; the engine recovers both rule text and its
 quotation from the original contiguous source span. Every authoritative sentence must
 be covered by recovered rule evidence or explicitly classified as non-policy
 (`descriptive` or `model_instruction`). Invalid ranges, spans over 2,000 characters,
-missing dispositions, and contradictory exclusions reject the complete response; the
+missing dispositions, contradictory exclusions, or disagreement with classification
+reject the complete response; the
 durable extraction job retries without publishing partial rules. Syntactically marked
-follow-up qualifications stay attached. Explicit exclusions can still misclassify policy,
+follow-up qualifications stay attached within classified policy boundaries. All non-policy
+sources finish without a second request. Classification can still misclassify policy,
 so selection completeness and generated scope labels still need semantic
-evaluation. The prompt version change triggers startup reindexing of existing sources.
+evaluation. The extra request adds indexing latency. The prompt version change triggers
+startup reindexing of existing sources.
 
 Document text is untrusted data. Structured output, source-ID/range validation, original
 evidence recovery, and XML escaping reduce specific failure modes; none is a general

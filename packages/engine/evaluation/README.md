@@ -141,7 +141,8 @@ The report preserves input fixtures, raw generations, retained rules, exact-cita
 checks, missing source/qualifier diagnostics, packed briefs, extraction/retrieval latency,
 model digest, prompt version, and artifact license metadata. It refuses to overwrite an
 existing output directory and verifies the model digest again afterward. A separate
-`generations.json` preserves responses if a later evaluation step fails.
+`generations.json` preserves responses if a later evaluation step fails. New runs also
+record each request's output schema and generation options for replay.
 
 Protocol `quality-v5` additionally compares retained original sentences with the fixed
 corpus's expected policy sentences. Every authoritative sentence in the standard corpus
@@ -149,9 +150,11 @@ is expected; extended mixed-policy documents declare their policy sentence numbe
 Missing policy or retained non-policy/reference sentences fail this diagnostic independently
 of the retrieval cases. This is fixture-specific coverage, not a general semantic classifier.
 Reports include durable extraction-job states and attempt counts, so successful retries
-are visible. The `rules-v6` extractor requires a selected rule or an explicit non-policy
-disposition for every supplied sentence before publishing work. Its explicit exclusions
-still need semantic review and can misclassify policy.
+are visible. The `rules-v9` extractor first classifies every sentence with a short explanation,
+then selects policy ranges. Classification must be complete, and recovered evidence and
+explicit exclusions must agree with it before publication. The two requests share a
+deadline and use the same approved provider. Classification is model judgment and can
+still misclassify policy; explanations are inspection data, never exported evidence.
 
 The default `--corpus standard` preserves the original seven-case input. Pass
 `--corpus extended` to add four authoritative documents and six cases covering regional
@@ -166,6 +169,17 @@ The extended corpus deliberately probes the 200-token cap with a long incident-r
 requirement. A hard cap can correctly omit that complete rule while the quality diagnostic
 fails; passing token accounting does not establish evidence completeness. Both corpora
 use actual extraction and the same 200/500-token retrieval path.
+
+Pass `--corpus adversarial` for a separately scored superset with six more authoritative
+documents and eight cases: appearance/history facts, a quoted museum title containing
+"must", varied model instructions, legitimate assistant-use restrictions, an all-non-policy
+source, and qualification attachment next to descriptive text. Standard and extended
+fixtures and scoring are unchanged. This corpus has 21 retrieval cases and 16 authoritative
+documents, including one that should produce no rules.
+
+```sh
+npm run eval:quality -- --corpus adversarial --out /tmp/othie-quality-adversarial
+```
 
 Protocol `quality-v4` introduced qualifier regexes against packed rule text and supporting
 quotations from the case's expected sources, excluding generated category/scope labels.
