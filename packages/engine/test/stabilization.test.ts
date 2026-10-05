@@ -149,7 +149,7 @@ describe("MVP regression cases", () => {
       const embed = vi.fn(async (texts: string[]) => texts.map(() => [1, 0]));
       vi.spyOn(engine.providers, "require").mockReturnValue({ ...localProvider(async (messages) => {
         const id = JSON.parse(messages[1]!.content).sources[0].source_id;
-        return { rules: [{ category: "leave", applicability: "employees", source_id: id, first_sentence: 1, last_sentence: 1 }] };
+        return { rules: [{ category: "leave", applicability: "employees", source_id: id, first_sentence: 1, last_sentence: 1 }], non_policy_sentences: [] };
       }), embed });
       await engine.start();
       await waitFor(() => engine.store.listRules("company").length === 1 && Number((engine.store.db.prepare("SELECT COUNT(*) AS n FROM derived_jobs WHERE state='done'").get() as {n:number}).n) === 3);
@@ -168,6 +168,32 @@ describe("MVP regression cases", () => {
       expect(engine.store.claimJob()).toBeUndefined(); engine.store.completeJob(first.id);
       const next = engine.store.claimJob()!; expect(next).toBeDefined(); engine.store.completeJob(next.id);
       expect(engine.store.claimJob()?.kind).toBe("rebuild");
+    } finally { await engine.stop(); await rm(f.root, { recursive: true, force: true }); }
+  });
+
+  it("retries incomplete sentence coverage without publishing partial rules", async () => {
+    const f = await fixture();
+    f.config.profiles.company!.sources[0]!.role = "authoritative";
+    f.config.profiles.company!.permitted_exports = "rules_only";
+    f.config.profiles.company!.providers = { embeddings: [], extraction: ["ollama"], synthesis: [] };
+    const path = join(f.docs, "telemetry.md");
+    await writeFile(path, "EU telemetry requires explicit consent. Outside the EU, telemetry defaults to enabled unless consent is explicitly false.");
+    const engine = new OthieEngine(f.config, f.data);
+    let complete = false;
+    vi.spyOn(engine.providers, "require").mockReturnValue(localProvider(async (messages) => {
+      const id = JSON.parse(messages[1]!.content).sources[0].source_id;
+      return { rules: [{ category: "telemetry", applicability: "users", source_id: id, first_sentence: 1, last_sentence: complete ? 2 : 1 }], non_policy_sentences: [] };
+    }));
+    try {
+      await engine.start();
+      await waitFor(() => Number((engine.store.db.prepare("SELECT COUNT(*) AS n FROM derived_jobs WHERE operation='extraction' AND error='Error: Incomplete extraction sentence coverage'").get() as {n:number}).n) === 1);
+      const revision = engine.store.getDocument(path, "company")!.active_revision_id;
+      expect(engine.store.listRules("company")).toEqual([]);
+      expect((await engine.context("company", { query: "telemetry" })).status.mode).toBe("empty");
+      complete = true;
+      await waitFor(() => Number((engine.store.db.prepare("SELECT COUNT(*) AS n FROM derived_jobs WHERE operation='extraction' AND state='done'").get() as {n:number}).n) === 1);
+      expect(engine.store.getDocument(path, "company")!.active_revision_id).toBe(revision);
+      expect((await engine.context("company", { query: "telemetry" })).text).toContain("explicitly false");
     } finally { await engine.stop(); await rm(f.root, { recursive: true, force: true }); }
   });
   it("falls back on uncited output and deadlines, then retries a recovered provider", async () => {
