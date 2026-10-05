@@ -143,9 +143,12 @@ model digest, prompt version, and artifact license metadata. It refuses to overw
 existing output directory and verifies the model digest again afterward. A separate
 `generations.json` preserves responses if a later evaluation step fails.
 
-Protocol `quality-v3` scores qualifier regexes against packed rule text and supporting
-quotations, excluding generated category/scope labels. Older `quality-v2` reports counted
-scope wording, which could mask omitted evidence. These are lexical diagnostics, not
+Protocol `quality-v4` scores qualifier regexes against packed rule text and supporting
+quotations from the case's expected sources, excluding generated category/scope labels.
+Numeric words use boundaries so "written" cannot satisfy "ten". The intermediate
+`quality-v3` excluded labels but still allowed unrelated sources to satisfy qualifiers.
+Older `quality-v2` reports counted scope wording, which could mask omitted evidence.
+These are lexical diagnostics, not
 semantic entailment or proof that all claims are supported. Inspect the raw selections
 and retained rules. Since `quality-v2`, scoring also requires an explicit conflict flag
 for the opposing-export case; old `quality-v1`

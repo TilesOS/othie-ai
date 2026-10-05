@@ -21,7 +21,7 @@ export const qualityCases: readonly QualityCase[] = [
   { id: "receipt-boundary", query: "expenses receipts over $25 lost receipt written explanation", sources: ["receipts.md"],
     patterns: ["(?:over|more than|exceed|above|>)\\s*\\$?25", "(?:exactly|less|below|under|optional)", "lost|missing", "written explanation"] },
   { id: "contractor-exception", query: "vacation days full time contractors carry over", sources: ["leave.md"],
-    patterns: ["twenty|20", "contractor", "ten|10", "calendar year|annually|annual", "(?:not|no|cannot|don't|doesn't|prohibit).{0,25}carry|carry.{0,25}(?:not|no|cannot)"] },
+    patterns: ["\\b(?:twenty|20)\\b", "contractor", "\\b(?:ten|10)\\b", "calendar year|annually|annual", "(?:not|no|cannot|don't|doesn't|prohibit).{0,25}carry|carry.{0,25}(?:not|no|cannot)"] },
   { id: "consent-negation", query: "EU telemetry missing explicit consent false outside EU", sources: ["telemetry.md"],
     patterns: ["EU", "explicit consent", "missing", "outside|non[- ]EU", "false", "must not|disabled|disable|cannot"] },
   { id: "opposing-export-rules", query: "migration project customer records CSV export", sources: ["current-export.md", "legacy-export.md"],

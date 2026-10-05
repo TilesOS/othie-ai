@@ -13,10 +13,11 @@ import type { ContextBriefV1 } from "../types.js";
 export function missingPatterns(text: string, patterns: readonly string[]): string[] {
   return patterns.filter((pattern) => !new RegExp(pattern, "i").test(text));
 }
-export function missingEvidencePatterns(rules: ContextBriefV1["applicable_rules"], patterns: readonly string[]): string[] {
+export function missingEvidencePatterns(rules: ContextBriefV1["applicable_rules"], patterns: readonly string[], sources?: readonly string[]): string[] {
   // Generated labels are advisory metadata and may not be sent to the host.
   // They cannot establish that a qualifier survived in packed policy evidence.
-  return missingPatterns(rules.map((rule) => `${rule.text}\n${rule.citation.quote ?? ""}`).join("\n"), patterns);
+  const evidence = sources ? rules.filter((rule) => sources.includes(basename(rule.citation.source))) : rules;
+  return missingPatterns(evidence.map((rule) => `${rule.text}\n${rule.citation.quote ?? ""}`).join("\n"), patterns);
 }
 export async function runModelQuality(model: string, out: string) {
   await mkdir(out, { recursive: false, mode: 0o700 });
@@ -84,7 +85,7 @@ export async function runModelQuality(model: string, out: string) {
         const selected = context.brief.applicable_rules;
         const actualSources = [...new Set(selected.map((rule) => basename(rule.citation.source)))];
         const missingSources = scenario.sources.filter((source) => !actualSources.includes(source));
-        const lost = missingEvidencePatterns(selected, scenario.patterns);
+        const lost = missingEvidencePatterns(selected, scenario.patterns, scenario.sources);
         const budgetValid = context.status.tokenCount === countTokens(context.text, "o200k_base") && context.status.tokenCount <= cap;
         const noOp = scenario.sources.length === 0;
         const conflictValid = scenario.expected_conflicts === undefined || context.status.conflicts === scenario.expected_conflicts;
@@ -97,7 +98,7 @@ export async function runModelQuality(model: string, out: string) {
     }
     const endTags = await local("/api/tags") as typeof tags;
     const modelUnchanged = endTags.models?.find((item) => item.name === identity.name)?.digest === identity.digest;
-    const report = { recorded_at: recordedAt, synthetic_only: true, protocol_version: "quality-v3", completed, model_unchanged: modelUnchanged,
+    const report = { recorded_at: recordedAt, synthetic_only: true, protocol_version: "quality-v4", completed, model_unchanged: modelUnchanged,
       model: identity, runtime: await local("/api/version"), platform: process.platform, node: process.version, prompt_version: EXTRACTION_PROMPT_VERSION,
       fixture_sha256: createHash("sha256").update(JSON.stringify({ qualityDocuments, qualityCases })).digest("hex"),
       license: { artifact_details: metadata.details ?? null, license_present: !!metadata.license,
