@@ -64,6 +64,11 @@ repeats, with no token savings on that small corpus. The expanded compiler evalu
 still fails quality acceptance despite passing citation, budget, and reference-isolation
 checks. Native Codex and Claude Code CLI delivery sessions are recorded separately.
 
+The [October 4 compiler follow-up](packages/engine/evaluation/records/2026-10-04/compiler-followup/README.md)
+fits both conflict sides at 200 tokens and scores 14/14, 12/14, and 14/14 across three
+fresh extractions with stricter source-specific diagnostics. The failing repeat omits a
+telemetry default during extraction at both caps, so consistent selection remains open.
+
 ## Repository layout
 
 ```text

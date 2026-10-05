@@ -162,3 +162,8 @@ directory to retain the report. The opt-in suite gates operational completion, e
 citations, token accounting, and reference isolation; it prints quality diagnostics
 separately. The evaluation CLI exits nonzero when any source/qualifier/conflict diagnostic fails.
 The normal deterministic suite skips the live-model run and requires no model download.
+
+The [October 4 compiler records](records/2026-10-04/compiler-followup/README.md) preserve
+five runs, including three final `quality-v4` repeats (14/14, 12/14, 14/14). Both conflict
+sides fit at 200 tokens in every final repeat. The failed repeat omits the non-EU telemetry
+default during extraction, failing at both caps; consistent selection remains open.

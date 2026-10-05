@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated October 3, 2026 on macOS with Node.js 24.18.0. The deterministic suite uses
+Updated October 4, 2026 on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
 
 ## Checks run
@@ -9,14 +9,14 @@ synthetic documents and provider fixtures; it requires no model training or down
 | --- | --- |
 | `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 113 passing tests; one opt-in real-model test skipped |
+| `npm test` | 118 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host tests within `npm test` | Six process tests pass |
 | `npm run lint --workspace=@othie/website` | Pass |
-| Local compiler-quality evaluator, three final runs | Operational/safety checks pass; diagnostics 11/14, 10/14, 11/14; quality acceptance fails at 200 tokens |
+| Local compiler-quality evaluator, three October 4 final runs | Operational/safety checks pass; diagnostics 14/14, 12/14, 14/14; one repeat fails extraction completeness at both caps |
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
-The full suite comprises 59 engine, 23 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 64 engine, 23 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -24,7 +24,7 @@ The [GitHub Actions run for code commit 504c27f](https://github.com/TilesOS/othi
 also passes on `macos-14` and `windows-latest`: clean `npm ci`, all workspace typechecks,
 the then-current 93 tests, and the Windows startup-script syntax check. A pre-existing
 Windows fixture used `URL.pathname` to launch a local CLI; it now uses `fileURLToPath`.
-The new October 3 changes have local macOS verification only; that historical CI run
+The October 3–4 changes have local macOS verification only; that historical CI run
 does not verify these changes on Windows. Those automated runner results do not establish
 native desktop-host or logon-startup acceptance.
 
@@ -55,7 +55,7 @@ a grant is revoked.
 ## Website patch verification
 
 The browser checks in this section were recorded October 2. Build, typecheck, tests,
-and lint were rerun October 3; browser/UI acceptance was not repeated for engine-only edits.
+and lint were rerun October 4; browser/UI acceptance was not repeated for engine-only edits.
 
 Next.js and its ESLint configuration were updated together from 16.3.4 to 16.3.8;
 transitive brace-expansion dependencies were updated within their existing version
@@ -143,6 +143,37 @@ failed to bind integration sockets and stalled the Next.js build; rerunning with
 required local access passed. No native host/desktop/Windows acceptance was repeated
 for these compiler changes, and no model artifacts were downloaded or distributed.
 
+## October 4 compiler packing and extraction follow-up
+
+The [October 4 records](packages/engine/evaluation/records/2026-10-04/compiler-followup/README.md)
+preserve five fresh synthetic evaluations, including the intermediate and final failures.
+Verbatim XML now excludes generated category/scope labels, retaining them only as advisory
+metadata in the structured brief. Consecutive whole rules from one original revision,
+location, and authority share a citation in XML. Tests verify that different sources,
+revisions, locations, or authorities cannot be grouped, and that long generated labels
+cannot displace either side of the export conflict at 200 tokens.
+
+The first fresh run exposed another source-ID failure: the model used sentence numbers
+to invent `s2` and `s3` for the only supplied source, `s1`. `rules-v5` adds an invocation-specific
+source-ID enum to the response schema and distinguishes IDs from sentence numbers in the
+instructions. Unknown IDs remain rejected, and the prompt version triggers startup
+reindexing. Evidence still comes from original, complete source spans.
+
+Quality protocol `quality-v4` excludes generated labels and unrelated source files from
+qualifier scoring; whole-word numeric checks prevent `written` from satisfying `ten`.
+Older scores used different rules, so they are not directly comparable acceptance scores.
+The three final repeats pass 14/14, 12/14, and 14/14 diagnostics: 20/21 at each cap.
+Both conflict sides and both no-op controls pass in every repeat. The failed repeat omits
+the non-EU telemetry default during extraction; it loses the same qualifiers at both
+caps, with no telemetry items omitted by packing. Selection completeness therefore
+remains open even though two reports pass this small fixed corpus.
+
+All five runs complete with exact retained citations, unchanged installed model digest,
+no reference rules promoted, and accurate token accounting/caps. Full workspace build,
+typechecks, website lint, production dependency audit, and 118 deterministic tests pass
+locally with the required process/socket access. No model weights were downloaded or
+distributed. Native host/desktop acceptance and Windows verification were not repeated.
+
 ## Remaining acceptance work
 
 - Codex project-file discovery and persisted interactive hook-trust acceptance; Claude
@@ -152,12 +183,12 @@ for these compiler changes, and no model artifacts were downloaded or distribute
   suite; the new changes also need current Windows CI verification.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
-- Compiler quality at 200 tokens: retain linked statements/exceptions and both conflict
-  sides within the cap, and reduce packing sensitivity to generated label lengths and
-  rule grouping. Exact quotation generation is replaced by original-span recovery;
-  conflict detection covers explicit source opposition across generated labels.
-  Selection completeness, label entailment, embeddings, synthesis, semantic grading,
-  and comparisons across multiple models still need evaluation.
+- Compiler selection completeness: the final October 4 repeat set still includes an
+  omitted non-EU telemetry default, failing at both caps. The fixed 200-token cases now
+  retain required linked statements/exceptions when extracted, and both conflict sides
+  fit in every repeat. Larger corpora must still evaluate budget sensitivity to source
+  lengths, rule grouping, and linked evidence. Label entailment, embeddings, synthesis,
+  semantic grading, and comparisons across multiple models remain open.
 - Signed desktop installers, guided onboarding, and model artifact distribution. Native
   Windows hardware/session access, signing identities, and reviewed redistributable model
   artifacts are not available as established acceptance inputs in this run.
