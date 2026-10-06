@@ -150,7 +150,7 @@ is expected; extended mixed-policy documents declare their policy sentence numbe
 Missing policy or retained non-policy/reference sentences fail this diagnostic independently
 of the retrieval cases. This is fixture-specific coverage, not a general semantic classifier.
 Reports include durable extraction-job states and attempt counts, so successful retries
-are visible. The `rules-v10` extractor classifies every sentence with a short explanation in one
+are visible. The `rules-v11` extractor classifies every sentence with a short explanation in one
 request, then derives policy evidence deterministically in source order. It recovers
 every classified policy sentence, attaching syntactic qualifications without crossing
 classified non-policy boundaries. No second selector can contradict these decisions.
@@ -182,6 +182,13 @@ documents, including one that should produce no rules.
 ```sh
 npm run eval:quality -- --corpus adversarial --out /tmp/othie-quality-adversarial
 ```
+
+Pass `--corpus boundaries` for the adversarial corpus plus four documents and seven
+cases checking active quoted policy, historical replacement, human assistant-use policy,
+conditional procedures, and display/example/instruction no-op controls. The 20
+authoritative documents and 28 cases use the same `quality-v5` scoring. This separately
+scored superset checks that quoted-history guidance does not suppress active quoted
+requirements or legitimate organizational restrictions on assistant use.
 
 Protocol `quality-v4` introduced qualifier regexes against packed rule text and supporting
 quotations from the case's expected sources, excluding generated category/scope labels.
