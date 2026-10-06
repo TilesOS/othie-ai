@@ -211,6 +211,13 @@ Document text is untrusted data. Structured output, source-ID/range validation, 
 evidence recovery, and XML escaping reduce specific failure modes; none is a general
 prompt-injection defense.
 
+The root dependency override pins Mammoth's CLI-only `argparse` dependency to 2.0.1,
+removing the unpatched legacy `sprintf-js` chain. Othie uses Mammoth's raw-text library
+API; a synthetic DOCX process test covers the actual ingestion path. Mammoth's bundled
+CLI help and conversion also work through argparse's compatibility aliases, with
+upstream deprecation warnings. The website's source-map dependency is locked at the
+patched `source-map-js` 1.2.2 within its existing version range.
+
 ## Primary references
 
 - [MCP tools specification](https://modelcontextprotocol.io/specification/2026-07-28/server/tools)
