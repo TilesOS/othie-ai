@@ -7,16 +7,17 @@ synthetic documents and provider fixtures; it requires no model training or down
 
 | Check | Result |
 | --- | --- |
+| `npm ci` | Clean lockfile installation passes |
 | `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 136 passing tests; one opt-in real-model test skipped |
+| `npm test` | 143 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host tests within `npm test` | Six process tests pass |
 | `npm run lint --workspace=@othie/website` | Pass |
-| Local compiler-quality evaluator, classification follow-up | Standard: 42/42; extended: 75/78 with complete fixture coverage; adversarial acceptance fails on completion, classification, relevance, and packing |
+| Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
-The full suite comprises 82 engine, 23 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 89 engine, 23 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -27,9 +28,13 @@ Windows fixture used `URL.pathname` to launch a local CLI; it now uses `fileURLT
 The [GitHub Actions run for commit 19a9dfe](https://github.com/TilesOS/othie-ai/actions/runs/37260102983)
 also passes on both runners with the then-current 118 deterministic tests, typechecks,
 clean installation, and Windows startup-script syntax check. This verifies the previous
-October 3–4 changes on Windows. The newer coverage/relevance/classification changes through `444421a`
-have local macOS verification only. Those automated runner results do not establish
-native desktop-host or logon-startup acceptance.
+October 3–4 changes on Windows. The [GitHub Actions run for commit 61279ff](https://github.com/TilesOS/othie-ai/actions/runs/37264456510)
+also passes both macOS and Windows jobs: clean installation, all typechecks, the
+then-current 136 deterministic tests, and Windows startup-script syntax. This run was
+inspected during the present follow-up and verifies the preceding coverage, relevance,
+and classification commits. New local changes beginning with `a36f3fc` still need their
+own Windows CI. Automated runner results do not establish native desktop-host or
+logon-startup acceptance.
 
 ## Delivery and credential coverage
 
@@ -270,23 +275,110 @@ typechecks, website lint, production audit, and all 136 deterministic tests pass
 with process/socket access. Native host/desktop acceptance and current Windows CI were
 not repeated; no model artifacts were downloaded or distributed.
 
+## October 5 deterministic extraction and relevance follow-up
+
+The [deterministic follow-up records](packages/engine/evaluation/records/2026-10-05/deterministic-followup/README.md)
+preserve the completed synthetic trials and subsequent repeats. `rules-v10` replaces
+model range selection with deterministic evidence recovery from complete classifications.
+Every classified policy sentence is selected in source order; syntactic qualifications
+stay attached inside classified policy boundaries, and identical recovered spans are
+deduplicated. One approved model request supplies classifications and inspection-only
+explanations. Fixed category/applicability metadata makes no generated subject/scope
+claim. Invalid or incomplete decisions and oversized evidence still reject the complete
+job, with durable retries and no partial publication. The prompt version reindexes
+unchanged documents. Implicit evidence relationships remain open.
+
+The initial adversarial trial completes at 38/42 with one attempt per source but still
+promotes the quoted title, matches a support deadline on "minutes", and loses maintenance
+notice/long incident evidence at 200 tokens. Tighter lexical relevance excludes generic
+quantities/time units as sole matches and weights evidence by corpus rarity and length.
+Independently relevant statements sharing source revision, location, and authority stay
+together for packing. Global rules and actual vector hits remain eligible; duration-only
+queries now need a subject or vector hit. The relevance-only trial scores 39/42, fixing
+the maintenance packing loss and unrelated support hit while retaining the title error.
+A live MCP test covers subject-based delivery and duration-only no-op.
+
+`rules-v11` clarifies the distinction between an assertion about quoted/display/historical
+wording and an active policy, including actively quoted policy and legitimate employee
+assistant-use restrictions. Standard, extended, and adversarial fixtures and `quality-v5`
+scoring are unchanged. The new separately scored `boundaries` superset adds four
+authoritative documents and seven cases for active quoted policy, historical replacement,
+assistant use, conditional procedures, and historical/example/instruction no-op controls.
+Expected coverage and controls remain fixed despite observed failures.
+
+The three `rules-v11` repeats score 40/42 standard, 75/78 extended, 123/126 adversarial,
+and 151/168 boundaries. All jobs complete in one attempt. Standard repeat 2 labels both
+leave entitlements descriptive despite explaining their entitlement effect, losing policy
+at both caps. Boundaries repeat 3 excludes the approved-assistant summary permission as
+a model instruction and loses another assistant clause during 200-token packing. These
+classification failures remain recorded. The other larger-corpus runs retain exact
+expected policy/non-policy coverage; all adversarial no-op controls pass, and only long
+incident evidence fails there at 200 tokens. Boundaries also fail historical-badge and
+customer-directory no-op controls at both caps because of generic subject-word overlap.
+
+`rules-v12` clarifies factual entitlements and bounded permissions for approved assistants
+and asks the model to check its explanation against the final kind. Bare numeric quantities
+are also excluded as sole lexical matches. The subsequent `entitlement-*` repeats keep
+the same corpus hashes and scoring; their reports are preserved alongside the earlier
+failures. Final repeats score 42/42 standard, 75/78 extended, 123/126 adversarial, and
+153/168 boundaries. Standard, extended, and adversarial repeats all have exact expected
+sentence coverage; only long incident evidence fails there at 200 tokens. Boundaries
+still fail two generic subject-word no-op controls at both caps. One of the three
+boundaries runs promotes the direct assistant instruction as policy, inventing a
+prohibition explanation absent from the source. Later repeats exclude it; this is an
+observed semantic safety failure, not a resolved classification guarantee.
+
+All 26 full reports complete with one attempt per extraction job, exact retained citations,
+reference isolation, unchanged installed model digest, and accurate hard caps. The
+manifest records report/generation hashes. Controlled generation settings, additional
+models, implicit evidence links, and semantic applicability remain open. Model
+classifications remain semantic judgments beyond structural validation. The temporarily
+started loopback model service was stopped after verification; no artifacts were downloaded
+or redistributed.
+
+The fresh full workspace build, typechecks, website lint, and 143 deterministic tests
+pass after `npm ci`, including process/socket tests and a synthetic DOCX ingestion test.
+No native host/desktop or Windows hardware acceptance was repeated. The previous head's
+macOS/Windows CI was verified; these new local commits still need their own CI.
+
+## October 5 dependency audit follow-up
+
+A fresh audit reports production findings absent from the preceding recorded audit:
+[`source-map-js` indexed-offset denial of service](https://github.com/advisories/GHSA-68fv-2mgg-jv7q)
+and [`sprintf-js` precision handling](https://github.com/advisories/GHSA-hp3w-g68c-fv3c)
+through Mammoth's legacy CLI-only argparse dependency. The source-map dependency is
+updated from 1.2.1 to patched 1.2.2 within its existing ranges. A scoped Mammoth override
+pins argparse 2.0.1, removing the unpatched formatter chain while retaining Mammoth
+1.12.2. DOCX ingestion through the isolated parser passes; the bundled Mammoth CLI help
+and synthetic conversion also pass with upstream compatibility-alias deprecation warnings.
+Clean installation reproduces the dependency tree. `npm audit --omit=dev` again reports
+zero advisories. The five development-tool findings in the previously recorded
+ESLint/fast-glob/micromatch/braces chain remain; audit still proposes downgrading the
+Next.js ESLint configuration to 14.2.35, which was not applied.
+
 ## Remaining acceptance work
 
 - Codex project-file discovery and persisted interactive hook-trust acceptance; Claude
   project/local settings discovery and desktop UI acceptance beyond explicit CLI settings.
 - Codex local-model context consumption after the observed positive-context failure.
 - Windows native-host and logon-startup acceptance beyond the historical automated CI
-  suite; the new changes also need current Windows CI verification.
+  suite; CI through `61279ff` passes both runners, and the new deterministic-selection
+  changes still need current Windows CI verification.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
-- Compiler classification, selection reliability, relevance, and packing: final standard
-  repeats pass; extended repeats exclude the observed non-policy/instruction promotion,
-  but still lose long whole-evidence context at 200 tokens. Adversarial runs expose quoted
-  history misclassification, selector disagreement/retries, generic word false positives,
-  and packing losses among overlapping rules. Next evaluate structurally constrained or
-  deterministic selections from explicit classifications and tighter relevance, keeping
-  these failures and expected coverage visible. Larger corpora, linked evidence, label
-  entailment, embeddings, synthesis, semantic grading, and additional models remain open.
+- Compiler classification, relevance, linked evidence, and packing: deterministic recovery
+  removes model-selector disagreement, and the clarified prompt excludes the observed
+  quoted title in fresh runs, while entitlement and assistant-permission classification
+  failures are recorded and followed up. The broader boundary corpus still promotes a
+  direct assistant instruction in one final repeat and fails generic-subject no-op checks.
+  Standard/extended/adversarial fixtures remain fixed; long
+  whole-evidence context still fails at 200 tokens. New boundary cases expose generic
+  subject-word collisions even with correct classification. Next evaluate semantic or
+  structurally grounded applicability with both no-op precision and policy recall checks;
+  preserve active quoted policy, genuine assistant-use policies, and all recorded failures.
+  Implicit evidence links beyond syntactic qualifications, larger corpora, label entailment,
+  embeddings, synthesis, semantic grading, controlled generation settings, and additional
+  models remain open.
 - Signed desktop installers, guided onboarding, and model artifact distribution. Native
   Windows hardware/session access, signing identities, and reviewed redistributable model
   artifacts are not available as established acceptance inputs in this run.

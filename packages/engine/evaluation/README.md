@@ -230,3 +230,12 @@ generic word relevance, and crowded 200-token packing. A single previous-extract
 comparison scores 28/42 versus 38/42 in each completed new-extractor repeat; an additional
 new-extractor repeat reaches the deadline. These observations do not establish reliable
 general classification or a controlled latency/quality advantage.
+
+The [deterministic follow-up records](records/2026-10-05/deterministic-followup/README.md)
+preserve 26 full evaluations. `rules-v12` final repeats score 42/42 standard, 75/78 extended,
+123/126 adversarial, and 153/168 boundaries. All jobs finish in one attempt. Standard,
+extended, and adversarial repeats have exact expected sentence coverage; the wider
+boundaries corpus still has one instruction-promotion coverage failure and two semantic
+relevance no-op failures at both caps. Long complete incident evidence fails at 200
+tokens throughout. Earlier entitlement/assistant-permission omissions remain recorded.
+These results do not establish general semantic classification or prompt-injection safety.
