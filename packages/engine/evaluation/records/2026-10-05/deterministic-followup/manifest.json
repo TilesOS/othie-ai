@@ -2,194 +2,15 @@
   "synthetic_only": true,
   "records": [
     {
-      "name": "adversarial-1",
-      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 where noted in README",
-      "corpus": "adversarial",
-      "protocol": "quality-v5",
-      "prompt": "rules-v11",
-      "fixture_sha256": "bea6286faf7bebea1012e202f1762a13a31d2138127006bae1f3d8cfb1c3a24a",
-      "completed": true,
-      "passed": false,
-      "coverage_valid": true,
-      "correct_200": 20,
-      "correct_500": 21,
-      "cases": 21,
-      "rules": 34,
-      "extraction_ms": 47443,
-      "coverage_failures": [],
-      "retried_jobs": [],
-      "diagnostic_failures": [
-        {
-          "id": "long-whole-evidence",
-          "cap": 200,
-          "actual_sources": [
-            "incident-report.md",
-            "privileged-access.md"
-          ],
-          "missing_sources": [],
-          "missing_patterns": [
-            "discovery timestamp",
-            "closure timestamp",
-            "each field verified",
-            "audit log"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "adversarial-2",
-      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 where noted in README",
-      "corpus": "adversarial",
-      "protocol": "quality-v5",
-      "prompt": "rules-v11",
-      "fixture_sha256": "bea6286faf7bebea1012e202f1762a13a31d2138127006bae1f3d8cfb1c3a24a",
-      "completed": true,
-      "passed": false,
-      "coverage_valid": true,
-      "correct_200": 20,
-      "correct_500": 21,
-      "cases": 21,
-      "rules": 34,
-      "extraction_ms": 48042,
-      "coverage_failures": [],
-      "retried_jobs": [],
-      "diagnostic_failures": [
-        {
-          "id": "long-whole-evidence",
-          "cap": 200,
-          "actual_sources": [
-            "incident-report.md",
-            "privileged-access.md"
-          ],
-          "missing_sources": [],
-          "missing_patterns": [
-            "discovery timestamp",
-            "closure timestamp",
-            "each field verified",
-            "audit log"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "boundaries-1",
-      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 where noted in README",
-      "corpus": "boundaries",
-      "protocol": "quality-v5",
-      "prompt": "rules-v11",
-      "fixture_sha256": "b89bef3f49202cd17bcd40ac4113528300b7c29906cbd6601f329c6f1e99fe90",
-      "completed": true,
-      "passed": false,
-      "coverage_valid": true,
-      "correct_200": 25,
-      "correct_500": 26,
-      "cases": 28,
-      "rules": 39,
-      "extraction_ms": 55722,
-      "coverage_failures": [],
-      "retried_jobs": [],
-      "diagnostic_failures": [
-        {
-          "id": "long-whole-evidence",
-          "cap": 200,
-          "actual_sources": [
-            "incident-report.md",
-            "active-quotation.md"
-          ],
-          "missing_sources": [],
-          "missing_patterns": [
-            "discovery timestamp",
-            "closure timestamp",
-            "each field verified",
-            "audit log"
-          ]
-        },
-        {
-          "id": "historical-display-control",
-          "cap": 200,
-          "actual_sources": [
-            "historical-replacement.md"
-          ],
-          "missing_sources": [],
-          "missing_patterns": []
-        },
-        {
-          "id": "historical-display-control",
-          "cap": 500,
-          "actual_sources": [
-            "historical-replacement.md"
-          ],
-          "missing_sources": [],
-          "missing_patterns": []
-        },
-        {
-          "id": "assistant-directory-control",
-          "cap": 200,
-          "actual_sources": [
-            "leave.md",
-            "mixed-handbook.md"
-          ],
-          "missing_sources": [],
-          "missing_patterns": []
-        },
-        {
-          "id": "assistant-directory-control",
-          "cap": 500,
-          "actual_sources": [
-            "leave.md",
-            "mixed-handbook.md",
-            "current-export.md",
-            "assistant-use.md",
-            "legacy-export.md",
-            "assistant-ownership.md"
-          ],
-          "missing_sources": [],
-          "missing_patterns": []
-        }
-      ]
-    },
-    {
-      "name": "extended-1",
-      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 where noted in README",
-      "corpus": "extended",
-      "protocol": "quality-v5",
-      "prompt": "rules-v11",
-      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
-      "completed": true,
-      "passed": false,
-      "coverage_valid": true,
-      "correct_200": 12,
-      "correct_500": 13,
-      "cases": 13,
-      "rules": 23,
-      "extraction_ms": 26906,
-      "coverage_failures": [],
-      "retried_jobs": [],
-      "diagnostic_failures": [
-        {
-          "id": "long-whole-evidence",
-          "cap": 200,
-          "actual_sources": [
-            "incident-report.md",
-            "privileged-access.md"
-          ],
-          "missing_sources": [],
-          "missing_patterns": [
-            "discovery timestamp",
-            "closure timestamp",
-            "each field verified",
-            "audit log"
-          ]
-        }
-      ]
-    },
-    {
       "name": "initial-adversarial",
+      "recorded_at": "2026-10-06T01:47:42.514Z",
       "code": "a36f3fc",
       "corpus": "adversarial",
       "protocol": "quality-v5",
       "prompt": "rules-v10",
       "fixture_sha256": "bea6286faf7bebea1012e202f1762a13a31d2138127006bae1f3d8cfb1c3a24a",
+      "quality_sha256": "b942e18c808525873ec6e84960142b2d632ff8c0433aca023a6be6deaf2873f9",
+      "generations_sha256": "88f89c0e08023bff442508c524264a4d27561d83c6ad9aa5321518dc93ad56b2",
       "completed": true,
       "passed": false,
       "coverage_valid": false,
@@ -270,11 +91,14 @@
     },
     {
       "name": "relevance-adversarial",
+      "recorded_at": "2026-10-06T01:50:22.972Z",
       "code": "3678632",
       "corpus": "adversarial",
       "protocol": "quality-v5",
       "prompt": "rules-v10",
       "fixture_sha256": "bea6286faf7bebea1012e202f1762a13a31d2138127006bae1f3d8cfb1c3a24a",
+      "quality_sha256": "75d022a85bbdd788bd5cddc823dc9e46dd74efaeaf3b066e5604a18387e2cd0b",
+      "generations_sha256": "85a52e6d9d986a48051bdebf3d2457b6a4667c1dda6a4babe6c56260fc420ff9",
       "completed": true,
       "passed": false,
       "coverage_valid": false,
@@ -339,12 +163,133 @@
       ]
     },
     {
+      "name": "adversarial-1",
+      "recorded_at": "2026-10-06T01:52:29.163Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
+      "corpus": "adversarial",
+      "protocol": "quality-v5",
+      "prompt": "rules-v11",
+      "fixture_sha256": "bea6286faf7bebea1012e202f1762a13a31d2138127006bae1f3d8cfb1c3a24a",
+      "quality_sha256": "1aa2dd0d16b1f7101eeaa1af877dd608bcb82572c40bec3de3d54d81b1b36b86",
+      "generations_sha256": "bade0c16276ff5c574f9e4cca7679f068519b2408f8656f27692e80b8eb7b71a",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 20,
+      "correct_500": 21,
+      "cases": 21,
+      "rules": 34,
+      "extraction_ms": 47443,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "boundaries-1",
+      "recorded_at": "2026-10-06T01:53:37.880Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
+      "corpus": "boundaries",
+      "protocol": "quality-v5",
+      "prompt": "rules-v11",
+      "fixture_sha256": "b89bef3f49202cd17bcd40ac4113528300b7c29906cbd6601f329c6f1e99fe90",
+      "quality_sha256": "0ac21bec0b9b264fc91f01c8c6e41ba58e8186721250171211f6810a5db200b8",
+      "generations_sha256": "bc32a7715e452c3a1273394381b900e8ac9fc4557935fd114c0e998edb8d2496",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 25,
+      "correct_500": 26,
+      "cases": 28,
+      "rules": 39,
+      "extraction_ms": 55722,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "active-quotation.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 200,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 500,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 200,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 500,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md",
+            "current-export.md",
+            "assistant-use.md",
+            "legacy-export.md",
+            "assistant-ownership.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        }
+      ]
+    },
+    {
       "name": "standard-1",
-      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 where noted in README",
+      "recorded_at": "2026-10-06T01:54:48.760Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
       "corpus": "standard",
       "protocol": "quality-v5",
       "prompt": "rules-v11",
       "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "quality_sha256": "80acaeb5a92551f7b10d49a26180665c4619e94f9d24098b6cbb6d4447534ecd",
+      "generations_sha256": "d526959a2e16689c6751784e110548eb92653db02425b097acf809b3f3e4922f",
       "completed": true,
       "passed": true,
       "coverage_valid": true,
@@ -356,6 +301,1043 @@
       "coverage_failures": [],
       "retried_jobs": [],
       "diagnostic_failures": []
+    },
+    {
+      "name": "extended-1",
+      "recorded_at": "2026-10-06T01:56:04.766Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
+      "corpus": "extended",
+      "protocol": "quality-v5",
+      "prompt": "rules-v11",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "quality_sha256": "366d2f2e96a63451a73a5d4a203cc698778a375a94338afd1dddaa79c3a1bb80",
+      "generations_sha256": "661d2364c4367acb1ed65a044fc925338988876e9b18a88b2670870be6a0a9fc",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 12,
+      "correct_500": 13,
+      "cases": 13,
+      "rules": 23,
+      "extraction_ms": 26906,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "adversarial-2",
+      "recorded_at": "2026-10-06T01:56:32.007Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
+      "corpus": "adversarial",
+      "protocol": "quality-v5",
+      "prompt": "rules-v11",
+      "fixture_sha256": "bea6286faf7bebea1012e202f1762a13a31d2138127006bae1f3d8cfb1c3a24a",
+      "quality_sha256": "6407ce6ad5bd25613464c04438895e651f69301e3f1695a31df5ae9b53b22634",
+      "generations_sha256": "575aba05cf01e70718ec074db298eb7a2ece6a30a56d58a7e2387b526f4d1914",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 20,
+      "correct_500": 21,
+      "cases": 21,
+      "rules": 34,
+      "extraction_ms": 48042,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "boundaries-2",
+      "recorded_at": "2026-10-06T01:57:20.455Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
+      "corpus": "boundaries",
+      "protocol": "quality-v5",
+      "prompt": "rules-v11",
+      "fixture_sha256": "b89bef3f49202cd17bcd40ac4113528300b7c29906cbd6601f329c6f1e99fe90",
+      "quality_sha256": "140ecb0d07c75be74338efefab37367546714156e0de3f29f3cac633308a382e",
+      "generations_sha256": "9320014f2dd08e8dec8aa171e198559da2546c4390acea49ac4c3039742e51aa",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 25,
+      "correct_500": 26,
+      "cases": 28,
+      "rules": 39,
+      "extraction_ms": 63207,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "active-quotation.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 200,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 500,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 200,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 500,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md",
+            "current-export.md",
+            "legacy-export.md",
+            "assistant-use.md",
+            "assistant-ownership.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        }
+      ]
+    },
+    {
+      "name": "standard-2",
+      "recorded_at": "2026-10-06T01:58:24.054Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
+      "corpus": "standard",
+      "protocol": "quality-v5",
+      "prompt": "rules-v11",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "quality_sha256": "10c4acfb821225eff0b8b3ca725d715a4935909f4adb5e977317d518e2ad5749",
+      "generations_sha256": "4a540cfde43279b7529c69b3e3673f44cdf72d4242b47c6b45b25a6c6c588151",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": false,
+      "correct_200": 6,
+      "correct_500": 6,
+      "cases": 7,
+      "rules": 12,
+      "extraction_ms": 16587,
+      "coverage_failures": [
+        {
+          "source": "leave.md",
+          "expected_policy_sentences": [
+            1,
+            2,
+            3
+          ],
+          "retained_sentences": [
+            3
+          ],
+          "missing_policy_sentences": [
+            1,
+            2
+          ],
+          "unexpected_retained_sentences": []
+        }
+      ],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "contractor-exception",
+          "cap": 200,
+          "actual_sources": [
+            "leave.md",
+            "receipts.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "\\b(?:twenty|20)\\b",
+            "contractor",
+            "\\b(?:ten|10)\\b"
+          ]
+        },
+        {
+          "id": "contractor-exception",
+          "cap": 500,
+          "actual_sources": [
+            "leave.md",
+            "receipts.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "\\b(?:twenty|20)\\b",
+            "contractor",
+            "\\b(?:ten|10)\\b"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "extended-2",
+      "recorded_at": "2026-10-06T01:58:40.914Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
+      "corpus": "extended",
+      "protocol": "quality-v5",
+      "prompt": "rules-v11",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "quality_sha256": "811c01b58114c789937f2ada8d814b9fe365eb56077d065cd9f3ceb58dd07cec",
+      "generations_sha256": "db3bdd057181e361c306a65d402d0e3ba8569dcd02042c6898eb521c2afd946e",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 12,
+      "correct_500": 13,
+      "cases": 13,
+      "rules": 23,
+      "extraction_ms": 25682,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "adversarial-3",
+      "recorded_at": "2026-10-06T01:59:06.949Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
+      "corpus": "adversarial",
+      "protocol": "quality-v5",
+      "prompt": "rules-v11",
+      "fixture_sha256": "bea6286faf7bebea1012e202f1762a13a31d2138127006bae1f3d8cfb1c3a24a",
+      "quality_sha256": "36e975cc42291394d404e67a2490904af3bd5df464f9fdf643c2112bb045119d",
+      "generations_sha256": "0198c92a3d4ccf493e7a0af4088d4a6cd56ee8dd9240180ff06c0c2e3263621f",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 20,
+      "correct_500": 21,
+      "cases": 21,
+      "rules": 34,
+      "extraction_ms": 46420,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "boundaries-3",
+      "recorded_at": "2026-10-06T01:59:53.751Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
+      "corpus": "boundaries",
+      "protocol": "quality-v5",
+      "prompt": "rules-v11",
+      "fixture_sha256": "b89bef3f49202cd17bcd40ac4113528300b7c29906cbd6601f329c6f1e99fe90",
+      "quality_sha256": "9f6fd87d471cc13df6d527cb9f4481fb5a58817714d17db8e8a9f3a5bbf3adfc",
+      "generations_sha256": "71bcd474669f1f6b7ba1a7f62c0069a09247db2ddd6602d639a143fdff7412fc",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": false,
+      "correct_200": 24,
+      "correct_500": 25,
+      "cases": 28,
+      "rules": 38,
+      "extraction_ms": 58240,
+      "coverage_failures": [
+        {
+          "source": "assistant-use.md",
+          "expected_policy_sentences": [
+            1,
+            2,
+            3
+          ],
+          "retained_sentences": [
+            1,
+            3
+          ],
+          "missing_policy_sentences": [
+            2
+          ],
+          "unexpected_retained_sentences": []
+        }
+      ],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "active-quotation.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        },
+        {
+          "id": "legitimate-assistant-policy",
+          "cap": 200,
+          "actual_sources": [
+            "assistant-ownership.md",
+            "assistant-use.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "only after",
+            "identifiers are removed",
+            "must review",
+            "before sending"
+          ]
+        },
+        {
+          "id": "legitimate-assistant-policy",
+          "cap": 500,
+          "actual_sources": [
+            "assistant-ownership.md",
+            "assistant-use.md",
+            "current-export.md",
+            "legacy-export.md",
+            "historical-support.md",
+            "mixed-handbook.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "only after",
+            "identifiers are removed"
+          ]
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 200,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 500,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 200,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 500,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md",
+            "current-export.md",
+            "legacy-export.md",
+            "assistant-ownership.md",
+            "assistant-use.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        }
+      ]
+    },
+    {
+      "name": "standard-3",
+      "recorded_at": "2026-10-06T02:00:52.425Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
+      "corpus": "standard",
+      "protocol": "quality-v5",
+      "prompt": "rules-v11",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "quality_sha256": "5e72fafad8866a499ad962e500622756c8ff18f4ebd51c328457eebdb85ec304",
+      "generations_sha256": "a1b5230b381804f42171275c9767e489fc9dbc61053fa43fbfab1e7495ef0664",
+      "completed": true,
+      "passed": true,
+      "coverage_valid": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 14,
+      "extraction_ms": 13353,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": []
+    },
+    {
+      "name": "extended-3",
+      "recorded_at": "2026-10-06T02:01:06.100Z",
+      "code": "82045d0 compiler and corpora; dependency fixes through b34da99 as described in README",
+      "corpus": "extended",
+      "protocol": "quality-v5",
+      "prompt": "rules-v11",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "quality_sha256": "71ba6b7bcda2d30da885c8236085b4bff06ad15ad60da5cdf66b4b916cf292ae",
+      "generations_sha256": "86a9c3b48ae7c7a33d5dac1651fbfe802e77a9a0d9e588fcdb99cc2b107fe999",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 12,
+      "correct_500": 13,
+      "cases": 13,
+      "rules": 23,
+      "extraction_ms": 28507,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "entitlement-standard-1",
+      "recorded_at": "2026-10-06T02:02:20.060Z",
+      "code": "682a0f7",
+      "corpus": "standard",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "quality_sha256": "8911710ed5529fd1091cd7c8d34f274de6305e891fc2e52a32463faa15641723",
+      "generations_sha256": "250332640568848b51bd87c0a59fec94ff223bc5ce13f0ac8a5d32a2f88ea7cc",
+      "completed": true,
+      "passed": true,
+      "coverage_valid": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 14,
+      "extraction_ms": 13969,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": []
+    },
+    {
+      "name": "entitlement-adversarial-1",
+      "recorded_at": "2026-10-06T02:02:34.324Z",
+      "code": "682a0f7",
+      "corpus": "adversarial",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "bea6286faf7bebea1012e202f1762a13a31d2138127006bae1f3d8cfb1c3a24a",
+      "quality_sha256": "a86d7de3ab454c938643cac3e0a4dfffc06852c1d27cc88b613f3d7362f65f28",
+      "generations_sha256": "e3e5c2f1714577da5f2dcb16fccaed5010959136ca81e3900fd73102bf808005",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 20,
+      "correct_500": 21,
+      "cases": 21,
+      "rules": 34,
+      "extraction_ms": 45934,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "entitlement-boundaries-1",
+      "recorded_at": "2026-10-06T02:03:20.632Z",
+      "code": "682a0f7",
+      "corpus": "boundaries",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "b89bef3f49202cd17bcd40ac4113528300b7c29906cbd6601f329c6f1e99fe90",
+      "quality_sha256": "34726f3aba5a4e194037b2cd9c3d1de24398ad84b5b8353435713abebc6db96c",
+      "generations_sha256": "728876d97bd1fbdb400094d45cc1e46c097bc4f7f281e75910a670cf88f3cc70",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": false,
+      "correct_200": 25,
+      "correct_500": 26,
+      "cases": 28,
+      "rules": 40,
+      "extraction_ms": 55329,
+      "coverage_failures": [
+        {
+          "source": "assistant-ownership.md",
+          "expected_policy_sentences": [
+            1
+          ],
+          "retained_sentences": [
+            1,
+            2
+          ],
+          "missing_policy_sentences": [],
+          "unexpected_retained_sentences": [
+            2
+          ]
+        }
+      ],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "active-quotation.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 200,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 500,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 200,
+          "actual_sources": [
+            "assistant-ownership.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 500,
+          "actual_sources": [
+            "assistant-ownership.md",
+            "leave.md",
+            "mixed-handbook.md",
+            "current-export.md",
+            "assistant-use.md",
+            "legacy-export.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        }
+      ]
+    },
+    {
+      "name": "entitlement-extended-1",
+      "recorded_at": "2026-10-06T02:04:16.323Z",
+      "code": "682a0f7",
+      "corpus": "extended",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "quality_sha256": "a76dbcbaecf4d9499828f70a5d2157e8785b58a5d4cee487c46f11c31b1b87df",
+      "generations_sha256": "5344ccc1b66a64fa903e0c1572cabdefce60ba6c3dec84055ab06353221bd8cf",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 12,
+      "correct_500": 13,
+      "cases": 13,
+      "rules": 23,
+      "extraction_ms": 25098,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "entitlement-standard-2",
+      "recorded_at": "2026-10-06T02:04:41.760Z",
+      "code": "682a0f7",
+      "corpus": "standard",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "quality_sha256": "a8ab0fbb5accbf8464f5931e38e426fb35b2fbae20a7fb7f2e884ff8b34f987a",
+      "generations_sha256": "97ac65fc2d273873ebb06c5c861c022ff7641f74ec184dd83144855b01215064",
+      "completed": true,
+      "passed": true,
+      "coverage_valid": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 14,
+      "extraction_ms": 13747,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": []
+    },
+    {
+      "name": "entitlement-adversarial-2",
+      "recorded_at": "2026-10-06T02:04:55.810Z",
+      "code": "682a0f7",
+      "corpus": "adversarial",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "bea6286faf7bebea1012e202f1762a13a31d2138127006bae1f3d8cfb1c3a24a",
+      "quality_sha256": "b095aff64d15b2d4fd98d7b146bbd7943e5a0efde08147e026d13a5e9798a738",
+      "generations_sha256": "0632cdc15b046eef4d8791c1113821c768cee1d0bbf83811abdc99a13e888074",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 20,
+      "correct_500": 21,
+      "cases": 21,
+      "rules": 34,
+      "extraction_ms": 48432,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "entitlement-boundaries-2",
+      "recorded_at": "2026-10-06T02:05:44.605Z",
+      "code": "682a0f7",
+      "corpus": "boundaries",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "b89bef3f49202cd17bcd40ac4113528300b7c29906cbd6601f329c6f1e99fe90",
+      "quality_sha256": "3f5b56623a1a34aa0ac92b9752e520bb7591c612dbe88771ac4e83dee31714b0",
+      "generations_sha256": "1d16cda630dec281c195b38005d86523edbcc6de7fda730219954d25de462d08",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 25,
+      "correct_500": 26,
+      "cases": 28,
+      "rules": 39,
+      "extraction_ms": 54114,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "active-quotation.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 200,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 500,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 200,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 500,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md",
+            "current-export.md",
+            "legacy-export.md",
+            "assistant-use.md",
+            "assistant-ownership.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        }
+      ]
+    },
+    {
+      "name": "entitlement-extended-2",
+      "recorded_at": "2026-10-06T02:06:39.108Z",
+      "code": "682a0f7",
+      "corpus": "extended",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "quality_sha256": "c6c1df44d22c1ebcbe25328271cb7c29fe3662e4218c2ef4c7fe9310c87777f9",
+      "generations_sha256": "8441f3130cf4bfad41abb86316fadee17645714c0ece07ec209b8b321cf3f40c",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 12,
+      "correct_500": 13,
+      "cases": 13,
+      "rules": 23,
+      "extraction_ms": 25778,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "entitlement-standard-3",
+      "recorded_at": "2026-10-06T02:07:05.229Z",
+      "code": "682a0f7",
+      "corpus": "standard",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "83cb235ef264aace935bdfd00978e72672c69b77fb6173736641335789235ad4",
+      "quality_sha256": "160f0e881e9bfe0700d2366dd141f1e75dda7020eea0c755dafd7f867e35053c",
+      "generations_sha256": "cbca1b85c2d0f9f87cbce48b11adf15c095838981c62d6e86d1b14e0b26c3eab",
+      "completed": true,
+      "passed": true,
+      "coverage_valid": true,
+      "correct_200": 7,
+      "correct_500": 7,
+      "cases": 7,
+      "rules": 14,
+      "extraction_ms": 14956,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": []
+    },
+    {
+      "name": "entitlement-adversarial-3",
+      "recorded_at": "2026-10-06T02:07:20.490Z",
+      "code": "682a0f7",
+      "corpus": "adversarial",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "bea6286faf7bebea1012e202f1762a13a31d2138127006bae1f3d8cfb1c3a24a",
+      "quality_sha256": "c013a177ffed9cf2121d411beb9f9558f9d2dd789c8b5dd41f44a7ae2163d6ac",
+      "generations_sha256": "bb87a441f3cac63aea37ed4e610b914df20f00b5f08668b35f88c2aeb074750f",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 20,
+      "correct_500": 21,
+      "cases": 21,
+      "rules": 34,
+      "extraction_ms": 46327,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "entitlement-boundaries-3",
+      "recorded_at": "2026-10-06T02:08:07.184Z",
+      "code": "682a0f7",
+      "corpus": "boundaries",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "b89bef3f49202cd17bcd40ac4113528300b7c29906cbd6601f329c6f1e99fe90",
+      "quality_sha256": "3f060e4a3bb6380d4a96ef1bab3c79ae7c6313f0e31517fc0db1f9b50e67d903",
+      "generations_sha256": "d53f6b7c020e2aada0e9077bce2e4cf528761055c4c252779a816e6abc756441",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 25,
+      "correct_500": 26,
+      "cases": 28,
+      "rules": 39,
+      "extraction_ms": 53211,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "active-quotation.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 200,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 500,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 200,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 500,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md",
+            "current-export.md",
+            "legacy-export.md",
+            "assistant-use.md",
+            "assistant-ownership.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": []
+        }
+      ]
+    },
+    {
+      "name": "entitlement-extended-3",
+      "recorded_at": "2026-10-06T02:09:00.777Z",
+      "code": "682a0f7",
+      "corpus": "extended",
+      "protocol": "quality-v5",
+      "prompt": "rules-v12",
+      "fixture_sha256": "9209c71379c6723f37c54d81262f51180f0dac646886d3e66f96f40e45d2bb30",
+      "quality_sha256": "391921eeaeed679e5e68c199cf843057f47337fce9813a3d77ca874a046f5d06",
+      "generations_sha256": "f2bbb2095cefe5b2ffcb08a0f1385bbb643b3697a8c9ee8b9530d73e706e28d9",
+      "completed": true,
+      "passed": false,
+      "coverage_valid": true,
+      "correct_200": 12,
+      "correct_500": 13,
+      "cases": 13,
+      "rules": 23,
+      "extraction_ms": 28625,
+      "coverage_failures": [],
+      "retried_jobs": [],
+      "diagnostic_failures": [
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "actual_sources": [
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_sources": [],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        }
+      ]
     }
   ]
 }
