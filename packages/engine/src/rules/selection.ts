@@ -3,18 +3,28 @@ import { meaningfulTerms } from "../retrieval/terms.js";
 
 export function selectRules(rules: RuleRecord[], query: string, semanticChunks: ChunkRecord[]): RuleRecord[] {
   const terms = new Set(meaningfulTerms(query));
-  return rules.map((rule) => {
+  const evidence = rules.map((rule) => ({ rule, words: new Set(`${rule.text} ${rule.quotation}`.toLowerCase().match(/[\p{L}\p{N}]+/gu)) }));
+  const frequency = new Map([...terms].map((term) => [term, evidence.filter(({ words }) => words.has(term)).length]));
+  const ranked = evidence.map(({ rule, words }) => {
     // Only semantic hits can select evidence without matching its own words. A
     // keyword hit elsewhere in a mixed source must not promote unrelated rules.
     const evidenceRank = semanticChunks.findIndex((chunk) => chunk.revisionId === rule.revisionId && chunk.documentId === rule.documentId && chunk.text.includes(rule.quotation));
-    // Generated scope/category labels can contain terms absent from the evidence.
-    // They must not create a lexical match for an unrelated request.
-    const words = new Set(`${rule.text} ${rule.quotation}`.toLowerCase().match(/[\p{L}\p{N}]+/gu));
-    const lexical = [...terms].filter((term) => words.has(term)).length;
-    return { rule, relevant: evidenceRank >= 0 || lexical > 0, score: (evidenceRank >= 0 ? 1 / (1 + evidenceRank) : 0) + lexical / 100 };
-  }).filter(({ rule, relevant }) => rule.global || relevant)
-    .sort((a, b) => Number(b.rule.global) - Number(a.rule.global) || b.rule.authorityPriority - a.rule.authorityPriority || b.score - a.score || a.rule.id.localeCompare(b.rule.id))
-    .map(({ rule }) => rule);
+    // Generated labels cannot establish lexical relevance. Weight evidence hits
+    // by corpus rarity and length so common policy vocabulary in a long rule
+    // does not displace a short requirement about the requested subject.
+    const matched = [...terms].filter((term) => words.has(term));
+    const lexical = matched.reduce((score, term) => score + Math.log(1 + rules.length / frequency.get(term)!), 0) / Math.sqrt(words.size || 1);
+    return { rule, relevant: evidenceRank >= 0 || matched.length > 0, score: (evidenceRank >= 0 ? 1 / (1 + evidenceRank) : 0) + lexical / 100 };
+  }).filter(({ rule, relevant }) => rule.global || relevant);
+  // Keep independently relevant evidence from the best-matching original source
+  // together. This preserves citation grouping and avoids a generic overlapping
+  // rule displacing a second requirement from that source during whole-item packing.
+  const group = (rule: RuleRecord) => JSON.stringify([rule.profile, rule.documentId, rule.revisionId, rule.sourcePath, rule.location, rule.authorityPriority]);
+  const scores = new Map<string, number>();
+  for (const { rule, score } of ranked) scores.set(group(rule), Math.max(score, scores.get(group(rule)) ?? 0));
+  return ranked.sort((a, b) => Number(b.rule.global) - Number(a.rule.global) || b.rule.authorityPriority - a.rule.authorityPriority
+    || scores.get(group(b.rule))! - scores.get(group(a.rule))! || group(a.rule).localeCompare(group(b.rule))
+    || b.score - a.score || a.rule.id.localeCompare(b.rule.id)).map(({ rule }) => rule);
 }
 
 function proposition(text: string): { subject: string; action: string; negative: boolean } | undefined {

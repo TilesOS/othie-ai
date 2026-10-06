@@ -176,7 +176,12 @@ SQLite's active revision is the publication authority. New records are staged un
 
 LanceDB maintains an explicit full-text index and separate vector tables keyed by provider/model revision/dimensions. SQLite FTS is an intentional lexical safety net. Reciprocal-rank fusion combines available text/vector ranks, then applies retrieval weights. Authority is retained separately and contradictions are emitted rather than silently merged.
 
-Keyword selection requires query-word overlap in each rule's original evidence. A match
+Keyword selection requires subject-word overlap in each rule's original evidence;
+shared quantities and time units alone do not establish relevance. Duration-only queries
+need a subject term or a vector hit. Corpus rarity and evidence length rank lexical
+matches before packing; independently relevant evidence sharing an original revision,
+location, and authority stays together at that group's strongest score. Global status
+and authority take precedence. A match
 in another sentence of the same source cannot promote an unrelated rule. Vector hits
 can still select source-backed rules without literal overlap; globally configured rules
 remain unconditional. These are relevance heuristics, not semantic applicability proof.

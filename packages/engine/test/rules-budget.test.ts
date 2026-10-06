@@ -7,6 +7,7 @@ import { ContextCompiler } from "../src/context/compiler.js";
 import { LanceIndex } from "../src/retrieval/lance-index.js";
 import { ProviderRegistry } from "../src/providers/registry.js";
 import { countTokens } from "../src/tokenizer.js";
+import { selectRules } from "../src/rules/selection.js";
 import { packContext } from "../src/context/packing.js";
 import { admitPath, isGlobalDocument } from "../src/security/paths.js";
 import type { ChunkRecord, RuleRecord } from "../src/types.js";
@@ -110,6 +111,25 @@ describe("rules and whole-item budgets",()=>{
       expect(separated.text).not.toContain("<rule_group");
       expect(separated.text.match(/<citation /g)).toHaveLength(3);
     }
+  });
+
+  it("packs both maintenance requirements before unrelated vocabulary at 200 tokens", async () => {
+    const f = await fixture(); cleanups.push(f.root);
+    const base = { profile: "company", category: "policy", applicability: "See cited evidence.", location: "lines 1-1",
+      authorityPriority: 80, global: false, modelIdentity: "test", promptVersion: EXTRACTION_PROMPT_VERSION };
+    const texts = ["Production maintenance must be announced at least 48 hours before it begins.",
+      "Emergency maintenance may start immediately only with incident commander approval.",
+      "Production deployments require approval from the release owner. Except during an active outage, when the incident commander may approve."];
+    const rules: RuleRecord[] = texts.map((text, index) => ({ ...base, id: `r${index}`, text, quotation: text,
+      documentId: index < 2 ? "maintenance" : "deployments", revisionId: index < 2 ? "maintenance-v" : "deployments-v",
+      sourcePath: `${f.docs}/${index < 2 ? "maintenance" : "deployments"}.md` }));
+    const query = "production emergency maintenance announcement 48 hours incident commander approval";
+    const result = packContext("company", f.config.profiles.company!, { query, max_tokens: 200 },
+      { rules: selectRules(rules, query, []), excerpts: [], keywordAvailable: true, vectorAvailable: false }, false, { corpus: 1, rules: 1 });
+    expect(result.brief.applicable_rules.map((rule) => rule.text)).toEqual(expect.arrayContaining(texts.slice(0, 2)));
+    expect(result.status.tokenCount).toBe(countTokens(result.text, "o200k_base"));
+    expect(result.status.tokenCount).toBeLessThanOrEqual(200);
+    expect(result.brief.applicable_rules.every((rule) => rule.citation.quote === rule.text)).toBe(true);
   });
 
   it("coalesces and caches synthesis, then invalidates on rule and policy revision",async()=>{

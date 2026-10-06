@@ -38,3 +38,29 @@ it("does not retrieve a rule solely through generated scope or category wording"
   expect(selectRules([telemetry], "missing consent", [])).toEqual([telemetry]);
   expect(selectRules([{ ...telemetry, global: true }], "repository comparator", [])).toHaveLength(1);
 });
+
+it("requires a policy subject beyond generic quantities and time units", () => {
+  const support = rule("support", "Support agents must acknowledge priority tickets within thirty minutes.");
+  for (const query of ["median took seventeen minutes", "thirty minutes", "four hours", "twenty days"])
+    expect(selectRules([support], query, [])).toEqual([]);
+  expect(selectRules([support], "support acknowledgement time", [])).toEqual([support]);
+  expect(selectRules([support], "priority tickets thirty minutes", [])).toEqual([support]);
+  expect(selectRules([{ ...support, global: true }], "thirty minutes", [])).toHaveLength(1);
+  const chunk = { documentId: support.documentId, revisionId: support.revisionId, text: support.quotation };
+  expect(selectRules([support], "thirty minutes", [chunk as never])).toEqual([support]);
+});
+
+it("keeps independently relevant evidence from the strongest source together for packing", () => {
+  const notice = rule("notice", "Production maintenance must be announced at least 48 hours before it begins.", { documentId: "maintenance", revisionId: "maintenance", sourcePath: "maintenance.md" });
+  const emergency = rule("emergency", "Emergency maintenance may start immediately only with incident commander approval.", { documentId: "maintenance", revisionId: "maintenance", sourcePath: "maintenance.md" });
+  const deployments = rule("deployments", "Production deployments require approval from the release owner. Except during an active outage, when the incident commander may approve.");
+  const query = "production emergency maintenance announcement 48 hours incident commander approval";
+  const ranked = selectRules([deployments, emergency, notice], query, []);
+  expect(ranked.indexOf(notice)).toBeLessThan(ranked.indexOf(deployments));
+  expect(ranked.indexOf(emergency)).toBeLessThan(ranked.indexOf(deployments));
+  const unrelated = rule("unrelated", "The payroll system requires monthly access reviews.", { documentId: "maintenance", revisionId: "maintenance", sourcePath: "maintenance.md" });
+  expect(selectRules([unrelated, ...ranked], query, [])).not.toContain(unrelated);
+  expect(selectRules([deployments, { ...notice, authorityPriority: 100 }], query, [
+    { documentId: deployments.documentId, revisionId: deployments.revisionId, text: deployments.quotation } as never,
+  ])[0]?.id).toBe("notice");
+});
