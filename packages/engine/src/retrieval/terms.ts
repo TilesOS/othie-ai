@@ -7,7 +7,7 @@ const stopwords = new Set([
 ]);
 
 export function meaningfulTerms(query: string): string[] {
-  return [...new Set((query.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []).filter((term) => term.length > 2 && !stopwords.has(term)))].slice(0, 20);
+  return [...new Set((query.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []).filter((term) => term.length > 2 && !/^\p{N}+$/u.test(term) && !stopwords.has(term)))].slice(0, 20);
 }
 
 export function hasLexicalOverlap(text: string, terms: string[]): boolean {

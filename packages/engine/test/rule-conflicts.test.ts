@@ -43,6 +43,9 @@ it("requires a policy subject beyond generic quantities and time units", () => {
   const support = rule("support", "Support agents must acknowledge priority tickets within thirty minutes.");
   for (const query of ["median took seventeen minutes", "thirty minutes", "four hours", "twenty days"])
     expect(selectRules([support], query, [])).toEqual([]);
+  const numeric = rule("numeric", "Support agents must acknowledge priority tickets within 500 seconds.");
+  expect(selectRules([numeric], "This program printed 500", [])).toEqual([]);
+  expect(selectRules([numeric], "priority tickets 500 seconds", [])).toEqual([numeric]);
   expect(selectRules([support], "support acknowledgement time", [])).toEqual([support]);
   expect(selectRules([support], "priority tickets thirty minutes", [])).toEqual([support]);
   expect(selectRules([{ ...support, global: true }], "thirty minutes", [])).toHaveLength(1);

@@ -8,6 +8,7 @@ describe("lexical relevance", () => {
   });
   it("does not use shared durations as the sole relevance signal", () => {
     expect(hasLexicalOverlap("Support tickets require acknowledgement within thirty minutes.", meaningfulTerms("median took seventeen minutes"))).toBe(false);
+    expect(hasLexicalOverlap("Support tickets require acknowledgement within 500 seconds.", meaningfulTerms("This program printed 500"))).toBe(false);
     expect(hasLexicalOverlap("Support tickets require acknowledgement within thirty minutes.", meaningfulTerms("support acknowledgement time"))).toBe(true);
   });
   it("still finds a scoped negated policy by its subject", () => {
