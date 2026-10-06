@@ -6,7 +6,7 @@ import type { ProviderRegistry } from "../providers/registry.js";
 import type { ChunkRecord, RuleRecord } from "../types.js";
 import { CLASSIFICATION_PROMPT, classificationJsonSchema, validateSentenceClassification, type SentenceClassification } from "./classification.js";
 
-export const EXTRACTION_PROMPT_VERSION = "rules-v11";
+export const EXTRACTION_PROMPT_VERSION = "rules-v12";
 
 const extractedSchema = z.object({
   rules: z.array(z.object({

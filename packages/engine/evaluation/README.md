@@ -150,7 +150,7 @@ is expected; extended mixed-policy documents declare their policy sentence numbe
 Missing policy or retained non-policy/reference sentences fail this diagnostic independently
 of the retrieval cases. This is fixture-specific coverage, not a general semantic classifier.
 Reports include durable extraction-job states and attempt counts, so successful retries
-are visible. The `rules-v11` extractor classifies every sentence with a short explanation in one
+are visible. The `rules-v12` extractor classifies every sentence with a short explanation in one
 request, then derives policy evidence deterministically in source order. It recovers
 every classified policy sentence, attaching syntactic qualifications without crossing
 classified non-policy boundaries. No second selector can contradict these decisions.

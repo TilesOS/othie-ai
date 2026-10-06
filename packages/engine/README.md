@@ -186,7 +186,7 @@ in another sentence of the same source cannot promote an unrelated rule. Vector 
 can still select source-backed rules without literal overlap; globally configured rules
 remain unconditional. These are relevance heuristics, not semantic applicability proof.
 
-Extraction uses one model classification request under a deadline (`rules-v11`). It
+Extraction uses one model classification request under a deadline (`rules-v12`). It
 classifies each numbered sentence as policy, descriptive text, or a model instruction,
 with a short explanation for inspection. The request uses the profile's approved
 extraction provider; explanations never become policy evidence.
