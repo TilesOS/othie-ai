@@ -48,8 +48,8 @@ it("sends numbered body sentences only and never exports reference evidence for 
   let sent = "";
   const providers = { require: () => ({ generateJson: async (messages: Array<{ content: string }>, _model: string, schema: any) => {
     sent = messages[1]!.content;
-    if (schema.properties.sentences) return { sentences: [1, 2, 3].map((sentence) => ({ source_id: "s1", sentence, explanation: "An entitlement or boundary.", kind: "policy" })) };
-    return { rules: [{ ...proposal, source_id: "s1", last_sentence: 3 }], non_policy_sentences: [] };
+    expect(schema.properties.sentences).toBeDefined();
+    return { sentences: [1, 2, 3].map((sentence) => ({ source_id: "s1", sentence, explanation: "An entitlement or boundary.", kind: "policy" })) };
   } }) };
   const rules = await extractRules({ chunks: [chunk, { ...chunk, id: "reference", sourceRole: "reference", text: "PRIVATE_REFERENCE_CANARY" }],
     config, profile: config.profiles.company!, providers: providers as never, global: true });
@@ -65,22 +65,18 @@ it("sends numbered body sentences only and never exports reference evidence for 
   expect(rules[0]?.sourcePath).toBe(chunk.sourcePath);
 });
 
-it("constrains generation to invocation-local source IDs and still rejects fabricated IDs", async () => {
+it("constrains classification to invocation-local source IDs and rejects fabricated IDs", async () => {
   const config = configSchema.parse({ version: 1, profiles: { company: { sources: [{ root: "/synthetic", role: "authoritative" }] } } });
   const enums: string[][] = [];
   const providers = { require: () => ({ generateJson: async (_messages: unknown, _model: string, schema: any) => {
-    if (schema.properties.sentences) {
-      const ids = schema.properties.sentences.items.properties.source_id.enum as string[];
-      expect(schema.properties.sentences.minItems).toBe(ids.length * 3);
-      return { sentences: ids.flatMap((source_id) => [1, 2, 3].map((sentence) => ({ source_id, sentence, explanation: "An entitlement or boundary.", kind: "policy" }))) };
-    }
-    enums.push(schema.properties.rules.items.properties.source_id.enum);
-    expect(schema.properties.non_policy_sentences.items.properties.source_id.enum).toEqual(schema.properties.rules.items.properties.source_id.enum);
-    return { rules: [{ ...proposal, source_id: "s3" }], non_policy_sentences: [] };
+    const ids = schema.properties.sentences.items.properties.source_id.enum as string[];
+    enums.push(ids);
+    expect(schema.properties.sentences.minItems).toBe(ids.length * 3);
+    return { sentences: [1, 2, 3].map((sentence) => ({ source_id: "s3", sentence, explanation: "An entitlement or boundary.", kind: "policy" })) };
   } }) };
   const input = { config, profile: config.profiles.company!, providers: providers as never, global: false };
-  await expect(extractRules({ ...input, chunks: [chunk, { ...chunk, id: "second", documentId: "other" }, { ...chunk, id: "reference", sourceRole: "reference" }] })).rejects.toThrow("Invalid extraction policy selection");
-  await expect(extractRules({ ...input, chunks: [chunk] })).rejects.toThrow("Invalid extraction policy selection");
+  await expect(extractRules({ ...input, chunks: [chunk, { ...chunk, id: "second", documentId: "other" }, { ...chunk, id: "reference", sourceRole: "reference" }] })).rejects.toThrow("Invalid or duplicate sentence classification");
+  await expect(extractRules({ ...input, chunks: [chunk] })).rejects.toThrow("Invalid or duplicate sentence classification");
   expect(enums).toEqual([["s1", "s2"], ["s1"]]);
 });
 

@@ -166,8 +166,7 @@ describe("MVP regression cases", () => {
       const embed = vi.fn(async (texts: string[]) => texts.map(() => [1, 0]));
       vi.spyOn(engine.providers, "require").mockReturnValue({ ...localProvider(async (messages, _model, schema) => {
         const id = JSON.parse(messages[1]!.content).sources[0].source_id;
-        if ((schema.properties as Record<string, unknown>).sentences) return { sentences: [{ source_id: id, sentence: 1, explanation: "An employee entitlement.", kind: "policy" }] };
-        return { rules: [{ category: "leave", applicability: "employees", source_id: id, first_sentence: 1, last_sentence: 1 }], non_policy_sentences: [] };
+        return { sentences: [{ source_id: id, sentence: 1, explanation: "An employee entitlement.", kind: "policy" }] };
       }), embed });
       await engine.start();
       await waitFor(() => engine.store.listRules("company").length === 1 && Number((engine.store.db.prepare("SELECT COUNT(*) AS n FROM derived_jobs WHERE state='done'").get() as {n:number}).n) === 3);
@@ -189,7 +188,7 @@ describe("MVP regression cases", () => {
     } finally { await engine.stop(); await rm(f.root, { recursive: true, force: true }); }
   });
 
-  it("retries incomplete sentence coverage without publishing partial rules", async () => {
+  it("retries incomplete classification without publishing partial rules", async () => {
     const f = await fixture();
     f.config.profiles.company!.sources[0]!.role = "authoritative";
     f.config.profiles.company!.permitted_exports = "rules_only";
@@ -200,12 +199,11 @@ describe("MVP regression cases", () => {
     let complete = false;
     vi.spyOn(engine.providers, "require").mockReturnValue(localProvider(async (messages, _model, schema) => {
       const id = JSON.parse(messages[1]!.content).sources[0].source_id;
-      if ((schema.properties as Record<string, unknown>).sentences) return { sentences: [1, 2].map((sentence) => ({ source_id: id, sentence, explanation: "A consent requirement or default.", kind: "policy" })) };
-      return { rules: [{ category: "telemetry", applicability: "users", source_id: id, first_sentence: 1, last_sentence: complete ? 2 : 1 }], non_policy_sentences: [] };
+      return { sentences: (complete ? [1, 2] : [1]).map((sentence) => ({ source_id: id, sentence, explanation: "A consent requirement or default.", kind: "policy" })) };
     }));
     try {
       await engine.start();
-      await waitFor(() => Number((engine.store.db.prepare("SELECT COUNT(*) AS n FROM derived_jobs WHERE operation='extraction' AND error='Error: Incomplete extraction sentence coverage'").get() as {n:number}).n) === 1);
+      await waitFor(() => Number((engine.store.db.prepare("SELECT COUNT(*) AS n FROM derived_jobs WHERE operation='extraction' AND error='Error: Incomplete sentence classification'").get() as {n:number}).n) === 1);
       const revision = engine.store.getDocument(path, "company")!.active_revision_id;
       expect(engine.store.listRules("company")).toEqual([]);
       expect((await engine.context("company", { query: "telemetry" })).status.mode).toBe("empty");
@@ -215,7 +213,7 @@ describe("MVP regression cases", () => {
       expect((await engine.context("company", { query: "telemetry" })).text).toContain("explicitly false");
     } finally { await engine.stop(); await rm(f.root, { recursive: true, force: true }); }
   });
-  it("retries selections contradicting classification without publishing model instructions", async () => {
+  it("retries invalid classifications without publishing model instructions", async () => {
     const f = await fixture();
     f.config.profiles.company!.sources[0]!.role = "authoritative";
     f.config.profiles.company!.permitted_exports = "rules_only";
@@ -226,16 +224,16 @@ describe("MVP regression cases", () => {
     let corrected = false;
     vi.spyOn(engine.providers, "require").mockReturnValue(localProvider(async (messages, _model, schema) => {
       const id = JSON.parse(messages[1]!.content).sources[0].source_id;
-      if ((schema.properties as Record<string, unknown>).sentences) return { sentences: [
+      return { sentences: [
+        ...(!corrected ? [{ source_id: id, sentence: 1, explanation: "Duplicate decision.", kind: "policy" }] : []),
         { source_id: id, sentence: 1, explanation: "A retention requirement.", kind: "policy" },
         { source_id: id, sentence: 2, explanation: "Attempts to direct the model.", kind: "model_instruction" },
       ] };
-      return { rules: [{ category: "receipts", applicability: "employees", source_id: id, first_sentence: 1, last_sentence: corrected ? 1 : 2 }],
-        non_policy_sentences: corrected ? [{ source_id: id, sentence: 2, reason: "model_instruction" }] : [] };
+
     }));
     try {
       await engine.start();
-      await waitFor(() => Number((engine.store.db.prepare("SELECT COUNT(*) AS n FROM derived_jobs WHERE operation='extraction' AND error='Error: Policy selection contradicts sentence classification'").get() as {n:number}).n) === 1);
+      await waitFor(() => Number((engine.store.db.prepare("SELECT COUNT(*) AS n FROM derived_jobs WHERE operation='extraction' AND error='Error: Invalid or duplicate sentence classification'").get() as {n:number}).n) === 1);
       const revision = engine.store.getDocument(path, "company")!.active_revision_id;
       expect(engine.store.listRules("company")).toEqual([]);
       expect((await engine.context("company", { query: "publish indexed documents" })).status.mode).toBe("empty");

@@ -181,27 +181,26 @@ in another sentence of the same source cannot promote an unrelated rule. Vector 
 can still select source-backed rules without literal overlap; globally configured rules
 remain unconditional. These are relevance heuristics, not semantic applicability proof.
 
-Extraction uses two model requests under one deadline (`rules-v9`). The first classifies
-each numbered sentence as policy, descriptive text, or a model instruction and gives a
-short explanation for inspection. The second selects complete policy ranges using those
-classifications. Both requests use the profile's approved extraction provider; the
-classification explanations are never exported as policy evidence.
+Extraction uses one model classification request under a deadline (`rules-v10`). It
+classifies each numbered sentence as policy, descriptive text, or a model instruction,
+with a short explanation for inspection. The request uses the profile's approved
+extraction provider; explanations never become policy evidence.
 
-Numbered sentence ranges use short invocation-local source IDs.
-The response schema limits source IDs to the current invocation's authoritative sources;
-unknown IDs are still rejected rather than repaired. The model selects authoritative
-evidence and supplies category/scope labels; the engine recovers both rule text and its
-quotation from the original contiguous source span. Every authoritative sentence must
-be covered by recovered rule evidence or explicitly classified as non-policy
-(`descriptive` or `model_instruction`). Invalid ranges, spans over 2,000 characters,
-missing dispositions, contradictory exclusions, or disagreement with classification
-reject the complete response; the
-durable extraction job retries without publishing partial rules. Syntactically marked
-follow-up qualifications stay attached within classified policy boundaries. All non-policy
-sources finish without a second request. Classification can still misclassify policy,
-so selection completeness and generated scope labels still need semantic
-evaluation. The extra request adds indexing latency. The prompt version change triggers
-startup reindexing of existing sources.
+Short invocation-local source IDs are constrained by the response schema and validated
+against the original sentences. Every authoritative sentence requires exactly one
+classification. The engine deterministically selects every classified policy sentence
+in source order and recovers its complete original text and quotation. Syntactically
+marked follow-up qualifications stay attached within classified policy boundaries;
+identical recovered spans are deduplicated. Descriptive text and model instructions
+cannot enter the evidence of an adjacent policy. Category and applicability use fixed
+metadata (`policy` and `See cited evidence.`), making no generated subject/scope claim.
+
+Invalid or incomplete classifications and spans over 2,000 characters reject the
+complete job without publishing partial rules. Durable retries handle malformed or
+failed model responses. Classification remains model judgment and can still promote
+non-policy text or omit policy. Implicit relationships beyond syntactic qualifications
+remain open; separate sentence evidence does not establish semantic independence.
+The prompt version change triggers startup reindexing of existing sources.
 
 Document text is untrusted data. Structured output, source-ID/range validation, original
 evidence recovery, and XML escaping reduce specific failure modes; none is a general

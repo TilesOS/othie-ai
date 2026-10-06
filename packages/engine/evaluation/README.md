@@ -150,11 +150,13 @@ is expected; extended mixed-policy documents declare their policy sentence numbe
 Missing policy or retained non-policy/reference sentences fail this diagnostic independently
 of the retrieval cases. This is fixture-specific coverage, not a general semantic classifier.
 Reports include durable extraction-job states and attempt counts, so successful retries
-are visible. The `rules-v9` extractor first classifies every sentence with a short explanation,
-then selects policy ranges. Classification must be complete, and recovered evidence and
-explicit exclusions must agree with it before publication. The two requests share a
-deadline and use the same approved provider. Classification is model judgment and can
-still misclassify policy; explanations are inspection data, never exported evidence.
+are visible. The `rules-v10` extractor classifies every sentence with a short explanation in one
+request, then derives policy evidence deterministically in source order. It recovers
+every classified policy sentence, attaching syntactic qualifications without crossing
+classified non-policy boundaries. No second selector can contradict these decisions.
+Classification is model judgment and can still misclassify policy; explanations are
+inspection data and never exported evidence. Fixed category/applicability metadata
+makes no generated subject or scope claim. Implicit evidence links remain open.
 
 The default `--corpus standard` preserves the original seven-case input. Pass
 `--corpus extended` to add four authoritative documents and six cases covering regional
