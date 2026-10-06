@@ -27,6 +27,9 @@
     "eval:quality": "npm run build --workspace=@othie/engine && node packages/engine/dist/src/evaluation/model-quality.js"
   },
   "overrides": {
-    "sharp": "0.35.4"
+    "sharp": "0.35.4",
+    "mammoth": {
+      "argparse": "2.0.1"
+    }
   }
 }

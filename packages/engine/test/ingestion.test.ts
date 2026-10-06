@@ -1,4 +1,4 @@
-import { rename, rm, unlink, writeFile } from "node:fs/promises";
+import { readFile, rename, rm, unlink, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { OthieEngine } from "../src/engine/service.js";
@@ -19,6 +19,21 @@ describe("offline-first ingestion",()=>{
       await writeFile(path,"# Vacation\nEmployees may take thirty days of vacation.\n");engine.store.enqueue(path,"company","upsert");await waitFor(()=>engine.store.listActiveChunks("company").some((chunk)=>chunk.text.includes("thirty days")));const edited=await engine.context("company",{query:"vacation"});expect(edited.text).toContain("thirty days");expect(edited.text).not.toContain("twenty days");
       await unlink(path);engine.store.revokePath(path,"company");expect((await engine.context("company",{query:"vacation"})).status.mode).toBe("empty");
     }finally{await engine.stop();}
+  });
+
+  it("indexes DOCX policy paragraphs through the isolated parser", async () => {
+    const f = await fixture(); cleanups.push(f.root);
+    const path = join(f.docs, "support.docx");
+    await writeFile(path, await readFile(new URL("./fixtures/support.docx", import.meta.url)));
+    const engine = new OthieEngine(f.config, f.data);
+    try {
+      await engine.start();
+      await waitFor(() => engine.store.getDocument(path, "company")?.status === "active");
+      const context = await engine.context("company", { query: "support emergency tickets" });
+      expect(context.text).toContain("Support replies must arrive within four hours.");
+      expect(context.text).toContain("Emergency tickets require an immediate acknowledgement.");
+      expect(context.brief.permitted_excerpts.every((excerpt) => excerpt.citation.source === "s1/support.docx")).toBe(true);
+    } finally { await engine.stop(); }
   });
 
   it("never exposes a staged replacement after a crash boundary",async()=>{
