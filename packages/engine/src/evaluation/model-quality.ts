@@ -10,6 +10,9 @@ import { countTokens } from "../tokenizer.js";
 import { EXTRACTION_PROMPT_VERSION } from "../rules/extractor.js";
 import { qualityCorpus, type QualityDocument } from "./quality-cases.js";
 import type { ContextBriefV1 } from "../types.js";
+import { evaluateApplicability, APPLICABILITY_PROMPT_VERSION } from "./applicability.js";
+import { selectRules } from "../rules/selection.js";
+import { packContext } from "../context/packing.js";
 
 export function missingPatterns(text: string, patterns: readonly string[]): string[] {
   return patterns.filter((pattern) => !new RegExp(pattern, "i").test(text));
@@ -36,6 +39,7 @@ export function extractionCoverage(documents: readonly QualityDocument[], rules:
 export const qualityOptionsSchema = z.object({
   temperature: z.number().finite().min(0).max(2).optional(),
   seed: z.number().int().min(0).max(2_147_483_647).optional(),
+  applicability: z.enum(["lexical", "semantic"]).optional(),
 }).strict();
 export type QualityOptions = z.infer<typeof qualityOptionsSchema>;
 
@@ -70,17 +74,18 @@ export async function runModelQuality(model: string, out: string, corpusName = "
   const engine = new OthieEngine(config, state);
   const provider = engine.providers.require(config.profiles.company!, "extraction", "ollama");
   const generate = provider.generateJson.bind(provider);
-  const generations: Array<{ messages: unknown; schema: unknown; options: unknown; raw: unknown; wall_ms: number; error?: string }> = [];
+  let generationStage: "extraction" | "applicability" = "extraction";
+  const generations: Array<{ stage: string; messages: unknown; schema: unknown; options: unknown; raw: unknown; wall_ms: number; error?: string }> = [];
   provider.generateJson = async (...args) => {
     args[4] = { ...args[4], ...(settings.temperature !== undefined ? { temperature: settings.temperature } : {}),
       ...(settings.seed !== undefined ? { seed: settings.seed } : {}) };
     const start = performance.now();
     try {
       const raw = await generate(...args);
-      generations.push({ messages: args[0], schema: args[2], options: args[4] ?? null, raw, wall_ms: Math.round(performance.now() - start) });
+      generations.push({ stage: generationStage, messages: args[0], schema: args[2], options: args[4] ?? null, raw, wall_ms: Math.round(performance.now() - start) });
       return raw;
     } catch (error) {
-      generations.push({ messages: args[0], schema: args[2], options: args[4] ?? null, raw: null, wall_ms: Math.round(performance.now() - start), error: "generation_failed" });
+      generations.push({ stage: generationStage, messages: args[0], schema: args[2], options: args[4] ?? null, raw: null, wall_ms: Math.round(performance.now() - start), error: "generation_failed" });
       throw error;
     }
   };
@@ -106,10 +111,33 @@ export async function runModelQuality(model: string, out: string, corpusName = "
     const coverageValid = coverage.every((doc) => doc.missing_policy_sentences.length === 0 && doc.unexpected_retained_sentences.length === 0);
     const extractionJobs = engine.store.db.prepare(`SELECT d.path,j.state,j.attempts,j.error FROM derived_jobs j JOIN documents d ON d.id=j.document_id WHERE j.operation='extraction' ORDER BY d.path`).all() as Array<{ path: string; state: string; attempts: number; error: string | null }>;
     const results = [];
+    const applicabilityResults = [];
+    generationStage = "applicability";
     for (const scenario of qualityCases) {
+      const candidates = selectRules(engine.store.listRules("company"), scenario.query, []);
+      let applicable = candidates, applicabilityValid = true;
+      const applicabilityStart = performance.now();
+      if (settings.applicability === "semantic") {
+        try {
+          const selected = await evaluateApplicability({ rules: candidates, query: scenario.query, provider, model,
+            signal: AbortSignal.timeout(20_000), options: { thinking: false } });
+          applicable = selected.rules;
+          applicabilityResults.push({ id: scenario.id, valid: true, candidate_count: candidates.length, selected_count: applicable.length,
+            decisions: selected.decisions, wall_ms: Math.round(performance.now() - applicabilityStart) });
+        } catch {
+          // Keep baseline evidence for inspection, but fail both diagnostic scores.
+          applicabilityValid = false;
+          applicabilityResults.push({ id: scenario.id, valid: false, candidate_count: candidates.length, selected_count: null,
+            decisions: [], wall_ms: Math.round(performance.now() - applicabilityStart) });
+        }
+      }
       for (const cap of [200, 500]) {
         const began = performance.now();
-        const context = await engine.context("company", { query: scenario.query, max_tokens: cap, surface: "code", phase: "turn_start", host: "model-quality-eval" });
+        const request = { query: scenario.query, max_tokens: cap, surface: "code" as const, phase: "turn_start" as const, host: "model-quality-eval" };
+        const baseline = await engine.context("company", request);
+        const context = settings.applicability === "semantic" && applicabilityValid
+          ? packContext("company", config.profiles.company!, request, { rules: applicable, excerpts: [], keywordAvailable: true, vectorAvailable: false }, true, engine.store.getRevisionCounters())
+          : baseline;
         const selected = context.brief.applicable_rules;
         const actualSources = [...new Set(selected.map((rule) => basename(rule.citation.source)))];
         const missingSources = scenario.sources.filter((source) => !actualSources.includes(source));
@@ -120,7 +148,9 @@ export async function runModelQuality(model: string, out: string, corpusName = "
         results.push({ id: scenario.id, cap, expected_sources: scenario.sources, actual_sources: actualSources,
           missing_sources: missingSources, missing_qualifier_patterns: lost, budget_valid: budgetValid,
           expected_conflicts: scenario.expected_conflicts ?? null, actual_conflicts: context.status.conflicts, conflict_valid: conflictValid,
-          correct: completed && budgetValid && conflictValid && (noOp ? selected.length === 0 : missingSources.length === 0 && lost.length === 0),
+          applicability_valid: applicabilityValid,
+          correct: completed && applicabilityValid && budgetValid && conflictValid && (noOp ? selected.length === 0 : missingSources.length === 0 && lost.length === 0),
+          ...(settings.applicability === "semantic" ? { lexical_baseline: baseline.brief } : {}),
           retrieval_ms: Math.round(performance.now() - began), brief: context.brief });
       }
     }
@@ -130,6 +160,8 @@ export async function runModelQuality(model: string, out: string, corpusName = "
       model: identity, runtime: await local("/api/version"), platform: process.platform, node: process.version, prompt_version: EXTRACTION_PROMPT_VERSION,
       fixture_sha256: createHash("sha256").update(JSON.stringify({ qualityDocuments, qualityCases })).digest("hex"),
       generation_settings: settings,
+      applicability_prompt_version: settings.applicability === "semantic" ? APPLICABILITY_PROMPT_VERSION : null,
+      applicability_results: applicabilityResults,
       license: { artifact_details: metadata.details ?? null, license_present: !!metadata.license,
         license_sha256: metadata.license ? createHash("sha256").update(metadata.license).digest("hex") : null,
         review: "Artifact redistribution license/notice review pending; this experiment redistributes no model weights." },
@@ -154,7 +186,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const out = resolve(arg("out") ?? `packages/engine/evaluation/results/quality-${Date.now()}`);
   await mkdir(resolve(out, ".."), { recursive: true });
   const options = { ...(arg("temperature") !== undefined ? { temperature: Number(arg("temperature")) } : {}),
-    ...(arg("seed") !== undefined ? { seed: Number(arg("seed")) } : {}) };
+    ...(arg("seed") !== undefined ? { seed: Number(arg("seed")) } : {}),
+    ...(arg("applicability") !== undefined ? { applicability: arg("applicability") as QualityOptions["applicability"] } : {}) };
   void runModelQuality(arg("model") ?? "qwen3.5:4b-mlx", out, arg("corpus"), options).then((report) => {
     process.stdout.write(JSON.stringify({ report: join(out, "quality.json"), passed: report.passed, correct: report.results.filter((result) => result.correct).length, total: report.results.length }) + "\n");
     if (!report.passed) process.exitCode = 1;

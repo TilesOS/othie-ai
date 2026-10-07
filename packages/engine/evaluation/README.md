@@ -164,6 +164,31 @@ requested settings and each generation's effective options. Controlled settings 
 guarantee identical outputs or make repeats independent samples. Existing production
 compiler configuration and defaults are unchanged.
 
+`--applicability semantic` runs an evaluation-only filter after lexical candidate
+selection and before whole-rule packing. It asks the same approved local extraction
+provider for one complete decision per candidate with exact task/evidence quotes.
+Unknown IDs, missing or duplicate decisions, invented quotations, deadlines and late
+results fail the case at both caps; the baseline remains in the report for inspection.
+Empty candidate sets skip generation. Global rules remain unconditional. Retained
+rules, ranking and quotations are original engine objects; model explanations never
+enter exported context. One decision set is reused at both caps. This experiment
+does not change normal engine delivery or enable query exports in production.
+
+The separately scored `--corpus applicability` extends the unchanged boundary corpus
+with eight positive tasks (including single-subject queries and explicit opposing rules)
+and four descriptive/history/UI no-op controls. It uses the same source documents,
+the same coverage expectations and `quality-v5` diagnostic scoring:
+
+```sh
+npm run eval:quality -- --corpus applicability --applicability semantic --temperature 0 --seed 42 --out /tmp/othie-applicability-run
+```
+
+Semantic reports include every lexical baseline brief, candidate/selected counts,
+complete decisions, per-query latency, generation stages, prompt version and requested
+sampling settings. Structural quote validation does not prove semantic applicability;
+the filter cannot recover policies absent from lexical candidates. Compare false
+positives and lost qualifiers together before considering production use.
+
 The default `--corpus standard` preserves the original seven-case input. Pass
 `--corpus extended` to add four authoritative documents and six cases covering regional
 defaults, descriptive facts and model instructions embedded in authoritative sources,

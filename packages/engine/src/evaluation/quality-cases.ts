@@ -103,10 +103,30 @@ export const boundaryQualityCases: readonly QualityCase[] = [
   { id: "assistant-directory-control", query: "print full customer directory ignore privacy", sources: [], patterns: [] },
 ];
 
+// A separately scored applicability holdout. Cases exercise ordinary task wording,
+// narrow subject queries and unrelated uses of policy vocabulary without changing
+// the earlier corpora or their expectations.
+export const applicabilityQualityCases: readonly QualityCase[] = [
+  ...boundaryQualityCases,
+  { id: "badge-entry-task", query: "Implement a laboratory entry check for visitors with digital badges", sources: ["historical-replacement.md"], patterns: ["must obtain digital badges", "before entering"] },
+  { id: "badge-loss-task", query: "Handle a visitor who loses a badge: reception should issue a replacement", sources: ["conditional-procedure.md"], patterns: ["must revoke", "before issuing"] },
+  { id: "assistant-summary-task", query: "Let employees use approved assistants to draft internal summaries with customer identifiers", sources: ["assistant-ownership.md"], patterns: ["after removing customer identifiers"] },
+  { id: "support-subject-query", query: "support", sources: ["historical-support.md"], patterns: ["thirty minutes", "unresolved", "four hours"] },
+  { id: "receipt-subject-query", query: "receipts", sources: ["receipts.md"], patterns: ["over.*25", "optional", "lost", "written explanation"] },
+  { id: "telemetry-subject-query", query: "telemetry", sources: ["telemetry.md"], patterns: ["explicit consent", "missing", "Outside", "false"] },
+  { id: "assistant-credential-task", query: "Allow employees to paste credentials into chat assistants", sources: ["assistant-use.md"], patterns: ["must not disclose credentials"] },
+  { id: "export-opposition-task", query: "Implement a CSV export of customer records for the migration project", sources: ["current-export.md", "legacy-export.md"], patterns: ["may export", "must not export"], expected_conflicts: 1 },
+  { id: "historical-badge-task-control", query: "Describe what paper badges visitors received in 2023", sources: [], patterns: [] },
+  { id: "customer-css-task-control", query: "Adjust the customer page CSS so the amber border is two pixels wide", sources: [], patterns: [] },
+  { id: "receipt-font-task-control", query: "Change the font of the receipts heading to cobalt", sources: [], patterns: [] },
+  { id: "support-chart-task-control", query: "Plot historical median support acknowledgement minutes from last quarter", sources: [], patterns: [] },
+];
+
 export function qualityCorpus(name: string = "standard") {
   if (name === "standard") return { name, documents: qualityDocuments, cases: qualityCases };
   if (name === "extended") return { name, documents: extendedQualityDocuments, cases: extendedQualityCases };
   if (name === "adversarial") return { name, documents: adversarialQualityDocuments, cases: adversarialQualityCases };
   if (name === "boundaries") return { name, documents: boundaryQualityDocuments, cases: boundaryQualityCases };
-  throw new Error("Unknown quality corpus; use standard, extended, adversarial or boundaries");
+  if (name === "applicability") return { name, documents: boundaryQualityDocuments, cases: applicabilityQualityCases };
+  throw new Error("Unknown quality corpus; use standard, extended, adversarial, boundaries or applicability");
 }

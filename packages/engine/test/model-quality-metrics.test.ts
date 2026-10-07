@@ -55,3 +55,12 @@ it("keeps the standard corpus separate from mixed-policy and long-evidence stres
   expect(extended.documents.some((doc) => doc.policy_sentences?.length)).toBe(true);
   expect(() => qualityCorpus("unknown")).toThrow("Unknown quality corpus");
 });
+
+it("extends applicability precision and recall checks without changing boundary fixtures or scores", () => {
+  const boundaries = qualityCorpus("boundaries"), applicability = qualityCorpus("applicability");
+  expect(applicability.documents).toBe(boundaries.documents);
+  expect(applicability.cases.slice(0, boundaries.cases.length)).toEqual(boundaries.cases);
+  expect(applicability.cases).toHaveLength(40);
+  expect(applicability.cases.slice(28).filter((item) => item.sources.length)).toHaveLength(8);
+  expect(applicability.cases.slice(28).filter((item) => !item.sources.length)).toHaveLength(4);
+});
