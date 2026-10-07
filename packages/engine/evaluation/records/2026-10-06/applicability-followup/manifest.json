@@ -1,0 +1,218 @@
+{
+  "synthetic_only": true,
+  "records": [
+    {
+      "name": "initial-boundaries",
+      "code": "8c2be61",
+      "corpus": "boundaries",
+      "prompt": "rules-v12",
+      "applicability_prompt": "applicability-v1",
+      "recorded_at": "2026-10-07T03:35:38.139Z",
+      "fixture_sha256": "b89bef3f49202cd17bcd40ac4113528300b7c29906cbd6601f329c6f1e99fe90",
+      "quality_sha256": "0d6277ddada5b0d6b8b8a6fa3f11730fb43c6c8296ffc39816c8f099b2387757",
+      "generations_sha256": "8207835df92a16b0c9f069d1bffff1d76e6a2cf0cfc413ddc00257fd831e3d86",
+      "completed": true,
+      "coverage_valid": true,
+      "passed": false,
+      "correct_200": 21,
+      "correct_500": 21,
+      "baseline_correct": 51,
+      "total": 56,
+      "applicability_failures": [
+        {
+          "id": "regional-defaults",
+          "valid": false,
+          "candidate_count": 4,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 4911
+        },
+        {
+          "id": "long-whole-evidence",
+          "valid": false,
+          "candidate_count": 10,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 9498
+        },
+        {
+          "id": "qualification-after-description",
+          "valid": false,
+          "candidate_count": 6,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 6492
+        },
+        {
+          "id": "assistant-directory-control",
+          "valid": false,
+          "candidate_count": 8,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 11301
+        }
+      ],
+      "diagnostic_failures": [
+        {
+          "id": "receipt-boundary",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "receipts.md"
+          ],
+          "missing_patterns": [
+            "(?:over|more than|exceed|above|>)\\s*\\$?25",
+            "(?:exactly|less|below|under|optional)"
+          ]
+        },
+        {
+          "id": "receipt-boundary",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "receipts.md"
+          ],
+          "missing_patterns": [
+            "(?:over|more than|exceed|above|>)\\s*\\$?25",
+            "(?:exactly|less|below|under|optional)"
+          ]
+        },
+        {
+          "id": "consent-negation",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "telemetry.md"
+          ],
+          "missing_patterns": [
+            "explicit consent",
+            "missing",
+            "must not|disabled|disable|cannot"
+          ]
+        },
+        {
+          "id": "consent-negation",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "telemetry.md"
+          ],
+          "missing_patterns": [
+            "explicit consent",
+            "missing",
+            "must not|disabled|disable|cannot"
+          ]
+        },
+        {
+          "id": "regional-defaults",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "regional-defaults.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "regional-defaults",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "regional-defaults.md",
+            "telemetry.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "incident-report.md",
+            "active-quotation.md"
+          ],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        },
+        {
+          "id": "long-whole-evidence",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "incident-report.md",
+            "active-quotation.md",
+            "privileged-access.md",
+            "quoted-history.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "qualification-after-description",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "qualification-boundary.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "qualification-after-description",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "qualification-boundary.md",
+            "maintenance.md",
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md",
+            "current-export.md",
+            "assistant-use.md",
+            "legacy-export.md",
+            "assistant-ownership.md"
+          ],
+          "missing_patterns": []
+        }
+      ]
+    }
+  ]
+}
