@@ -11,6 +11,7 @@ No model weights are downloaded or distributed.
 | Run | Applicability prompt / corpus | Extraction coverage | Lexical baseline | Semantic diagnostics |
 | --- | --- | --- | ---: | ---: |
 | [initial-boundaries](initial-boundaries/quality.json) | applicability-v1 / boundaries | pass | 51/56 | 42/56 |
+| [revised-applicability](revised-applicability/quality.json) | applicability-v2 / applicability | pass | 61/80 | 54/80 |
 
 The initial filter is an observed failure. It drops the receipt threshold and
 optional boundary while retaining only lost-receipt replacement evidence, and
@@ -36,7 +37,22 @@ intent, actions, project purposes or output formats. The separately scored
 `applicability` corpus extends the unchanged boundary fixtures with eight
 positive task/subject queries and four historical/descriptive/UI controls.
 It includes narrow subject queries to expose lexical candidate omissions that
-a downstream filter cannot repair. Both prompts and all failures stay recorded.
+a downstream filter cannot repair. This second trial fixes the receipt/consent
+multi-topic omissions but still fails eight query responses on generated quote
+structure. It discards an opposing export prohibition, keeps historical badge
+and support-chart false positives, and cannot recover missing support escalation,
+lost-receipt substitution or missing-consent definitions absent from the lexical
+candidate set. It remains worse than its paired baseline. All failures stay recorded.
+
+`applicability-v3` replaces generated quotations with supplied anchor IDs. Each
+positive decision must cite the task and its own original evidence item; negative
+decisions must have empty anchors. The harness recovers the full original task
+and quotation deterministically. Unknown, cross-item, missing, duplicate and
+contradictory anchors reject the whole response. This changes the representation
+of grounding, not its semantic standard: v1/v2 already allowed an exact quote
+covering the full task/evidence. No fabricated quote is repaired or accepted.
+The prompt also explicitly retains prohibitions when a task requests a prohibited
+action. The quality scoring, corpus and production compiler are unchanged.
 
 The manifest records code identities, fixture/report/generation hashes, paired
 scores and failures. Exact quotes ground a model decision in the supplied text

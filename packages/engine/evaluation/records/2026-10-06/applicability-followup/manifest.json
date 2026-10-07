@@ -213,6 +213,382 @@
           "missing_patterns": []
         }
       ]
+    },
+    {
+      "name": "revised-applicability",
+      "code": "17e382a",
+      "corpus": "applicability",
+      "prompt": "rules-v12",
+      "applicability_prompt": "applicability-v2",
+      "recorded_at": "2026-10-07T03:40:28.777Z",
+      "fixture_sha256": "b6b849623a4c866d18f89adec99bd9fa3763bf8cf4ee0e41c0493551ea2953f6",
+      "quality_sha256": "047152e065b2526c9d9f79219535452ce92436b780826eaeeacf7573ae4bb1c0",
+      "generations_sha256": "fc25808a125c3607a589fa934d83ab567b0f82c73f6d35d5f5e4f5026b0b5473",
+      "generation_settings": {
+        "thinking": false,
+        "temperature": 0,
+        "seed": 42
+      },
+      "completed": true,
+      "coverage_valid": true,
+      "passed": false,
+      "correct_200": 27,
+      "correct_500": 27,
+      "baseline_correct": 61,
+      "total": 80,
+      "applicability_failures": [
+        {
+          "id": "regional-defaults",
+          "valid": false,
+          "candidate_count": 4,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 3884
+        },
+        {
+          "id": "mixed-policy-exclusions",
+          "valid": false,
+          "candidate_count": 7,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 5840
+        },
+        {
+          "id": "linked-access-extension",
+          "valid": false,
+          "candidate_count": 6,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 4784
+        },
+        {
+          "id": "long-whole-evidence",
+          "valid": false,
+          "candidate_count": 10,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 7527
+        },
+        {
+          "id": "qualification-after-description",
+          "valid": false,
+          "candidate_count": 6,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 4981
+        },
+        {
+          "id": "human-assistant-use",
+          "valid": false,
+          "candidate_count": 13,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 12800
+        },
+        {
+          "id": "assistant-directory-control",
+          "valid": false,
+          "candidate_count": 8,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 5840
+        },
+        {
+          "id": "receipt-subject-query",
+          "valid": false,
+          "candidate_count": 2,
+          "selected_count": null,
+          "decisions": [],
+          "wall_ms": 2307
+        }
+      ],
+      "diagnostic_failures": [
+        {
+          "id": "regional-defaults",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "regional-defaults.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "regional-defaults",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "regional-defaults.md",
+            "telemetry.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "mixed-policy-exclusions",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "maintenance.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "mixed-policy-exclusions",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "maintenance.md",
+            "qualification-boundary.md",
+            "incident-report.md",
+            "travel.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "linked-access-extension",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "privileged-access.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "linked-access-extension",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "privileged-access.md",
+            "incident-report.md",
+            "maintenance.md",
+            "active-quotation.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "incident-report.md",
+            "active-quotation.md"
+          ],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        },
+        {
+          "id": "long-whole-evidence",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "incident-report.md",
+            "active-quotation.md",
+            "privileged-access.md",
+            "quoted-history.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "qualification-after-description",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "qualification-boundary.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "qualification-after-description",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "qualification-boundary.md",
+            "maintenance.md",
+            "incident-report.md",
+            "privileged-access.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "human-assistant-use",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "assistant-ownership.md",
+            "assistant-use.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "human-assistant-use",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "assistant-ownership.md",
+            "assistant-use.md",
+            "current-export.md",
+            "legacy-export.md",
+            "mixed-handbook.md",
+            "receipts.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "assistant-directory-control",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "leave.md",
+            "mixed-handbook.md",
+            "current-export.md",
+            "legacy-export.md",
+            "assistant-use.md",
+            "assistant-ownership.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "support-subject-query",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-support.md"
+          ],
+          "missing_patterns": [
+            "unresolved",
+            "four hours"
+          ]
+        },
+        {
+          "id": "support-subject-query",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-support.md"
+          ],
+          "missing_patterns": [
+            "unresolved",
+            "four hours"
+          ]
+        },
+        {
+          "id": "receipt-subject-query",
+          "cap": 200,
+          "applicability_valid": false,
+          "actual_sources": [
+            "receipts.md"
+          ],
+          "missing_patterns": [
+            "lost",
+            "written explanation"
+          ]
+        },
+        {
+          "id": "receipt-subject-query",
+          "cap": 500,
+          "applicability_valid": false,
+          "actual_sources": [
+            "receipts.md"
+          ],
+          "missing_patterns": [
+            "lost",
+            "written explanation"
+          ]
+        },
+        {
+          "id": "telemetry-subject-query",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "telemetry.md"
+          ],
+          "missing_patterns": [
+            "missing"
+          ]
+        },
+        {
+          "id": "telemetry-subject-query",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "telemetry.md"
+          ],
+          "missing_patterns": [
+            "missing"
+          ]
+        },
+        {
+          "id": "export-opposition-task",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "current-export.md"
+          ],
+          "missing_patterns": [
+            "must not export"
+          ]
+        },
+        {
+          "id": "export-opposition-task",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "current-export.md"
+          ],
+          "missing_patterns": [
+            "must not export"
+          ]
+        },
+        {
+          "id": "support-chart-task-control",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-support.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "support-chart-task-control",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-support.md"
+          ],
+          "missing_patterns": []
+        }
+      ]
     }
   ]
 }
