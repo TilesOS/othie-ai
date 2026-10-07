@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated October 5, 2026 on macOS with Node.js 24.18.0. The deterministic suite uses
+Updated October 6, 2026 on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
 
 ## Checks run
@@ -10,14 +10,15 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci` | Clean lockfile installation passes |
 | `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 143 passing tests; one opt-in real-model test skipped |
+| `npm test` | 150 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host tests within `npm test` | Six process tests pass |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
+| Evaluation-only semantic applicability, initial trials | Boundaries 42/56 versus lexical 51/56; larger applicability corpus 54/80 versus paired lexical 61/80; both fail acceptance |
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
-The full suite comprises 89 engine, 23 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 96 engine, 23 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -31,10 +32,13 @@ clean installation, and Windows startup-script syntax check. This verifies the p
 October 3–4 changes on Windows. The [GitHub Actions run for commit 61279ff](https://github.com/TilesOS/othie-ai/actions/runs/37264456510)
 also passes both macOS and Windows jobs: clean installation, all typechecks, the
 then-current 136 deterministic tests, and Windows startup-script syntax. This run was
-inspected during the present follow-up and verifies the preceding coverage, relevance,
-and classification commits. New local changes beginning with `a36f3fc` still need their
-own Windows CI. Automated runner results do not establish native desktop-host or
-logon-startup acceptance.
+inspected during the earlier follow-up and verifies the preceding coverage, relevance,
+and classification commits. The [run for commit 9c7ba51](https://github.com/TilesOS/othie-ai/actions/runs/37403113033)
+was inspected October 6 and passes both macOS and Windows jobs: clean installation,
+all typechecks, the then-current 143 tests and Windows startup-script syntax. This
+verifies the previously unverified deterministic-selection, classification and dependency
+commits. New local changes starting at `812380a` still need their own CI. Automated
+runner results do not establish native desktop-host or logon-startup acceptance.
 
 ## Delivery and credential coverage
 
@@ -63,7 +67,8 @@ a grant is revoked.
 ## Website patch verification
 
 The browser checks in this section were recorded October 2. Build, typecheck, tests,
-and lint were rerun October 4; browser/UI acceptance was not repeated for engine-only edits.
+and lint were rerun October 6; browser/UI acceptance was not repeated for engine/evaluator
+and dependency edits.
 
 Next.js and its ESLint configuration were updated together from 16.3.4 to 16.3.8;
 transitive brace-expansion dependencies were updated within their existing version
@@ -356,14 +361,58 @@ zero advisories. The five development-tool findings in the previously recorded
 ESLint/fast-glob/micromatch/braces chain remain; audit still proposes downgrading the
 Next.js ESLint configuration to 14.2.35, which was not applied.
 
+## October 6 production dependency and applicability follow-up
+
+A refreshed production audit finds two newly reported advisories:
+[MCP client OAuth issuer binding](https://github.com/advisories/GHSA-6qxp-vccf-f47h)
+and [Sharp's bundled librsvg](https://github.com/advisories/GHSA-wq5f-xc86-pv6w).
+Client, server and transitive core move together from 2.0.0 to 2.3.1; the Sharp override
+moves from 0.35.4 to 0.35.5. The OAuth advisory concerns HTTP OAuth clients rather than
+the stdio clients exercised here. The audit's suggested LanceDB downgrade was not used.
+An initial install left the old overridden Sharp lock entry; a targeted refresh and
+clean `npm ci` now reproduce the patched tree. Synthetic SVG-to-PNG conversion passes
+with Sharp 0.35.5 and librsvg 2.63.2. Production audit reports zero findings; the five
+previously recorded development-tool findings remain. Full build, typechecks, website
+lint and deterministic/process tests pass after the dependency refresh.
+
+The [applicability records](packages/engine/evaluation/records/2026-10-06/applicability-followup/README.md)
+preserve controlled local experiments without changing normal engine context delivery.
+The evaluator accepts explicit temperature/seed settings, records effective request
+options, and pairs each semantic result with the same extraction's lexical baseline.
+The same approved loopback extraction provider evaluates complete original candidates
+before whole-rule packing. Empty candidates skip generation, global rules remain
+unconditional, and retained rules/quotations/ranking remain original engine objects.
+Both caps reuse one query decision. Invalid, incomplete or late responses fail both
+scores; baseline evidence stays available for inspection. Model explanations never
+enter context. Embeddings and synthesis stay disabled.
+
+The unchanged boundary corpus scores 42/56 versus lexical 51/56 in the first trial:
+the filter drops receipt and consent qualifiers, invents intent for historical badge
+wording and fails four queries on fabricated or contradictory quotes. A new separately
+scored applicability superset retains every original document/case and adds eight
+positive tasks and four historical/descriptive/UI controls. The revised prompt scores
+54/80 versus paired lexical 61/80. It fixes the initial multi-topic omissions but fails
+eight responses structurally, drops an opposing export prohibition and exposes missing
+lexical candidates for short support, receipt and telemetry subject queries. A downstream
+filter cannot restore evidence absent from its input. Original scores and expectations
+remain unchanged; these are failed experiments, not a production relevance fix.
+
+`applicability-v3` replaces generated quotations with supplied task/evidence anchor IDs,
+recovering full original text deterministically. Cross-item, unknown, missing, duplicate
+or contradictory anchors still reject the complete response. It explicitly keeps
+prohibitions when the task requests prohibited behavior. This representation change
+does not prove the semantic relationship between task and policy. Controlled generation
+settings also do not guarantee determinism or independent observations. The installed
+model remains the only available local model; no additional artifacts were downloaded.
+
 ## Remaining acceptance work
 
 - Codex project-file discovery and persisted interactive hook-trust acceptance; Claude
   project/local settings discovery and desktop UI acceptance beyond explicit CLI settings.
 - Codex local-model context consumption after the observed positive-context failure.
 - Windows native-host and logon-startup acceptance beyond the historical automated CI
-  suite; CI through `61279ff` passes both runners, and the new deterministic-selection
-  changes still need current Windows CI verification.
+  suite; CI through `9c7ba51` passes both runners, while the October 6 local evaluator
+  and dependency changes still need their own Windows CI verification.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
 - Compiler classification, relevance, linked evidence, and packing: deterministic recovery
@@ -373,8 +422,10 @@ Next.js ESLint configuration to 14.2.35, which was not applied.
   direct assistant instruction in one final repeat and fails generic-subject no-op checks.
   Standard/extended/adversarial fixtures remain fixed; long
   whole-evidence context still fails at 200 tokens. New boundary cases expose generic
-  subject-word collisions even with correct classification. Next evaluate semantic or
-  structurally grounded applicability with both no-op precision and policy recall checks;
+  subject-word collisions even with correct classification. Controlled applicability
+  trials now measure paired no-op precision and policy recall but fail acceptance.
+  Next address candidate completeness and semantic scope without trading away qualifiers
+  or opposing requirements, and enforce native-hook latency budgets before production use;
   preserve active quoted policy, genuine assistant-use policies, and all recorded failures.
   Implicit evidence links beyond syntactic qualifications, larger corpora, label entailment,
   embeddings, synthesis, semantic grading, controlled generation settings, and additional
