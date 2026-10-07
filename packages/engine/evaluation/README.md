@@ -166,8 +166,9 @@ compiler configuration and defaults are unchanged.
 
 `--applicability semantic` runs an evaluation-only filter after lexical candidate
 selection and before whole-rule packing. It asks the same approved local extraction
-provider for one complete decision per candidate with exact task/evidence quotes.
-Unknown IDs, missing or duplicate decisions, invented quotations, deadlines and late
+provider for one complete decision per candidate using scoped task/evidence anchors.
+The harness recovers full original quotations from these IDs. Unknown or cross-item
+anchors, contradictory anchors, missing or duplicate decisions, deadlines and late
 results fail the case at both caps; the baseline remains in the report for inspection.
 Empty candidate sets skip generation. Global rules remain unconditional. Retained
 rules, ranking and quotations are original engine objects; model explanations never
@@ -183,7 +184,7 @@ the same coverage expectations and `quality-v5` diagnostic scoring:
 npm run eval:quality -- --corpus applicability --applicability semantic --temperature 0 --seed 42 --out /tmp/othie-applicability-run
 ```
 
-Semantic reports include every lexical baseline brief, candidate/selected counts,
+Semantic reports include every lexical baseline brief and its diagnostic score, candidate/selected counts,
 complete decisions, per-query latency, generation stages, prompt version and requested
 sampling settings. Structural quote validation does not prove semantic applicability;
 the filter cannot recover policies absent from lexical candidates. Compare false

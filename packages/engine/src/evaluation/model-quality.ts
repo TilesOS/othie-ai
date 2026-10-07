@@ -79,13 +79,14 @@ export async function runModelQuality(model: string, out: string, corpusName = "
   provider.generateJson = async (...args) => {
     args[4] = { ...args[4], ...(settings.temperature !== undefined ? { temperature: settings.temperature } : {}),
       ...(settings.seed !== undefined ? { seed: settings.seed } : {}) };
+    const stage = generationStage;
     const start = performance.now();
     try {
       const raw = await generate(...args);
-      generations.push({ stage: generationStage, messages: args[0], schema: args[2], options: args[4] ?? null, raw, wall_ms: Math.round(performance.now() - start) });
+      generations.push({ stage, messages: args[0], schema: args[2], options: args[4] ?? null, raw, wall_ms: Math.round(performance.now() - start) });
       return raw;
     } catch (error) {
-      generations.push({ stage: generationStage, messages: args[0], schema: args[2], options: args[4] ?? null, raw: null, wall_ms: Math.round(performance.now() - start), error: "generation_failed" });
+      generations.push({ stage, messages: args[0], schema: args[2], options: args[4] ?? null, raw: null, wall_ms: Math.round(performance.now() - start), error: "generation_failed" });
       throw error;
     }
   };
