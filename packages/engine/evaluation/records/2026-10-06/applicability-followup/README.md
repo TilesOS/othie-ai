@@ -12,6 +12,7 @@ No model weights are downloaded or distributed.
 | --- | --- | --- | ---: | ---: |
 | [initial-boundaries](initial-boundaries/quality.json) | applicability-v1 / boundaries | pass | 51/56 | 42/56 |
 | [revised-applicability](revised-applicability/quality.json) | applicability-v2 / applicability | pass | 61/80 | 54/80 |
+| [anchors-1](anchors-1/quality.json) | applicability-v3 / applicability | pass | 61/80 | 61/80 |
 
 The initial filter is an observed failure. It drops the receipt threshold and
 optional boundary while retaining only lost-receipt replacement evidence, and
@@ -54,7 +55,20 @@ covering the full task/evidence. No fabricated quote is repaired or accepted.
 The prompt also explicitly retains prohibitions when a task requests a prohibited
 action. The quality scoring, corpus and production compiler are unchanged.
 
+The first anchor run has no invalid decisions, but fixing representation does not
+fix model judgment. It removes customer-directory, customer-CSS and receipt-font
+false positives while dropping receipt boundaries, EU consent evidence and an
+assistant credential prohibition at both caps. Positive diagnostics fall from
+45/52 to 39/52 while no-op diagnostics improve from 16/28 to 22/28, leaving the
+combined score unchanged. Historical-badge and support-chart controls still fail.
+The three narrow subject queries still miss required evidence before the filter;
+long complete incident evidence still fails at 200 tokens. Filter calls take
+1.1–13.3 seconds; 26 of 32 exceed the hook's default 2,000 ms deadline before
+process/transport overhead. This is not production acceptance.
+
 The manifest records code identities, fixture/report/generation hashes, paired
 scores and failures. Exact quotes ground a model decision in the supplied text
 but do not prove its semantic truth. A production gate requires precision,
-recall and operational latency acceptance together.
+recall and operational latency acceptance together. [verification.json](verification.json)
+records the patched dependency tree, clean production audit, 150 passing tests,
+full workspace checks, SVG conversion and inspected previous-head CI results.

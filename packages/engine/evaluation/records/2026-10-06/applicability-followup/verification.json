@@ -1,0 +1,311 @@
+{
+  "recorded_at": "2026-10-07T03:48:59.299Z",
+  "synthetic_only": true,
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "checks": {
+    "clean_install": true,
+    "full_build": true,
+    "workspace_typecheck": true,
+    "website_lint": true,
+    "tests": {
+      "engine": 96,
+      "hooks": 23,
+      "website": 14,
+      "codex": 10,
+      "claude_code": 7,
+      "skipped_model_tests": 1
+    },
+    "process_tests": 6,
+    "synthetic_svg": {
+      "sharp": "0.35.5",
+      "librsvg": "2.63.2",
+      "format": "png",
+      "width": 2,
+      "height": 2
+    }
+  },
+  "production_audit": {
+    "auditReportVersion": 2,
+    "vulnerabilities": {},
+    "metadata": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "dependencies": {
+        "prod": 167,
+        "dev": 406,
+        "optional": 234,
+        "peer": 51,
+        "peerOptional": 0,
+        "total": 749
+      }
+    }
+  },
+  "dependency_tree": {
+    "version": "0.1.0",
+    "name": "othie-ai",
+    "dependencies": {
+      "@othie/engine": {
+        "version": "0.1.0",
+        "resolved": "file:../../packages/engine",
+        "overridden": false,
+        "dependencies": {
+          "@lancedb/lancedb": {
+            "version": "0.38.0",
+            "resolved": "https://registry.npmjs.org/@lancedb/lancedb/-/lancedb-0.38.0.tgz",
+            "overridden": false,
+            "dependencies": {
+              "@huggingface/transformers": {
+                "version": "3.0.2",
+                "resolved": "https://registry.npmjs.org/@huggingface/transformers/-/transformers-3.0.2.tgz",
+                "overridden": false,
+                "dependencies": {
+                  "sharp": {
+                    "version": "0.35.5"
+                  }
+                }
+              }
+            }
+          },
+          "@modelcontextprotocol/client": {
+            "version": "2.3.1",
+            "resolved": "https://registry.npmjs.org/@modelcontextprotocol/client/-/client-2.3.1.tgz",
+            "overridden": false,
+            "dependencies": {
+              "@modelcontextprotocol/core": {
+                "version": "2.3.1",
+                "resolved": "https://registry.npmjs.org/@modelcontextprotocol/core/-/core-2.3.1.tgz",
+                "overridden": false
+              }
+            }
+          },
+          "@modelcontextprotocol/server": {
+            "version": "2.3.1",
+            "resolved": "https://registry.npmjs.org/@modelcontextprotocol/server/-/server-2.3.1.tgz",
+            "overridden": false,
+            "dependencies": {
+              "@modelcontextprotocol/core": {
+                "version": "2.3.1"
+              }
+            }
+          }
+        }
+      },
+      "@othie/website": {
+        "version": "0.1.0",
+        "resolved": "file:../../apps/website",
+        "overridden": false,
+        "dependencies": {
+          "next": {
+            "version": "16.3.8",
+            "resolved": "https://registry.npmjs.org/next/-/next-16.3.8.tgz",
+            "overridden": false,
+            "dependencies": {
+              "sharp": {
+                "version": "0.35.5",
+                "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.35.5.tgz",
+                "overridden": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "ci": {
+    "conclusion": "success",
+    "headSha": "9c7ba519931207b33adda3f3ec92c2662004b32b",
+    "jobs": [
+      {
+        "completedAt": "2026-10-06T02:15:43Z",
+        "conclusion": "success",
+        "databaseId": 112074526041,
+        "name": "desktop (windows-latest)",
+        "startedAt": "2026-10-06T02:13:56Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-06T02:13:57Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-06T02:13:57Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:03Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-06T02:13:57Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:11Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "startedAt": "2026-10-06T02:14:03Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:58Z",
+            "conclusion": "success",
+            "name": "Run npm ci",
+            "number": 4,
+            "startedAt": "2026-10-06T02:14:11Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:15:02Z",
+            "conclusion": "success",
+            "name": "Run npm run typecheck",
+            "number": 5,
+            "startedAt": "2026-10-06T02:14:58Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:15:35Z",
+            "conclusion": "success",
+            "name": "Run npm test",
+            "number": 6,
+            "startedAt": "2026-10-06T02:15:02Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:15:35Z",
+            "conclusion": "success",
+            "name": "Check Windows startup script syntax",
+            "number": 7,
+            "startedAt": "2026-10-06T02:15:35Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:15:39Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 13,
+            "startedAt": "2026-10-06T02:15:35Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:15:41Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 14,
+            "startedAt": "2026-10-06T02:15:39Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:15:41Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 15,
+            "startedAt": "2026-10-06T02:15:41Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/TilesOS/othie-ai/actions/runs/37403113033/job/112074526041"
+      },
+      {
+        "completedAt": "2026-10-06T02:14:45Z",
+        "conclusion": "success",
+        "databaseId": 112074526284,
+        "name": "desktop (macos-14)",
+        "startedAt": "2026-10-06T02:14:00Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-06T02:14:01Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-06T02:14:01Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:03Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-06T02:14:01Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:04Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "startedAt": "2026-10-06T02:14:03Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:22Z",
+            "conclusion": "success",
+            "name": "Run npm ci",
+            "number": 4,
+            "startedAt": "2026-10-06T02:14:04Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:24Z",
+            "conclusion": "success",
+            "name": "Run npm run typecheck",
+            "number": 5,
+            "startedAt": "2026-10-06T02:14:22Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:39Z",
+            "conclusion": "success",
+            "name": "Run npm test",
+            "number": 6,
+            "startedAt": "2026-10-06T02:14:24Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:39Z",
+            "conclusion": "skipped",
+            "name": "Check Windows startup script syntax",
+            "number": 7,
+            "startedAt": "2026-10-06T02:14:39Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:43Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 13,
+            "startedAt": "2026-10-06T02:14:39Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:43Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 14,
+            "startedAt": "2026-10-06T02:14:43Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-06T02:14:44Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 15,
+            "startedAt": "2026-10-06T02:14:43Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/TilesOS/othie-ai/actions/runs/37403113033/job/112074526284"
+      }
+    ],
+    "url": "https://github.com/TilesOS/othie-ai/actions/runs/37403113033",
+    "scope": "Previous published head; October 6 local commits have not run CI."
+  }
+}
