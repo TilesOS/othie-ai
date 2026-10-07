@@ -833,6 +833,208 @@
           "missing_patterns": []
         }
       ]
+    },
+    {
+      "name": "anchors-2",
+      "code": "93fc506",
+      "corpus": "applicability",
+      "prompt": "rules-v12",
+      "applicability_prompt": "applicability-v3",
+      "recorded_at": "2026-10-07T03:49:42.949Z",
+      "fixture_sha256": "b6b849623a4c866d18f89adec99bd9fa3763bf8cf4ee0e41c0493551ea2953f6",
+      "quality_sha256": "55958f8b336903e6ebb18c30e7441a0b0c5d478bcf2e1f110a666f79e482ff2e",
+      "generations_sha256": "6456aae8b86ffd105c8915b81f3f8026ceb2cf47c544d24e6168091b81da6692",
+      "generation_settings": {
+        "thinking": false,
+        "temperature": 0,
+        "seed": 42
+      },
+      "completed": true,
+      "coverage_valid": true,
+      "passed": false,
+      "correct_200": 32,
+      "correct_500": 33,
+      "baseline_correct": 61,
+      "total": 80,
+      "positive_correct": 41,
+      "positive_total": 52,
+      "no_op_correct": 24,
+      "no_op_total": 28,
+      "filter_min_ms": 1185,
+      "filter_max_ms": 13170,
+      "calls_over_default_hook_deadline": 25,
+      "generated_queries": 32,
+      "applicability_failures": [],
+      "diagnostic_failures": [
+        {
+          "id": "contractor-exception",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "leave.md"
+          ],
+          "missing_patterns": [
+            "\\b(?:twenty|20)\\b",
+            "contractor",
+            "\\b(?:ten|10)\\b"
+          ]
+        },
+        {
+          "id": "contractor-exception",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "leave.md"
+          ],
+          "missing_patterns": [
+            "\\b(?:twenty|20)\\b",
+            "contractor",
+            "\\b(?:ten|10)\\b"
+          ]
+        },
+        {
+          "id": "long-whole-evidence",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "incident-report.md"
+          ],
+          "missing_patterns": [
+            "discovery timestamp",
+            "closure timestamp",
+            "each field verified",
+            "audit log"
+          ]
+        },
+        {
+          "id": "legitimate-assistant-policy",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "assistant-use.md"
+          ],
+          "missing_patterns": [
+            "must not disclose credentials"
+          ]
+        },
+        {
+          "id": "legitimate-assistant-policy",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "assistant-use.md"
+          ],
+          "missing_patterns": [
+            "must not disclose credentials"
+          ]
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "historical-display-control",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-replacement.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "support-subject-query",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-support.md"
+          ],
+          "missing_patterns": [
+            "unresolved",
+            "four hours"
+          ]
+        },
+        {
+          "id": "support-subject-query",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-support.md"
+          ],
+          "missing_patterns": [
+            "unresolved",
+            "four hours"
+          ]
+        },
+        {
+          "id": "receipt-subject-query",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "receipts.md"
+          ],
+          "missing_patterns": [
+            "lost",
+            "written explanation"
+          ]
+        },
+        {
+          "id": "receipt-subject-query",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "receipts.md"
+          ],
+          "missing_patterns": [
+            "lost",
+            "written explanation"
+          ]
+        },
+        {
+          "id": "telemetry-subject-query",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "telemetry.md"
+          ],
+          "missing_patterns": [
+            "missing"
+          ]
+        },
+        {
+          "id": "telemetry-subject-query",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "telemetry.md"
+          ],
+          "missing_patterns": [
+            "missing"
+          ]
+        },
+        {
+          "id": "support-chart-task-control",
+          "cap": 200,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-support.md"
+          ],
+          "missing_patterns": []
+        },
+        {
+          "id": "support-chart-task-control",
+          "cap": 500,
+          "applicability_valid": true,
+          "actual_sources": [
+            "historical-support.md"
+          ],
+          "missing_patterns": []
+        }
+      ]
     }
   ],
   "verification_sha256": "39d73ac31d6e76960e64bdb2bba8b8d20bdc0b64141f3e487df25e38aaeca23b"

@@ -13,6 +13,7 @@ No model weights are downloaded or distributed.
 | [initial-boundaries](initial-boundaries/quality.json) | applicability-v1 / boundaries | pass | 51/56 | 42/56 |
 | [revised-applicability](revised-applicability/quality.json) | applicability-v2 / applicability | pass | 61/80 | 54/80 |
 | [anchors-1](anchors-1/quality.json) | applicability-v3 / applicability | pass | 61/80 | 61/80 |
+| [anchors-2](anchors-2/quality.json) | applicability-v3 / applicability | pass | 61/80 | 65/80 |
 
 The initial filter is an observed failure. It drops the receipt threshold and
 optional boundary while retaining only lost-receipt replacement evidence, and
@@ -65,6 +66,18 @@ The three narrow subject queries still miss required evidence before the filter;
 long complete incident evidence still fails at 200 tokens. Filter calls take
 1.1–13.3 seconds; 26 of 32 exceed the hook's default 2,000 ms deadline before
 process/transport overhead. This is not production acceptance.
+
+The second anchor run also has complete valid decisions, but improves to 65/80
+with different failures. It recovers receipt/consent qualifiers and the natural
+historical-badge no-op, while dropping both vacation entitlements from the
+contractor task. It still omits the assistant credential prohibition and retains
+the fragmentary historical-badge and support-chart false positives. Positive
+diagnostics are 41/52 and no-op diagnostics 24/28. The extracted policy set is
+identical to the first run after ignoring list order. Nine of 32 model requests
+change candidate ordering; some other decisions vary with identical messages,
+schemas and requested sampling settings. Warm state and ranking ties remain
+uncontrolled, so these runs do not isolate a cause for variation. Twenty-five
+of 32 model calls exceed the default hook deadline.
 
 The manifest records code identities, fixture/report/generation hashes, paired
 scores and failures. Exact quotes ground a model decision in the supplied text
