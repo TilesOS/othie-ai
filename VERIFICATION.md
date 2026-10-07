@@ -15,6 +15,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
 | Evaluation-only semantic applicability, initial trials | Boundaries 42/56 versus lexical 51/56; larger applicability corpus 54/80 versus paired lexical 61/80; both fail acceptance |
+| Evaluation-only anchored applicability, three controlled repeats | 61/80, 65/80, 61/80 versus lexical 61/80 each; positive recall regresses and 75/96 model calls exceed the default hook deadline |
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
@@ -405,6 +406,26 @@ does not prove the semantic relationship between task and policy. Controlled gen
 settings also do not guarantee determinism or independent observations. The installed
 model remains the only available local model; no additional artifacts were downloaded.
 
+Three anchor repeats score 61/80, 65/80 and 61/80 versus paired lexical 61/80 each.
+All query decisions are structurally valid, but positive diagnostics fall from
+135/156 to 119/156 while no-op diagnostics improve from 48/84 to 68/84. Filtering
+still loses receipt boundaries, consent conditions, vacation entitlements or assistant
+credential restrictions and retains historical-badge/support-chart false positives.
+The recovered policy set is identical across repeats after ignoring order; candidate
+ordering and warm state vary, and some decisions vary with identical recorded inputs
+and requested settings. These observations do not isolate a cause or establish general
+semantic quality. Seventy-five of 96 model calls exceed the hook's default two-second
+deadline before transport overhead; observed filtering calls take 1.1–13.3 seconds.
+
+All five reports preserve complete expected extraction coverage, one attempt per source,
+unchanged model digest, exact citations, reference isolation and accurate hard caps.
+The manifest includes report/generation hashes and paired failures. The temporary model
+service was stopped after verification. The filter remains evaluation-only; normal
+delivery is unchanged. All 150 deterministic tests and workspace typechecks pass with
+the final code; build, website lint and production audit pass after clean installation
+of the patched dependency tree. Native host/desktop acceptance was not repeated, and
+these local commits still need their own Windows CI.
+
 ## Remaining acceptance work
 
 - Codex project-file discovery and persisted interactive hook-trust acceptance; Claude
@@ -425,7 +446,8 @@ model remains the only available local model; no additional artifacts were downl
   subject-word collisions even with correct classification. Controlled applicability
   trials now measure paired no-op precision and policy recall but fail acceptance.
   Next address candidate completeness and semantic scope without trading away qualifiers
-  or opposing requirements, and enforce native-hook latency budgets before production use;
+  or opposing requirements, evaluate stable-order replay separately from fresh-engine
+  repeats, and enforce native-hook latency budgets before production use;
   preserve active quoted policy, genuine assistant-use policies, and all recorded failures.
   Implicit evidence links beyond syntactic qualifications, larger corpora, label entailment,
   embeddings, synthesis, semantic grading, controlled generation settings, and additional

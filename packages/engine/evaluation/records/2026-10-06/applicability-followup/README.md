@@ -14,6 +14,7 @@ No model weights are downloaded or distributed.
 | [revised-applicability](revised-applicability/quality.json) | applicability-v2 / applicability | pass | 61/80 | 54/80 |
 | [anchors-1](anchors-1/quality.json) | applicability-v3 / applicability | pass | 61/80 | 61/80 |
 | [anchors-2](anchors-2/quality.json) | applicability-v3 / applicability | pass | 61/80 | 65/80 |
+| [anchors-3](anchors-3/quality.json) | applicability-v3 / applicability | pass | 61/80 | 61/80 |
 
 The initial filter is an observed failure. It drops the receipt threshold and
 optional boundary while retaining only lost-receipt replacement evidence, and
@@ -78,6 +79,28 @@ change candidate ordering; some other decisions vary with identical messages,
 schemas and requested sampling settings. Warm state and ranking ties remain
 uncontrolled, so these runs do not isolate a cause for variation. Twenty-five
 of 32 model calls exceed the default hook deadline.
+
+The third anchor run has valid complete decisions and the same recovered policy
+set. It again drops a receipt boundary, EU consent evidence and the assistant
+credential prohibition, while failing historical-badge and support-chart controls.
+Positive/no-op scores return to 39/52 and 22/28. Across three repeats, semantic
+diagnostics total 187/240 versus lexical 183/240: no-op checks improve from 48/84
+to 68/84 while positive checks fall from 135/156 to 119/156. The combined score
+therefore masks a recall regression. Seventy-five of 96 filter calls exceed the
+two-second hook deadline, with observed calls spanning 1.1–13.3 seconds.
+
+All five trials finish extraction in one attempt per authoritative source with
+exact expected sentence coverage, unchanged model digest, exact retained citations,
+reference isolation and accurate hard caps. The three anchor trials have no
+structural decision failures. These operational properties cannot validate model
+applicability judgments. The service was returned to its initially stopped state.
+
+Next work should recover source-backed definitions and linked requirements missing
+from short-query candidates, measure stable ordering/replays separately from fresh
+engine repeats, and test applicability without losing qualifiers, entitlements or
+prohibitions. On-demand model filtering needs native-hook latency acceptance before
+production integration. The only installed model was used; additional-model,
+embedding, synthesis, semantic-grading, native-host and desktop acceptance remain open.
 
 The manifest records code identities, fixture/report/generation hashes, paired
 scores and failures. Exact quotes ground a model decision in the supplied text
