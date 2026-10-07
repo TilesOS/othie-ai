@@ -3,6 +3,7 @@ import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { basename, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { z } from "zod";
 import { configSchema } from "../config.js";
 import { OthieEngine } from "../engine/service.js";
 import { countTokens } from "../tokenizer.js";
@@ -32,7 +33,14 @@ export function extractionCoverage(documents: readonly QualityDocument[], rules:
   });
 }
 
-export async function runModelQuality(model: string, out: string, corpusName = "standard") {
+export const qualityOptionsSchema = z.object({
+  temperature: z.number().finite().min(0).max(2).optional(),
+  seed: z.number().int().min(0).max(2_147_483_647).optional(),
+}).strict();
+export type QualityOptions = z.infer<typeof qualityOptionsSchema>;
+
+export async function runModelQuality(model: string, out: string, corpusName = "standard", options: QualityOptions = {}) {
+  const settings = qualityOptionsSchema.parse(options);
   const corpus = qualityCorpus(corpusName);
   const qualityDocuments = corpus.documents, qualityCases = corpus.cases;
   await mkdir(out, { recursive: false, mode: 0o700 });
@@ -64,6 +72,8 @@ export async function runModelQuality(model: string, out: string, corpusName = "
   const generate = provider.generateJson.bind(provider);
   const generations: Array<{ messages: unknown; schema: unknown; options: unknown; raw: unknown; wall_ms: number; error?: string }> = [];
   provider.generateJson = async (...args) => {
+    args[4] = { ...args[4], ...(settings.temperature !== undefined ? { temperature: settings.temperature } : {}),
+      ...(settings.seed !== undefined ? { seed: settings.seed } : {}) };
     const start = performance.now();
     try {
       const raw = await generate(...args);
@@ -119,6 +129,7 @@ export async function runModelQuality(model: string, out: string, corpusName = "
     const report = { recorded_at: recordedAt, synthetic_only: true, protocol_version: "quality-v5", corpus: corpus.name, completed, model_unchanged: modelUnchanged,
       model: identity, runtime: await local("/api/version"), platform: process.platform, node: process.version, prompt_version: EXTRACTION_PROMPT_VERSION,
       fixture_sha256: createHash("sha256").update(JSON.stringify({ qualityDocuments, qualityCases })).digest("hex"),
+      generation_settings: settings,
       license: { artifact_details: metadata.details ?? null, license_present: !!metadata.license,
         license_sha256: metadata.license ? createHash("sha256").update(metadata.license).digest("hex") : null,
         review: "Artifact redistribution license/notice review pending; this experiment redistributes no model weights." },
@@ -142,7 +153,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const arg = (name: string) => { const index = process.argv.indexOf(`--${name}`); return index < 0 ? undefined : process.argv[index + 1]; };
   const out = resolve(arg("out") ?? `packages/engine/evaluation/results/quality-${Date.now()}`);
   await mkdir(resolve(out, ".."), { recursive: true });
-  void runModelQuality(arg("model") ?? "qwen3.5:4b-mlx", out, arg("corpus")).then((report) => {
+  const options = { ...(arg("temperature") !== undefined ? { temperature: Number(arg("temperature")) } : {}),
+    ...(arg("seed") !== undefined ? { seed: Number(arg("seed")) } : {}) };
+  void runModelQuality(arg("model") ?? "qwen3.5:4b-mlx", out, arg("corpus"), options).then((report) => {
     process.stdout.write(JSON.stringify({ report: join(out, "quality.json"), passed: report.passed, correct: report.results.filter((result) => result.correct).length, total: report.results.length }) + "\n");
     if (!report.passed) process.exitCode = 1;
   }).catch(() => { process.stderr.write("Model quality evaluation failed; inspect preserved generations.\n"); process.exitCode = 1; });

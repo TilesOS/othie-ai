@@ -158,6 +158,12 @@ Classification is model judgment and can still misclassify policy; explanations 
 inspection data and never exported evidence. Fixed category/applicability metadata
 makes no generated subject or scope claim. Implicit evidence links remain open.
 
+Pass `--temperature 0 --seed 42` to send explicit Ollama sampling settings for all
+classification requests. Omitted options retain runtime defaults. Reports record the
+requested settings and each generation's effective options. Controlled settings do not
+guarantee identical outputs or make repeats independent samples. Existing production
+compiler configuration and defaults are unchanged.
+
 The default `--corpus standard` preserves the original seven-case input. Pass
 `--corpus extended` to add four authoritative documents and six cases covering regional
 defaults, descriptive facts and model instructions embedded in authoritative sources,

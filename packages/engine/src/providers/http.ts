@@ -1,5 +1,5 @@
 import type { OthieConfig } from "../config.js";
-import type { JsonMessage, ModelProvider } from "./types.js";
+import type { GenerationOptions, JsonMessage, ModelProvider } from "./types.js";
 import { ProviderError } from "./types.js";
 
 function isLoopback(url: URL): boolean { return ["127.0.0.1", "::1", "localhost"].includes(url.hostname); }
@@ -51,14 +51,17 @@ export class HttpModelProvider implements ModelProvider {
     return data.data.sort((a,b) => a.index-b.index).map((item) => item.embedding);
   }
 
-  async generateJson(messages: JsonMessage[], model: string, schema: Record<string, unknown>, signal: AbortSignal, options?: { thinking?: boolean }): Promise<unknown> {
+  async generateJson(messages: JsonMessage[], model: string, schema: Record<string, unknown>, signal: AbortSignal, options?: GenerationOptions): Promise<unknown> {
+    const sampling = { ...(options?.temperature !== undefined ? { temperature: options.temperature } : {}),
+      ...(options?.seed !== undefined ? { seed: options.seed } : {}) };
     if (this.endpoint.kind === "ollama") {
-      const response = await guardedFetch(this.endpoint, "api/chat", { method: "POST", headers: this.headers(), body: JSON.stringify({ model, messages, stream: false, think: options?.thinking ?? false, format: schema }), signal });
+      const response = await guardedFetch(this.endpoint, "api/chat", { method: "POST", headers: this.headers(), body: JSON.stringify({ model, messages, stream: false, think: options?.thinking ?? false, format: schema,
+        ...(Object.keys(sampling).length ? { options: sampling } : {}) }), signal });
       const data = await response.json() as { message?: { content?: string } };
       if (!data.message?.content) throw new ProviderError("Invalid Ollama generation response");
       return JSON.parse(data.message.content) as unknown;
     }
-    const response = await guardedFetch(this.endpoint, "v1/chat/completions", { method: "POST", headers: this.headers(), body: JSON.stringify({ model, messages, response_format: { type: "json_schema", json_schema: { name: "othie_output", strict: true, schema } } }), signal });
+    const response = await guardedFetch(this.endpoint, "v1/chat/completions", { method: "POST", headers: this.headers(), body: JSON.stringify({ model, messages, ...sampling, response_format: { type: "json_schema", json_schema: { name: "othie_output", strict: true, schema } } }), signal });
     const data = await response.json() as { choices?: Array<{ message?: { content?: string } }> };
     const content = data.choices?.[0]?.message?.content;
     if (!content) throw new ProviderError("Invalid OpenAI-compatible generation response");
