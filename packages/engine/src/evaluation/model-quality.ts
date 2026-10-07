@@ -145,12 +145,17 @@ export async function runModelQuality(model: string, out: string, corpusName = "
         const budgetValid = context.status.tokenCount === countTokens(context.text, "o200k_base") && context.status.tokenCount <= cap;
         const noOp = scenario.sources.length === 0;
         const conflictValid = scenario.expected_conflicts === undefined || context.status.conflicts === scenario.expected_conflicts;
+        const baselineRules = baseline.brief.applicable_rules;
+        const baselineCorrect = completed && baseline.status.tokenCount === countTokens(baseline.text, "o200k_base") && baseline.status.tokenCount <= cap
+          && (scenario.expected_conflicts === undefined || baseline.status.conflicts === scenario.expected_conflicts)
+          && (noOp ? baselineRules.length === 0 : scenario.sources.every((source) => baselineRules.some((rule) => basename(rule.citation.source) === source))
+            && missingEvidencePatterns(baselineRules, scenario.patterns, scenario.sources).length === 0);
         results.push({ id: scenario.id, cap, expected_sources: scenario.sources, actual_sources: actualSources,
           missing_sources: missingSources, missing_qualifier_patterns: lost, budget_valid: budgetValid,
           expected_conflicts: scenario.expected_conflicts ?? null, actual_conflicts: context.status.conflicts, conflict_valid: conflictValid,
           applicability_valid: applicabilityValid,
           correct: completed && applicabilityValid && budgetValid && conflictValid && (noOp ? selected.length === 0 : missingSources.length === 0 && lost.length === 0),
-          ...(settings.applicability === "semantic" ? { lexical_baseline: baseline.brief } : {}),
+          ...(settings.applicability === "semantic" ? { lexical_baseline: baseline.brief, lexical_baseline_correct: baselineCorrect } : {}),
           retrieval_ms: Math.round(performance.now() - began), brief: context.brief });
       }
     }
@@ -159,7 +164,9 @@ export async function runModelQuality(model: string, out: string, corpusName = "
     const report = { recorded_at: recordedAt, synthetic_only: true, protocol_version: "quality-v5", corpus: corpus.name, completed, model_unchanged: modelUnchanged,
       model: identity, runtime: await local("/api/version"), platform: process.platform, node: process.version, prompt_version: EXTRACTION_PROMPT_VERSION,
       fixture_sha256: createHash("sha256").update(JSON.stringify({ qualityDocuments, qualityCases })).digest("hex"),
-      generation_settings: settings,
+      generation_settings: { thinking: false, ...(settings.temperature !== undefined ? { temperature: settings.temperature } : {}),
+        ...(settings.seed !== undefined ? { seed: settings.seed } : {}) },
+      applicability_mode: settings.applicability ?? "lexical",
       applicability_prompt_version: settings.applicability === "semantic" ? APPLICABILITY_PROMPT_VERSION : null,
       applicability_results: applicabilityResults,
       license: { artifact_details: metadata.details ?? null, license_present: !!metadata.license,
@@ -170,7 +177,7 @@ export async function runModelQuality(model: string, out: string, corpusName = "
       extraction_jobs: extractionJobs.map((job) => ({ source: basename(job.path), state: job.state, attempts: job.attempts, error_present: job.error !== null })),
       all_retained_citations_exact: rules.every((rule) => rule.citation_exact), reference_promoted: rules.some((rule) => rule.source === "vendor-guide.md"),
       results, passed: completed && modelUnchanged && coverageValid && results.every((result) => result.correct) && rules.every((rule) => rule.citation_exact),
-      limitations: "Small fixed synthetic corpus. Expected policy sentence coverage is fixture-specific, not a general semantic classifier. Regex qualifier checks are lexical diagnostics, not semantic entailment or unsupported-claim proof. Raw generations, explicit exclusions, and retained rules require review. Embeddings and synthesis disabled. Conflicts are explicit-opposition diagnostics only. No statistical generalization or model redistribution license approval.",
+      limitations: "Small fixed synthetic corpus. Expected policy sentence coverage is fixture-specific, not a general semantic classifier. Regex qualifier checks are lexical diagnostics, not semantic entailment or unsupported-claim proof. Raw generations, explicit exclusions, and retained rules require review. Embeddings and synthesis disabled. Optional semantic applicability is evaluation-only, adds model latency and cannot recover rules absent from lexical candidates. Exact quote validation does not establish semantic truth. Conflicts are explicit-opposition diagnostics only. Controlled settings do not guarantee determinism or independent samples. No statistical generalization or model redistribution license approval.",
     };
     await writeFile(join(out, "quality.json"), JSON.stringify(report, null, 2) + "\n", { flag: "wx", mode: 0o600 });
     return report;
