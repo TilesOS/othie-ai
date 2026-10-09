@@ -296,3 +296,32 @@ Semantic runs also require filtering to finish within `--hook-deadline-ms` (defa
 so slow decisions remain available for inspection. Filtering time excludes hook stdin,
 process startup, engine retrieval and transport: passing this necessary latency check
 cannot establish end-to-end native-hook acceptance. Production hook behavior is unchanged.
+
+## Stable recorded-input applicability replay
+
+The replay runner reads an existing synthetic `quality.json` with `applicability-v3`
+requests and an unchanged installed Ollama model digest. It sends the exact recorded
+messages, candidate ordering, schema and sampling settings in the same case order on
+each repeat. No extraction, fresh engine, candidate expansion or re-ranking occurs.
+It rejects changed prompts/schemas, ambiguous cases/anchors, and evidence absent from
+retained authoritative originals. Empty-candidate cases have no recorded model call
+and are listed separately. The default replays all nonempty requests three times:
+
+```sh
+npm run build --workspace=@othie/engine
+node packages/engine/dist/src/evaluation/applicability-replay.js --input packages/engine/evaluation/records/2026-10-06/applicability-followup/anchors-1/quality.json --out /tmp/othie-fixed-replay
+```
+
+Pass `--cases receipt-boundary,consent-negation` for an explicitly recorded subset,
+`--repeats 3` for repeat count, or `--generation-deadline-ms 2000` to actually cancel
+calls at a hook-sized model budget. The default generation deadline is 20 seconds,
+while `--hook-deadline-ms` defaults to 2,000 for independent latency gating.
+
+A new output directory contains `protocol.json`, a raw attempt file saved after every
+call, and `summary.json` after completion. Requests receive identity hashes. Summaries
+count distinct applicability decision sets separately from explanation wording and
+compare decisions against the recording. Invalid/late attempts fail atomically and
+remain inspectable. Scores measure source, qualifier and explicit-conflict diagnostics
+**before packing**; they are not the packed `quality-v5` acceptance totals. Warm runtime
+state remains uncontrolled, and repeats are not independent samples. Both semantic
+quality and native-hook latency acceptance remain necessary before production use.
