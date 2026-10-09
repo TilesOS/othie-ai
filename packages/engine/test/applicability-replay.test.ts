@@ -35,6 +35,7 @@ it("replays identical requests in recorded order and distinguishes decision vari
   expect(result.results.map((row) => row.changed_ids)).toEqual([[], ["r1"], []]);
   expect(result.variation).toEqual([{ id: "support", distinct_decision_sets: 2, invalid_attempts: 0, changed_from_recording: 1 }]);
   expect(result.scores_before_packing.positive).toEqual({ correct: 2, total: 3 });
+  expect(result.recorded_scores_before_packing.positive).toEqual({ correct: 1, total: 1 });
   expect(result.skipped_cases).toEqual(["noop"]);
 });
 

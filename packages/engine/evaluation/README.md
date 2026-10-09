@@ -320,7 +320,8 @@ while `--hook-deadline-ms` defaults to 2,000 for independent latency gating.
 A new output directory contains `protocol.json`, a raw attempt file saved after every
 call, and `summary.json` after completion. Requests receive identity hashes. Summaries
 count distinct applicability decision sets separately from explanation wording and
-compare decisions against the recording. Invalid/late attempts fail atomically and
+compare decisions against the recording. Recorded pre-packing diagnostic scores
+are also retained as a baseline. Invalid/late attempts fail atomically and
 remain inspectable. Scores measure source, qualifier and explicit-conflict diagnostics
 **before packing**; they are not the packed `quality-v5` acceptance totals. Warm runtime
 state remains uncontrolled, and repeats are not independent samples. Both semantic

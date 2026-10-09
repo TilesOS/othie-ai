@@ -29,6 +29,11 @@ export const replayOptionsSchema = z.object({ repeats: z.number().int().min(1).m
   generation_deadline_ms: z.number().int().min(1).max(20_000).default(20_000),
   cases: z.array(z.string().min(1)).min(1).optional() }).strict();
 export type ReplayOptions = z.input<typeof replayOptionsSchema>;
+function scoreSelection(scenario: { id: string; query: string; sources: string[]; patterns: string[]; expected_conflicts?: number }, rules: RuleRecord[]) {
+  const coverage = candidateCoverage(scenario, rules);
+  const conflicts = conflictGroups(rules).length;
+  return { coverage, conflicts, correct: coverage.complete && (scenario.expected_conflicts === undefined || conflicts === scenario.expected_conflicts) };
+}
 const hash = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 
 /** Freeze the recorded request, including candidate order and anchors. Reject inputs
@@ -91,12 +96,10 @@ export async function replayApplicability(raw: unknown, provider: ModelProvider,
       const decisions = validateAnchoredApplicability(response, request.scenario.query, request.evidence);
       const retained = new Set(decisions.filter((item) => item.applies).map((item) => item.id));
       const selected = request.rules.filter((rule) => retained.has(rule.id));
-      const coverage = candidateCoverage(request.scenario, selected);
-      const conflicts = conflictGroups(selected).length;
+      const score = scoreSelection(request.scenario, selected);
       results.push({ repeat, id: request.scenario.id, request_sha256: request.request_sha256, raw: response, valid: true,
         decisions, changed_ids: decisions.filter((item) => item.applies !== request.baseline.find((original) => original.id === item.id)!.applies).map((item) => item.id).sort(),
-        expected_sources: request.scenario.sources, coverage, conflicts,
-        correct: coverage.complete && (request.scenario.expected_conflicts === undefined || conflicts === request.scenario.expected_conflicts),
+        expected_sources: request.scenario.sources, ...score,
         hook_deadline_met: performance.now() - began < settings.hook_deadline_ms, wall_ms: Math.round(performance.now() - began) });
     } catch {
       results.push({ repeat, id: request.scenario.id, request_sha256: request.request_sha256, raw: response, valid: false,
@@ -111,7 +114,13 @@ export async function replayApplicability(raw: unknown, provider: ModelProvider,
     distinct_decision_sets: signatures(results.filter((item) => item.id === request.scenario.id)).size,
     invalid_attempts: results.filter((item) => item.id === request.scenario.id && !item.valid).length,
     changed_from_recording: results.filter((item) => item.id === request.scenario.id && (item.changed_ids?.length ?? 0) > 0).length }));
-  return { results, variation, skipped_cases: prepared.skipped_cases,
+  const recordedDiagnostics = prepared.requests.map((request) => {
+    const ids = new Set(request.baseline.filter((item) => item.applies).map((item) => item.id));
+    return { id: request.scenario.id, expected_sources: request.scenario.sources,
+      ...scoreSelection(request.scenario, request.rules.filter((rule) => ids.has(rule.id))) };
+  });
+  return { results, variation, recorded_diagnostics_before_packing: recordedDiagnostics,
+    recorded_scores_before_packing: diagnosticScores(recordedDiagnostics), skipped_cases: prepared.skipped_cases,
     scores_before_packing: diagnosticScores(results),
     hook_latency_valid: results.every((item) => item.hook_deadline_met),
     valid: results.every((item) => item.valid), settings };

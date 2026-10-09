@@ -1,0 +1,44 @@
+{
+  "synthetic_only": true,
+  "records": [
+    {
+      "name": "source-revision",
+      "code": "61358a0",
+      "recorded_at": "2026-10-09T02:41:38.720Z",
+      "fixture_sha256": "b6b849623a4c866d18f89adec99bd9fa3763bf8cf4ee0e41c0493551ea2953f6",
+      "quality_sha256": "7fd17c30029bfc256d09f561f45a9d23a78dea5f9b382ae0be21d0307f5642f2",
+      "generations_sha256": "9edd1e09f5af4f6e676e62859e3e36baae9859d7ec6dc82ac9c31e261f7c3162",
+      "candidate_mode": "source-revision",
+      "diagnostic_scores": {
+        "positive": {
+          "correct": 41,
+          "total": 52
+        },
+        "no_op": {
+          "correct": 24,
+          "total": 28
+        },
+        "combined": {
+          "correct": 65,
+          "total": 80
+        }
+      },
+      "lexical_diagnostic_scores": {
+        "positive": {
+          "correct": 45,
+          "total": 52
+        },
+        "no_op": {
+          "correct": 16,
+          "total": 28
+        },
+        "combined": {
+          "correct": 61,
+          "total": 80
+        }
+      },
+      "hook_latency_valid": false,
+      "passed": false
+    }
+  ]
+}
