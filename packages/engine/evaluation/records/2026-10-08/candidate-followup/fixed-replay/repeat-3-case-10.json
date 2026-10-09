@@ -1,0 +1,169 @@
+{
+  "repeat": 3,
+  "id": "removable-drive-policy",
+  "request_sha256": "a27f992aad2241ec8a7d6a17365bf36b4b62e7737da6bf770916131900677ae9",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task explicitly requests encryption of removable drives containing customer data, which aligns with the policy requiring staff to encrypt such drives before storage.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The task explicitly requests reporting lost drives within one hour, which matches the policy requirement for lost removable drives to be reported to security within that timeframe.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The task does not mention unlocked workstations or reporting them to security, so this policy is not applicable to the current request.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "The task does not involve a lost receipt requiring a written explanation, making this specific exception irrelevant to the requested actions.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "While the task involves security incidents (lost drives), it does not request the full implementation of the detailed security incident report format or all its specific fields.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "The task does not request exporting customer records as CSV for a migration project, and this policy permits an action not requested by the task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "The task does not request exporting customer records as CSV for a migration project, so this prohibition is not applicable to the current scope.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r8",
+        "explanation": "The task does not involve summarizing customer tickets or removing personal identifiers in that context, making this conditional permission irrelevant.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r9",
+        "explanation": "The task does not involve sending assistant-generated drafts to customers, so the requirement to review such drafts is not applicable.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r10",
+        "explanation": "The task does not request using approved assistants to draft internal summaries after removing customer identifiers, so this permission is not applicable.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task explicitly requests encryption of removable drives containing customer data, which aligns with the policy requiring staff to encrypt such drives before storage.",
+      "applies": true,
+      "task_quote": "encrypt removable drives customer data lost drives reported security one hour",
+      "evidence_quote": "Staff must encrypt removable drives before storing customer data."
+    },
+    {
+      "id": "r2",
+      "explanation": "The task explicitly requests reporting lost drives within one hour, which matches the policy requirement for lost removable drives to be reported to security within that timeframe.",
+      "applies": true,
+      "task_quote": "encrypt removable drives customer data lost drives reported security one hour",
+      "evidence_quote": "Lost removable drives must be reported to security within one hour."
+    },
+    {
+      "id": "r3",
+      "explanation": "The task does not mention unlocked workstations or reporting them to security, so this policy is not applicable to the current request.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "The task does not involve a lost receipt requiring a written explanation, making this specific exception irrelevant to the requested actions.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "While the task involves security incidents (lost drives), it does not request the full implementation of the detailed security incident report format or all its specific fields.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "The task does not request exporting customer records as CSV for a migration project, and this policy permits an action not requested by the task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "The task does not request exporting customer records as CSV for a migration project, so this prohibition is not applicable to the current scope.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r8",
+      "explanation": "The task does not involve summarizing customer tickets or removing personal identifiers in that context, making this conditional permission irrelevant.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r9",
+      "explanation": "The task does not involve sending assistant-generated drafts to customers, so the requirement to review such drafts is not applicable.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r10",
+      "explanation": "The task does not request using approved assistants to draft internal summaries after removing customer identifiers, so this permission is not applicable.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "mixed-handbook.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "mixed-handbook.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 7965
+}

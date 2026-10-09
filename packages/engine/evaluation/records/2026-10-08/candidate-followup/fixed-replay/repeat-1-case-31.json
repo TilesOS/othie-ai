@@ -1,0 +1,53 @@
+{
+  "repeat": 1,
+  "id": "receipt-font-task-control",
+  "request_sha256": "1275b46648fae55e412f226a44b88f6fa24059b1e2f50c39384f5fa9f5f0ed91",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The policy defines a submission threshold for employees but does not govern document formatting or font styles.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r2",
+        "explanation": "The policy specifies receipt requirements based on expense amounts but does not address visual design elements like font color.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The policy defines a submission threshold for employees but does not govern document formatting or font styles.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r2",
+      "explanation": "The policy specifies receipt requirements based on expense amounts but does not address visual design elements like font color.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [],
+  "coverage": {
+    "candidate_count": 0,
+    "actual_sources": [],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 2009
+}

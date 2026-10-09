@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "removable-drive-policy",
+  "request_sha256": "a27f992aad2241ec8a7d6a17365bf36b4b62e7737da6bf770916131900677ae9",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "mixed-handbook.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

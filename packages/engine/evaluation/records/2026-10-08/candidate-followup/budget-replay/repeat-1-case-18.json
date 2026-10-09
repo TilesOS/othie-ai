@@ -1,0 +1,43 @@
+{
+  "repeat": 1,
+  "id": "conditional-replacement",
+  "request_sha256": "f37975d9e96ef84c04cc7cc9bc64fd3a8a762a105406456314a2d066d6f64e74",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence explicitly mandates revoking the badge before issuing a replacement, which directly aligns with the task's requirement to revoke the badge prior to issuing a replacement.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence explicitly mandates revoking the badge before issuing a replacement, which directly aligns with the task's requirement to revoke the badge prior to issuing a replacement.",
+      "applies": true,
+      "task_quote": "visitor loses badge reception revoke issuing replacement",
+      "evidence_quote": "If a visitor loses a badge, reception must revoke it before issuing a replacement."
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "conditional-procedure.md"
+  ],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "conditional-procedure.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": true,
+  "wall_ms": 1348
+}

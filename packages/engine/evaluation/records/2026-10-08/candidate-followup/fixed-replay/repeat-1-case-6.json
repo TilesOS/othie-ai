@@ -1,0 +1,85 @@
+{
+  "repeat": 1,
+  "id": "regional-defaults",
+  "request_sha256": "f961fdf30fbaee1b9e4390e4f0d5c69c1f8cbb147f9cb03222cf1a22e9b328b0",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task mentions 'Australian accounts' which matches the evidence's specific region and subject, establishing applicability.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The task mentions 'Canadian accounts' which matches the evidence's specific region and subject, establishing applicability.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The task mentions 'trial accounts' which matches the evidence's specific subject, establishing applicability.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r3"
+      },
+      {
+        "id": "r4",
+        "explanation": "The task does not mention EU or telemetry; this is a descriptive rule unrelated to the requested subjects.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task mentions 'Australian accounts' which matches the evidence's specific region and subject, establishing applicability.",
+      "applies": true,
+      "task_quote": "Canadian Australian accounts automatic renewal defaults trial accounts",
+      "evidence_quote": "For Australian accounts, automatic renewal defaults to enabled unless an administrator explicitly disables it."
+    },
+    {
+      "id": "r2",
+      "explanation": "The task mentions 'Canadian accounts' which matches the evidence's specific region and subject, establishing applicability.",
+      "applies": true,
+      "task_quote": "Canadian Australian accounts automatic renewal defaults trial accounts",
+      "evidence_quote": "For Canadian accounts, automatic renewal defaults to disabled unless an administrator explicitly enables it."
+    },
+    {
+      "id": "r3",
+      "explanation": "The task mentions 'trial accounts' which matches the evidence's specific subject, establishing applicability.",
+      "applies": true,
+      "task_quote": "Canadian Australian accounts automatic renewal defaults trial accounts",
+      "evidence_quote": "Trial accounts in either region must never renew automatically."
+    },
+    {
+      "id": "r4",
+      "explanation": "The task does not mention EU or telemetry; this is a descriptive rule unrelated to the requested subjects.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "regional-defaults.md"
+  ],
+  "coverage": {
+    "candidate_count": 3,
+    "actual_sources": [
+      "regional-defaults.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 3226
+}

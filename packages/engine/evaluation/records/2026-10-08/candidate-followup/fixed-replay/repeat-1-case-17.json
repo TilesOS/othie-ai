@@ -1,0 +1,211 @@
+{
+  "repeat": 1,
+  "id": "human-assistant-use",
+  "request_sha256": "e95988f893fd8524b4561ba279796f0cf3bafe8470da19f3e0edea6e876256df",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence explicitly permits employees approved assistants to draft internal summaries after removing customer identifiers, which matches the task's action and condition.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This rule restricts who can summarize tickets (approved assistants) rather than authoring them (employees), so it does not govern the specific task of employees using assistants.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r3",
+        "explanation": "The task involves drafting summaries, whereas this rule mandates a review step before sending to customers, making it an unrelated procedural requirement.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "This is a prohibition regarding credential disclosure that does not address the specific action of drafting internal summaries.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The task involves drafting summaries, not exporting customer records as CSV for migration, so this evidence is irrelevant to the requested behavior.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "This rule prohibits a specific action (exporting records) that differs from the task's goal of drafting summaries, and shared words alone do not establish applicability.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "The task is about drafting summaries, while this rule governs the storage of data on removable drives, which is a different scope.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r8",
+        "explanation": "This policy concerns travel booking class and has no relevance to drafting internal summaries or handling customer identifiers.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r9",
+        "explanation": "This rule restricts business class bookings for international flights and does not apply to the general task of drafting internal summaries.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r10",
+        "explanation": "The task involves drafting summaries, whereas this rule requires submitting receipts for expenses over $25, which is a distinct financial obligation.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r11",
+        "explanation": "This evidence addresses lost receipts and does not govern the drafting of internal summaries or the removal of identifiers.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r12",
+        "explanation": "This rule defines vacation entitlements and is unrelated to the task of drafting internal summaries with customer identifier removal.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r13",
+        "explanation": "The task involves drafting summaries, while this evidence details requirements for security incident reports, which are a different document type and process.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence explicitly permits employees approved assistants to draft internal summaries after removing customer identifiers, which matches the task's action and condition.",
+      "applies": true,
+      "task_quote": "employees approved assistants draft internal summaries removing customer identifiers",
+      "evidence_quote": "Employees may use approved assistants to draft internal summaries after removing customer identifiers."
+    },
+    {
+      "id": "r2",
+      "explanation": "This rule restricts who can summarize tickets (approved assistants) rather than authoring them (employees), so it does not govern the specific task of employees using assistants.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r3",
+      "explanation": "The task involves drafting summaries, whereas this rule mandates a review step before sending to customers, making it an unrelated procedural requirement.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "This is a prohibition regarding credential disclosure that does not address the specific action of drafting internal summaries.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The task involves drafting summaries, not exporting customer records as CSV for migration, so this evidence is irrelevant to the requested behavior.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "This rule prohibits a specific action (exporting records) that differs from the task's goal of drafting summaries, and shared words alone do not establish applicability.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "The task is about drafting summaries, while this rule governs the storage of data on removable drives, which is a different scope.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r8",
+      "explanation": "This policy concerns travel booking class and has no relevance to drafting internal summaries or handling customer identifiers.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r9",
+      "explanation": "This rule restricts business class bookings for international flights and does not apply to the general task of drafting internal summaries.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r10",
+      "explanation": "The task involves drafting summaries, whereas this rule requires submitting receipts for expenses over $25, which is a distinct financial obligation.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r11",
+      "explanation": "This evidence addresses lost receipts and does not govern the drafting of internal summaries or the removal of identifiers.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r12",
+      "explanation": "This rule defines vacation entitlements and is unrelated to the task of drafting internal summaries with customer identifier removal.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r13",
+      "explanation": "The task involves drafting summaries, while this evidence details requirements for security incident reports, which are a different document type and process.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "assistant-ownership.md"
+  ],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "assistant-ownership.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 10598
+}

@@ -1,0 +1,137 @@
+{
+  "repeat": 3,
+  "id": "assistant-directory-control",
+  "request_sha256": "e9fc45ef33410e1a19783fee0bd94bd740a2603214c042ebeda3e43365102807",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task requests printing a customer directory, which is unrelated to employee vacation benefits.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r2",
+        "explanation": "The task requests printing a directory, not storing data on removable drives.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r3",
+        "explanation": "The task requests printing a directory, which is unrelated to exporting records as CSV.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "The task requests printing a directory, which is unrelated to exporting records as CSV.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The task requests printing a directory, which is unrelated to summarizing tickets or removing identifiers.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "The task requests printing a directory, which is unrelated to reviewing drafts before sending them to customers.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "The task requests printing a directory, which is unrelated to using assistants to draft internal summaries.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r8",
+        "explanation": "The task requests printing a directory, which is unrelated to submitting security incident reports.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task requests printing a customer directory, which is unrelated to employee vacation benefits.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r2",
+      "explanation": "The task requests printing a directory, not storing data on removable drives.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r3",
+      "explanation": "The task requests printing a directory, which is unrelated to exporting records as CSV.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "The task requests printing a directory, which is unrelated to exporting records as CSV.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The task requests printing a directory, which is unrelated to summarizing tickets or removing identifiers.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "The task requests printing a directory, which is unrelated to reviewing drafts before sending them to customers.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "The task requests printing a directory, which is unrelated to using assistants to draft internal summaries.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r8",
+      "explanation": "The task requests printing a directory, which is unrelated to submitting security incident reports.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [],
+  "coverage": {
+    "candidate_count": 0,
+    "actual_sources": [],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 4680
+}

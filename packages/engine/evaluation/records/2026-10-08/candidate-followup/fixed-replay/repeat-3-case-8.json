@@ -1,0 +1,113 @@
+{
+  "repeat": 3,
+  "id": "linked-access-extension",
+  "request_sha256": "902f40c5ae95b21930298cf35244b92220208c858d664ba61609f56a3c6d7a36",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task text explicitly mentions 'privileged access expires eight hours' and 'two additional hours', which directly matches the core conditions of this policy.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The task text explicitly mentions 'audit log', which is a key requirement for recording extensions defined in this policy.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "While the task mentions 'incident commanders' and 'regions', this policy defines a comprehensive list of fields for security incident reports that are not requested by the task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "The task text does not mention 'emergency maintenance' or 'immediate start', making this policy irrelevant to the specific request.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The task text does not mention 'workstations', 'leaving desks', or 'locking', so this policy is not applicable.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "The task text does not mention 'production deployments', 'release owner', or 'active outage' conditions found in this policy.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task text explicitly mentions 'privileged access expires eight hours' and 'two additional hours', which directly matches the core conditions of this policy.",
+      "applies": true,
+      "task_quote": "privileged access expires eight hours incident commanders two additional hours audit log",
+      "evidence_quote": "Privileged access must expire after eight hours. Only incident commanders may extend access, for at most two additional hours."
+    },
+    {
+      "id": "r2",
+      "explanation": "The task text explicitly mentions 'audit log', which is a key requirement for recording extensions defined in this policy.",
+      "applies": true,
+      "task_quote": "privileged access expires eight hours incident commanders two additional hours audit log",
+      "evidence_quote": "Extensions must be recorded in the audit log before the original access expires."
+    },
+    {
+      "id": "r3",
+      "explanation": "While the task mentions 'incident commanders' and 'regions', this policy defines a comprehensive list of fields for security incident reports that are not requested by the task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "The task text does not mention 'emergency maintenance' or 'immediate start', making this policy irrelevant to the specific request.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The task text does not mention 'workstations', 'leaving desks', or 'locking', so this policy is not applicable.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "The task text does not mention 'production deployments', 'release owner', or 'active outage' conditions found in this policy.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "privileged-access.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "privileged-access.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 4987
+}

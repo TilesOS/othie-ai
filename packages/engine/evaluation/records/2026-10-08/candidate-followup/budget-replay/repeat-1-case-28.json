@@ -1,0 +1,18 @@
+{
+  "repeat": 1,
+  "id": "export-opposition-task",
+  "request_sha256": "2953f98e8b12b3ccc5ce15abfd7207a73cc406c27c78dc4a62ac19bdd78cf6f0",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "current-export.md",
+    "legacy-export.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2000
+}

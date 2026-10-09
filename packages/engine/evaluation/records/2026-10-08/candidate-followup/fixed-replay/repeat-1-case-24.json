@@ -1,0 +1,46 @@
+{
+  "repeat": 1,
+  "id": "support-subject-query",
+  "request_sha256": "e6848dd9aa67d3bc7924baa24b4a44d7faaa6f5ddaf5c977b22a41025efa0d2d",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence item establishes a mandatory obligation for support agents to acknowledge priority tickets, which is an active organizational policy governing the requested task.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence item establishes a mandatory obligation for support agents to acknowledge priority tickets, which is an active organizational policy governing the requested task.",
+      "applies": true,
+      "task_quote": "support",
+      "evidence_quote": "Support agents must acknowledge priority tickets within thirty minutes."
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "historical-support.md"
+  ],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "historical-support.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [
+      "unresolved",
+      "four hours"
+    ],
+    "complete": false
+  },
+  "conflicts": 0,
+  "correct": false,
+  "hook_deadline_met": true,
+  "wall_ms": 1284
+}

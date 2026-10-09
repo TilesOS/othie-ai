@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "qualification-after-description",
+  "request_sha256": "b1baf46174a2408b9349006b7ce6b66b7f97b5cc96867a4900851972adf93f74",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "qualification-boundary.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

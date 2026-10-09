@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "human-assistant-use",
+  "request_sha256": "e95988f893fd8524b4561ba279796f0cf3bafe8470da19f3e0edea6e876256df",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "assistant-ownership.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

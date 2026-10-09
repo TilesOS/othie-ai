@@ -1,0 +1,123 @@
+{
+  "repeat": 1,
+  "id": "customer-css-task-control",
+  "request_sha256": "748aeaee3728a444d83592db0fb343bd85a38fc10bac352e3c8e8ab296e0f0d9",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The policy governs data storage security but does not address CSS styling or visual design adjustments for customer pages.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r2",
+        "explanation": "This evidence grants permission to export records as CSV, which is unrelated to modifying CSS border widths.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r3",
+        "explanation": "This evidence prohibits exporting records as CSV, which does not pertain to the requested CSS modification task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "The policy restricts summarizing tickets with personal identifiers removed; it does not cover adjusting page aesthetics.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "This evidence requires reviewing assistant drafts before sending to customers, which is unrelated to CSS styling changes.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "This evidence permits using assistants for internal summaries after identifier removal; it does not address the task of adjusting CSS borders.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "The policy details requirements for security incident reports and does not govern customer page visual design or CSS adjustments.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The policy governs data storage security but does not address CSS styling or visual design adjustments for customer pages.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r2",
+      "explanation": "This evidence grants permission to export records as CSV, which is unrelated to modifying CSS border widths.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r3",
+      "explanation": "This evidence prohibits exporting records as CSV, which does not pertain to the requested CSS modification task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "The policy restricts summarizing tickets with personal identifiers removed; it does not cover adjusting page aesthetics.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "This evidence requires reviewing assistant drafts before sending to customers, which is unrelated to CSS styling changes.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "This evidence permits using assistants for internal summaries after identifier removal; it does not address the task of adjusting CSS borders.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "The policy details requirements for security incident reports and does not govern customer page visual design or CSS adjustments.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [],
+  "coverage": {
+    "candidate_count": 0,
+    "actual_sources": [],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 5280
+}

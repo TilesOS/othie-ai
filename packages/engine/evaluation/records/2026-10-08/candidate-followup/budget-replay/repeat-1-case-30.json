@@ -1,0 +1,15 @@
+{
+  "repeat": 1,
+  "id": "customer-css-task-control",
+  "request_sha256": "748aeaee3728a444d83592db0fb343bd85a38fc10bac352e3c8e8ab296e0f0d9",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

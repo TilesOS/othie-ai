@@ -1,0 +1,15 @@
+{
+  "repeat": 1,
+  "id": "historical-badge-task-control",
+  "request_sha256": "a855a951c76023098b4d404465748c3d2fdabe739af5caa8f75413e52c078591",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

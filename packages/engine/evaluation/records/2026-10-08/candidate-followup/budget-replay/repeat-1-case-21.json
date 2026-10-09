@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "badge-entry-task",
+  "request_sha256": "4b61b4423c5cf3d1e2d4dcb5ca79d96056e19d76cec7a7b3e5378e3a164515a2",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "historical-replacement.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "assistant-summary-task",
+  "request_sha256": "daf5cfef6ef442a6512c8be07add2b7f695901ac9136fea105ca0a1c3179e1fc",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "assistant-ownership.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2000
+}

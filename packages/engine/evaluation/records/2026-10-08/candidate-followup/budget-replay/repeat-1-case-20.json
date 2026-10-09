@@ -1,0 +1,15 @@
+{
+  "repeat": 1,
+  "id": "assistant-directory-control",
+  "request_sha256": "e9fc45ef33410e1a19783fee0bd94bd740a2603214c042ebeda3e43365102807",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

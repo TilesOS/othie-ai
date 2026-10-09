@@ -1,0 +1,89 @@
+{
+  "repeat": 1,
+  "id": "consent-negation",
+  "request_sha256": "47c979a2dcbda39519030434b63038901502dc48ca6c699c6ecfa4f115a41c75",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence states that outside the EU, telemetry defaults to enabled unless consent is explicitly false, which directly addresses the task's query about telemetry status and consent requirements outside the EU.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This evidence defines what constitutes explicit consent but does not specify the default behavior or operational rules for telemetry when consent is missing in the context of the task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r3",
+        "explanation": "This evidence restricts EU users from having telemetry enabled without explicit consent, which contradicts the task's focus on the 'outside EU' region and does not apply to that specific scope.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "This evidence governs report handling regarding missing fields, which is unrelated to telemetry functionality or consent rules for the task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence states that outside the EU, telemetry defaults to enabled unless consent is explicitly false, which directly addresses the task's query about telemetry status and consent requirements outside the EU.",
+      "applies": true,
+      "task_quote": "EU telemetry missing explicit consent false outside EU",
+      "evidence_quote": "Outside the EU, telemetry defaults to enabled unless consent is explicitly false."
+    },
+    {
+      "id": "r2",
+      "explanation": "This evidence defines what constitutes explicit consent but does not specify the default behavior or operational rules for telemetry when consent is missing in the context of the task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r3",
+      "explanation": "This evidence restricts EU users from having telemetry enabled without explicit consent, which contradicts the task's focus on the 'outside EU' region and does not apply to that specific scope.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "This evidence governs report handling regarding missing fields, which is unrelated to telemetry functionality or consent rules for the task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "telemetry.md"
+  ],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "telemetry.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [
+      "explicit consent",
+      "missing",
+      "must not|disabled|disable|cannot"
+    ],
+    "complete": false
+  },
+  "conflicts": 0,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 3700
+}

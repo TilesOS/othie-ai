@@ -1,0 +1,41 @@
+{
+  "repeat": 3,
+  "id": "support-chart-task-control",
+  "request_sha256": "7ec7364029d74a36e87fd33b9a9f07056a4694887e2c4d6b8f4ebe63dcd057a5",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence item describes a mandatory requirement for support agents to acknowledge tickets, which constitutes an organizational policy obligation.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence item describes a mandatory requirement for support agents to acknowledge tickets, which constitutes an organizational policy obligation.",
+      "applies": true,
+      "task_quote": "Plot historical median support acknowledgement minutes from last quarter",
+      "evidence_quote": "Support agents must acknowledge priority tickets within thirty minutes."
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "historical-support.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": false
+  },
+  "conflicts": 0,
+  "correct": false,
+  "hook_deadline_met": true,
+  "wall_ms": 1183
+}

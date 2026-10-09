@@ -1,0 +1,85 @@
+{
+  "repeat": 2,
+  "id": "contractor-exception",
+  "request_sha256": "22684b122d2a66e916bf40157de44fd05cb3cbc6c3d62938b97d3745ce508e4e",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The policy defines a baseline entitlement of twenty days for full-time employees, which is relevant context for evaluating contractor status.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This policy explicitly defines the entitlement and baseline requirement for contractors, directly addressing the subject of the task.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "This policy establishes a prohibition regarding carry-over for all employees and defines the default exception that contradicts the task's premise.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r3"
+      },
+      {
+        "id": "r4",
+        "explanation": "This policy governs expense receipts and is unrelated to vacation days or contractor status.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The policy defines a baseline entitlement of twenty days for full-time employees, which is relevant context for evaluating contractor status.",
+      "applies": true,
+      "task_quote": "vacation days full time contractors carry over",
+      "evidence_quote": "Full-time employees receive twenty paid vacation days per calendar year."
+    },
+    {
+      "id": "r2",
+      "explanation": "This policy explicitly defines the entitlement and baseline requirement for contractors, directly addressing the subject of the task.",
+      "applies": true,
+      "task_quote": "vacation days full time contractors carry over",
+      "evidence_quote": "Contractors receive ten paid vacation days per calendar year, not twenty."
+    },
+    {
+      "id": "r3",
+      "explanation": "This policy establishes a prohibition regarding carry-over for all employees and defines the default exception that contradicts the task's premise.",
+      "applies": true,
+      "task_quote": "vacation days full time contractors carry over",
+      "evidence_quote": "Unused days do not carry over to the next calendar year."
+    },
+    {
+      "id": "r4",
+      "explanation": "This policy governs expense receipts and is unrelated to vacation days or contractor status.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "leave.md"
+  ],
+  "coverage": {
+    "candidate_count": 3,
+    "actual_sources": [
+      "leave.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 3999
+}

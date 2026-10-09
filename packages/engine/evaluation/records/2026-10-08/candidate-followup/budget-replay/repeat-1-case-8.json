@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "linked-access-extension",
+  "request_sha256": "902f40c5ae95b21930298cf35244b92220208c858d664ba61609f56a3c6d7a36",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "privileged-access.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

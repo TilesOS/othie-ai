@@ -1,0 +1,128 @@
+{
+  "repeat": 2,
+  "id": "mixed-policy-exclusions",
+  "request_sha256": "ad21200f0144ea1c8d91684db6eb4c52ce33b7fbbeecd52a0b53ff249f16899e",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task explicitly requests 'incident commander approval' for the maintenance announcement, which directly matches the condition in r1 stating immediate start requires such approval.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The task specifies a '48 hours' timeframe for the announcement, which aligns with the baseline requirement in r2 that production maintenance must be announced at least 48 hours before it begins.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The task describes a 'production emergency maintenance' scenario where the incident commander is approving; r3 states that during an active outage, the incident commander may approve deployments, making this rule applicable to the exception",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r3"
+      },
+      {
+        "id": "r4",
+        "explanation": "The task is about a maintenance announcement, not a security incident report; r4 lists specific fields required for security incident reports which are irrelevant to the current task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The task concerns production maintenance and incident commander approval, whereas r5 discusses medical accommodations waiving written-approval requirements for business class, which is unrelated to the task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "The task involves production maintenance announcements and incident commander approval, while r6 restricts business class bookings for international flights with written approval, which does not apply to the task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "The task is about maintenance announcements and incident commander approval for production work; r7 governs privileged access expiration and extension by incident commanders, which is unrelated to the task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task explicitly requests 'incident commander approval' for the maintenance announcement, which directly matches the condition in r1 stating immediate start requires such approval.",
+      "applies": true,
+      "task_quote": "production emergency maintenance announcement 48 hours incident commander approval",
+      "evidence_quote": "Emergency maintenance may start immediately only with incident commander approval."
+    },
+    {
+      "id": "r2",
+      "explanation": "The task specifies a '48 hours' timeframe for the announcement, which aligns with the baseline requirement in r2 that production maintenance must be announced at least 48 hours before it begins.",
+      "applies": true,
+      "task_quote": "production emergency maintenance announcement 48 hours incident commander approval",
+      "evidence_quote": "Production maintenance must be announced at least 48 hours before it begins."
+    },
+    {
+      "id": "r3",
+      "explanation": "The task describes a 'production emergency maintenance' scenario where the incident commander is approving; r3 states that during an active outage, the incident commander may approve deployments, making this rule applicable to the exception",
+      "applies": true,
+      "task_quote": "production emergency maintenance announcement 48 hours incident commander approval",
+      "evidence_quote": "Production deployments require approval from the release owner. Except during an active outage, when the incident commander may approve."
+    },
+    {
+      "id": "r4",
+      "explanation": "The task is about a maintenance announcement, not a security incident report; r4 lists specific fields required for security incident reports which are irrelevant to the current task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The task concerns production maintenance and incident commander approval, whereas r5 discusses medical accommodations waiving written-approval requirements for business class, which is unrelated to the task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "The task involves production maintenance announcements and incident commander approval, while r6 restricts business class bookings for international flights with written approval, which does not apply to the task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "The task is about maintenance announcements and incident commander approval for production work; r7 governs privileged access expiration and extension by incident commanders, which is unrelated to the task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "maintenance.md"
+  ],
+  "coverage": {
+    "candidate_count": 3,
+    "actual_sources": [
+      "maintenance.md",
+      "qualification-boundary.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 6798
+}

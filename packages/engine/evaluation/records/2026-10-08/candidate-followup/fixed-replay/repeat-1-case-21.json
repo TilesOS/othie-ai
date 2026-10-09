@@ -1,0 +1,57 @@
+{
+  "repeat": 1,
+  "id": "badge-entry-task",
+  "request_sha256": "4b61b4423c5cf3d1e2d4dcb5ca79d96056e19d76cec7a7b3e5378e3a164515a2",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence explicitly mandates obtaining digital badges as a requirement for laboratory entry, which directly aligns with the task's goal of implementing such a check.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The evidence specifies wearing safety goggles in the clean room, which is a distinct requirement unrelated to the specific task of implementing a digital badge entry check.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence explicitly mandates obtaining digital badges as a requirement for laboratory entry, which directly aligns with the task's goal of implementing such a check.",
+      "applies": true,
+      "task_quote": "Implement a laboratory entry check for visitors with digital badges",
+      "evidence_quote": "Visitors now must obtain digital badges before entering the laboratory."
+    },
+    {
+      "id": "r2",
+      "explanation": "The evidence specifies wearing safety goggles in the clean room, which is a distinct requirement unrelated to the specific task of implementing a digital badge entry check.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "historical-replacement.md"
+  ],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "historical-replacement.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 2341
+}

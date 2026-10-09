@@ -1,0 +1,59 @@
+{
+  "repeat": 2,
+  "id": "telemetry-subject-query",
+  "request_sha256": "b4e8b764947d6da1f998a6ed144d780d4ba8c209ea9c2433572c3f21afbc59c4",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "This statement establishes a mandatory prohibition for EU users regarding telemetry without explicit consent.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This statement defines the default behavior and exception for non-EU regions regarding telemetry enablement.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "This statement establishes a mandatory prohibition for EU users regarding telemetry without explicit consent.",
+      "applies": true,
+      "task_quote": "telemetry",
+      "evidence_quote": "EU users must not have telemetry enabled without explicit consent."
+    },
+    {
+      "id": "r2",
+      "explanation": "This statement defines the default behavior and exception for non-EU regions regarding telemetry enablement.",
+      "applies": true,
+      "task_quote": "telemetry",
+      "evidence_quote": "Outside the EU, telemetry defaults to enabled unless consent is explicitly false."
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "telemetry.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "telemetry.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [
+      "missing"
+    ],
+    "complete": false
+  },
+  "conflicts": 0,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2121
+}

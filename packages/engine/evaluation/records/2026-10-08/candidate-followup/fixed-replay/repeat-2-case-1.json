@@ -1,0 +1,127 @@
+{
+  "repeat": 2,
+  "id": "travel-approval",
+  "request_sha256": "0ab65cf38fb363305c540d70b3df2f6bd641409df63929f4987433530041adff",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "This evidence directly addresses the medical accommodation exception for business class written approval requests.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This evidence establishes the general rule requiring written approval for international business class travel.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "This evidence mandates economy class for domestic travel, which is irrelevant to the request for international business class.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "This evidence concerns lost receipts and written explanations, which does not match the medical accommodation context of the task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "This evidence governs emergency maintenance procedures, which is unrelated to travel booking policies.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "This evidence details production deployment approval processes, which does not apply to employee travel requests.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "This evidence defines security incident report requirements, which is unrelated to business class travel approvals.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "This evidence directly addresses the medical accommodation exception for business class written approval requests.",
+      "applies": true,
+      "task_quote": "international travel business class written approval medical accommodation",
+      "evidence_quote": "A documented medical accommodation waives the written-approval requirement for business class."
+    },
+    {
+      "id": "r2",
+      "explanation": "This evidence establishes the general rule requiring written approval for international business class travel.",
+      "applies": true,
+      "task_quote": "international travel business class written approval medical accommodation",
+      "evidence_quote": "Employees may book business class for international flights only with written approval before booking."
+    },
+    {
+      "id": "r3",
+      "explanation": "This evidence mandates economy class for domestic travel, which is irrelevant to the request for international business class.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "This evidence concerns lost receipts and written explanations, which does not match the medical accommodation context of the task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "This evidence governs emergency maintenance procedures, which is unrelated to travel booking policies.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "This evidence details production deployment approval processes, which does not apply to employee travel requests.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "This evidence defines security incident report requirements, which is unrelated to business class travel approvals.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "travel.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "travel.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 5010
+}

@@ -1,0 +1,41 @@
+{
+  "repeat": 2,
+  "id": "historical-display-control",
+  "request_sha256": "c511810b72bace2a3208d7c411cf486490947112712ce744a297b3711917e2a2",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence item establishes a mandatory requirement for visitors to obtain digital badges, which is an organizational obligation applicable to the task of describing the prototype welcome screen.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence item establishes a mandatory requirement for visitors to obtain digital badges, which is an organizational obligation applicable to the task of describing the prototype welcome screen.",
+      "applies": true,
+      "task_quote": "2023 paper badges prototype welcome screen",
+      "evidence_quote": "Visitors now must obtain digital badges before entering the laboratory."
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "historical-replacement.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": false
+  },
+  "conflicts": 0,
+  "correct": false,
+  "hook_deadline_met": true,
+  "wall_ms": 1298
+}

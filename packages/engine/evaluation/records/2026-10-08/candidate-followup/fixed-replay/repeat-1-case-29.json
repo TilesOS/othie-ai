@@ -1,0 +1,55 @@
+{
+  "repeat": 1,
+  "id": "historical-badge-task-control",
+  "request_sha256": "a855a951c76023098b4d404465748c3d2fdabe739af5caa8f75413e52c078591",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence states a current mandatory requirement for digital badges, which contradicts the task's request about paper badges and implies paper badges are no longer issued.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r2",
+        "explanation": "The evidence describes a safety gear requirement unrelated to badge types or visitor identification methods, so it does not address the task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence states a current mandatory requirement for digital badges, which contradicts the task's request about paper badges and implies paper badges are no longer issued.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r2",
+      "explanation": "The evidence describes a safety gear requirement unrelated to badge types or visitor identification methods, so it does not address the task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [
+    "r1"
+  ],
+  "expected_sources": [],
+  "coverage": {
+    "candidate_count": 0,
+    "actual_sources": [],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 2246
+}

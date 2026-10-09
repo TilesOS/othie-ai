@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "active-quoted-policy",
+  "request_sha256": "3b09c71c06f1f816961d8750f38a8f99a694ccbe15cc4203cf5ee11232066509",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "active-quotation.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2002
+}

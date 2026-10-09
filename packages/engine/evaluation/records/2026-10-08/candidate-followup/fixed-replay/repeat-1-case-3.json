@@ -1,0 +1,87 @@
+{
+  "repeat": 1,
+  "id": "contractor-exception",
+  "request_sha256": "22684b122d2a66e916bf40157de44fd05cb3cbc6c3d62938b97d3745ce508e4e",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence states full-time employees receive twenty days, but the task specifically asks about 'full time contractors,' who are a distinct category from standard employees.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r2",
+        "explanation": "The evidence explicitly defines the vacation days for 'contractors' as ten, which directly addresses the subject of the task.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The evidence states that unused days do not carry over, which contradicts the task's premise of 'carry over' and defines the default behavior for vacation policy.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r3"
+      },
+      {
+        "id": "r4",
+        "explanation": "The evidence concerns expense receipts and is unrelated to the topic of vacation days.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence states full-time employees receive twenty days, but the task specifically asks about 'full time contractors,' who are a distinct category from standard employees.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r2",
+      "explanation": "The evidence explicitly defines the vacation days for 'contractors' as ten, which directly addresses the subject of the task.",
+      "applies": true,
+      "task_quote": "vacation days full time contractors carry over",
+      "evidence_quote": "Contractors receive ten paid vacation days per calendar year, not twenty."
+    },
+    {
+      "id": "r3",
+      "explanation": "The evidence states that unused days do not carry over, which contradicts the task's premise of 'carry over' and defines the default behavior for vacation policy.",
+      "applies": true,
+      "task_quote": "vacation days full time contractors carry over",
+      "evidence_quote": "Unused days do not carry over to the next calendar year."
+    },
+    {
+      "id": "r4",
+      "explanation": "The evidence concerns expense receipts and is unrelated to the topic of vacation days.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [
+    "r1"
+  ],
+  "expected_sources": [
+    "leave.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "leave.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 4352
+}

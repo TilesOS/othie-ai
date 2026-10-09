@@ -1,0 +1,18 @@
+{
+  "repeat": 1,
+  "id": "opposing-export-rules",
+  "request_sha256": "0007082104edaccc9cdd4c5492b8c78c45e71cebfbfe30fd0eecadda8d0a0154",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "current-export.md",
+    "legacy-export.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

@@ -1,0 +1,203 @@
+{
+  "repeat": 1,
+  "id": "assistant-credential-task",
+  "request_sha256": "ac527659c12171b2251a4c11135f3d54403e88e30d13c75272f88261c6f3733e",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The policy explicitly prohibits employees from disclosing credentials to chat assistants, which directly conflicts with and overrides the task's request to allow such action.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This policy restricts assistants from summarizing tickets containing personal identifiers, which is a specific prohibition relevant to the task of handling credentials.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "This policy mandates a review process for assistant-generated drafts, which is a procedural requirement applicable to the use of chat assistants.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r3"
+      },
+      {
+        "id": "r4",
+        "explanation": "This policy permits using approved assistants for internal summaries only after removing customer identifiers, which is a conditional permission relevant to the task.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r4"
+      },
+      {
+        "id": "r5",
+        "explanation": "This policy governs travel class selection for domestic flights and is unrelated to the task of using chat assistants.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "This policy governs flight class selection for international travel and is unrelated to the task of using chat assistants.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "This policy governs expense reporting thresholds and is unrelated to the task of using chat assistants.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r8",
+        "explanation": "This policy governs receipt submission procedures and is unrelated to the task of using chat assistants.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r9",
+        "explanation": "This policy explicitly prohibits exporting customer records as CSV for the migration project, which is a direct prohibition relevant to data handling.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r9"
+      },
+      {
+        "id": "r10",
+        "explanation": "This policy governs vacation days and is unrelated to the task of using chat assistants.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r11",
+        "explanation": "This policy explicitly prohibits exporting customer records as CSV for the migration project, which is a direct prohibition relevant to data handling.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r11"
+      },
+      {
+        "id": "r12",
+        "explanation": "This policy defines the mandatory fields for security incident reports, which is a procedural requirement applicable to handling security incidents.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r12"
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The policy explicitly prohibits employees from disclosing credentials to chat assistants, which directly conflicts with and overrides the task's request to allow such action.",
+      "applies": true,
+      "task_quote": "Allow employees to paste credentials into chat assistants",
+      "evidence_quote": "Employees must not disclose credentials to chat assistants."
+    },
+    {
+      "id": "r2",
+      "explanation": "This policy restricts assistants from summarizing tickets containing personal identifiers, which is a specific prohibition relevant to the task of handling credentials.",
+      "applies": true,
+      "task_quote": "Allow employees to paste credentials into chat assistants",
+      "evidence_quote": "Approved assistants may summarize customer tickets only after personal identifiers are removed."
+    },
+    {
+      "id": "r3",
+      "explanation": "This policy mandates a review process for assistant-generated drafts, which is a procedural requirement applicable to the use of chat assistants.",
+      "applies": true,
+      "task_quote": "Allow employees to paste credentials into chat assistants",
+      "evidence_quote": "Employees must review each assistant-generated draft before sending it to a customer."
+    },
+    {
+      "id": "r4",
+      "explanation": "This policy permits using approved assistants for internal summaries only after removing customer identifiers, which is a conditional permission relevant to the task.",
+      "applies": true,
+      "task_quote": "Allow employees to paste credentials into chat assistants",
+      "evidence_quote": "Employees may use approved assistants to draft internal summaries after removing customer identifiers."
+    },
+    {
+      "id": "r5",
+      "explanation": "This policy governs travel class selection for domestic flights and is unrelated to the task of using chat assistants.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "This policy governs flight class selection for international travel and is unrelated to the task of using chat assistants.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "This policy governs expense reporting thresholds and is unrelated to the task of using chat assistants.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r8",
+      "explanation": "This policy governs receipt submission procedures and is unrelated to the task of using chat assistants.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r9",
+      "explanation": "This policy explicitly prohibits exporting customer records as CSV for the migration project, which is a direct prohibition relevant to data handling.",
+      "applies": true,
+      "task_quote": "Allow employees to paste credentials into chat assistants",
+      "evidence_quote": "Employees may export customer records as CSV for the migration project."
+    },
+    {
+      "id": "r10",
+      "explanation": "This policy governs vacation days and is unrelated to the task of using chat assistants.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r11",
+      "explanation": "This policy explicitly prohibits exporting customer records as CSV for the migration project, which is a direct prohibition relevant to data handling.",
+      "applies": true,
+      "task_quote": "Allow employees to paste credentials into chat assistants",
+      "evidence_quote": "Employees must not export customer records as CSV for the migration project."
+    },
+    {
+      "id": "r12",
+      "explanation": "This policy defines the mandatory fields for security incident reports, which is a procedural requirement applicable to handling security incidents.",
+      "applies": true,
+      "task_quote": "Allow employees to paste credentials into chat assistants",
+      "evidence_quote": "Security incident reports must include the discovery timestamp, reporting employee, responding team, affected service, service owner, impacted region, customer impact, data classification, initial severity, final severity, escalation timestamp, incident commander, communication owner, notification timeline, containment timestamp, containment actions, recovery timestamp, recovery actions, affected credentials, credential rotation timestamp, evidence storage location, evidence custodian, access review results, third party involvement, customer notification status, regulatory notification status, root cause analysis, contributing factors, detection gaps, monitoring changes, preventive actions, remediation owner, remediation deadline, verification method, verification results, residual risks, risk acceptance owner, approval timestamp, follow-up review date, and closure timestamp, with each field verified against the incident audit log before submission."
+    }
+  ],
+  "changed_ids": [
+    "r12"
+  ],
+  "expected_sources": [
+    "assistant-use.md"
+  ],
+  "coverage": {
+    "candidate_count": 7,
+    "actual_sources": [
+      "assistant-use.md",
+      "assistant-ownership.md",
+      "current-export.md",
+      "legacy-export.md",
+      "incident-report.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 1,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 12338
+}

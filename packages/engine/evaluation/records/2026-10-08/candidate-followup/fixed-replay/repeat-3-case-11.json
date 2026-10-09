@@ -1,0 +1,241 @@
+{
+  "repeat": 3,
+  "id": "legitimate-assistant-policy",
+  "request_sha256": "adca39721f171928e083e0409d888396c42c79387b5af26302a1645d2fab0c45",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task explicitly requests summarizing customer tickets, which is a permitted action for approved assistants only after removing personal identifiers, matching the policy's conditional permission.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The task does not request disclosing credentials to chat assistants; it requests reviewing drafts and summarizing tickets, which are separate actions from the prohibited disclosure.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r3",
+        "explanation": "The task explicitly includes 'review draft' as a required action, directly aligning with this policy's mandatory requirement for employees.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r3"
+      },
+      {
+        "id": "r4",
+        "explanation": "The task does not request drafting internal summaries; it requests summarizing customer tickets and reviewing drafts, which are distinct actions from the permitted drafting activity.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The task does not request exporting customer records as CSV; it requests summarizing tickets and reviewing drafts, which are unrelated to record export.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "The task does not request exporting customer records as CSV for the migration project; it requests summarizing tickets and reviewing drafts, which do not violate this prohibition.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "The task does not request submitting security incident reports or including specific fields like root cause analysis; it requests summarizing tickets and reviewing drafts.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r8",
+        "explanation": "The task does not request acknowledging priority tickets within thirty minutes; it requests summarizing tickets and reviewing drafts, which are unrelated to ticket acknowledgment timing.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r9",
+        "explanation": "The task does not request escalating unresolved tickets to the on-call lead; it requests summarizing tickets and reviewing drafts, which are unrelated to escalation procedures.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r10",
+        "explanation": "The task does not request storing customer data on removable drives or encrypting them; it requests summarizing tickets and reviewing drafts.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r11",
+        "explanation": "The task does not request booking domestic travel; it requests summarizing tickets and reviewing drafts, which are unrelated to travel booking policies.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r12",
+        "explanation": "The task does not request booking international flights or seeking written approval for business class; it requests summarizing tickets and reviewing drafts.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r13",
+        "explanation": "The task does not request submitting receipts for expenses over $25; it requests summarizing tickets and reviewing drafts, which are unrelated to expense reporting.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r14",
+        "explanation": "The task does not request submitting written explanations for lost receipts; it requests summarizing tickets and reviewing drafts, which are unrelated to receipt loss procedures.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r15",
+        "explanation": "The task does not request vacation days or calendar year calculations; it requests summarizing tickets and reviewing drafts, which are unrelated to leave entitlements.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task explicitly requests summarizing customer tickets, which is a permitted action for approved assistants only after removing personal identifiers, matching the policy's conditional permission.",
+      "applies": true,
+      "task_quote": "employees credentials chat assistants approved summarize customer tickets personal identifiers review draft",
+      "evidence_quote": "Approved assistants may summarize customer tickets only after personal identifiers are removed."
+    },
+    {
+      "id": "r2",
+      "explanation": "The task does not request disclosing credentials to chat assistants; it requests reviewing drafts and summarizing tickets, which are separate actions from the prohibited disclosure.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r3",
+      "explanation": "The task explicitly includes 'review draft' as a required action, directly aligning with this policy's mandatory requirement for employees.",
+      "applies": true,
+      "task_quote": "employees credentials chat assistants approved summarize customer tickets personal identifiers review draft",
+      "evidence_quote": "Employees must review each assistant-generated draft before sending it to a customer."
+    },
+    {
+      "id": "r4",
+      "explanation": "The task does not request drafting internal summaries; it requests summarizing customer tickets and reviewing drafts, which are distinct actions from the permitted drafting activity.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The task does not request exporting customer records as CSV; it requests summarizing tickets and reviewing drafts, which are unrelated to record export.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "The task does not request exporting customer records as CSV for the migration project; it requests summarizing tickets and reviewing drafts, which do not violate this prohibition.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "The task does not request submitting security incident reports or including specific fields like root cause analysis; it requests summarizing tickets and reviewing drafts.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r8",
+      "explanation": "The task does not request acknowledging priority tickets within thirty minutes; it requests summarizing tickets and reviewing drafts, which are unrelated to ticket acknowledgment timing.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r9",
+      "explanation": "The task does not request escalating unresolved tickets to the on-call lead; it requests summarizing tickets and reviewing drafts, which are unrelated to escalation procedures.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r10",
+      "explanation": "The task does not request storing customer data on removable drives or encrypting them; it requests summarizing tickets and reviewing drafts.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r11",
+      "explanation": "The task does not request booking domestic travel; it requests summarizing tickets and reviewing drafts, which are unrelated to travel booking policies.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r12",
+      "explanation": "The task does not request booking international flights or seeking written approval for business class; it requests summarizing tickets and reviewing drafts.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r13",
+      "explanation": "The task does not request submitting receipts for expenses over $25; it requests summarizing tickets and reviewing drafts, which are unrelated to expense reporting.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r14",
+      "explanation": "The task does not request submitting written explanations for lost receipts; it requests summarizing tickets and reviewing drafts, which are unrelated to receipt loss procedures.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r15",
+      "explanation": "The task does not request vacation days or calendar year calculations; it requests summarizing tickets and reviewing drafts, which are unrelated to leave entitlements.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "assistant-use.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "assistant-use.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [
+      "must not disclose credentials"
+    ],
+    "complete": false
+  },
+  "conflicts": 0,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 12372
+}

@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "mixed-policy-exclusions",
+  "request_sha256": "ad21200f0144ea1c8d91684db6eb4c52ce33b7fbbeecd52a0b53ff249f16899e",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "maintenance.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

@@ -1,0 +1,590 @@
+{
+  "synthetic_only": true,
+  "method": "Offline scoring of recorded original decisions; no model calls or latency measurement.",
+  "code": "4775e6c",
+  "input_sha256": "69803df2abf556db77528d1ce80e8195123c1448e776269a7505d2c828876f9c",
+  "fixture_sha256": "b6b849623a4c866d18f89adec99bd9fa3763bf8cf4ee0e41c0493551ea2953f6",
+  "recorded_diagnostics_before_packing": [
+    {
+      "id": "travel-approval",
+      "expected_sources": [
+        "travel.md"
+      ],
+      "coverage": {
+        "candidate_count": 2,
+        "actual_sources": [
+          "travel.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "receipt-boundary",
+      "expected_sources": [
+        "receipts.md"
+      ],
+      "coverage": {
+        "candidate_count": 1,
+        "actual_sources": [
+          "receipts.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [
+          "(?:over|more than|exceed|above|>)\\s*\\$?25",
+          "(?:exactly|less|below|under|optional)"
+        ],
+        "complete": false
+      },
+      "conflicts": 0,
+      "correct": false
+    },
+    {
+      "id": "contractor-exception",
+      "expected_sources": [
+        "leave.md"
+      ],
+      "coverage": {
+        "candidate_count": 3,
+        "actual_sources": [
+          "leave.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "consent-negation",
+      "expected_sources": [
+        "telemetry.md"
+      ],
+      "coverage": {
+        "candidate_count": 1,
+        "actual_sources": [
+          "telemetry.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [
+          "explicit consent",
+          "missing",
+          "must not|disabled|disable|cannot"
+        ],
+        "complete": false
+      },
+      "conflicts": 0,
+      "correct": false
+    },
+    {
+      "id": "opposing-export-rules",
+      "expected_sources": [
+        "current-export.md",
+        "legacy-export.md"
+      ],
+      "coverage": {
+        "candidate_count": 3,
+        "actual_sources": [
+          "current-export.md",
+          "legacy-export.md",
+          "mixed-handbook.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 1,
+      "correct": true
+    },
+    {
+      "id": "regional-defaults",
+      "expected_sources": [
+        "regional-defaults.md"
+      ],
+      "coverage": {
+        "candidate_count": 3,
+        "actual_sources": [
+          "regional-defaults.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "mixed-policy-exclusions",
+      "expected_sources": [
+        "maintenance.md"
+      ],
+      "coverage": {
+        "candidate_count": 3,
+        "actual_sources": [
+          "maintenance.md",
+          "qualification-boundary.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "linked-access-extension",
+      "expected_sources": [
+        "privileged-access.md"
+      ],
+      "coverage": {
+        "candidate_count": 2,
+        "actual_sources": [
+          "privileged-access.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "long-whole-evidence",
+      "expected_sources": [
+        "incident-report.md"
+      ],
+      "coverage": {
+        "candidate_count": 2,
+        "actual_sources": [
+          "incident-report.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "removable-drive-policy",
+      "expected_sources": [
+        "mixed-handbook.md"
+      ],
+      "coverage": {
+        "candidate_count": 2,
+        "actual_sources": [
+          "mixed-handbook.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "legitimate-assistant-policy",
+      "expected_sources": [
+        "assistant-use.md"
+      ],
+      "coverage": {
+        "candidate_count": 2,
+        "actual_sources": [
+          "assistant-use.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [
+          "must not disclose credentials"
+        ],
+        "complete": false
+      },
+      "conflicts": 0,
+      "correct": false
+    },
+    {
+      "id": "support-history-boundary",
+      "expected_sources": [
+        "historical-support.md"
+      ],
+      "coverage": {
+        "candidate_count": 2,
+        "actual_sources": [
+          "historical-support.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "quoted-policy-boundary",
+      "expected_sources": [
+        "quoted-history.md"
+      ],
+      "coverage": {
+        "candidate_count": 2,
+        "actual_sources": [
+          "quoted-history.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "qualification-after-description",
+      "expected_sources": [
+        "qualification-boundary.md"
+      ],
+      "coverage": {
+        "candidate_count": 4,
+        "actual_sources": [
+          "qualification-boundary.md",
+          "maintenance.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "active-quoted-policy",
+      "expected_sources": [
+        "active-quotation.md"
+      ],
+      "coverage": {
+        "candidate_count": 2,
+        "actual_sources": [
+          "active-quotation.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "historical-replacement",
+      "expected_sources": [
+        "historical-replacement.md"
+      ],
+      "coverage": {
+        "candidate_count": 1,
+        "actual_sources": [
+          "historical-replacement.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "human-assistant-use",
+      "expected_sources": [
+        "assistant-ownership.md"
+      ],
+      "coverage": {
+        "candidate_count": 1,
+        "actual_sources": [
+          "assistant-ownership.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "conditional-replacement",
+      "expected_sources": [
+        "conditional-procedure.md"
+      ],
+      "coverage": {
+        "candidate_count": 1,
+        "actual_sources": [
+          "conditional-procedure.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "historical-display-control",
+      "expected_sources": [],
+      "coverage": {
+        "candidate_count": 1,
+        "actual_sources": [
+          "historical-replacement.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": false
+      },
+      "conflicts": 0,
+      "correct": false
+    },
+    {
+      "id": "assistant-directory-control",
+      "expected_sources": [],
+      "coverage": {
+        "candidate_count": 0,
+        "actual_sources": [],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "badge-entry-task",
+      "expected_sources": [
+        "historical-replacement.md"
+      ],
+      "coverage": {
+        "candidate_count": 1,
+        "actual_sources": [
+          "historical-replacement.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "badge-loss-task",
+      "expected_sources": [
+        "conditional-procedure.md"
+      ],
+      "coverage": {
+        "candidate_count": 1,
+        "actual_sources": [
+          "conditional-procedure.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "assistant-summary-task",
+      "expected_sources": [
+        "assistant-ownership.md"
+      ],
+      "coverage": {
+        "candidate_count": 5,
+        "actual_sources": [
+          "assistant-ownership.md",
+          "assistant-use.md",
+          "current-export.md",
+          "mixed-handbook.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "support-subject-query",
+      "expected_sources": [
+        "historical-support.md"
+      ],
+      "coverage": {
+        "candidate_count": 1,
+        "actual_sources": [
+          "historical-support.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [
+          "unresolved",
+          "four hours"
+        ],
+        "complete": false
+      },
+      "conflicts": 0,
+      "correct": false
+    },
+    {
+      "id": "receipt-subject-query",
+      "expected_sources": [
+        "receipts.md"
+      ],
+      "coverage": {
+        "candidate_count": 2,
+        "actual_sources": [
+          "receipts.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [
+          "lost",
+          "written explanation"
+        ],
+        "complete": false
+      },
+      "conflicts": 0,
+      "correct": false
+    },
+    {
+      "id": "telemetry-subject-query",
+      "expected_sources": [
+        "telemetry.md"
+      ],
+      "coverage": {
+        "candidate_count": 2,
+        "actual_sources": [
+          "telemetry.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [
+          "missing"
+        ],
+        "complete": false
+      },
+      "conflicts": 0,
+      "correct": false
+    },
+    {
+      "id": "assistant-credential-task",
+      "expected_sources": [
+        "assistant-use.md"
+      ],
+      "coverage": {
+        "candidate_count": 6,
+        "actual_sources": [
+          "assistant-use.md",
+          "assistant-ownership.md",
+          "current-export.md",
+          "legacy-export.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 1,
+      "correct": true
+    },
+    {
+      "id": "export-opposition-task",
+      "expected_sources": [
+        "current-export.md",
+        "legacy-export.md"
+      ],
+      "coverage": {
+        "candidate_count": 3,
+        "actual_sources": [
+          "current-export.md",
+          "legacy-export.md",
+          "mixed-handbook.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 1,
+      "correct": true
+    },
+    {
+      "id": "historical-badge-task-control",
+      "expected_sources": [],
+      "coverage": {
+        "candidate_count": 1,
+        "actual_sources": [
+          "historical-replacement.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": false
+      },
+      "conflicts": 0,
+      "correct": false
+    },
+    {
+      "id": "customer-css-task-control",
+      "expected_sources": [],
+      "coverage": {
+        "candidate_count": 0,
+        "actual_sources": [],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "receipt-font-task-control",
+      "expected_sources": [],
+      "coverage": {
+        "candidate_count": 0,
+        "actual_sources": [],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": true
+      },
+      "conflicts": 0,
+      "correct": true
+    },
+    {
+      "id": "support-chart-task-control",
+      "expected_sources": [],
+      "coverage": {
+        "candidate_count": 1,
+        "actual_sources": [
+          "historical-support.md"
+        ],
+        "missing_sources": [],
+        "missing_qualifier_patterns": [],
+        "complete": false
+      },
+      "conflicts": 0,
+      "correct": false
+    }
+  ],
+  "recorded_scores_before_packing": {
+    "positive": {
+      "correct": 20,
+      "total": 26
+    },
+    "no_op": {
+      "correct": 3,
+      "total": 6
+    },
+    "combined": {
+      "correct": 23,
+      "total": 32
+    }
+  },
+  "skipped_cases": [
+    "reference-injection-control",
+    "repository-only-control",
+    "descriptive-sentence-control",
+    "authoritative-instruction-control",
+    "new-descriptive-control",
+    "new-instruction-control",
+    "all-non-policy-control",
+    "demonstration-quote-control"
+  ]
+}

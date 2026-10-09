@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "receipt-subject-query",
+  "request_sha256": "77cd844f30a4592057b9e139f4b157804191c53e1b1cbd60031e40dec3707c0e",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "receipts.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2000
+}

@@ -1,0 +1,123 @@
+{
+  "repeat": 3,
+  "id": "customer-css-task-control",
+  "request_sha256": "748aeaee3728a444d83592db0fb343bd85a38fc10bac352e3c8e8ab296e0f0d9",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task requests a CSS adjustment for a customer page, which is unrelated to the policy requiring encryption of removable drives.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r2",
+        "explanation": "The task requests a CSS adjustment for a customer page, which does not involve exporting customer records as CSV.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r3",
+        "explanation": "The task requests a CSS adjustment for a customer page, which does not involve exporting customer records as CSV.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "The task requests a CSS adjustment for a customer page, which does not involve summarizing customer tickets.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The task requests a CSS adjustment for a customer page, which does not involve reviewing assistant-generated drafts before sending to customers.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "The task requests a CSS adjustment for a customer page, which does not involve using assistants to draft internal summaries.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "The task requests a CSS adjustment for a customer page, which does not involve creating or submitting security incident reports.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task requests a CSS adjustment for a customer page, which is unrelated to the policy requiring encryption of removable drives.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r2",
+      "explanation": "The task requests a CSS adjustment for a customer page, which does not involve exporting customer records as CSV.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r3",
+      "explanation": "The task requests a CSS adjustment for a customer page, which does not involve exporting customer records as CSV.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "The task requests a CSS adjustment for a customer page, which does not involve summarizing customer tickets.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The task requests a CSS adjustment for a customer page, which does not involve reviewing assistant-generated drafts before sending to customers.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "The task requests a CSS adjustment for a customer page, which does not involve using assistants to draft internal summaries.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "The task requests a CSS adjustment for a customer page, which does not involve creating or submitting security incident reports.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [],
+  "coverage": {
+    "candidate_count": 0,
+    "actual_sources": [],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 4632
+}

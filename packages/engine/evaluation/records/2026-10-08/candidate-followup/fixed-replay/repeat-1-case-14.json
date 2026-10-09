@@ -1,0 +1,117 @@
+{
+  "repeat": 1,
+  "id": "qualification-after-description",
+  "request_sha256": "b1baf46174a2408b9349006b7ce6b66b7f97b5cc96867a4900851972adf93f74",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task explicitly requests 'production release' approval, which is the core subject of this policy requiring release owner or incident commander approval.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The task requires a 'deployment record', directly matching the policy's mandate that operators must record every deployment.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The task includes 'active outage' and 'incident commander', which are key conditions and actors defined in this exception to the standard approval process.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r3"
+      },
+      {
+        "id": "r4",
+        "explanation": "The task specifies 'production release', making this policy's requirement for a 48-hour announcement before production maintenance applicable.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r4"
+      },
+      {
+        "id": "r5",
+        "explanation": "While the task does not mention security incidents, it lists 'security incident reports' as part of the deployment record context, requiring this definition to interpret the scope.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r5"
+      },
+      {
+        "id": "r6",
+        "explanation": "The task does not mention privileged access or extensions, and this policy is unrelated to the deployment record requirements specified in the task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task explicitly requests 'production release' approval, which is the core subject of this policy requiring release owner or incident commander approval.",
+      "applies": true,
+      "task_quote": "operators deployment record production release owner active outage incident commander approve",
+      "evidence_quote": "Production deployments require approval from the release owner. Except during an active outage, when the incident commander may approve."
+    },
+    {
+      "id": "r2",
+      "explanation": "The task requires a 'deployment record', directly matching the policy's mandate that operators must record every deployment.",
+      "applies": true,
+      "task_quote": "operators deployment record production release owner active outage incident commander approve",
+      "evidence_quote": "Operators must record every deployment."
+    },
+    {
+      "id": "r3",
+      "explanation": "The task includes 'active outage' and 'incident commander', which are key conditions and actors defined in this exception to the standard approval process.",
+      "applies": true,
+      "task_quote": "operators deployment record production release owner active outage incident commander approve",
+      "evidence_quote": "Emergency maintenance may start immediately only with incident commander approval."
+    },
+    {
+      "id": "r4",
+      "explanation": "The task specifies 'production release', making this policy's requirement for a 48-hour announcement before production maintenance applicable.",
+      "applies": true,
+      "task_quote": "operators deployment record production release owner active outage incident commander approve",
+      "evidence_quote": "Production maintenance must be announced at least 48 hours before it begins."
+    },
+    {
+      "id": "r5",
+      "explanation": "While the task does not mention security incidents, it lists 'security incident reports' as part of the deployment record context, requiring this definition to interpret the scope.",
+      "applies": true,
+      "task_quote": "operators deployment record production release owner active outage incident commander approve",
+      "evidence_quote": "Security incident reports must include the discovery timestamp, reporting employee, responding team, affected service, service owner, impacted region, customer impact, data classification, initial severity, final severity, escalation timestamp, incident commander, communication owner, notification timeline, containment timestamp, containment actions, recovery timestamp, recovery actions, affected credentials, credential rotation timestamp, evidence storage location, evidence custodian, access review results, third party involvement, customer notification status, regulatory notification status, root cause analysis, contributing factors, detection gaps, monitoring changes, preventive actions, remediation owner, remediation deadline, verification method, verification results, residual risks, risk acceptance owner, approval timestamp, follow-up review date, and closure timestamp, with each field verified against the incident audit log before submission."
+    },
+    {
+      "id": "r6",
+      "explanation": "The task does not mention privileged access or extensions, and this policy is unrelated to the deployment record requirements specified in the task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [
+    "r5"
+  ],
+  "expected_sources": [
+    "qualification-boundary.md"
+  ],
+  "coverage": {
+    "candidate_count": 5,
+    "actual_sources": [
+      "qualification-boundary.md",
+      "maintenance.md",
+      "incident-report.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 5261
+}

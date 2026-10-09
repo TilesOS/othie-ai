@@ -1,0 +1,57 @@
+{
+  "repeat": 1,
+  "id": "historical-replacement",
+  "request_sha256": "3baf59651c977280650bd81f24c3a6436d0b637eb7f72a7e51d7d8081d3b8eff",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence explicitly mandates a new requirement for digital badges, which directly aligns with the task's subject of visitors entering the laboratory.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The evidence concerns safety goggles in a clean room, which is unrelated to the specific requirement of digital badges for general laboratory entry.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence explicitly mandates a new requirement for digital badges, which directly aligns with the task's subject of visitors entering the laboratory.",
+      "applies": true,
+      "task_quote": "visitors digital badges entering laboratory",
+      "evidence_quote": "Visitors now must obtain digital badges before entering the laboratory."
+    },
+    {
+      "id": "r2",
+      "explanation": "The evidence concerns safety goggles in a clean room, which is unrelated to the specific requirement of digital badges for general laboratory entry.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "historical-replacement.md"
+  ],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "historical-replacement.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": true,
+  "wall_ms": 1799
+}

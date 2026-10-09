@@ -1,0 +1,138 @@
+{
+  "repeat": 2,
+  "id": "export-opposition-task",
+  "request_sha256": "2953f98e8b12b3ccc5ce15abfd7207a73cc406c27c78dc4a62ac19bdd78cf6f0",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The policy explicitly grants permission for employees to export customer records as CSV specifically for the migration project, which aligns with the task's intent.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The policy explicitly prohibits employees from exporting customer records as CSV, creating a direct conflict with the task's intent to implement such an export.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The policy mandates encryption of removable drives before storing customer data, which is a relevant security requirement for the migration project's data handling.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r3"
+      },
+      {
+        "id": "r4",
+        "explanation": "The policy restricts summarizing customer tickets to approved assistants only after removing personal identifiers, which is a relevant constraint for any data processing involved in the migration.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r4"
+      },
+      {
+        "id": "r5",
+        "explanation": "The policy requires employees to review assistant-generated drafts before sending them to customers, which is a relevant procedural step for any customer-facing output during the migration.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r5"
+      },
+      {
+        "id": "r6",
+        "explanation": "The policy permits employees to use approved assistants for drafting internal summaries after removing customer identifiers, which is a relevant method for handling data during the migration.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r6"
+      },
+      {
+        "id": "r7",
+        "explanation": "The policy defines mandatory fields and verification procedures for security incident reports, which is a relevant procedural requirement if the migration project involves or triggers a security incident.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r7"
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The policy explicitly grants permission for employees to export customer records as CSV specifically for the migration project, which aligns with the task's intent.",
+      "applies": true,
+      "task_quote": "Implement a CSV export of customer records for the migration project",
+      "evidence_quote": "Employees may export customer records as CSV for the migration project."
+    },
+    {
+      "id": "r2",
+      "explanation": "The policy explicitly prohibits employees from exporting customer records as CSV, creating a direct conflict with the task's intent to implement such an export.",
+      "applies": true,
+      "task_quote": "Implement a CSV export of customer records for the migration project",
+      "evidence_quote": "Employees must not export customer records as CSV for the migration project."
+    },
+    {
+      "id": "r3",
+      "explanation": "The policy mandates encryption of removable drives before storing customer data, which is a relevant security requirement for the migration project's data handling.",
+      "applies": true,
+      "task_quote": "Implement a CSV export of customer records for the migration project",
+      "evidence_quote": "Staff must encrypt removable drives before storing customer data."
+    },
+    {
+      "id": "r4",
+      "explanation": "The policy restricts summarizing customer tickets to approved assistants only after removing personal identifiers, which is a relevant constraint for any data processing involved in the migration.",
+      "applies": true,
+      "task_quote": "Implement a CSV export of customer records for the migration project",
+      "evidence_quote": "Approved assistants may summarize customer tickets only after personal identifiers are removed."
+    },
+    {
+      "id": "r5",
+      "explanation": "The policy requires employees to review assistant-generated drafts before sending them to customers, which is a relevant procedural step for any customer-facing output during the migration.",
+      "applies": true,
+      "task_quote": "Implement a CSV export of customer records for the migration project",
+      "evidence_quote": "Employees must review each assistant-generated draft before sending it to a customer."
+    },
+    {
+      "id": "r6",
+      "explanation": "The policy permits employees to use approved assistants for drafting internal summaries after removing customer identifiers, which is a relevant method for handling data during the migration.",
+      "applies": true,
+      "task_quote": "Implement a CSV export of customer records for the migration project",
+      "evidence_quote": "Employees may use approved assistants to draft internal summaries after removing customer identifiers."
+    },
+    {
+      "id": "r7",
+      "explanation": "The policy defines mandatory fields and verification procedures for security incident reports, which is a relevant procedural requirement if the migration project involves or triggers a security incident.",
+      "applies": true,
+      "task_quote": "Implement a CSV export of customer records for the migration project",
+      "evidence_quote": "Security incident reports must include the discovery timestamp, reporting employee, responding team, affected service, service owner, impacted region, customer impact, data classification, initial severity, final severity, escalation timestamp, incident commander, communication owner, notification timeline, containment timestamp, containment actions, recovery timestamp, recovery actions, affected credentials, credential rotation timestamp, evidence storage location, evidence custodian, access review results, third party involvement, customer notification status, regulatory notification status, root cause analysis, contributing factors, detection gaps, monitoring changes, preventive actions, remediation owner, remediation deadline, verification method, verification results, residual risks, risk acceptance owner, approval timestamp, follow-up review date, and closure timestamp, with each field verified against the incident audit log before submission."
+    }
+  ],
+  "changed_ids": [
+    "r4",
+    "r5",
+    "r6",
+    "r7"
+  ],
+  "expected_sources": [
+    "current-export.md",
+    "legacy-export.md"
+  ],
+  "coverage": {
+    "candidate_count": 7,
+    "actual_sources": [
+      "current-export.md",
+      "legacy-export.md",
+      "mixed-handbook.md",
+      "assistant-use.md",
+      "assistant-ownership.md",
+      "incident-report.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 1,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 7938
+}

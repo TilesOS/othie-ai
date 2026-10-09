@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "consent-negation",
+  "request_sha256": "47c979a2dcbda39519030434b63038901502dc48ca6c699c6ecfa4f115a41c75",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "telemetry.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

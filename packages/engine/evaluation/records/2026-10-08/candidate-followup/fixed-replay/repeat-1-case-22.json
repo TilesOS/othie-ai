@@ -1,0 +1,43 @@
+{
+  "repeat": 1,
+  "id": "badge-loss-task",
+  "request_sha256": "984ef4b50673440a79d5184802602a856e39bab3f7617785fc1fc50f956ee2c4",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The policy explicitly mandates revoking the lost badge before issuing a replacement, which directly governs the reception's required action for this scenario.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The policy explicitly mandates revoking the lost badge before issuing a replacement, which directly governs the reception's required action for this scenario.",
+      "applies": true,
+      "task_quote": "Handle a visitor who loses a badge: reception should issue a replacement",
+      "evidence_quote": "If a visitor loses a badge, reception must revoke it before issuing a replacement."
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "conditional-procedure.md"
+  ],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "conditional-procedure.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": true,
+  "wall_ms": 1281
+}

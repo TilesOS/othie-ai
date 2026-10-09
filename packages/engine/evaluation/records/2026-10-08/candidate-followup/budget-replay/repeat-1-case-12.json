@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "support-history-boundary",
+  "request_sha256": "15f450a9060d8da19684c1eee64191578fa63b232cadbdb0e7cc62e8c505b8e2",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "historical-support.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

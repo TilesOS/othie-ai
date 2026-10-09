@@ -1,0 +1,114 @@
+{
+  "repeat": 3,
+  "id": "qualification-after-description",
+  "request_sha256": "b1baf46174a2408b9349006b7ce6b66b7f97b5cc96867a4900851972adf93f74",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task explicitly requests 'production release' approval, which is the core subject of this policy requiring release owner or incident commander approval.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The task requires a 'deployment record', directly matching the policy's mandate that operators must record every deployment.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The task includes 'active outage' and 'incident commander', which are key conditions and actors defined in this exception clause for emergency maintenance.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r3"
+      },
+      {
+        "id": "r4",
+        "explanation": "The task specifies 'production release', making the 48-hour announcement requirement for production maintenance directly applicable to the requested action.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r4"
+      },
+      {
+        "id": "r5",
+        "explanation": "While the task mentions 'incident commander' and 'production', this policy governs security incident reports rather than deployment procedures or release approvals.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "The task does not mention 'privileged access' or 'extension' of access, so the specific rules regarding expiration and extension do not apply to the deployment request.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task explicitly requests 'production release' approval, which is the core subject of this policy requiring release owner or incident commander approval.",
+      "applies": true,
+      "task_quote": "operators deployment record production release owner active outage incident commander approve",
+      "evidence_quote": "Production deployments require approval from the release owner. Except during an active outage, when the incident commander may approve."
+    },
+    {
+      "id": "r2",
+      "explanation": "The task requires a 'deployment record', directly matching the policy's mandate that operators must record every deployment.",
+      "applies": true,
+      "task_quote": "operators deployment record production release owner active outage incident commander approve",
+      "evidence_quote": "Operators must record every deployment."
+    },
+    {
+      "id": "r3",
+      "explanation": "The task includes 'active outage' and 'incident commander', which are key conditions and actors defined in this exception clause for emergency maintenance.",
+      "applies": true,
+      "task_quote": "operators deployment record production release owner active outage incident commander approve",
+      "evidence_quote": "Emergency maintenance may start immediately only with incident commander approval."
+    },
+    {
+      "id": "r4",
+      "explanation": "The task specifies 'production release', making the 48-hour announcement requirement for production maintenance directly applicable to the requested action.",
+      "applies": true,
+      "task_quote": "operators deployment record production release owner active outage incident commander approve",
+      "evidence_quote": "Production maintenance must be announced at least 48 hours before it begins."
+    },
+    {
+      "id": "r5",
+      "explanation": "While the task mentions 'incident commander' and 'production', this policy governs security incident reports rather than deployment procedures or release approvals.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "The task does not mention 'privileged access' or 'extension' of access, so the specific rules regarding expiration and extension do not apply to the deployment request.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "qualification-boundary.md"
+  ],
+  "coverage": {
+    "candidate_count": 4,
+    "actual_sources": [
+      "qualification-boundary.md",
+      "maintenance.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 5117
+}

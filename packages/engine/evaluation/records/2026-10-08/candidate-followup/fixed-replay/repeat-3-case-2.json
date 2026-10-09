@@ -1,0 +1,131 @@
+{
+  "repeat": 3,
+  "id": "receipt-boundary",
+  "request_sha256": "e0cfebc74585d5025c922b438f61355c552e09e05723b47beb685924c9cc9e61",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task explicitly requests a 'written explanation' for lost receipts, which directly aligns with the policy requiring employees to submit such an explanation when a required receipt is lost.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The task asks about expenses over $25 where receipts are lost; the policy mandates submitting receipts for these amounts, establishing a conflict between the implied need for proof and the requirement to submit the receipt itself.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The task concerns expenses over $25, whereas this policy defines rules specifically for expenses of $25 or less, making it irrelevant to the specific subject matter requested.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "The task addresses lost receipts and expense documentation, while this policy governs lost removable drives and reporting timelines to security, which are unrelated subjects.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "This policy concerns unused vacation days and calendar years, which is entirely unrelated to the task's focus on lost receipts and expense thresholds.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "The task involves expenses and receipts, not medical accommodations or business class travel waivers, so this policy does not apply to the requested subject.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "This policy restricts business class bookings to international flights with written approval, which is unrelated to the general task of handling lost receipts for expenses over $25.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task explicitly requests a 'written explanation' for lost receipts, which directly aligns with the policy requiring employees to submit such an explanation when a required receipt is lost.",
+      "applies": true,
+      "task_quote": "expenses receipts over $25 lost receipt written explanation",
+      "evidence_quote": "If a required receipt is lost, employees must submit a written explanation instead."
+    },
+    {
+      "id": "r2",
+      "explanation": "The task asks about expenses over $25 where receipts are lost; the policy mandates submitting receipts for these amounts, establishing a conflict between the implied need for proof and the requirement to submit the receipt itself.",
+      "applies": true,
+      "task_quote": "expenses receipts over $25 lost receipt written explanation",
+      "evidence_quote": "Employees must submit receipts for expenses over $25."
+    },
+    {
+      "id": "r3",
+      "explanation": "The task concerns expenses over $25, whereas this policy defines rules specifically for expenses of $25 or less, making it irrelevant to the specific subject matter requested.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "The task addresses lost receipts and expense documentation, while this policy governs lost removable drives and reporting timelines to security, which are unrelated subjects.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "This policy concerns unused vacation days and calendar years, which is entirely unrelated to the task's focus on lost receipts and expense thresholds.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "The task involves expenses and receipts, not medical accommodations or business class travel waivers, so this policy does not apply to the requested subject.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "This policy restricts business class bookings to international flights with written approval, which is unrelated to the general task of handling lost receipts for expenses over $25.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [
+    "r2"
+  ],
+  "expected_sources": [
+    "receipts.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "receipts.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [
+      "(?:exactly|less|below|under|optional)"
+    ],
+    "complete": false
+  },
+  "conflicts": 0,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 6363
+}

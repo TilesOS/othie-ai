@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "regional-defaults",
+  "request_sha256": "f961fdf30fbaee1b9e4390e4f0d5c69c1f8cbb147f9cb03222cf1a22e9b328b0",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "regional-defaults.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2000
+}

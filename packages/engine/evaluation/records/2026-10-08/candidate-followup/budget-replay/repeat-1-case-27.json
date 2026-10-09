@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "assistant-credential-task",
+  "request_sha256": "ac527659c12171b2251a4c11135f3d54403e88e30d13c75272f88261c6f3733e",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "assistant-use.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

@@ -1,0 +1,135 @@
+{
+  "repeat": 2,
+  "id": "opposing-export-rules",
+  "request_sha256": "0007082104edaccc9cdd4c5492b8c78c45e71cebfbfe30fd0eecadda8d0a0154",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task explicitly requests a CSV export of customer records, which directly conflicts with the prohibition in r2 and overrides the permission in r1.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r2",
+        "explanation": "The task explicitly requests a CSV export of customer records, which is prohibited by this rule.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The task involves exporting data but does not mention storing it on removable drives or encrypting them.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "The task requests a CSV export, not the summarization of customer tickets by an assistant.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The task does not involve sending drafts to customers; it is about exporting records for a project.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "The task requests a CSV export, not the use of an assistant to draft internal summaries.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "The task is about exporting customer records, not submitting security incident reports with specific fields.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task explicitly requests a CSV export of customer records, which directly conflicts with the prohibition in r2 and overrides the permission in r1.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r2",
+      "explanation": "The task explicitly requests a CSV export of customer records, which is prohibited by this rule.",
+      "applies": true,
+      "task_quote": "migration project customer records CSV export",
+      "evidence_quote": "Employees must not export customer records as CSV for the migration project."
+    },
+    {
+      "id": "r3",
+      "explanation": "The task involves exporting data but does not mention storing it on removable drives or encrypting them.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "The task requests a CSV export, not the summarization of customer tickets by an assistant.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The task does not involve sending drafts to customers; it is about exporting records for a project.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "The task requests a CSV export, not the use of an assistant to draft internal summaries.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "The task is about exporting customer records, not submitting security incident reports with specific fields.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [
+    "r1",
+    "r3"
+  ],
+  "expected_sources": [
+    "current-export.md",
+    "legacy-export.md"
+  ],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "legacy-export.md"
+    ],
+    "missing_sources": [
+      "current-export.md"
+    ],
+    "missing_qualifier_patterns": [
+      "may export"
+    ],
+    "complete": false
+  },
+  "conflicts": 0,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 4538
+}

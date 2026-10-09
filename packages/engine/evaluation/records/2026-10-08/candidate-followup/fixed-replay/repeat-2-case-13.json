@@ -1,0 +1,99 @@
+{
+  "repeat": 2,
+  "id": "quoted-policy-boundary",
+  "request_sha256": "eb8d1e0ba5e8ac94f4ebf29d15631b10663f0c9380f4baadf568eab39b62751f",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task explicitly requests safety goggles for lab visitors in a clean room, which directly matches the policy requirement stated in this evidence item.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This evidence clarifies that prescription eyewear is not a substitute for required goggles, reinforcing the baseline requirement without contradicting it.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The task does not request digital badges or entry procedures, so this policy regarding visitor access credentials is irrelevant to the specific request for eyewear.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "This evidence governs lost receipts and employee documentation, which has no connection to the task's focus on visitor safety eyewear requirements.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The task does not involve reports or missing fields requiring verification, making this procedural rule inapplicable to the request for goggles.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task explicitly requests safety goggles for lab visitors in a clean room, which directly matches the policy requirement stated in this evidence item.",
+      "applies": true,
+      "task_quote": "lab visitors safety goggles clean room prescription eyewear required goggles",
+      "evidence_quote": "Lab visitors must wear safety goggles in the clean room."
+    },
+    {
+      "id": "r2",
+      "explanation": "This evidence clarifies that prescription eyewear is not a substitute for required goggles, reinforcing the baseline requirement without contradicting it.",
+      "applies": true,
+      "task_quote": "lab visitors safety goggles clean room prescription eyewear required goggles",
+      "evidence_quote": "Prescription eyewear does not replace the required goggles."
+    },
+    {
+      "id": "r3",
+      "explanation": "The task does not request digital badges or entry procedures, so this policy regarding visitor access credentials is irrelevant to the specific request for eyewear.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "This evidence governs lost receipts and employee documentation, which has no connection to the task's focus on visitor safety eyewear requirements.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The task does not involve reports or missing fields requiring verification, making this procedural rule inapplicable to the request for goggles.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "quoted-history.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "quoted-history.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 4313
+}

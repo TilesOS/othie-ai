@@ -1,0 +1,217 @@
+{
+  "repeat": 1,
+  "id": "assistant-summary-task",
+  "request_sha256": "daf5cfef6ef442a6512c8be07add2b7f695901ac9136fea105ca0a1c3179e1fc",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The policy explicitly permits employees to use approved assistants for internal summaries provided customer identifiers are removed, which aligns with the task's conditional permission.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This policy restricts summarizing customer tickets to only after personal identifiers are removed, which conflicts with the task's intent to include customer identifiers.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r3",
+        "explanation": "This policy mandates a review step before sending drafts to customers, which is a necessary procedural requirement for the task of drafting summaries.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r3"
+      },
+      {
+        "id": "r4",
+        "explanation": "This policy prohibits disclosing credentials to chat assistants, which is a direct prohibition relevant to the use of assistants in the task.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r4"
+      },
+      {
+        "id": "r5",
+        "explanation": "This policy permits exporting customer records as CSV specifically for the migration project, which is a conditional permission applicable to the task.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r5"
+      },
+      {
+        "id": "r6",
+        "explanation": "This policy explicitly prohibits exporting customer records as CSV for the migration project, which is a direct prohibition relevant to the task.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r6"
+      },
+      {
+        "id": "r7",
+        "explanation": "This policy requires encrypting removable drives before storing customer data, which is a necessary security procedure for handling the task's subject matter.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r7"
+      },
+      {
+        "id": "r8",
+        "explanation": "This policy governs travel class selection and is unrelated to the task of drafting internal summaries.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r9",
+        "explanation": "This policy governs flight booking classes and is unrelated to the task of drafting internal summaries.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r10",
+        "explanation": "This policy requires submitting receipts for expenses over $25 and is unrelated to the task of drafting internal summaries.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r11",
+        "explanation": "This policy provides an alternative procedure for lost receipts and is unrelated to the task of drafting internal summaries.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r12",
+        "explanation": "This policy defines vacation entitlements and is unrelated to the task of drafting internal summaries.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r13",
+        "explanation": "This policy details security incident reporting requirements and is unrelated to the task of drafting internal summaries.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The policy explicitly permits employees to use approved assistants for internal summaries provided customer identifiers are removed, which aligns with the task's conditional permission.",
+      "applies": true,
+      "task_quote": "Let employees use approved assistants to draft internal summaries with customer identifiers",
+      "evidence_quote": "Employees may use approved assistants to draft internal summaries after removing customer identifiers."
+    },
+    {
+      "id": "r2",
+      "explanation": "This policy restricts summarizing customer tickets to only after personal identifiers are removed, which conflicts with the task's intent to include customer identifiers.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r3",
+      "explanation": "This policy mandates a review step before sending drafts to customers, which is a necessary procedural requirement for the task of drafting summaries.",
+      "applies": true,
+      "task_quote": "Let employees use approved assistants to draft internal summaries with customer identifiers",
+      "evidence_quote": "Employees must review each assistant-generated draft before sending it to a customer."
+    },
+    {
+      "id": "r4",
+      "explanation": "This policy prohibits disclosing credentials to chat assistants, which is a direct prohibition relevant to the use of assistants in the task.",
+      "applies": true,
+      "task_quote": "Let employees use approved assistants to draft internal summaries with customer identifiers",
+      "evidence_quote": "Employees must not disclose credentials to chat assistants."
+    },
+    {
+      "id": "r5",
+      "explanation": "This policy permits exporting customer records as CSV specifically for the migration project, which is a conditional permission applicable to the task.",
+      "applies": true,
+      "task_quote": "Let employees use approved assistants to draft internal summaries with customer identifiers",
+      "evidence_quote": "Employees may export customer records as CSV for the migration project."
+    },
+    {
+      "id": "r6",
+      "explanation": "This policy explicitly prohibits exporting customer records as CSV for the migration project, which is a direct prohibition relevant to the task.",
+      "applies": true,
+      "task_quote": "Let employees use approved assistants to draft internal summaries with customer identifiers",
+      "evidence_quote": "Employees must not export customer records as CSV for the migration project."
+    },
+    {
+      "id": "r7",
+      "explanation": "This policy requires encrypting removable drives before storing customer data, which is a necessary security procedure for handling the task's subject matter.",
+      "applies": true,
+      "task_quote": "Let employees use approved assistants to draft internal summaries with customer identifiers",
+      "evidence_quote": "Staff must encrypt removable drives before storing customer data."
+    },
+    {
+      "id": "r8",
+      "explanation": "This policy governs travel class selection and is unrelated to the task of drafting internal summaries.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r9",
+      "explanation": "This policy governs flight booking classes and is unrelated to the task of drafting internal summaries.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r10",
+      "explanation": "This policy requires submitting receipts for expenses over $25 and is unrelated to the task of drafting internal summaries.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r11",
+      "explanation": "This policy provides an alternative procedure for lost receipts and is unrelated to the task of drafting internal summaries.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r12",
+      "explanation": "This policy defines vacation entitlements and is unrelated to the task of drafting internal summaries.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r13",
+      "explanation": "This policy details security incident reporting requirements and is unrelated to the task of drafting internal summaries.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [
+    "r6"
+  ],
+  "expected_sources": [
+    "assistant-ownership.md"
+  ],
+  "coverage": {
+    "candidate_count": 6,
+    "actual_sources": [
+      "assistant-ownership.md",
+      "assistant-use.md",
+      "current-export.md",
+      "legacy-export.md",
+      "mixed-handbook.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 1,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 12907
+}

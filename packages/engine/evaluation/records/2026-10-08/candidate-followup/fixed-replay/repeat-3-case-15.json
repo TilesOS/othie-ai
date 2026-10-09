@@ -1,0 +1,113 @@
+{
+  "repeat": 3,
+  "id": "active-quoted-policy",
+  "request_sha256": "3b09c71c06f1f816961d8750f38a8f99a694ccbe15cc4203cf5ee11232066509",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence explicitly mandates reporting unlocked workstations, which directly addresses the task's subject of staff failing to report them.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This policy defines the baseline requirement for locking workstations before leaving desks, providing the necessary context for the task's incident.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The evidence concerns encrypting removable drives and storing customer data, which is unrelated to workstation locking or security reporting.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "This policy governs the reporting of lost drives within one hour, a specific scenario distinct from the general task of reporting unlocked workstations.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The evidence describes rules for report field verification and duration, which does not apply to the substantive issue of unlocked workstations.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "This policy details the extensive fields required for security incident reports; while relevant to the report format, it is a general procedural rule not specific to the workstation locking violation described in the task.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence explicitly mandates reporting unlocked workstations, which directly addresses the task's subject of staff failing to report them.",
+      "applies": true,
+      "task_quote": "staff lock workstations leaving desks report unlocked security",
+      "evidence_quote": "Staff must report unlocked workstations to security."
+    },
+    {
+      "id": "r2",
+      "explanation": "This policy defines the baseline requirement for locking workstations before leaving desks, providing the necessary context for the task's incident.",
+      "applies": true,
+      "task_quote": "staff lock workstations leaving desks report unlocked security",
+      "evidence_quote": "The current access policy states: 'Staff must lock workstations before leaving desks'."
+    },
+    {
+      "id": "r3",
+      "explanation": "The evidence concerns encrypting removable drives and storing customer data, which is unrelated to workstation locking or security reporting.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "This policy governs the reporting of lost drives within one hour, a specific scenario distinct from the general task of reporting unlocked workstations.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The evidence describes rules for report field verification and duration, which does not apply to the substantive issue of unlocked workstations.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "This policy details the extensive fields required for security incident reports; while relevant to the report format, it is a general procedural rule not specific to the workstation locking violation described in the task.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "active-quotation.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "active-quotation.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 5503
+}

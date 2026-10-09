@@ -1,0 +1,113 @@
+{
+  "repeat": 2,
+  "id": "linked-access-extension",
+  "request_sha256": "902f40c5ae95b21930298cf35244b92220208c858d664ba61609f56a3c6d7a36",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task text explicitly mentions 'privileged access expires eight hours' and 'two additional hours', which directly matches the core conditions of this policy.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The task text explicitly mentions 'audit log', which is a key requirement for recording extensions defined in this policy.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "This policy defines the structure of security incident reports but does not contain any specific obligations or prohibitions related to the topics mentioned in the task text (privileged access expiration, extensions, audit log).",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "This policy governs emergency maintenance start times and approval requirements, which are unrelated to the specific topics of privileged access expiration and extension in the task text.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "This policy concerns workstation locking procedures, which is a distinct operational rule not covered by the topics of privileged access expiration or extensions in the task text.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "This policy addresses production deployment approvals and exceptions for outages, which does not align with the specific topics of privileged access expiration and extension found in the task text.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task text explicitly mentions 'privileged access expires eight hours' and 'two additional hours', which directly matches the core conditions of this policy.",
+      "applies": true,
+      "task_quote": "privileged access expires eight hours incident commanders two additional hours audit log",
+      "evidence_quote": "Privileged access must expire after eight hours. Only incident commanders may extend access, for at most two additional hours."
+    },
+    {
+      "id": "r2",
+      "explanation": "The task text explicitly mentions 'audit log', which is a key requirement for recording extensions defined in this policy.",
+      "applies": true,
+      "task_quote": "privileged access expires eight hours incident commanders two additional hours audit log",
+      "evidence_quote": "Extensions must be recorded in the audit log before the original access expires."
+    },
+    {
+      "id": "r3",
+      "explanation": "This policy defines the structure of security incident reports but does not contain any specific obligations or prohibitions related to the topics mentioned in the task text (privileged access expiration, extensions, audit log).",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "This policy governs emergency maintenance start times and approval requirements, which are unrelated to the specific topics of privileged access expiration and extension in the task text.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "This policy concerns workstation locking procedures, which is a distinct operational rule not covered by the topics of privileged access expiration or extensions in the task text.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "This policy addresses production deployment approvals and exceptions for outages, which does not align with the specific topics of privileged access expiration and extension found in the task text.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "privileged-access.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "privileged-access.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 5349
+}

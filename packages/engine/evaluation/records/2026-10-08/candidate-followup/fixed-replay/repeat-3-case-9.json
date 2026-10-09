@@ -1,0 +1,169 @@
+{
+  "repeat": 3,
+  "id": "long-whole-evidence",
+  "request_sha256": "56445fcb209e851975d4902c18f1588b24e8e8ce2ab666e698f1d1374f7a0c9a",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The policy explicitly mandates that reports missing required fields must remain open until verified, which directly addresses the task's requirement for closure timestamps and verification.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This policy defines the mandatory list of fields including discovery timestamp and closure timestamp, establishing the baseline requirements needed to interpret the task's subject.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The task concerns security incident reports; this policy regarding unlocked workstations is a distinct operational rule unrelated to report field requirements.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "This policy governs access extensions in the audit log, which does not pertain to the specific fields required for security incident reports.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The task involves report closure and verification; this policy regarding privileged access expiration is unrelated to incident reporting procedures.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "This policy concerns eyewear requirements and has no relevance to security incident report fields or timestamps.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "The task is about report structure; this policy regarding lost drives is a separate operational procedure unrelated to the requested analysis.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r8",
+        "explanation": "This policy addresses lost receipts and does not establish any rules for security incident report fields or closure timestamps.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r9",
+        "explanation": "The task focuses on report requirements; this policy regarding emergency maintenance approval is unrelated to the incident report process described.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r10",
+        "explanation": "This policy covers production deployment approvals and does not pertain to the specific fields or closure logic of security incident reports.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The policy explicitly mandates that reports missing required fields must remain open until verified, which directly addresses the task's requirement for closure timestamps and verification.",
+      "applies": true,
+      "task_quote": "security incident report required fields discovery timestamp closure timestamp verified audit log remain open",
+      "evidence_quote": "A report missing any required field must remain open until the field is verified."
+    },
+    {
+      "id": "r2",
+      "explanation": "This policy defines the mandatory list of fields including discovery timestamp and closure timestamp, establishing the baseline requirements needed to interpret the task's subject.",
+      "applies": true,
+      "task_quote": "security incident report required fields discovery timestamp closure timestamp verified audit log remain open",
+      "evidence_quote": "Security incident reports must include the discovery timestamp, reporting employee, responding team, affected service, service owner, impacted region, customer impact, data classification, initial severity, final severity, escalation timestamp, incident commander, communication owner, notification timeline, containment timestamp, containment actions, recovery timestamp, recovery actions, affected credentials, credential rotation timestamp, evidence storage location, evidence custodian, access review results, third party involvement, customer notification status, regulatory notification status, root cause analysis, contributing factors, detection gaps, monitoring changes, preventive actions, remediation owner, remediation deadline, verification method, verification results, residual risks, risk acceptance owner, approval timestamp, follow-up review date, and closure timestamp, with each field verified against the incident audit log before submission."
+    },
+    {
+      "id": "r3",
+      "explanation": "The task concerns security incident reports; this policy regarding unlocked workstations is a distinct operational rule unrelated to report field requirements.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "This policy governs access extensions in the audit log, which does not pertain to the specific fields required for security incident reports.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The task involves report closure and verification; this policy regarding privileged access expiration is unrelated to incident reporting procedures.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "This policy concerns eyewear requirements and has no relevance to security incident report fields or timestamps.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "The task is about report structure; this policy regarding lost drives is a separate operational procedure unrelated to the requested analysis.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r8",
+      "explanation": "This policy addresses lost receipts and does not establish any rules for security incident report fields or closure timestamps.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r9",
+      "explanation": "The task focuses on report requirements; this policy regarding emergency maintenance approval is unrelated to the incident report process described.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r10",
+      "explanation": "This policy covers production deployment approvals and does not pertain to the specific fields or closure logic of security incident reports.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "incident-report.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "incident-report.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 7680
+}

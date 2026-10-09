@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "travel-approval",
+  "request_sha256": "0ab65cf38fb363305c540d70b3df2f6bd641409df63929f4987433530041adff",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "travel.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2004
+}

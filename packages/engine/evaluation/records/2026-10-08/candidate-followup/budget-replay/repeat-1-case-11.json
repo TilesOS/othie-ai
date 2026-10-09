@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "legitimate-assistant-policy",
+  "request_sha256": "adca39721f171928e083e0409d888396c42c79387b5af26302a1645d2fab0c45",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "assistant-use.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2002
+}

@@ -1,0 +1,71 @@
+{
+  "repeat": 1,
+  "id": "support-history-boundary",
+  "request_sha256": "15f450a9060d8da19684c1eee64191578fa63b232cadbdb0e7cc62e8c505b8e2",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The task explicitly requests escalation of priority tickets after four hours, which directly aligns with the policy requiring such an action.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The task mentions 'thirty minutes' regarding acknowledgment, matching the policy requirement for support agents to acknowledge priority tickets within that timeframe.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The task does not involve summarizing customer tickets or handling personal identifiers; it only addresses ticket escalation and acknowledgment timing.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The task explicitly requests escalation of priority tickets after four hours, which directly aligns with the policy requiring such an action.",
+      "applies": true,
+      "task_quote": "priority tickets acknowledge thirty minutes unresolved four hours escalated on-call lead",
+      "evidence_quote": "Priority tickets unresolved after four hours must be escalated to the on-call lead."
+    },
+    {
+      "id": "r2",
+      "explanation": "The task mentions 'thirty minutes' regarding acknowledgment, matching the policy requirement for support agents to acknowledge priority tickets within that timeframe.",
+      "applies": true,
+      "task_quote": "priority tickets acknowledge thirty minutes unresolved four hours escalated on-call lead",
+      "evidence_quote": "Support agents must acknowledge priority tickets within thirty minutes."
+    },
+    {
+      "id": "r3",
+      "explanation": "The task does not involve summarizing customer tickets or handling personal identifiers; it only addresses ticket escalation and acknowledgment timing.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "historical-support.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "historical-support.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 0,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 2650
+}

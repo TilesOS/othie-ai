@@ -1,0 +1,130 @@
+{
+  "repeat": 1,
+  "id": "opposing-export-rules",
+  "request_sha256": "0007082104edaccc9cdd4c5492b8c78c45e71cebfbfe30fd0eecadda8d0a0154",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence explicitly grants permission to export customer records as CSV for the migration project, which aligns directly with the task's goal.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This evidence imposes a prohibition on exporting customer records as CSV for the migration project, creating a direct conflict with the task that must be respected over permissive language.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      },
+      {
+        "id": "r3",
+        "explanation": "The evidence mandates encryption of removable drives before storing customer data, which is a relevant security requirement for handling the data involved in the migration project.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r3"
+      },
+      {
+        "id": "r4",
+        "explanation": "This evidence restricts summarizing customer tickets and does not pertain to the specific action of exporting customer records as CSV for a migration project.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The evidence requires reviewing assistant-generated drafts before sending them to customers, which is unrelated to the task of exporting raw customer records as CSV.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "This evidence permits using assistants for internal summaries after removing identifiers, but does not address the specific requirement of exporting customer records as CSV for a migration project.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "The evidence details requirements for security incident reports, which is a distinct document type and process unrelated to the task of exporting customer records as CSV.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence explicitly grants permission to export customer records as CSV for the migration project, which aligns directly with the task's goal.",
+      "applies": true,
+      "task_quote": "migration project customer records CSV export",
+      "evidence_quote": "Employees may export customer records as CSV for the migration project."
+    },
+    {
+      "id": "r2",
+      "explanation": "This evidence imposes a prohibition on exporting customer records as CSV for the migration project, creating a direct conflict with the task that must be respected over permissive language.",
+      "applies": true,
+      "task_quote": "migration project customer records CSV export",
+      "evidence_quote": "Employees must not export customer records as CSV for the migration project."
+    },
+    {
+      "id": "r3",
+      "explanation": "The evidence mandates encryption of removable drives before storing customer data, which is a relevant security requirement for handling the data involved in the migration project.",
+      "applies": true,
+      "task_quote": "migration project customer records CSV export",
+      "evidence_quote": "Staff must encrypt removable drives before storing customer data."
+    },
+    {
+      "id": "r4",
+      "explanation": "This evidence restricts summarizing customer tickets and does not pertain to the specific action of exporting customer records as CSV for a migration project.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The evidence requires reviewing assistant-generated drafts before sending them to customers, which is unrelated to the task of exporting raw customer records as CSV.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "This evidence permits using assistants for internal summaries after removing identifiers, but does not address the specific requirement of exporting customer records as CSV for a migration project.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "The evidence details requirements for security incident reports, which is a distinct document type and process unrelated to the task of exporting customer records as CSV.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "current-export.md",
+    "legacy-export.md"
+  ],
+  "coverage": {
+    "candidate_count": 3,
+    "actual_sources": [
+      "current-export.md",
+      "legacy-export.md",
+      "mixed-handbook.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": true
+  },
+  "conflicts": 1,
+  "correct": true,
+  "hook_deadline_met": false,
+  "wall_ms": 6211
+}

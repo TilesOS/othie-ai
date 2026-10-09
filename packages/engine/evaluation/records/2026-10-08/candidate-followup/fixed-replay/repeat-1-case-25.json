@@ -1,0 +1,60 @@
+{
+  "repeat": 1,
+  "id": "receipt-subject-query",
+  "request_sha256": "77cd844f30a4592057b9e139f4b157804191c53e1b1cbd60031e40dec3707c0e",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence establishes a mandatory requirement for submitting receipts when expenses exceed $25, which is an active organizational policy obligation.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The evidence defines a specific exception where receipts are optional for expenses of $25 or less, which is an active organizational policy provision.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r2"
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence establishes a mandatory requirement for submitting receipts when expenses exceed $25, which is an active organizational policy obligation.",
+      "applies": true,
+      "task_quote": "receipts",
+      "evidence_quote": "Employees must submit receipts for expenses over $25."
+    },
+    {
+      "id": "r2",
+      "explanation": "The evidence defines a specific exception where receipts are optional for expenses of $25 or less, which is an active organizational policy provision.",
+      "applies": true,
+      "task_quote": "receipts",
+      "evidence_quote": "For expenses of exactly $25 or less, receipts are optional."
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [
+    "receipts.md"
+  ],
+  "coverage": {
+    "candidate_count": 2,
+    "actual_sources": [
+      "receipts.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [
+      "lost",
+      "written explanation"
+    ],
+    "complete": false
+  },
+  "conflicts": 0,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2348
+}

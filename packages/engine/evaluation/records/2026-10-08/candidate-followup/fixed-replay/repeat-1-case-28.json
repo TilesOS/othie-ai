@@ -1,0 +1,135 @@
+{
+  "repeat": 1,
+  "id": "export-opposition-task",
+  "request_sha256": "2953f98e8b12b3ccc5ce15abfd7207a73cc406c27c78dc4a62ac19bdd78cf6f0",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The policy explicitly grants permission to export customer records as CSV for the migration project, which aligns directly with the task's implementation goal.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "This policy prohibits exporting customer records as CSV, creating a direct conflict with the task that requires implementing such an export.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r3",
+        "explanation": "The requirement to encrypt removable drives is a separate security control unrelated to the specific action of exporting data as CSV.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r4",
+        "explanation": "This policy governs summarizing tickets and removing identifiers, which does not address the implementation of a CSV export for customer records.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r5",
+        "explanation": "The requirement to review drafts before sending them to customers is unrelated to the technical act of exporting data as CSV.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r6",
+        "explanation": "This policy permits using assistants for internal summaries after removing identifiers, which does not cover the task's requirement to implement a CSV export.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      },
+      {
+        "id": "r7",
+        "explanation": "The detailed requirements for security incident reports do not apply to the routine implementation of a customer record export.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The policy explicitly grants permission to export customer records as CSV for the migration project, which aligns directly with the task's implementation goal.",
+      "applies": true,
+      "task_quote": "Implement a CSV export of customer records for the migration project",
+      "evidence_quote": "Employees may export customer records as CSV for the migration project."
+    },
+    {
+      "id": "r2",
+      "explanation": "This policy prohibits exporting customer records as CSV, creating a direct conflict with the task that requires implementing such an export.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r3",
+      "explanation": "The requirement to encrypt removable drives is a separate security control unrelated to the specific action of exporting data as CSV.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r4",
+      "explanation": "This policy governs summarizing tickets and removing identifiers, which does not address the implementation of a CSV export for customer records.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r5",
+      "explanation": "The requirement to review drafts before sending them to customers is unrelated to the technical act of exporting data as CSV.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r6",
+      "explanation": "This policy permits using assistants for internal summaries after removing identifiers, which does not cover the task's requirement to implement a CSV export.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    },
+    {
+      "id": "r7",
+      "explanation": "The detailed requirements for security incident reports do not apply to the routine implementation of a customer record export.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [
+    "r2",
+    "r3"
+  ],
+  "expected_sources": [
+    "current-export.md",
+    "legacy-export.md"
+  ],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "current-export.md"
+    ],
+    "missing_sources": [
+      "legacy-export.md"
+    ],
+    "missing_qualifier_patterns": [
+      "must not export"
+    ],
+    "complete": false
+  },
+  "conflicts": 0,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 5824
+}

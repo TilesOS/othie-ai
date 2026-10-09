@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "telemetry-subject-query",
+  "request_sha256": "b4e8b764947d6da1f998a6ed144d780d4ba8c209ea9c2433572c3f21afbc59c4",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "telemetry.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

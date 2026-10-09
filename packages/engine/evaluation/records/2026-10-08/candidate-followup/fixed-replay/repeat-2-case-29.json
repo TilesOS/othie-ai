@@ -1,0 +1,55 @@
+{
+  "repeat": 2,
+  "id": "historical-badge-task-control",
+  "request_sha256": "a855a951c76023098b4d404465748c3d2fdabe739af5caa8f75413e52c078591",
+  "raw": {
+    "decisions": [
+      {
+        "id": "r1",
+        "explanation": "The evidence states a current mandatory requirement for digital badges, which contradicts the task's request to describe paper badges from 2023 and implies paper badges are no longer issued or required.",
+        "applies": true,
+        "task_anchor": "task",
+        "evidence_anchor": "r1"
+      },
+      {
+        "id": "r2",
+        "explanation": "The evidence describes a safety requirement for goggles in the clean room but provides no information regarding paper badges or visitor identification methods.",
+        "applies": false,
+        "task_anchor": "",
+        "evidence_anchor": ""
+      }
+    ]
+  },
+  "valid": true,
+  "decisions": [
+    {
+      "id": "r1",
+      "explanation": "The evidence states a current mandatory requirement for digital badges, which contradicts the task's request to describe paper badges from 2023 and implies paper badges are no longer issued or required.",
+      "applies": true,
+      "task_quote": "Describe what paper badges visitors received in 2023",
+      "evidence_quote": "Visitors now must obtain digital badges before entering the laboratory."
+    },
+    {
+      "id": "r2",
+      "explanation": "The evidence describes a safety requirement for goggles in the clean room but provides no information regarding paper badges or visitor identification methods.",
+      "applies": false,
+      "task_quote": "",
+      "evidence_quote": ""
+    }
+  ],
+  "changed_ids": [],
+  "expected_sources": [],
+  "coverage": {
+    "candidate_count": 1,
+    "actual_sources": [
+      "historical-replacement.md"
+    ],
+    "missing_sources": [],
+    "missing_qualifier_patterns": [],
+    "complete": false
+  },
+  "conflicts": 0,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2363
+}

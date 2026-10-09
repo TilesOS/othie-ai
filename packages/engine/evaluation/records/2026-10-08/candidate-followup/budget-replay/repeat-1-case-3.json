@@ -1,0 +1,17 @@
+{
+  "repeat": 1,
+  "id": "contractor-exception",
+  "request_sha256": "22684b122d2a66e916bf40157de44fd05cb3cbc6c3d62938b97d3745ce508e4e",
+  "raw": null,
+  "valid": false,
+  "decisions": [],
+  "changed_ids": null,
+  "expected_sources": [
+    "leave.md"
+  ],
+  "coverage": null,
+  "conflicts": null,
+  "correct": false,
+  "hook_deadline_met": false,
+  "wall_ms": 2001
+}

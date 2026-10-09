@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated October 6, 2026 on macOS with Node.js 24.18.0. The deterministic suite uses
+Updated October 8, 2026 on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
 
 ## Checks run
@@ -10,16 +10,19 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci` | Clean lockfile installation passes |
 | `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 150 passing tests; one opt-in real-model test skipped |
+| `npm test` | 159 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host tests within `npm test` | Six process tests pass |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
 | Evaluation-only semantic applicability, initial trials | Boundaries 42/56 versus lexical 51/56; larger applicability corpus 54/80 versus paired lexical 61/80; both fail acceptance |
 | Evaluation-only anchored applicability, three controlled repeats | 61/80, 65/80, 61/80 versus lexical 61/80 each; positive recall regresses and 75/96 model calls exceed the default hook deadline |
+| Evaluation-only source-revision candidates | Pre-packing positive coverage 26/26 versus lexical 23/26; filtered packed diagnostics 65/80 versus 61/80, with positive recall regression and 27/32 calls missing the hook deadline |
+| Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
+| Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
-The full suite comprises 96 engine, 23 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 105 engine, 23 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -38,7 +41,11 @@ and classification commits. The [run for commit 9c7ba51](https://github.com/Tile
 was inspected October 6 and passes both macOS and Windows jobs: clean installation,
 all typechecks, the then-current 143 tests and Windows startup-script syntax. This
 verifies the previously unverified deterministic-selection, classification and dependency
-commits. New local changes starting at `812380a` still need their own CI. Automated
+commits. The [run for commit 8d8243f](https://github.com/TilesOS/othie-ai/actions/runs/37569998793)
+was inspected October 8 and passes both macOS and Windows jobs: clean installation,
+all workspace typechecks, the then-current 150 tests and Windows startup-script syntax.
+This verifies the October 6 dependency and applicability changes. New local changes
+starting at `61358a0` still need their own CI. Automated
 runner results do not establish native desktop-host or logon-startup acceptance.
 
 ## Delivery and credential coverage
@@ -426,14 +433,73 @@ the final code; build, website lint and production audit pass after clean instal
 of the patched dependency tree. Native host/desktop acceptance was not repeated, and
 these local commits still need their own Windows CI.
 
+## October 8 candidate coverage and applicability replay follow-up
+
+The [October 8 records](packages/engine/evaluation/records/2026-10-08/candidate-followup/README.md)
+preserve a fresh source-revision candidate experiment with unchanged fixtures, scoring,
+`rules-v12`, `applicability-v3`, installed model digest, temperature 0 and seed 42.
+Lexical subject hits can experimentally include other extracted whole policies from the
+same profile, document, revision, source and authority. Global rules alone do not seed
+expansion. This overfetch remains evaluation-only and can add unrelated policies from
+mixed-topic sources; it does not prove implicit evidence links or change normal delivery.
+
+Positive pre-packing candidate coverage improves from 23/26 to 26/26, recovering support
+escalation, lost-receipt substitution and missing-consent definitions for narrow queries.
+The paired packed result is 65/80 versus lexical 61/80. Positive diagnostics regress from
+45/52 to 41/52 while no-op diagnostics improve from 16/28 to 24/28. The model still drops
+vacation entitlements and an assistant credential prohibition and retains historical-badge
+and support-chart false positives. Two export responses have contradictory anchors;
+a human-assistant query reaches the 20-second generation deadline. These fail both caps
+without hiding baseline evidence. Long incident evidence still fails at 200 tokens.
+All extraction jobs complete in one attempt with exact expected sentence coverage,
+reference isolation, exact citations, unchanged digest and accurate hard caps.
+
+The evaluator now records candidate coverage before packing and separates positive/no-op
+scores. Semantic acceptance independently requires filtering within the native hook's
+2,000 ms default; diagnostic requests still allow 20 seconds to preserve slow decisions.
+Twenty-seven of 32 nonempty calls miss that necessary latency gate. Generation/validation
+time excludes other hook work, so passing would still require end-to-end native acceptance.
+
+A recorded-input replay runner fixes messages, candidate order, schemas, sampling settings
+and case order without fresh extraction or re-ranking. It checks the installed digest,
+rejects ambiguous or ungrounded inputs, preserves each raw attempt before proceeding,
+separates invalid attempts from decision variation, and independently scores retained
+source/qualifier/conflict evidence before packing. These scores cannot be compared to
+packed `quality-v5` totals. Deterministic regressions cover isolation, missing linked
+requirements, overfetch, replay order, provenance, cancellation, late output, changed
+models and refusal to overwrite evidence.
+
+Three replays of the October 6 `anchors-1` input hold all 32 nonempty requests fixed.
+All 96 responses are structurally valid with unchanged digest, but eight queries have
+two distinct applicability decision sets. Before-packing diagnostics score 23/32,
+22/32 and 21/32 versus the original recording's 23/32. Positive scores are 19/26,
+19/26 and 18/26 versus recorded 20/26; nonempty-candidate no-op scores are 4/6,
+3/6 and 3/6 versus 3/6. Eight empty-candidate cases have no replayed model request
+and are reported separately. Seventy-seven of 96 calls exceed the hook gate, taking
+1.2–12.9 seconds. Fixed ordering therefore does not eliminate observed variation or
+resolve recall/latency failure. Runtime internals, warm state and machine load remain
+uncontrolled; these are observations without a causal or statistical claim.
+
+An additional replay enforces a 2,000 ms generation deadline on all 32 recorded
+requests. Only seven produce valid decisions; 25 fail without raw decisions at
+2.000–2.004 seconds as cancellation unwinds. Pre-packing diagnostics pass 4/32.
+The installed digest stays unchanged, failed attempts remain inspectable, and the
+experiment exits nonzero. Model-only cancellation does not establish a native hook's
+end-to-end budget. The temporary model was unloaded and its loopback service stopped.
+
+The final full workspace build, typechecks, website lint, production dependency audit
+and 159 deterministic tests pass, with one live-model test skipped. No model weights
+were downloaded or distributed. Native host sessions and desktop acceptance were not
+repeated. CI through `8d8243f` passes both runners; October 8 local commits still need CI.
+
 ## Remaining acceptance work
 
 - Codex project-file discovery and persisted interactive hook-trust acceptance; Claude
   project/local settings discovery and desktop UI acceptance beyond explicit CLI settings.
 - Codex local-model context consumption after the observed positive-context failure.
 - Windows native-host and logon-startup acceptance beyond the historical automated CI
-  suite; CI through `9c7ba51` passes both runners, while the October 6 local evaluator
-  and dependency changes still need their own Windows CI verification.
+  suite; CI through `8d8243f` passes both runners, while the October 8 local evaluator
+  changes still need their own Windows CI verification.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
 - Compiler classification, relevance, linked evidence, and packing: deterministic recovery
@@ -445,9 +511,11 @@ these local commits still need their own Windows CI.
   whole-evidence context still fails at 200 tokens. New boundary cases expose generic
   subject-word collisions even with correct classification. Controlled applicability
   trials now measure paired no-op precision and policy recall but fail acceptance.
-  Next address candidate completeness and semantic scope without trading away qualifiers
-  or opposing requirements, evaluate stable-order replay separately from fresh-engine
-  repeats, and enforce native-hook latency budgets before production use;
+  Source-revision overfetch recovers the three known short-query candidate gaps in the
+  fixed fixtures but still fails semantic recall and latency acceptance. Next improve
+  semantic scope without trading away qualifiers or opposing requirements, preserve
+  separate stable-order and fresh-engine evidence, and enforce end-to-end native-hook
+  latency budgets before production use;
   preserve active quoted policy, genuine assistant-use policies, and all recorded failures.
   Implicit evidence links beyond syntactic qualifications, larger corpora, label entailment,
   embeddings, synthesis, semantic grading, controlled generation settings, and additional
