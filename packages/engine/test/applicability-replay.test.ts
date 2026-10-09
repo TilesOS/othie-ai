@@ -1,7 +1,9 @@
-import { readFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { expect, it, vi } from "vitest";
 import { applicabilitySchema, APPLICABILITY_PROMPT, APPLICABILITY_PROMPT_VERSION } from "../src/evaluation/applicability.js";
-import { prepareApplicabilityReplay, replayApplicability } from "../src/evaluation/applicability-replay.js";
+import { prepareApplicabilityReplay, replayApplicability, runApplicabilityReplay } from "../src/evaluation/applicability-replay.js";
 import type { ModelProvider } from "../src/providers/types.js";
 
 const text = "Support agents must acknowledge priority tickets within thirty minutes.";
@@ -31,7 +33,7 @@ it("replays identical requests in recorded order and distinguishes decision vari
   expect(saved).toEqual([1, 2, 3]);
   expect(new Set(result.results.map((row) => row.request_sha256)).size).toBe(1);
   expect(result.results.map((row) => row.changed_ids)).toEqual([[], ["r1"], []]);
-  expect(result.variation).toEqual([{ id: "support", distinct_decision_sets: 2, changed_from_recording: 1 }]);
+  expect(result.variation).toEqual([{ id: "support", distinct_decision_sets: 2, invalid_attempts: 0, changed_from_recording: 1 }]);
   expect(result.scores_before_packing.positive).toEqual({ correct: 2, total: 3 });
   expect(result.skipped_cases).toEqual(["noop"]);
 });
@@ -39,7 +41,9 @@ it("replays identical requests in recorded order and distinguishes decision vari
 it("rejects incomplete, cross-item and late results and preserves raw failed attempts", async () => {
   const generateJson = vi.fn<ModelProvider["generateJson"]>(async () => ({ decisions: [] }));
   const invalid = await replayApplicability(fixture(), { generateJson } as never, { repeats: 1 });
-  expect(invalid.valid).toBe(false); expect(invalid.results[0]?.raw).toEqual({ decisions: [] });
+  expect(invalid.valid).toBe(false);
+  expect(invalid.variation[0]?.distinct_decision_sets).toBe(0);
+  expect(invalid.variation[0]?.invalid_attempts).toBe(1); expect(invalid.results[0]?.raw).toEqual({ decisions: [] });
   expect(invalid.results[0]?.changed_ids).toBe(null);
   generateJson.mockImplementation(async () => ({ decisions: [{ ...decision, evidence_anchor: "another-item" }] }));
   expect((await replayApplicability(fixture(), { generateJson } as never, { repeats: 1 })).valid).toBe(false);
@@ -86,4 +90,31 @@ it("keeps each repeat's query order fixed and validates the committed anchor rec
   const result = await replayApplicability(report, { generateJson } as never, { repeats: 2, cases: ids });
   expect(result.results.map((row) => row.id)).toEqual([...ids, ...ids]);
   expect(result.variation.every((row) => row.distinct_decision_sets === 1 && row.changed_from_recording === 0)).toBe(true);
+});
+
+it("runs the file-based entry point, preserves each attempt and refuses changed models or existing output", async () => {
+  const root = await mkdtemp(join(tmpdir(), "othie-replay-test-"));
+  const input = join(root, "quality.json"), out = join(root, "out");
+  const fetchMock = vi.fn<typeof fetch>(async (url, init) => {
+    const path = new URL(String(url)).pathname;
+    if (path === "/api/tags") return Response.json({ models: [{ name: "installed", digest: "original-digest" }] });
+    if (path === "/api/version") return Response.json({ version: "test" });
+    expect(path).toBe("/api/chat");
+    expect(JSON.parse(init!.body as string)).toMatchObject({ messages, model: "installed", format: generation.schema,
+      options: { temperature: 0, seed: 42 } });
+    return Response.json({ message: { content: JSON.stringify({ decisions: [decision] }) } });
+  });
+  vi.stubGlobal("fetch", fetchMock);
+  try {
+    await writeFile(input, JSON.stringify(fixture()));
+    const report = await runApplicabilityReplay(input, out, { repeats: 1 });
+    expect(report.passed).toBe(true); expect(report.model_unchanged).toBe(true);
+    expect((await readdir(out)).sort()).toEqual(["protocol.json", "repeat-1-case-1.json", "summary.json"]);
+    expect(JSON.parse(await readFile(join(out, "repeat-1-case-1.json"), "utf8")).raw).toEqual({ decisions: [decision] });
+    await expect(runApplicabilityReplay(input, out, { repeats: 1 })).rejects.toThrow();
+    fetchMock.mockClear();
+    fetchMock.mockImplementation(async () => Response.json({ models: [{ name: "installed", digest: "changed" }] }));
+    await expect(runApplicabilityReplay(input, join(root, "changed"))).rejects.toThrow("digest");
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  } finally { vi.unstubAllGlobals(); await rm(root, { recursive: true, force: true }); }
 });

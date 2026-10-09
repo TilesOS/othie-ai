@@ -22,7 +22,7 @@ it("sends explicit zero sampling values in the runtime's expected fields and lea
 });
 
 it("rejects invalid evaluation settings before starting model work", () => {
-  expect(qualityOptionsSchema.parse({ temperature: 0, seed: 0 })).toEqual({ temperature: 0, seed: 0 });
+  expect(qualityOptionsSchema.parse({ temperature: 0, seed: 0 })).toEqual({ temperature: 0, seed: 0, hook_deadline_ms: 2_000 });
   for (const settings of [{ temperature: NaN }, { temperature: -1 }, { temperature: 3 },
     { seed: 1.5 }, { seed: -1 }, { seed: 2_147_483_648 }, { unknown: true }]) {
     expect(qualityOptionsSchema.safeParse(settings).success).toBe(false);

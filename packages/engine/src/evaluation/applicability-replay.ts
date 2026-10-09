@@ -3,8 +3,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { z } from "zod";
-import { configSchema } from "../config.js";
-import { ProviderRegistry } from "../providers/registry.js";
+import { HttpModelProvider } from "../providers/http.js";
 import type { GenerationOptions, JsonMessage, ModelProvider } from "../providers/types.js";
 import type { RuleRecord } from "../types.js";
 import { conflictGroups } from "../rules/selection.js";
@@ -106,10 +105,11 @@ export async function replayApplicability(raw: unknown, provider: ModelProvider,
     }
     await onResult?.(results[results.length - 1]!);
   }
-  const signatures = (rows: ReplayResult[]) => new Set(rows.map((row) => row.valid
-    ? JSON.stringify(row.decisions.map(({ id, applies }) => ({ id, applies })).sort((a, b) => a.id.localeCompare(b.id))) : "invalid"));
+  const signatures = (rows: ReplayResult[]) => new Set(rows.filter((row) => row.valid).map((row) =>
+    JSON.stringify(row.decisions.map(({ id, applies }) => ({ id, applies })).sort((a, b) => a.id.localeCompare(b.id)))));
   const variation = prepared.requests.map((request) => ({ id: request.scenario.id,
     distinct_decision_sets: signatures(results.filter((item) => item.id === request.scenario.id)).size,
+    invalid_attempts: results.filter((item) => item.id === request.scenario.id && !item.valid).length,
     changed_from_recording: results.filter((item) => item.id === request.scenario.id && (item.changed_ids?.length ?? 0) > 0).length }));
   return { results, variation, skipped_cases: prepared.skipped_cases,
     scores_before_packing: diagnosticScores(results),
@@ -131,8 +131,8 @@ export async function runApplicabilityReplay(input: string, out: string, options
   const settings = replayOptionsSchema.parse(options);
   const prepared = prepareApplicabilityReplay(raw, settings.cases);
   // Fixed approved loopback runtime. No downloaded models or remote exports.
-  const config = configSchema.parse({ version: 1, profiles: { replay: { sources: [], providers: { extraction: ["ollama"], embeddings: [], synthesis: [] } } } });
-  const provider = new ProviderRegistry(config).require(config.profiles.replay!, "extraction", "ollama");
+  const provider = new HttpModelProvider("ollama", { id: "ollama", kind: "ollama",
+    base_url: "http://127.0.0.1:11434", allowed_redirect_origins: [] });
   const local = async (path: string) => {
     const response = await fetch(`http://127.0.0.1:11434${path}`, { signal: AbortSignal.timeout(10_000), redirect: "error" });
     if (!response.ok) throw new Error("Replay metadata unavailable");
