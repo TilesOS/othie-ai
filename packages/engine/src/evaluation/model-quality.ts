@@ -11,18 +11,11 @@ import { EXTRACTION_PROMPT_VERSION } from "../rules/extractor.js";
 import { qualityCorpus, type QualityDocument } from "./quality-cases.js";
 import type { ContextBriefV1 } from "../types.js";
 import { evaluateApplicability, APPLICABILITY_PROMPT_VERSION } from "./applicability.js";
-import { selectRules } from "../rules/selection.js";
+import { selectQualityCandidates } from "./quality-candidates.js";
+import { candidateCoverage, diagnosticScores, missingEvidencePatterns } from "./quality-metrics.js";
+export { missingPatterns, missingEvidencePatterns } from "./quality-metrics.js";
 import { packContext } from "../context/packing.js";
 
-export function missingPatterns(text: string, patterns: readonly string[]): string[] {
-  return patterns.filter((pattern) => !new RegExp(pattern, "i").test(text));
-}
-export function missingEvidencePatterns(rules: ContextBriefV1["applicable_rules"], patterns: readonly string[], sources?: readonly string[]): string[] {
-  // Generated labels are advisory metadata and may not be sent to the host.
-  // They cannot establish that a qualifier survived in packed policy evidence.
-  const evidence = sources ? rules.filter((rule) => sources.includes(basename(rule.citation.source))) : rules;
-  return missingPatterns(evidence.map((rule) => `${rule.text}\n${rule.citation.quote ?? ""}`).join("\n"), patterns);
-}
 export function extractionCoverage(documents: readonly QualityDocument[], rules: readonly { source: string; quotation: string }[]) {
   return documents.map((doc) => {
     const sentences = [...new Intl.Segmenter("en", { granularity: "sentence" }).segment(doc.text)].map(({ segment }) => segment.trim()).filter(Boolean);
@@ -40,8 +33,10 @@ export const qualityOptionsSchema = z.object({
   temperature: z.number().finite().min(0).max(2).optional(),
   seed: z.number().int().min(0).max(2_147_483_647).optional(),
   applicability: z.enum(["lexical", "semantic"]).optional(),
+  candidates: z.enum(["lexical", "source-revision"]).optional(),
+  hook_deadline_ms: z.number().int().min(1).max(20_000).default(2_000),
 }).strict();
-export type QualityOptions = z.infer<typeof qualityOptionsSchema>;
+export type QualityOptions = z.input<typeof qualityOptionsSchema>;
 
 export async function runModelQuality(model: string, out: string, corpusName = "standard", options: QualityOptions = {}) {
   const settings = qualityOptionsSchema.parse(options);
@@ -113,9 +108,15 @@ export async function runModelQuality(model: string, out: string, corpusName = "
     const extractionJobs = engine.store.db.prepare(`SELECT d.path,j.state,j.attempts,j.error FROM derived_jobs j JOIN documents d ON d.id=j.document_id WHERE j.operation='extraction' ORDER BY d.path`).all() as Array<{ path: string; state: string; attempts: number; error: string | null }>;
     const results = [];
     const applicabilityResults = [];
+    const candidateDiagnostics = [];
     generationStage = "applicability";
     for (const scenario of qualityCases) {
-      const candidates = selectRules(engine.store.listRules("company"), scenario.query, []);
+      const allRules = engine.store.listRules("company");
+      const lexicalCandidates = selectQualityCandidates(allRules, scenario.query, "lexical");
+      const candidates = selectQualityCandidates(allRules, scenario.query, settings.candidates ?? "lexical");
+      candidateDiagnostics.push({ id: scenario.id, expected_sources: scenario.sources,
+        lexical: candidateCoverage(scenario, lexicalCandidates), selected: candidateCoverage(scenario, candidates),
+        candidates: candidates.map((rule) => ({ source: basename(rule.sourcePath), quotation: rule.quotation, global: rule.global })) });
       let applicable = candidates, applicabilityValid = true;
       const applicabilityStart = performance.now();
       if (settings.applicability === "semantic") {
@@ -124,19 +125,20 @@ export async function runModelQuality(model: string, out: string, corpusName = "
             signal: AbortSignal.timeout(20_000), options: { thinking: false } });
           applicable = selected.rules;
           applicabilityResults.push({ id: scenario.id, valid: true, candidate_count: candidates.length, selected_count: applicable.length,
-            decisions: selected.decisions, wall_ms: Math.round(performance.now() - applicabilityStart) });
+            decisions: selected.decisions, hook_deadline_met: performance.now() - applicabilityStart < settings.hook_deadline_ms,
+            wall_ms: Math.round(performance.now() - applicabilityStart) });
         } catch {
           // Keep baseline evidence for inspection, but fail both diagnostic scores.
           applicabilityValid = false;
           applicabilityResults.push({ id: scenario.id, valid: false, candidate_count: candidates.length, selected_count: null,
-            decisions: [], wall_ms: Math.round(performance.now() - applicabilityStart) });
+            decisions: [], hook_deadline_met: false, wall_ms: Math.round(performance.now() - applicabilityStart) });
         }
       }
       for (const cap of [200, 500]) {
         const began = performance.now();
         const request = { query: scenario.query, max_tokens: cap, surface: "code" as const, phase: "turn_start" as const, host: "model-quality-eval" };
         const baseline = await engine.context("company", request);
-        const context = settings.applicability === "semantic" && applicabilityValid
+        const context = (settings.applicability === "semantic" && applicabilityValid) || (settings.applicability !== "semantic" && settings.candidates === "source-revision")
           ? packContext("company", config.profiles.company!, request, { rules: applicable, excerpts: [], keywordAvailable: true, vectorAvailable: false }, true, engine.store.getRevisionCounters())
           : baseline;
         const selected = context.brief.applicable_rules;
@@ -156,12 +158,14 @@ export async function runModelQuality(model: string, out: string, corpusName = "
           expected_conflicts: scenario.expected_conflicts ?? null, actual_conflicts: context.status.conflicts, conflict_valid: conflictValid,
           applicability_valid: applicabilityValid,
           correct: completed && applicabilityValid && budgetValid && conflictValid && (noOp ? selected.length === 0 : missingSources.length === 0 && lost.length === 0),
-          ...(settings.applicability === "semantic" ? { lexical_baseline: baseline.brief, lexical_baseline_correct: baselineCorrect } : {}),
+          ...((settings.applicability === "semantic" || settings.candidates === "source-revision") ? { lexical_baseline: baseline.brief, lexical_baseline_correct: baselineCorrect } : {}),
           retrieval_ms: Math.round(performance.now() - began), brief: context.brief });
       }
     }
     const endTags = await local("/api/tags") as typeof tags;
     const modelUnchanged = endTags.models?.find((item) => item.name === identity.name)?.digest === identity.digest;
+    const qualityPassed = completed && modelUnchanged && coverageValid && results.every((result) => result.correct) && rules.every((rule) => rule.citation_exact);
+    const hookLatencyValid = applicabilityResults.every((result) => result.hook_deadline_met);
     const report = { recorded_at: recordedAt, synthetic_only: true, protocol_version: "quality-v5", corpus: corpus.name, completed, model_unchanged: modelUnchanged,
       model: identity, runtime: await local("/api/version"), platform: process.platform, node: process.version, prompt_version: EXTRACTION_PROMPT_VERSION,
       fixture_sha256: createHash("sha256").update(JSON.stringify({ qualityDocuments, qualityCases })).digest("hex"),
@@ -170,6 +174,11 @@ export async function runModelQuality(model: string, out: string, corpusName = "
       applicability_mode: settings.applicability ?? "lexical",
       applicability_prompt_version: settings.applicability === "semantic" ? APPLICABILITY_PROMPT_VERSION : null,
       applicability_results: applicabilityResults,
+      candidate_mode: settings.candidates ?? "lexical", candidate_diagnostics: candidateDiagnostics,
+      diagnostic_scores: diagnosticScores(results),
+      lexical_diagnostic_scores: diagnosticScores(results.map((result) => ({ ...result, correct: result.lexical_baseline_correct ?? result.correct }))),
+      hook_deadline_ms: settings.hook_deadline_ms, hook_latency_valid: hookLatencyValid,
+      hook_latency_scope: "Filtering time only; excludes hook stdin, process startup, retrieval and transport. Passing is necessary, not sufficient, for native-hook acceptance.",
       license: { artifact_details: metadata.details ?? null, license_present: !!metadata.license,
         license_sha256: metadata.license ? createHash("sha256").update(metadata.license).digest("hex") : null,
         review: "Artifact redistribution license/notice review pending; this experiment redistributes no model weights." },
@@ -177,8 +186,8 @@ export async function runModelQuality(model: string, out: string, corpusName = "
       extraction_coverage: coverage, extraction_coverage_valid: coverageValid,
       extraction_jobs: extractionJobs.map((job) => ({ source: basename(job.path), state: job.state, attempts: job.attempts, error_present: job.error !== null })),
       all_retained_citations_exact: rules.every((rule) => rule.citation_exact), reference_promoted: rules.some((rule) => rule.source === "vendor-guide.md"),
-      results, passed: completed && modelUnchanged && coverageValid && results.every((result) => result.correct) && rules.every((rule) => rule.citation_exact),
-      limitations: "Small fixed synthetic corpus. Expected policy sentence coverage is fixture-specific, not a general semantic classifier. Regex qualifier checks are lexical diagnostics, not semantic entailment or unsupported-claim proof. Raw generations, explicit exclusions, and retained rules require review. Embeddings and synthesis disabled. Optional semantic applicability is evaluation-only, adds model latency and cannot recover rules absent from lexical candidates. Exact quote validation does not establish semantic truth. Conflicts are explicit-opposition diagnostics only. Controlled settings do not guarantee determinism or independent samples. No statistical generalization or model redistribution license approval.",
+      results, quality_passed: qualityPassed, passed: qualityPassed && hookLatencyValid,
+      limitations: "Small fixed synthetic corpus. Expected policy sentence coverage is fixture-specific, not a general semantic classifier. Regex qualifier checks are lexical diagnostics, not semantic entailment or unsupported-claim proof. Raw generations, explicit exclusions, and retained rules require review. Embeddings and synthesis disabled. Optional semantic applicability and source-revision candidate overfetch are evaluation-only. Overfetch can add unrelated requirements; filtering cannot restore evidence absent from its input. Exact quote validation does not establish semantic truth. Conflicts are explicit-opposition diagnostics only. Controlled settings do not guarantee determinism or independent samples. No statistical generalization or model redistribution license approval.",
     };
     await writeFile(join(out, "quality.json"), JSON.stringify(report, null, 2) + "\n", { flag: "wx", mode: 0o600 });
     return report;
@@ -195,7 +204,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   await mkdir(resolve(out, ".."), { recursive: true });
   const options = { ...(arg("temperature") !== undefined ? { temperature: Number(arg("temperature")) } : {}),
     ...(arg("seed") !== undefined ? { seed: Number(arg("seed")) } : {}),
-    ...(arg("applicability") !== undefined ? { applicability: arg("applicability") as QualityOptions["applicability"] } : {}) };
+    ...(arg("applicability") !== undefined ? { applicability: arg("applicability") as QualityOptions["applicability"] } : {}),
+    ...(arg("candidates") !== undefined ? { candidates: arg("candidates") as QualityOptions["candidates"] } : {}),
+    ...(arg("hook-deadline-ms") !== undefined ? { hook_deadline_ms: Number(arg("hook-deadline-ms")) } : {}) };
   void runModelQuality(arg("model") ?? "qwen3.5:4b-mlx", out, arg("corpus"), options).then((report) => {
     process.stdout.write(JSON.stringify({ report: join(out, "quality.json"), passed: report.passed, correct: report.results.filter((result) => result.correct).length, total: report.results.length }) + "\n");
     if (!report.passed) process.exitCode = 1;

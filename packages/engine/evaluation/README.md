@@ -271,3 +271,28 @@ boundaries corpus still has one instruction-promotion coverage failure and two s
 relevance no-op failures at both caps. Long complete incident evidence fails at 200
 tokens throughout. Earlier entitlement/assistant-permission omissions remain recorded.
 These results do not establish general semantic classification or prompt-injection safety.
+
+## Candidate coverage and hook latency experiments
+
+`--candidates source-revision` expands a lexical hit with the other extracted policy
+rules in the same profile, document, revision, source and authority. It uses original
+whole evidence, without matching filenames or generated labels. Global rules alone
+do not seed expansion. This is evaluation-only overfetch: unrelated requirements from
+a mixed-topic source can enter the candidate set. It does not establish semantic links
+or change production relevance.
+
+```sh
+npm run eval:quality -- --corpus applicability --candidates source-revision --applicability semantic --temperature 0 --seed 42 --out /tmp/othie-source-candidates
+```
+
+New reports include pre-packing coverage diagnostics for both lexical and experimental
+candidates, plus separate positive/no-op scores for packed output and the lexical baseline.
+These distinguish candidate omissions from filtering and packing losses. Existing fixtures,
+expectations and `quality-v5` quality scores remain unchanged.
+
+Semantic runs also require filtering to finish within `--hook-deadline-ms` (default
+2,000, matching the native hook default) for the overall `passed` gate. The independent
+`quality_passed` gate preserves quality diagnostics. Requests still allow 20 seconds
+so slow decisions remain available for inspection. Filtering time excludes hook stdin,
+process startup, engine retrieval and transport: passing this necessary latency check
+cannot establish end-to-end native-hook acceptance. Production hook behavior is unchanged.
