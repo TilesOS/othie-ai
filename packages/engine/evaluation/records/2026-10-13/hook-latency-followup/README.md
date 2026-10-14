@@ -51,8 +51,14 @@ strict defaults. The regression also checks complete attempt preservation,
 credential/path privacy, malformed diagnostics, engine receipt, source
 qualifications and refusal to overwrite evidence.
 
+The [final workspace test output](workspace-tests.txt) records 167 passing tests
+and one skipped real-model test. During concurrent build/suite load, this wider-budget
+regression observes Codex positive and no-op process times of 2,828 and 4,840 ms.
+Those paths would fail the standalone two-second gate. This separate observation
+preserves the scheduling/latency limitation without assigning a cause.
+
 The [manifest](manifest.json) hashes the preserved attempts, protocols, summaries
-and initial failed test output. Temporary engine state and credentials are removed
+and both test outputs. Temporary engine state and credentials are removed
 after each repeat. Extraction, embeddings and synthesis are disabled, so this
 measures lexical excerpt fallback rather than semantic applicability. It does
 not establish native host discovery/trust, desktop UI, macOS/Windows, production

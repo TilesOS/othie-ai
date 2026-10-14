@@ -1,17 +1,19 @@
 # Othie verification
 
-Updated October 8, 2026 on macOS with Node.js 24.18.0. The deterministic suite uses
-synthetic documents and provider fixtures; it requires no model training or downloads.
+Updated October 13, 2026 (America/New_York) on Linux x64 with Node.js 24.19.0.
+The October 3–8 model and native-host records were collected on macOS with Node.js
+24.18.0. The deterministic suite uses synthetic documents and provider fixtures;
+it requires no model training or downloads.
 
 ## Checks run
 
 | Check | Result |
 | --- | --- |
-| `npm ci` | Clean lockfile installation passes |
+| `npm ci` | Previously recorded clean lockfile installation passes; not repeated October 13 |
 | `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 159 passing tests; one opt-in real-model test skipped |
-| MCP/lifecycle/cross-host tests within `npm test` | Six process tests pass |
+| `npm test` | 167 passing tests; one opt-in real-model test skipped |
+| MCP/lifecycle/cross-host/latency tests within `npm test` | Seven engine process tests pass |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
 | Evaluation-only semantic applicability, initial trials | Boundaries 42/56 versus lexical 51/56; larger applicability corpus 54/80 versus paired lexical 61/80; both fail acceptance |
@@ -19,10 +21,11 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Evaluation-only source-revision candidates | Pre-packing positive coverage 26/26 versus lexical 23/26; filtered packed diagnostics 65/80 versus 61/80, with positive recall regression and 27/32 calls missing the hook deadline |
 | Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
 | Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
+| Complete adapter-process latency, three fresh-engine repeats | 42/42 behavior and budget gates pass at 2,000 ms internally/3,000 ms externally; preceding outer-timeout failure and slower parallel-suite observations remain recorded |
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
-The full suite comprises 105 engine, 23 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 110 engine, 26 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -45,7 +48,7 @@ commits. The [run for commit 8d8243f](https://github.com/TilesOS/othie-ai/action
 was inspected October 8 and passes both macOS and Windows jobs: clean installation,
 all workspace typechecks, the then-current 150 tests and Windows startup-script syntax.
 This verifies the October 6 dependency and applicability changes. New local changes
-starting at `61358a0` still need their own CI. Automated
+starting at `61358a0`, including the October 13 follow-up, still need their own CI. Automated
 runner results do not establish native desktop-host or logon-startup acceptance.
 
 ## Delivery and credential coverage
@@ -492,13 +495,60 @@ and 159 deterministic tests pass, with one live-model test skipped. No model wei
 were downloaded or distributed. Native host sessions and desktop acceptance were not
 repeated. CI through `8d8243f` passes both runners; October 8 local commits still need CI.
 
+## October 13 complete adapter-process deadline follow-up
+
+The [hook latency records](packages/engine/evaluation/records/2026-10-13/hook-latency-followup/README.md)
+preserve a new `npm run eval:hook-latency` evaluator, the initial failed regression
+output, one preliminary standalone run, and three final fresh-engine repeats using
+code `97cbdcb`. Both compiled adapters are invoked directly against synthetic live
+engines. Extraction, embeddings and synthesis are disabled; context uses lexical
+excerpt fallback. No model artifacts, hosted model API or native host login are used.
+
+The shared runtime now keeps one absolute monotonic deadline across stdin, parsing,
+transport, validation and output serialization. Expired budgets never start a query;
+late synchronous failures are classified as timeouts even when they delay the timer
+callback. Three deterministic regressions fail against the prior runtime and pass
+after this change. Module initialization still precedes the internal clock.
+
+The evaluator measures complete process time from before spawn until close, saves
+every attempt immediately, hashes compiled entry points and the shared runtime, and
+refuses to overwrite evidence. Each repeat creates fresh engine/index/credential state
+and alternates host order. Positive delivery preserves the first-response qualification
+and citation. No-op, live revocation, unavailable engine, stalled authenticated IPC,
+delayed stdin followed by stalled IPC, and unclosed stdin are independently scored.
+Engine-stall controls must reach the authenticated engine to pass. Normal paths must
+finish within 2,000 ms; stall controls must fail open and exit within the 3,000 ms outer
+watchdog, including startup and cleanup. Behavior and latency have separate gates.
+
+All 42 final attempts pass. Normal paths take 779–1,549 ms; stall controls take
+2,270–2,753 ms and emit no context. Their internal diagnostics report 2,001–2,006 ms.
+One earlier Claude Code engine-stall regression hits the outer watchdog at about
+3,012 ms; its original test output remains, but temporary raw attempts were removed
+by test cleanup. Its cause is not isolated. The preliminary standalone run passes
+14/14 at the same default budgets. These local observations do not establish a
+general scheduling or latency guarantee.
+
+The behavioral integration regression uses 5,000 ms internally/8,000 ms externally
+under parallel suite load. During the final workspace checks, its Codex positive and
+no-op paths take 2,828 and 4,840 ms, exceeding the standalone two-second gate. The
+[workspace test output](packages/engine/evaluation/records/2026-10-13/hook-latency-followup/workspace-tests.txt)
+preserves these observations separately. Wider regression budgets do not change the
+acceptance evaluator defaults or production hook settings. Native-host overhead and
+semantic-model filtering remain unmeasured by this new evaluator.
+
+All workspace builds, typechecks, website lint and 167 deterministic tests pass with
+local IPC socket access; one opt-in real-model test is skipped. The refreshed production
+dependency audit reports zero advisories. Existing installed dependencies were used;
+`npm ci` was not repeated. Website browser/UI, native host sessions, macOS/Windows CI,
+Windows startup and signed installers were not verified in this Linux run.
+
 ## Remaining acceptance work
 
 - Codex project-file discovery and persisted interactive hook-trust acceptance; Claude
   project/local settings discovery and desktop UI acceptance beyond explicit CLI settings.
 - Codex local-model context consumption after the observed positive-context failure.
 - Windows native-host and logon-startup acceptance beyond the historical automated CI
-  suite; CI through `8d8243f` passes both runners, while the October 8 local evaluator
+  suite; CI through `8d8243f` passes both runners, while the October 8 and October 13 evaluator
   changes still need their own Windows CI verification.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
@@ -515,7 +565,9 @@ repeated. CI through `8d8243f` passes both runners; October 8 local commits stil
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve
   separate stable-order and fresh-engine evidence, and enforce end-to-end native-hook
-  latency budgets before production use;
+  latency budgets before production use. The October 13 direct-adapter records cover
+  lexical fallback and deadline failure behavior; native host and semantic-model latency
+  acceptance remain open, including the observed slower paths under parallel load;
   preserve active quoted policy, genuine assistant-use policies, and all recorded failures.
   Implicit evidence links beyond syntactic qualifications, larger corpora, label entailment,
   embeddings, synthesis, semantic grading, controlled generation settings, and additional

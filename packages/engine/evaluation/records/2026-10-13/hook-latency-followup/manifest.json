@@ -81,6 +81,15 @@
     "initial-standalone/1-codex-stalled-input.json": "00f5db4036a6b4857974af560b90de4aa26a5581cce05b810e2bc2cdf38389e8",
     "initial-standalone/1-codex-unavailable.json": "8579575098db699034f101baa5731c5bf015d8bcf0d2b3303b93f4f58b2e9fc2",
     "initial-standalone/protocol.json": "ee5de4d79753f27439758307ca667e6ca24245fb27b0e784337c7a2b08ae5cea",
-    "initial-standalone/summary.json": "df6827117dd2b965c32788c3c27cbb1838fe46b7b623bd96ab594f77fbbfee31"
+    "initial-standalone/summary.json": "df6827117dd2b965c32788c3c27cbb1838fe46b7b623bd96ab594f77fbbfee31",
+    "workspace-tests.txt": "a5c7d52f4db023f63646dc35a8336bedf6fcefabee7ee88a1c32884ce32dc3b7"
+  },
+  "workspace_regression": {
+    "path": "workspace-tests.txt",
+    "tests_passed": 167,
+    "real_model_tests_skipped": 1,
+    "deadline_ms": 5000,
+    "host_timeout_ms": 8000,
+    "limitation": "Behavioral regression under parallel suite/build load, not default-budget acceptance. Codex positive and no-op paths exceed 2000 ms."
   }
 }
