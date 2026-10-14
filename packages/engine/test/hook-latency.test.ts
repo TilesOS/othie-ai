@@ -46,9 +46,9 @@ describe("process-level hook latency acceptance", () => {
   it("runs both compiled adapters against fresh live state and preserves attempts without overwrites", async () => {
     const root = await mkdtemp(join(tmpdir(), "othie-hook-latency-test-")), out = join(root, "evidence");
     try {
-      // This regression verifies behavior and evidence, not this machine's latency
-      // acceptance. The standalone evaluator retains its strict 3-second default.
-      const report = await runHookLatencyAcceptance(out, { repeats: 1, host_timeout_ms: 5_000 });
+      // This regression verifies behavior and evidence under parallel suite load.
+      // Standalone acceptance retains its strict 2-second/3-second defaults.
+      const report = await runHookLatencyAcceptance(out, { repeats: 1, deadline_ms: 5_000, host_timeout_ms: 8_000 });
       expect(report.completed).toBe(true);
       expect(report.attempts.filter((attempt) => !attempt.behavior_passed)).toEqual([]);
       expect(report.passed).toBe(report.attempts.every((attempt) => attempt.passed));
@@ -64,5 +64,5 @@ describe("process-level hook latency acceptance", () => {
       await expect(runHookLatencyAcceptance(out, { repeats: 1 })).rejects.toThrow();
       expect(await readFile(join(out, "summary.json"), "utf8")).toBe(before);
     } finally { await rm(root, { recursive: true, force: true }); }
-  }, 30_000);
+  }, 60_000);
 });
