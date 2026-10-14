@@ -106,8 +106,11 @@ export async function runPromptHook(host: HookHost, rawInput: string, options: H
     return finish("invalid_options");
   }
   const controller = new AbortController();
-  const expiresAt = performance.now() + options.deadlineMs;
-  const timer = setTimeout(() => controller.abort(), options.deadlineMs);
+  // Stdin, parsing, transport and validation share one monotonic budget.
+  const expiresAt = started + options.deadlineMs;
+  const remainingMs = expiresAt - performance.now();
+  if (remainingMs <= 0) return finish("context_timeout");
+  const timer = setTimeout(() => controller.abort(), remainingMs);
   const deadline = new Promise<never>((_, reject) => controller.signal.addEventListener("abort", () => reject(new Error("deadline")), { once: true }));
   try {
     const request: ContextQuery = { query: event.prompt, workspaceRoot: event.cwd, surface: "code", phase: "turn_start", host, maxTokens: options.maxTokens };
@@ -118,8 +121,11 @@ export async function runPromptHook(host: HookHost, rawInput: string, options: H
     if (!valid) return finish("invalid_context_response");
     if ((result.brief.status as Record<string, unknown>).mode === "empty") return finish("empty", "", result);
     const additionalContext = `Othie context brief (source-backed; preserve the included citations):\n${result.text}`;
-    return finish("injected", `${JSON.stringify({ hookSpecificOutput: { hookEventName: "UserPromptSubmit", additionalContext } })}\n`, result);
+    const stdout = `${JSON.stringify({ hookSpecificOutput: { hookEventName: "UserPromptSubmit", additionalContext } })}\n`;
+    if (performance.now() >= expiresAt) { controller.abort(); return finish("context_timeout"); }
+    return finish("injected", stdout, result);
   } catch {
+    if (performance.now() >= expiresAt) controller.abort();
     return finish(controller.signal.aborted ? "context_timeout" : "context_unavailable");
   } finally { clearTimeout(timer); }
 }
@@ -207,8 +213,7 @@ export async function hookMain(host: HookHost, entryUrl: string): Promise<void> 
   const options = hookOptionsFromProcess(host, entryUrl), started = performance.now();
   try {
     const raw = await readHookStdin(options.deadlineMs);
-    const remainingMs = Math.floor(options.deadlineMs - (performance.now() - started));
-    const result = remainingMs > 0 ? await runPromptHook(host, raw, { ...options, deadlineMs: remainingMs }, undefined, started) : outcomeResult(host, options, started, "context_timeout");
+    const result = await runPromptHook(host, raw, options, undefined, started);
     if (result.stdout) process.stdout.write(result.stdout);
     if (result.stderr) process.stderr.write(result.stderr);
   } catch (error) {

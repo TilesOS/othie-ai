@@ -14,6 +14,9 @@ additional tokens, and the connected model's tokenizer may differ.
 The entry point bounds stdin and subprocess output to one million bytes each. Its default
 two-second deadline covers stdin reading and the CLI request after module initialization;
 the host's outer timeout also bounds process startup. Timed-out CLI children are killed.
+Stdin, event parsing, CLI transport, response validation, and output serialization share
+one monotonic deadline. An expired budget never starts another CLI request, and late
+synchronous failures are reported as timeouts even before the timer callback runs.
 Diagnostics contain fixed error codes only. The adapters neither read host transcripts nor
 alter host settings. See the individual integration guides for setup and removal.
 
