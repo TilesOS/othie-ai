@@ -326,3 +326,37 @@ remain inspectable. Scores measure source, qualifier and explicit-conflict diagn
 **before packing**; they are not the packed `quality-v5` acceptance totals. Warm runtime
 state remains uncontrolled, and repeats are not independent samples. Both semantic
 quality and native-hook latency acceptance remain necessary before production use.
+
+## Complete adapter-process latency
+
+`npm run eval:hook-latency -- --out /tmp/othie-hook-latency` launches both compiled
+prompt adapters directly against a fresh synthetic engine, index and credentials on
+each of three repeats. It requires local IPC socket access and no model or host login.
+Extraction, embeddings and synthesis are disabled; the positive case uses cited
+lexical excerpts. This is adapter-process evidence, not native-host or semantic-filter
+acceptance.
+
+The fixed cases cover positive delivery with the first-response qualification intact,
+a repository-only no-op, a stalled authenticated engine request, delayed stdin followed
+by a stalled request, stdin that never closes, live revocation, and an unavailable
+engine. Both engine-stall cases must reach the authenticated engine before they can
+pass. Input and engine stalls must return no context with a timeout diagnostic.
+
+The parent measures time from before process spawn until process close, including
+module initialization, stdin, CLI startup, IPC, validation and output. Each raw attempt
+also preserves the adapter's content-free diagnostic and its internal elapsed time.
+Normal delivery/no-op/failure paths must complete within `--deadline-ms` (default
+2,000). Stall controls are expected to use the adapter's full internal deadline plus
+startup and cleanup; they must exit before `--host-timeout-ms` (default 3,000). The
+outer watchdog kills over-budget adapters and fails the attempt. Timer scheduling
+does not guarantee exact millisecond termination.
+
+Pass `--repeats 1` for a single observation. A new output directory contains
+`protocol.json`, an attempt file written immediately after every invocation, and
+`summary.json` after completion. The protocol records runtime, fixture and compiled
+entry-point hashes, budgets and condition/host order. Existing output directories are
+rejected before an engine starts. All fixtures are synthetic; credentials, temporary
+paths and host session metadata are excluded. Failed attempts remain in the record,
+behavior and latency are scored separately, and any failed attempt makes the CLI exit
+nonzero. Fresh engine state does not control machine load or runtime warm state, and
+these local repeats are not statistical or cross-platform acceptance.
