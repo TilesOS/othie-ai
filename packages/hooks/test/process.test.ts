@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { expect, it } from "vitest";
 
 it.each(["codex", "claude-code"])("counts startup against the compiled %s hook deadline before launching the CLI", async (host) => {
@@ -13,7 +13,7 @@ it.each(["codex", "claude-code"])("counts startup against the compiled %s hook d
     await writeFile(cli, `import { writeFileSync } from 'node:fs'; writeFileSync(${JSON.stringify(marker)}, 'queried');\n`);
     const adapter = fileURLToPath(new URL(`../../../integrations/${host}/dist/src/user-prompt-submit.js`, import.meta.url));
     const result = await new Promise<{ code: number | null; stdout: string; stderr: string }>((done, reject) => {
-      const child = spawn(process.execPath, ["--import", preload, adapter, "--cli", cli, "--deadline-ms", "300", "--diagnostics-json"], { stdio: "pipe" });
+      const child = spawn(process.execPath, ["--import", pathToFileURL(preload).href, adapter, "--cli", cli, "--deadline-ms", "300", "--diagnostics-json"], { stdio: "pipe" });
       let stdout = "", stderr = "";
       const timer = setTimeout(() => { child.kill("SIGKILL"); reject(new Error("Hook did not exit")); }, 5_000);
       child.stdout.setEncoding("utf8").on("data", (chunk) => { stdout += chunk; });
