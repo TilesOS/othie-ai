@@ -1,0 +1,101 @@
+{
+  "inspected_at": "2026-10-15T03:13:12.125Z",
+  "run_url": "https://github.com/TilesOS/othie-ai/actions/runs/37877299841",
+  "head_sha": "7eb19f83532ab27fcbb6fd58f74bce2f82322210",
+  "jobs": [
+    {
+      "name": "desktop (windows-latest)",
+      "conclusion": "success",
+      "html_url": "https://github.com/TilesOS/othie-ai/actions/runs/37877299841/job/113648709743",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run typecheck",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm test",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check Windows startup script syntax",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "desktop (macos-14)",
+      "conclusion": "success",
+      "html_url": "https://github.com/TilesOS/othie-ai/actions/runs/37877299841/job/113648710075",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run typecheck",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm test",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check Windows startup script syntax",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "recorded_at": "2026-10-15T03:17:12.420824+00:00",
+  "code": "7b5ee06fe7209996072a5eac6720045b4761e820",
+  "synthetic_only": true,
+  "platform": "linux",
+  "node": "v24.19.0",
+  "tests": {
+    "passing": 164,
+    "skipped_live_model": 1,
+    "by_workspace": {
+      "engine": 106,
+      "hooks": 27,
+      "website": 14,
+      "claude_code": 7,
+      "codex": 10
+    }
+  },
+  "checks": {
+    "clean_install": "pass",
+    "workspace_build": "pass",
+    "workspace_typecheck": "pass",
+    "website_lint": "pass",
+    "production_audit_advisories": 0,
+    "git_diff_check": "pass",
+    "all_attempt_files_match_summary": true,
+    "all_compiled_artifact_hashes_verified": true
+  },
+  "initial_sandbox_attempt": "Existing socket and child-process tests failed under restricted execution. Baseline and final suites pass with required local access; initial failing output is preserved in checks/initial-sandbox-tests.txt.",
+  "latency": {
+    "initial_probe_code": "b4f0417",
+    "initial_probe_attempts": 8,
+    "final_code": "7b5ee06",
+    "final_attempts": 24,
+    "final_all_passed": true,
+    "min_wall_ms": 577.5277029999997,
+    "max_wall_ms": 662.1910980000002
+  },
+  "limitations": [
+    "No model runtime or weights installed/downloaded for this follow-up. Prior semantic failures remain unchanged.",
+    "No native host sessions, desktop UI or Windows hardware acceptance repeated.",
+    "CI through 7eb19f8 passes both macOS and Windows; new local hook changes require their own CI.",
+    "Process timing covers compiled adapters and a small lexical excerpt workload with all providers disabled; native host overhead and model-based applicability are excluded."
+  ],
+  "supplemental_checks": [
+    {
+      "code": "26f3e67",
+      "change": "Windows-compatible file URL for the compiled startup-test preload",
+      "hooks_build": "pass",
+      "hook_tests_passing": 27,
+      "git_diff_check": "pass"
+    }
+  ],
+  "check_log_normalization": "Terminal carriage returns and trailing whitespace removed from archived check logs; attempt JSON files are unchanged."
+}

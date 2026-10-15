@@ -1,0 +1,250 @@
+{
+  "protocol_version": "hook-latency-v1",
+  "recorded_at": "2026-10-15T03:12:37.736Z",
+  "synthetic_only": true,
+  "platform": "linux",
+  "node": "v24.19.0",
+  "repeats": 1,
+  "hook_deadline_ms": 2000,
+  "outer_timeout_ms": 3000,
+  "context_token_cap": 500,
+  "policy": "Canary support policy requires the first response within eleven hours. This is a first-response target, not a resolution deadline.",
+  "queries": {
+    "positive": "According to Canary support policy, what is the first-response target?",
+    "irrelevant": "Refactor the JavaScript sorting comparator. Do not use tools."
+  },
+  "compiled_artifacts": [
+    {
+      "path": "packages/engine/dist/src/cli.js",
+      "sha256": "d8164cd510b1c806493a540b2e366b0197037eaf9a336441405952d20a1a8e05"
+    },
+    {
+      "path": "integrations/codex/dist/src/user-prompt-submit.js",
+      "sha256": "f509052788ddea2779ebf8988000e12d51ba1f64bb8eb2267aa7623fd34ea7a4"
+    },
+    {
+      "path": "integrations/claude-code/dist/src/user-prompt-submit.js",
+      "sha256": "dbbef2fad3f47b69bbc9d8f19c994f5f88e3eee7ab99097301c76439bc39d9e4"
+    },
+    {
+      "path": "packages/hooks/dist/src/index.js",
+      "sha256": "5a9d8c2c464ed690454b96e25dc2ea7acaab4708339a632d5b1f08759f56736f"
+    }
+  ],
+  "limitations": "Compiled adapter processes against a synthetic live engine, with extraction, embeddings and synthesis disabled. Parent wall time includes process startup and exit. No native Codex/Claude Code session, model consumption, semantic applicability, desktop UI or Windows hardware acceptance. Repeated local timings are observations, not a general latency guarantee.",
+  "passed": true,
+  "records": [
+    {
+      "host": "codex",
+      "condition": "positive",
+      "repeat": 1,
+      "code": 0,
+      "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"Othie context brief (source-backed; preserve the included citations):\\n<organization_context profile=\\\"company\\\" mode=\\\"fallback\\\"><items><excerpt>Canary support policy requires the first response within eleven hours. This is a first-response target, not a resolution deadline.<citation source=\\\"s1/canary.md\\\" at=\\\"lines 1-1\\\"/></excerpt></items><conflicts count=\\\"0\\\" detection=\\\"explicit_opposition_only\\\"></conflicts><status tokenizer=\\\"o200k_base\\\" tokenizer_estimate=\\\"false\\\" tokens=\\\"120\\\" omitted=\\\"0\\\" keyword=\\\"true\\\" vector=\\\"false\\\" corpus_revision=\\\"3\\\" rule_revision=\\\"0\\\"/></organization_context>\"}}\n",
+      "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"codex\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"injected\",\"elapsed_ms\":936,\"mode\":\"fallback\",\"token_count\":120,\"omitted_items\":0,\"rule_count\":0,\"excerpt_count\":1,\"synthesis_count\":0,\"conflict_count\":0}\n",
+      "wall_ms": 950.4734569999999,
+      "timed_out": false,
+      "oversized": false,
+      "diagnostics": {
+        "schema_version": "1",
+        "event": "othie_prompt_hook",
+        "host": "codex",
+        "surface": "code",
+        "phase": "turn_start",
+        "outcome": "injected",
+        "elapsed_ms": 936,
+        "mode": "fallback",
+        "token_count": 120,
+        "omitted_items": 0,
+        "rule_count": 0,
+        "excerpt_count": 1,
+        "synthesis_count": 0,
+        "conflict_count": 0
+      },
+      "delivery_passed": true,
+      "hook_deadline_met": true,
+      "passed": true
+    },
+    {
+      "host": "claude-code",
+      "condition": "positive",
+      "repeat": 1,
+      "code": 0,
+      "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"Othie context brief (source-backed; preserve the included citations):\\n<organization_context profile=\\\"company\\\" mode=\\\"fallback\\\"><items><excerpt>Canary support policy requires the first response within eleven hours. This is a first-response target, not a resolution deadline.<citation source=\\\"s1/canary.md\\\" at=\\\"lines 1-1\\\"/></excerpt></items><conflicts count=\\\"0\\\" detection=\\\"explicit_opposition_only\\\"></conflicts><status tokenizer=\\\"o200k_base\\\" tokenizer_estimate=\\\"false\\\" tokens=\\\"120\\\" omitted=\\\"0\\\" keyword=\\\"true\\\" vector=\\\"false\\\" corpus_revision=\\\"3\\\" rule_revision=\\\"0\\\"/></organization_context>\"}}\n",
+      "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"claude-code\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"injected\",\"elapsed_ms\":778,\"mode\":\"fallback\",\"token_count\":120,\"omitted_items\":0,\"rule_count\":0,\"excerpt_count\":1,\"synthesis_count\":0,\"conflict_count\":0}\n",
+      "wall_ms": 787.9533839999999,
+      "timed_out": false,
+      "oversized": false,
+      "diagnostics": {
+        "schema_version": "1",
+        "event": "othie_prompt_hook",
+        "host": "claude-code",
+        "surface": "code",
+        "phase": "turn_start",
+        "outcome": "injected",
+        "elapsed_ms": 778,
+        "mode": "fallback",
+        "token_count": 120,
+        "omitted_items": 0,
+        "rule_count": 0,
+        "excerpt_count": 1,
+        "synthesis_count": 0,
+        "conflict_count": 0
+      },
+      "delivery_passed": true,
+      "hook_deadline_met": true,
+      "passed": true
+    },
+    {
+      "host": "codex",
+      "condition": "irrelevant",
+      "repeat": 1,
+      "code": 0,
+      "stdout": "",
+      "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"codex\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"empty\",\"elapsed_ms\":633,\"mode\":\"empty\",\"token_count\":74,\"omitted_items\":0,\"rule_count\":0,\"excerpt_count\":0,\"synthesis_count\":0,\"conflict_count\":0}\n",
+      "wall_ms": 642.9657480000001,
+      "timed_out": false,
+      "oversized": false,
+      "diagnostics": {
+        "schema_version": "1",
+        "event": "othie_prompt_hook",
+        "host": "codex",
+        "surface": "code",
+        "phase": "turn_start",
+        "outcome": "empty",
+        "elapsed_ms": 633,
+        "mode": "empty",
+        "token_count": 74,
+        "omitted_items": 0,
+        "rule_count": 0,
+        "excerpt_count": 0,
+        "synthesis_count": 0,
+        "conflict_count": 0
+      },
+      "delivery_passed": true,
+      "hook_deadline_met": true,
+      "passed": true
+    },
+    {
+      "host": "claude-code",
+      "condition": "irrelevant",
+      "repeat": 1,
+      "code": 0,
+      "stdout": "",
+      "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"claude-code\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"empty\",\"elapsed_ms\":783,\"mode\":\"empty\",\"token_count\":74,\"omitted_items\":0,\"rule_count\":0,\"excerpt_count\":0,\"synthesis_count\":0,\"conflict_count\":0}\n",
+      "wall_ms": 792.510131,
+      "timed_out": false,
+      "oversized": false,
+      "diagnostics": {
+        "schema_version": "1",
+        "event": "othie_prompt_hook",
+        "host": "claude-code",
+        "surface": "code",
+        "phase": "turn_start",
+        "outcome": "empty",
+        "elapsed_ms": 783,
+        "mode": "empty",
+        "token_count": 74,
+        "omitted_items": 0,
+        "rule_count": 0,
+        "excerpt_count": 0,
+        "synthesis_count": 0,
+        "conflict_count": 0
+      },
+      "delivery_passed": true,
+      "hook_deadline_met": true,
+      "passed": true
+    },
+    {
+      "host": "codex",
+      "condition": "revoked",
+      "repeat": 1,
+      "code": 0,
+      "stdout": "",
+      "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"codex\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"context_unavailable\",\"elapsed_ms\":574}\n",
+      "wall_ms": 583.1820339999999,
+      "timed_out": false,
+      "oversized": false,
+      "diagnostics": {
+        "schema_version": "1",
+        "event": "othie_prompt_hook",
+        "host": "codex",
+        "surface": "code",
+        "phase": "turn_start",
+        "outcome": "context_unavailable",
+        "elapsed_ms": 574
+      },
+      "delivery_passed": true,
+      "hook_deadline_met": true,
+      "passed": true
+    },
+    {
+      "host": "claude-code",
+      "condition": "revoked",
+      "repeat": 1,
+      "code": 0,
+      "stdout": "",
+      "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"claude-code\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"context_unavailable\",\"elapsed_ms\":591}\n",
+      "wall_ms": 600.4107839999997,
+      "timed_out": false,
+      "oversized": false,
+      "diagnostics": {
+        "schema_version": "1",
+        "event": "othie_prompt_hook",
+        "host": "claude-code",
+        "surface": "code",
+        "phase": "turn_start",
+        "outcome": "context_unavailable",
+        "elapsed_ms": 591
+      },
+      "delivery_passed": true,
+      "hook_deadline_met": true,
+      "passed": true
+    },
+    {
+      "host": "codex",
+      "condition": "unavailable",
+      "repeat": 1,
+      "code": 0,
+      "stdout": "",
+      "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"codex\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"context_unavailable\",\"elapsed_ms\":563}\n",
+      "wall_ms": 572.2511599999998,
+      "timed_out": false,
+      "oversized": false,
+      "diagnostics": {
+        "schema_version": "1",
+        "event": "othie_prompt_hook",
+        "host": "codex",
+        "surface": "code",
+        "phase": "turn_start",
+        "outcome": "context_unavailable",
+        "elapsed_ms": 563
+      },
+      "delivery_passed": true,
+      "hook_deadline_met": true,
+      "passed": true
+    },
+    {
+      "host": "claude-code",
+      "condition": "unavailable",
+      "repeat": 1,
+      "code": 0,
+      "stdout": "",
+      "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"claude-code\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"context_unavailable\",\"elapsed_ms\":593}\n",
+      "wall_ms": 602.979687,
+      "timed_out": false,
+      "oversized": false,
+      "diagnostics": {
+        "schema_version": "1",
+        "event": "othie_prompt_hook",
+        "host": "claude-code",
+        "surface": "code",
+        "phase": "turn_start",
+        "outcome": "context_unavailable",
+        "elapsed_ms": 593
+      },
+      "delivery_passed": true,
+      "hook_deadline_met": true,
+      "passed": true
+    }
+  ]
+}
