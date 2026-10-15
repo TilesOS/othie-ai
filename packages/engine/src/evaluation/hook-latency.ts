@@ -14,18 +14,22 @@ const hookDeadlineMs = 2_000, outerTimeoutMs = 3_000;
 const positive = "According to Canary support policy, what is the first-response target?";
 const irrelevant = "Refactor the JavaScript sorting comparator. Do not use tools.";
 const policy = "Canary support policy requires the first response within eleven hours. This is a first-response target, not a resolution deadline.";
-const repository = fileURLToPath(new URL("../../../../../", import.meta.url));
+const repository = fileURLToPath(new URL(import.meta.url.includes("/dist/") ? "../../../../../" : "../../../../", import.meta.url));
 const adapterPath = (host: Host) => join(repository, "integrations", host, "dist/src/user-prompt-submit.js");
-const cliPath = fileURLToPath(new URL("../cli.js", import.meta.url));
+const cliPath = join(repository, "packages/engine/dist/src/cli.js");
 
 /** Parent timing includes spawn, module loading, stdin, CLI/IPC, validation,
  * output and process exit. No native host or model is launched. */
 async function invoke(host: Host, config: string, credential: string, cwd: string, prompt: string) {
   const began = performance.now();
   return new Promise<{ code: number | null; stdout: string; stderr: string; wall_ms: number; timed_out: boolean; oversized: boolean }>((done, reject) => {
-    // Deliberately omit --deadline-ms: verify the adapter's actual default.
+    // Deliberately omit --deadline-ms and remove its two environment overrides:
+    // verify the adapter's actual default without changing the caller's settings.
+    const env = { ...process.env };
+    delete env.OTHIE_CODEX_DEADLINE_MS;
+    delete env.OTHIE_CLAUDE_CODE_DEADLINE_MS;
     const child = spawn(process.execPath, [adapterPath(host), "--cli", cliPath, "--config", config,
-      "--bridge", host, "--credential-file", credential, "--max-tokens", "500", "--diagnostics-json"], { cwd, stdio: "pipe" });
+      "--bridge", host, "--credential-file", credential, "--max-tokens", "500", "--diagnostics-json"], { cwd, env, stdio: "pipe" });
     let stdout = "", stderr = "", timedOut = false, oversized = false, bytes = 0;
     const timer = setTimeout(() => { timedOut = true; child.kill("SIGKILL"); }, outerTimeoutMs);
     const collect = (target: "stdout" | "stderr", chunk: string) => {
@@ -71,7 +75,8 @@ export async function runHookLatency(out: string, repeats = 3) {
       sha256: createHash("sha256").update(await readFile(path)).digest("hex") })));
     const protocol = { protocol_version: "hook-latency-v1", recorded_at: new Date().toISOString(), synthetic_only: true,
       platform: process.platform, node: process.version, repeats, hook_deadline_ms: hookDeadlineMs, outer_timeout_ms: outerTimeoutMs,
-      context_token_cap: 500, policy, queries: { positive, irrelevant }, compiled_artifacts: hashes,
+      context_token_cap: 500, deadline_environment_overrides: "removed from child environment", policy,
+      queries: { positive, irrelevant }, compiled_artifacts: hashes,
       limitations: "Compiled adapter processes against a synthetic live engine, with extraction, embeddings and synthesis disabled. Parent wall time includes process startup and exit. No native Codex/Claude Code session, model consumption, semantic applicability, desktop UI or Windows hardware acceptance. Repeated local timings are observations, not a general latency guarantee." };
     await writeFile(join(out, "protocol.json"), JSON.stringify(protocol, null, 2) + "\n", { flag: "wx", mode: 0o600 });
     running = await runEngine(config);

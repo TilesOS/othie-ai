@@ -107,7 +107,8 @@ synthetic local experiments, not a general sandbox for arbitrary untrusted progr
 and Claude Code adapters against an isolated synthetic live engine without launching a
 native host or model. Three repeats cover cited delivery, irrelevant-task silence, live
 credential revocation and engine unavailability. Host order alternates between repeats.
-The adapters use their default 2,000 ms deadline; parent timing includes spawn, module
+The adapters use their default 2,000 ms deadline with deadline environment overrides
+removed from child processes; parent timing includes spawn, module
 loading, stdin, CLI/IPC, validation, output and exit. A separate 3,000 ms watchdog bounds
 the adapter process. Every attempt must deliver the expected result and exit within
 2,000 ms to pass. Pass `--repeats 1` through `10` to change the repeat count.
