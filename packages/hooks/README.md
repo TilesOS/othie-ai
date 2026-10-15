@@ -16,6 +16,8 @@ two-second deadline starts at Node's performance time origin, including module l
 stdin reading, the CLI request, and response validation. An exhausted startup budget
 skips the CLI. Synchronous startup/validation can delay cancellation; late context is
 discarded, and the host's outer timeout bounds total process lifetime. Timed-out CLI children are killed.
+Output serialization uses the same deadline. Late synchronous failures are reported
+as timeouts even before the timer callback runs.
 Diagnostics contain fixed error codes only. The adapters neither read host transcripts nor
 alter host settings. See the individual integration guides for setup and removal.
 

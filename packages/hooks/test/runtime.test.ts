@@ -109,6 +109,39 @@ describe("shared prompt-hook safety", () => {
     expect(result).toEqual({ stdout: "", stderr: "Othie Codex hook: context_timeout\n" });
   });
 
+  it("does not query after the shared stdin/request budget expires", async () => {
+    const query = vi.fn();
+    const result = await runPromptHook("codex", event, options, { query }, performance.now() - options.deadlineMs - 1);
+    expect(result).toEqual({ stdout: "", stderr: "Othie Codex hook: context_timeout\n" });
+    expect(query).not.toHaveBeenCalled();
+  });
+
+  it("uses only the time left after stdin for an uncooperative request", async () => {
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout", "performance"] });
+    try {
+      let signal: AbortSignal | undefined;
+      const pending = runPromptHook("codex", event, options, { query: async (_request, value) => {
+        signal = value;
+        return new Promise(() => {});
+      } }, performance.now() - 75);
+      await vi.advanceTimersByTimeAsync(25);
+      expect(signal?.aborted).toBe(true);
+      expect(await pending).toEqual({ stdout: "", stderr: "Othie Codex hook: context_timeout\n" });
+    } finally { vi.useRealTimers(); }
+  });
+
+  it("reports timeout when synchronous failure prevents the timer from firing", async () => {
+    let now = 0;
+    const clock = vi.spyOn(performance, "now").mockImplementation(() => now);
+    try {
+      const result = await runPromptHook("codex", event, options, { query: async () => {
+        now = options.deadlineMs;
+        throw new Error("PRIVATE_PROVIDER_ERROR");
+      } });
+      expect(result).toEqual({ stdout: "", stderr: "Othie Codex hook: context_timeout\n" });
+    } finally { clock.mockRestore(); }
+  });
+
   it("emits only allowlisted JSON diagnostics for useful context", async () => {
     const result = await run(await fixture(), { diagnosticsJson: true });
     const metadata = JSON.parse(result.stderr);

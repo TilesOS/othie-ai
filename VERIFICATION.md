@@ -11,8 +11,8 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci` | Clean lockfile installation passes |
 | `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 164 passing tests; one opt-in real-model test skipped |
-| MCP/lifecycle/cross-host and latency tests within `npm test` | Seven engine process tests pass |
+| `npm test` | 172 passing tests; one opt-in real-model test skipped |
+| MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
@@ -24,7 +24,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
-The full suite comprises 106 engine, 27 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 111 engine, 30 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -496,6 +496,53 @@ The final full workspace build, typechecks, website lint, production dependency 
 and 159 deterministic tests pass, with one live-model test skipped. No model weights
 were downloaded or distributed. Native host sessions and desktop acceptance were not
 repeated. CI through `8d8243f` passes both runners; October 8 local commits still need CI.
+
+## October 13 complete adapter-process deadline follow-up
+
+The [hook latency records](packages/engine/evaluation/records/2026-10-13/hook-latency-followup/README.md)
+preserve a new `npm run eval:hook-latency` evaluator, the initial failed regression
+output, one preliminary standalone run, and three final fresh-engine repeats using
+code `97cbdcb`. Both compiled adapters are invoked directly against synthetic live
+engines. Extraction, embeddings and synthesis are disabled; context uses lexical
+excerpt fallback. No model artifacts, hosted model API or native host login are used.
+
+The shared runtime now keeps one absolute monotonic deadline across stdin, parsing,
+transport, validation and output serialization. Expired budgets never start a query;
+late synchronous failures are classified as timeouts even when they delay the timer
+callback. Three deterministic regressions fail against the prior runtime and pass
+after this change. Module initialization still precedes the internal clock.
+
+The evaluator measures complete process time from before spawn until close, saves
+every attempt immediately, hashes compiled entry points and the shared runtime, and
+refuses to overwrite evidence. Each repeat creates fresh engine/index/credential state
+and alternates host order. Positive delivery preserves the first-response qualification
+and citation. No-op, live revocation, unavailable engine, stalled authenticated IPC,
+delayed stdin followed by stalled IPC, and unclosed stdin are independently scored.
+Engine-stall controls must reach the authenticated engine to pass. Normal paths must
+finish within 2,000 ms; stall controls must fail open and exit within the 3,000 ms outer
+watchdog, including startup and cleanup. Behavior and latency have separate gates.
+
+All 42 final attempts pass. Normal paths take 779–1,549 ms; stall controls take
+2,270–2,753 ms and emit no context. Their internal diagnostics report 2,001–2,006 ms.
+One earlier Claude Code engine-stall regression hits the outer watchdog at about
+3,012 ms; its original test output remains, but temporary raw attempts were removed
+by test cleanup. Its cause is not isolated. The preliminary standalone run passes
+14/14 at the same default budgets. These local observations do not establish a
+general scheduling or latency guarantee.
+
+The behavioral integration regression uses 5,000 ms internally/8,000 ms externally
+under parallel suite load. During the final workspace checks, its Codex positive and
+no-op paths take 2,828 and 4,840 ms, exceeding the standalone two-second gate. The
+[workspace test output](packages/engine/evaluation/records/2026-10-13/hook-latency-followup/workspace-tests.txt)
+preserves these observations separately. Wider regression budgets do not change the
+acceptance evaluator defaults or production hook settings. Native-host overhead and
+semantic-model filtering remain unmeasured by this new evaluator.
+
+All workspace builds, typechecks, website lint and 167 deterministic tests pass with
+local IPC socket access; one opt-in real-model test is skipped. The refreshed production
+dependency audit reports zero advisories. Existing installed dependencies were used;
+`npm ci` was not repeated. Website browser/UI, native host sessions, macOS/Windows CI,
+Windows startup and signed installers were not verified in this Linux run.
 
 ## October 14 startup deadline and adapter latency follow-up
 

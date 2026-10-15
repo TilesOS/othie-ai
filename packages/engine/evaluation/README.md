@@ -103,7 +103,7 @@ synthetic local experiments, not a general sandbox for arbitrary untrusted progr
 
 ## Native prompt-hook acceptance
 
-`npm run eval:hook-latency -- --out /tmp/othie-hook-latency` measures compiled Codex
+`npm run eval:hook-default-latency -- --out /tmp/othie-hook-default-latency` measures compiled Codex
 and Claude Code adapters against an isolated synthetic live engine without launching a
 native host or model. Three repeats cover cited delivery, irrelevant-task silence, live
 credential revocation and engine unavailability. Host order alternates between repeats.
@@ -117,7 +117,9 @@ The new output directory preserves protocol, compiled artifact hashes, each atte
 it finishes, and a final summary. Failures remain saved and exit nonzero. All providers
 are disabled, so this measures lexical excerpt delivery and cannot establish semantic
 applicability latency, model consumption, native host overhead, or desktop acceptance.
-Use the native session runner below for host/model acceptance.
+This preserves the October 14 normal-path baseline with one live engine. Use
+`eval:hook-latency` for fresh engines and deadline/stall controls, or the native
+session runner below for host/model acceptance.
 
 `npm run eval:native-hooks -- --host claude-code --out /tmp/othie-native-claude` launches
 the installed native host in noninteractive mode against an isolated synthetic engine.
@@ -342,3 +344,37 @@ remain inspectable. Scores measure source, qualifier and explicit-conflict diagn
 **before packing**; they are not the packed `quality-v5` acceptance totals. Warm runtime
 state remains uncontrolled, and repeats are not independent samples. Both semantic
 quality and native-hook latency acceptance remain necessary before production use.
+
+## Complete adapter-process latency
+
+`npm run eval:hook-latency -- --out /tmp/othie-hook-latency` launches both compiled
+prompt adapters directly against a fresh synthetic engine, index and credentials on
+each of three repeats. It requires local IPC socket access and no model or host login.
+Extraction, embeddings and synthesis are disabled; the positive case uses cited
+lexical excerpts. This is adapter-process evidence, not native-host or semantic-filter
+acceptance.
+
+The fixed cases cover positive delivery with the first-response qualification intact,
+a repository-only no-op, a stalled authenticated engine request, delayed stdin followed
+by a stalled request, stdin that never closes, live revocation, and an unavailable
+engine. Both engine-stall cases must reach the authenticated engine before they can
+pass. Input and engine stalls must return no context with a timeout diagnostic.
+
+The parent measures time from before process spawn until process close, including
+module initialization, stdin, CLI startup, IPC, validation and output. Each raw attempt
+also preserves the adapter's content-free diagnostic and its internal elapsed time.
+Normal delivery/no-op/failure paths must complete within `--deadline-ms` (default
+2,000). Stall controls consume the adapter's internal deadline, including Node startup,
+and must exit before `--host-timeout-ms` (default 3,000), allowing for cleanup. The
+outer watchdog kills over-budget adapters and fails the attempt. Timer scheduling
+does not guarantee exact millisecond termination.
+
+Pass `--repeats 1` for a single observation. A new output directory contains
+`protocol.json`, an attempt file written immediately after every invocation, and
+`summary.json` after completion. The protocol records runtime, fixture and compiled
+entry-point hashes, budgets and condition/host order. Existing output directories are
+rejected before an engine starts. All fixtures are synthetic; credentials, temporary
+paths and host session metadata are excluded. Failed attempts remain in the record,
+behavior and latency are scored separately, and any failed attempt makes the CLI exit
+nonzero. Fresh engine state does not control machine load or runtime warm state, and
+these local repeats are not statistical or cross-platform acceptance.

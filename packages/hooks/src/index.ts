@@ -120,8 +120,11 @@ export async function runPromptHook(host: HookHost, rawInput: string, options: H
     if (!valid) return finish("invalid_context_response");
     if ((result.brief.status as Record<string, unknown>).mode === "empty") return finish("empty", "", result);
     const additionalContext = `Othie context brief (source-backed; preserve the included citations):\n${result.text}`;
-    return finish("injected", `${JSON.stringify({ hookSpecificOutput: { hookEventName: "UserPromptSubmit", additionalContext } })}\n`, result);
+    const stdout = `${JSON.stringify({ hookSpecificOutput: { hookEventName: "UserPromptSubmit", additionalContext } })}\n`;
+    if (performance.now() >= expiresAt) { controller.abort(); return finish("context_timeout"); }
+    return finish("injected", stdout, result);
   } catch {
+    if (performance.now() >= expiresAt) controller.abort();
     return finish(controller.signal.aborted ? "context_timeout" : "context_unavailable");
   } finally { clearTimeout(timer); }
 }
