@@ -12,12 +12,16 @@ The cap covers the engine's XML; host framing and the adapter's short introducti
 additional tokens, and the connected model's tokenizer may differ.
 
 The entry point bounds stdin and subprocess output to one million bytes each. Its default
-two-second deadline covers stdin reading and the CLI request after module initialization;
-the host's outer timeout also bounds process startup. Timed-out CLI children are killed.
+two-second deadline starts at Node's performance time origin, including module loading,
+stdin reading, the CLI request, and response validation. An exhausted startup budget
+skips the CLI. Synchronous startup/validation can delay cancellation; late context is
+discarded, and the host's outer timeout bounds total process lifetime. Timed-out CLI children are killed.
+Output serialization uses the same deadline. Late synchronous failures are reported
+as timeouts even before the timer callback runs.
 Diagnostics contain fixed error codes only. The adapters neither read host transcripts nor
 alter host settings. See the individual integration guides for setup and removal.
 
 `--diagnostics-json` opts into a single content-free JSON event on stderr for injection,
-empty results, or failure. It records host/surface/phase, request elapsed time, outcome,
+empty results, or failure. It records host/surface/phase, elapsed time since Node startup, outcome,
 and counts from validated responses. No prompt, text, path, profile, citation, credential,
 or session identifier is included. Othie does not store these events or send them anywhere.

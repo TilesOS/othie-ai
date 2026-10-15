@@ -1,0 +1,47 @@
+
+ RUN  v5.0.0 <othie-repository>/packages/engine
+
+Hook latency 1/codex/positive: passed=true, wall_ms=1238
+Hook latency 1/claude-code/positive: passed=true, wall_ms=1040
+Hook latency 1/codex/irrelevant: passed=true, wall_ms=915
+Hook latency 1/claude-code/irrelevant: passed=true, wall_ms=847
+Hook latency 1/codex/stalled-engine: passed=true, wall_ms=2257
+Hook latency 1/claude-code/stalled-engine: passed=false, wall_ms=3012
+Hook latency 1/codex/delayed-input-stalled-engine: passed=true, wall_ms=2267
+Hook latency 1/claude-code/delayed-input-stalled-engine: passed=true, wall_ms=2301
+Hook latency 1/codex/stalled-input: passed=true, wall_ms=2245
+Hook latency 1/claude-code/stalled-input: passed=true, wall_ms=2466
+Hook latency 1/codex/revoked: passed=true, wall_ms=813
+Hook latency 1/claude-code/revoked: passed=true, wall_ms=771
+Hook latency 1/codex/unavailable: passed=true, wall_ms=740
+Hook latency 1/claude-code/unavailable: passed=true, wall_ms=831
+ ❯ test/hook-latency.test.ts (5 tests | 1 failed) 21865ms
+   ❯ process-level hook latency acceptance (5)
+     × runs both compiled adapters against fresh live state and preserves attempts without overwrites 21856ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/hook-latency.test.ts > process-level hook latency acceptance > runs both compiled adapters against fresh live state and preserves attempts without overwrites
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ test/hook-latency.test.ts:51:29
+     49|       const report = await runHookLatencyAcceptance(out, { repeats: 1 …
+     50|       expect(report.completed).toBe(true);
+     51|       expect(report.passed).toBe(true);
+       |                             ^
+     52|       expect(report.attempts).toHaveLength(14);
+     53|       expect(report.attempts.filter((attempt) => attempt.condition.inc…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  03:35:35
+   Duration  22.92s (tests 96%, import 3%, transform 1%)
