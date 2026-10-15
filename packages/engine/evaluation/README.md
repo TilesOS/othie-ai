@@ -103,6 +103,21 @@ synthetic local experiments, not a general sandbox for arbitrary untrusted progr
 
 ## Native prompt-hook acceptance
 
+`npm run eval:hook-latency -- --out /tmp/othie-hook-latency` measures compiled Codex
+and Claude Code adapters against an isolated synthetic live engine without launching a
+native host or model. Three repeats cover cited delivery, irrelevant-task silence, live
+credential revocation and engine unavailability. Host order alternates between repeats.
+The adapters use their default 2,000 ms deadline; parent timing includes spawn, module
+loading, stdin, CLI/IPC, validation, output and exit. A separate 3,000 ms watchdog bounds
+the adapter process. Every attempt must deliver the expected result and exit within
+2,000 ms to pass. Pass `--repeats 1` through `10` to change the repeat count.
+
+The new output directory preserves protocol, compiled artifact hashes, each attempt as
+it finishes, and a final summary. Failures remain saved and exit nonzero. All providers
+are disabled, so this measures lexical excerpt delivery and cannot establish semantic
+applicability latency, model consumption, native host overhead, or desktop acceptance.
+Use the native session runner below for host/model acceptance.
+
 `npm run eval:native-hooks -- --host claude-code --out /tmp/othie-native-claude` launches
 the installed native host in noninteractive mode against an isolated synthetic engine.
 The four sessions cover positive cited delivery, a repository-only no-op, live credential
