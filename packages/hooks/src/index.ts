@@ -105,9 +105,11 @@ export async function runPromptHook(host: HookHost, rawInput: string, options: H
   if (!Number.isSafeInteger(options.maxTokens) || options.maxTokens <= 0 || !Number.isSafeInteger(options.deadlineMs) || options.deadlineMs <= 0 || options.deadlineMs > 2_147_483_647) {
     return finish("invalid_options");
   }
+  const expiresAt = started + options.deadlineMs;
+  const remainingMs = expiresAt - performance.now();
+  if (remainingMs <= 0) return finish("context_timeout");
   const controller = new AbortController();
-  const expiresAt = performance.now() + options.deadlineMs;
-  const timer = setTimeout(() => controller.abort(), options.deadlineMs);
+  const timer = setTimeout(() => controller.abort(), remainingMs);
   const deadline = new Promise<never>((_, reject) => controller.signal.addEventListener("abort", () => reject(new Error("deadline")), { once: true }));
   try {
     const request: ContextQuery = { query: event.prompt, workspaceRoot: event.cwd, surface: "code", phase: "turn_start", host, maxTokens: options.maxTokens };
@@ -204,11 +206,13 @@ function readHookStdin(deadlineMs: number): Promise<string> {
 }
 
 export async function hookMain(host: HookHost, entryUrl: string): Promise<void> {
-  const options = hookOptionsFromProcess(host, entryUrl), started = performance.now();
+  // performance.now() measures time since Node's time origin, including static
+  // imports. Never grant a fresh budget after startup or after consuming stdin.
+  const started = 0, options = hookOptionsFromProcess(host, entryUrl);
   try {
-    const raw = await readHookStdin(options.deadlineMs);
-    const remainingMs = Math.floor(options.deadlineMs - (performance.now() - started));
-    const result = remainingMs > 0 ? await runPromptHook(host, raw, { ...options, deadlineMs: remainingMs }, undefined, started) : outcomeResult(host, options, started, "context_timeout");
+    const remainingMs = options.deadlineMs - performance.now();
+    const raw = remainingMs > 0 ? await readHookStdin(remainingMs) : undefined;
+    const result = raw !== undefined ? await runPromptHook(host, raw, options, undefined, started) : outcomeResult(host, options, started, "context_timeout");
     if (result.stdout) process.stdout.write(result.stdout);
     if (result.stderr) process.stderr.write(result.stderr);
   } catch (error) {

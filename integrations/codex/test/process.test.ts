@@ -23,7 +23,7 @@ describe("compiled Codex hook process", () => {
   });
   it("rejects oversized multibyte input and exits without context", async () => {
     const raw = JSON.stringify({ hook_event_name: "UserPromptSubmit", cwd: "/workspace", prompt: "界".repeat(400_000) });
-    expect(await invoke(raw)).toEqual({ code: 0, stdout: "", stderr: "Othie Codex hook: invalid_event\n" });
+    expect(await invoke(raw, [], 2000)).toEqual({ code: 0, stdout: "", stderr: "Othie Codex hook: invalid_event\n" });
   });
   it("does not expose subprocess errors when the CLI is missing", async () => {
     const result = await invoke(event, ["--cli", "/PRIVATE_MISSING_CLI"], 1000);

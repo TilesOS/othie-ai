@@ -17,8 +17,9 @@ The adapter shares `@othie/hooks` with Claude Code. It independently recounts th
 XML with the declared tokenizer, checks the requested cap, verifies host/workspace
 metadata, and rejects inconsistent status or citation data. The cap covers XML; the
 adapter introduction and host framing add tokens. The internal deadline also covers
-stdin reading after module initialization, and input/output are limited to one million
-bytes. The host's outer timeout covers startup.
+Node startup, module loading, stdin reading, the CLI request and response validation;
+input/output are limited to one million bytes. Late context is discarded even when
+synchronous work delays cancellation. The host's outer timeout bounds process lifetime.
 
 Pass `--diagnostics-json` or set `OTHIE_CODEX_DIAGNOSTICS_JSON=1` to emit one content-free
 JSON event on stderr, including successful injection and empty/no-op outcomes. It records

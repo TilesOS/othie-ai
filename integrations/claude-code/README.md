@@ -5,8 +5,10 @@ prototype. It reads only the prompt and working directory from stdin, queries th
 engine through its authenticated CLI, and emits `hookSpecificOutput.additionalContext`
 when the result contains verified packed items. It never emits a block decision.
 
-The default internal deadline is two seconds after module initialization, including
-stdin reading; the example gives the host a three-second outer timeout. Empty retrieval,
+The default internal deadline is two seconds from Node startup, including module loading,
+stdin reading, the CLI request and response validation; the example gives the host a
+three-second outer timeout. Late context is discarded even when synchronous work delays
+cancellation. Empty retrieval,
 engine failure, timeout, and invalid or over-budget responses all allow the prompt to
 continue without Othie context. Diagnostics use fixed codes on stderr.
 
