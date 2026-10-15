@@ -1,0 +1,59 @@
+{
+  "recorded_at": "2026-10-15T04:04:22.983149+00:00",
+  "code": "ca1bd937711061c4887edf244125ce2829b2f14d",
+  "synthetic_only": true,
+  "original_commits_retained": [
+    "aa5caad",
+    "97cbdcb",
+    "ebf36b2",
+    "d03e8a8",
+    "b2279cd",
+    "b4f0417",
+    "7b5ee06",
+    "26f3e67",
+    "c410e6f"
+  ],
+  "tests": {
+    "passed": 172,
+    "skipped_live_model": 1,
+    "by_workspace": {
+      "engine": 111,
+      "hooks": 30,
+      "website": 14,
+      "codex": 10,
+      "claude_code": 7
+    }
+  },
+  "checks": {
+    "workspace_build": "pass",
+    "workspace_typecheck": "pass",
+    "website_lint": "pass",
+    "production_audit_advisories": 0,
+    "git_diff_check": "pass",
+    "both_prior_manifests_valid": true,
+    "original_nine_commits_are_ancestors": true,
+    "attempts_match_summaries": true,
+    "compiled_hashes_match": true
+  },
+  "strict_evaluators": {
+    "fresh_engine": {
+      "attempts": 14,
+      "passed": true,
+      "min_wall_ms": 586.0457689999998,
+      "max_wall_ms": 2029.3180579999998
+    },
+    "actual_defaults": {
+      "attempts": 8,
+      "passed": true,
+      "min_wall_ms": 591.2491540000001,
+      "max_wall_ms": 755.0459770000001
+    }
+  },
+  "log_normalization": "Repository paths replaced with <othie-repository>; terminal carriage returns, trailing spaces and trailing blank lines removed. Attempt JSON is unchanged.",
+  "limitations": [
+    "Direct compiled adapters, not native host sessions or model consumption.",
+    "Lexical excerpt workload with model providers disabled; semantic acceptance remains open.",
+    "Single serial repeat per evaluator; timings are observations, not a general guarantee.",
+    "No new native Windows hardware, desktop UI or installer acceptance."
+  ]
+}

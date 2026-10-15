@@ -1,0 +1,30 @@
+{
+  "host": "codex",
+  "condition": "irrelevant",
+  "repeat": 1,
+  "code": 0,
+  "stdout": "",
+  "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"codex\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"empty\",\"elapsed_ms\":607,\"mode\":\"empty\",\"token_count\":74,\"omitted_items\":0,\"rule_count\":0,\"excerpt_count\":0,\"synthesis_count\":0,\"conflict_count\":0}\n",
+  "wall_ms": 619.277679,
+  "timed_out": false,
+  "oversized": false,
+  "diagnostics": {
+    "schema_version": "1",
+    "event": "othie_prompt_hook",
+    "host": "codex",
+    "surface": "code",
+    "phase": "turn_start",
+    "outcome": "empty",
+    "elapsed_ms": 607,
+    "mode": "empty",
+    "token_count": 74,
+    "omitted_items": 0,
+    "rule_count": 0,
+    "excerpt_count": 0,
+    "synthesis_count": 0,
+    "conflict_count": 0
+  },
+  "delivery_passed": true,
+  "hook_deadline_met": true,
+  "passed": true
+}

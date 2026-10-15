@@ -1,0 +1,15 @@
+Hook latency 1/codex/positive: passed=true, wall_ms=625
+Hook latency 1/claude-code/positive: passed=true, wall_ms=609
+Hook latency 1/codex/irrelevant: passed=true, wall_ms=586
+Hook latency 1/claude-code/irrelevant: passed=true, wall_ms=609
+Hook latency 1/codex/stalled-engine: passed=true, wall_ms=2025
+Hook latency 1/claude-code/stalled-engine: passed=true, wall_ms=2029
+Hook latency 1/codex/delayed-input-stalled-engine: passed=true, wall_ms=2020
+Hook latency 1/claude-code/delayed-input-stalled-engine: passed=true, wall_ms=2017
+Hook latency 1/codex/stalled-input: passed=true, wall_ms=2013
+Hook latency 1/claude-code/stalled-input: passed=true, wall_ms=2012
+Hook latency 1/codex/revoked: passed=true, wall_ms=680
+Hook latency 1/claude-code/revoked: passed=true, wall_ms=619
+Hook latency 1/codex/unavailable: passed=true, wall_ms=617
+Hook latency 1/claude-code/unavailable: passed=true, wall_ms=629
+{"report":"<othie-repository>/packages/engine/evaluation/records/2026-10-14/combined-hook-verification/fresh-engine/summary.json","passed":true}

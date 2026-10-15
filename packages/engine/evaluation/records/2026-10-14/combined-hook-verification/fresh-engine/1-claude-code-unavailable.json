@@ -1,0 +1,28 @@
+{
+  "repeat": 1,
+  "host": "claude-code",
+  "condition": "unavailable",
+  "code": 0,
+  "signal": null,
+  "stdout": "",
+  "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"claude-code\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"context_unavailable\",\"elapsed_ms\":618}\n",
+  "wall_ms": 628.7134880000012,
+  "timed_out": false,
+  "output_limit_exceeded": false,
+  "start_failed": false,
+  "expected_outcome": "context_unavailable",
+  "diagnostic": {
+    "schema_version": "1",
+    "event": "othie_prompt_hook",
+    "host": "claude-code",
+    "surface": "code",
+    "phase": "turn_start",
+    "outcome": "context_unavailable",
+    "elapsed_ms": 618
+  },
+  "engine_received": false,
+  "process_budget_ms": 2000,
+  "behavior_passed": true,
+  "latency_passed": true,
+  "passed": true
+}

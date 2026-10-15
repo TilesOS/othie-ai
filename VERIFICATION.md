@@ -14,6 +14,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm test` | 172 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
+| Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
 | Evaluation-only semantic applicability, initial trials | Boundaries 42/56 versus lexical 51/56; larger applicability corpus 54/80 versus paired lexical 61/80; both fail acceptance |
@@ -49,8 +50,9 @@ all workspace typechecks, the then-current 150 tests and Windows startup-script 
 This verifies the October 6 dependency and applicability changes. The
 [run for `7eb19f8`](https://github.com/TilesOS/othie-ai/actions/runs/37877299841), inspected
 October 14, passes clean installation, workspace typechecks and tests on both runners,
-plus Windows startup-script syntax. This verifies the October 8 evaluator changes;
-the new startup-deadline and latency-evaluator commits still need their own CI. Automated
+plus Windows startup-script syntax. This verifies the October 8 evaluator changes.
+Startup-deadline changes through `c410e6f` also pass both runners; CI for the combined
+history is tracked in PR #1. Automated
 runner results do not establish native desktop-host or logon-startup acceptance.
 
 ## Delivery and credential coverage
@@ -576,14 +578,36 @@ restricted-sandbox suite failed on socket/process access, while baseline and fin
 pass with the required local access. Native-host and website browser acceptance were not
 repeated. CI through `7eb19f8` now passes both runners; the new local hook commits need CI.
 
+## October 14 combined cloud verification
+
+Merge `ca1bd93` preserves all four October 13 commits and all five October 14 commits.
+The runtime combines startup-inclusive budgeting with the earlier checks after output
+serialization and synchronous failure. The fresh-engine/stall evaluator remains
+`npm run eval:hook-latency`; the separate October 14 actual-default baseline is now
+`npm run eval:hook-default-latency`. Both original recordings and failure/load observations
+remain available. Two October 13 text logs have trailing blank lines removed and their
+manifest hashes refreshed; exact originals remain in `d03e8a8`, and attempt JSON is unchanged.
+
+The [combined records](packages/engine/evaluation/records/2026-10-14/combined-hook-verification/README.md)
+verify all 172 deterministic tests, build, typechecks, website lint, and zero production
+dependency advisories. One opt-in live-model test remains skipped. A serial strict run
+passes all 14 fresh-engine conditions at the default 2,000/3,000 ms budgets, including
+authenticated IPC stalls, delayed input and unclosed stdin. The separate normal-path
+runner passes all eight attempts with the adapters' actual defaults. These are direct
+adapter checks with model providers disabled; native-host and semantic acceptance remain open.
+
+The [CI run for `c410e6f`](https://github.com/TilesOS/othie-ai/actions/runs/38678642518)
+passes both macOS and Windows jobs. CI for the combined history is tracked in
+[PR #1](https://github.com/TilesOS/othie-ai/pull/1).
+
 ## Remaining acceptance work
 
 - Codex project-file discovery and persisted interactive hook-trust acceptance; Claude
   project/local settings discovery and desktop UI acceptance beyond explicit CLI settings.
 - Codex local-model context consumption after the observed positive-context failure.
 - Windows native-host and logon-startup acceptance beyond the historical automated CI
-  suite; CI through `7eb19f8` passes both runners, while the new startup-deadline and
-  latency-evaluator changes still need their own Windows CI verification.
+  suite; CI through `c410e6f` passes both runners, while the combined-history CI is
+  tracked in PR #1. Native Windows host/session acceptance remains open.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
 - Compiler classification, relevance, linked evidence, and packing: deterministic recovery
