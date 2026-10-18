@@ -15,6 +15,26 @@ type NativeCondition = "positive" | "irrelevant" | "revoked" | "unavailable";
 type HookReceipt = { event: string; model?: string | null; stdout: string; stderr: string; code: number };
 const canaryPolicy = "Canary enterprise support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.";
 
+// Native hosts can report account utilization and encoded private paths even in
+// synthetic sessions. Redact structured metadata before retaining transcripts.
+export function redactNativeTranscript(text: string, paths: ReadonlyArray<readonly [string, string]>): string {
+  const privateFields = new Set(["session_id", "uuid", "hook_id", "request_id", "memory_paths", "messaging_socket_path", "rate_limit_info"]);
+  const redactPaths = (value: string) => {
+    for (const [path, replacement] of paths) value = value.replaceAll(path, replacement);
+    return value;
+  };
+  const redact = (value: unknown): unknown => {
+    if (typeof value === "string") return redactPaths(value);
+    if (Array.isArray(value)) return value.map(redact);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, entry]) =>
+      [key, privateFields.has(key) ? "<redacted>" : redact(entry)]));
+    return value;
+  };
+  return text.split("\n").map((line) => {
+    try { return JSON.stringify(redact(JSON.parse(line))); } catch { return redactPaths(line); }
+  }).join("\n");
+}
+
 export function nativeHookDelivery(host: NativeHost, condition: NativeCondition, receipt: HookReceipt | null): boolean {
   if (!receipt || receipt.code !== 0 || receipt.event !== "UserPromptSubmit") return false;
   try {
@@ -176,7 +196,7 @@ export async function runNativeHookAcceptance(host: NativeHost, out: string, loc
       const answer = answers.at(-1)?.trim().toLowerCase().replace(/[.!]$/, "") ?? null;
       const expected = condition === "positive" ? "11" : condition === "irrelevant" ? "42" : "unknown";
       const delivery = nativeHookDelivery(host, condition, receipt);
-      const redact = (text: string) => text.replaceAll(root, "<temporary-fixture>").replaceAll(repository, "<othie-repository>").replaceAll(homedir(), "<user-home>");
+      const redact = (text: string) => redactNativeTranscript(text, [[root, "<temporary-fixture>"], [repository, "<othie-repository>"], [homedir(), "<user-home>"]]);
       const hostModel = receipt?.model ?? events.find((event) => event.type === "system" && event.subtype === "init")?.model ?? null;
       const record = { host, host_model: hostModel, condition, prompt, expected, answer, elapsed_ms: elapsedMs, response: { ...response, stdout: redact(response.stdout), stderr: redact(response.stderr) },
         receipt, delivery_passed: !!delivery, passed: !!delivery && response.code === 0 && !response.timed_out && answer === expected };

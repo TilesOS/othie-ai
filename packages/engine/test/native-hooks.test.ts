@@ -3,9 +3,25 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { claudeSettingsConfiguration, nativeHookDelivery, recordingWrapper } from "../src/evaluation/native-hooks.js";
+import { claudeSettingsConfiguration, nativeHookDelivery, recordingWrapper, redactNativeTranscript } from "../src/evaluation/native-hooks.js";
 
 describe("native hook acceptance recorder", () => {
+  it("redacts account telemetry, identifiers and encoded host paths while preserving synthetic evidence", () => {
+    const transcript = [
+      { type: "system", cwd: "/private/fixture/workspace", session_id: "PRIVATE_SESSION", memory_paths: { auto: "PRIVATE_ENCODED_PATH" }, messaging_socket_path: "PRIVATE_SOCKET" },
+      { type: "rate_limit_event", rate_limit_info: { utilization: "PRIVATE_ACCOUNT_UTILIZATION" }, uuid: "PRIVATE_UUID" },
+      { type: "assistant", message: { content: [{ text: "11" }], request_id: "PRIVATE_REQUEST" } },
+      { type: "system", hook_id: "PRIVATE_HOOK", stdout: '{"hookSpecificOutput":{"additionalContext":"synthetic cited context"}}', exit_code: 0 },
+    ].map((event) => JSON.stringify(event)).join("\n") + "\nwarning at /private/fixture/file\n";
+    const redacted = redactNativeTranscript(transcript, [["/private/fixture", "<temporary-fixture>"]]);
+    expect(redacted).not.toMatch(/PRIVATE_|\/private\/fixture/);
+    expect(redacted).toContain('"text":"11"');
+    expect(redacted).toContain("synthetic cited context");
+    expect(redacted).toContain('"exit_code":0');
+    expect(redacted).toContain("warning at <temporary-fixture>/file");
+    expect(redactNativeTranscript(redacted, [["/private/fixture", "<temporary-fixture>"]])).toBe(redacted);
+  });
+
   it("requires the full cited policy and matching successful adapter event for native delivery", () => {
     const context = '<excerpt source="s1/canary.md">Canary enterprise support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.</excerpt>';
     const receipt = { event: "UserPromptSubmit", code: 0, stderr: JSON.stringify({ host: "claude-code", outcome: "injected" }),
