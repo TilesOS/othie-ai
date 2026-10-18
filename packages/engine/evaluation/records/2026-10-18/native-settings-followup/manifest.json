@@ -1,10 +1,11 @@
 {
   "code": "2fe3015",
+  "final_argument_guard_code": "2f15b20",
   "synthetic_only": true,
   "files": [
     {
       "path": "README.md",
-      "sha256": "18f99035de50e52c507bbe01e2fafd450722aece9904169d8f817fa20ed32b58"
+      "sha256": "6902d359185d25462c9833fa9c6842f240755ba30e0e376a5bff49588c071984"
     },
     {
       "path": "checks/build.txt",
@@ -17,6 +18,14 @@
     {
       "path": "checks/default-evaluator.txt",
       "sha256": "afbba63fbb46f15c84a1be8f5b86fc6ded0dcd44978f433ab3210915f4b094a8"
+    },
+    {
+      "path": "checks/final-tests.txt",
+      "sha256": "5e5b867643c1d7cb844c8645eaef0ecd3ace27e692fce7bebd8a1aad02f7e30c"
+    },
+    {
+      "path": "checks/final-typecheck.txt",
+      "sha256": "2dc3035b749ad8c19987c4c1e06f78d657ae6aa5c9d71fc4fe077960ebf2fec6"
     },
     {
       "path": "checks/merged-ci.json",
@@ -296,7 +305,7 @@
     },
     {
       "path": "verification.json",
-      "sha256": "c2424a1f71bdf9b281abdc24ee12c5dccf283218b1d1a2f382284de859fdc10b"
+      "sha256": "913582aeedca19da420cbe9f41f31fd5e4835878948656856422a0e6e045965a"
     }
   ]
 }

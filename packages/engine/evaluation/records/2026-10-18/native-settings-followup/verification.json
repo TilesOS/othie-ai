@@ -126,5 +126,25 @@
     "Strict serial adapter checks use synthetic lexical excerpts and disabled model providers.",
     "No interactive trust, desktop UI, native Codex sessions, local-model consumption, semantic filtering, native Windows/logon, installer or larger coding benchmark acceptance.",
     "Installed dependencies used; clean installation not repeated."
-  ]
+  ],
+  "final_argument_guard": {
+    "code": "2f15b20",
+    "recorded_at": "2026-10-18T22:22:34.721Z",
+    "workspace_typecheck": "pass",
+    "workspace_tests": "pass",
+    "tests": {
+      "passed": 176,
+      "skipped_opt_in_real_model": 1,
+      "by_workspace": {
+        "engine": 115,
+        "hooks": 30,
+        "website": 14,
+        "codex": 10,
+        "claude_code": 7
+      }
+    },
+    "changed_behavior": "Unknown, duplicate and incomplete native CLI arguments fail before creating run state; valid native invocation behavior is unchanged.",
+    "native_sessions_repeated": false,
+    "source_sha256": "dd1e411a4aba315cd2abc6ae1765308ab5fe5ceeb37d53d488c71a7066face0c"
+  }
 }

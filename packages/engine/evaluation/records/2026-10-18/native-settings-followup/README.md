@@ -57,6 +57,13 @@ were not changed or reinstalled. The [merged CI record](checks/merged-ci.json) c
 both macOS and Windows jobs pass for `449c3fc`; the new local commits still need CI.
 The [manifest](manifest.json) hashes the published evidence and normalized check logs.
 
+Final harness review added strict CLI argument parsing in `2f15b20`: unknown, duplicate
+and incomplete flags now fail before run state is created, preventing an accidental
+explicit-baseline run when a discovery flag is mistyped. Final
+[workspace typechecks](checks/final-typecheck.txt) and the [full suite](checks/final-tests.txt)
+pass with 176 deterministic tests and one opt-in real-model test skipped. Valid native
+invocation behavior is unchanged; the native sessions were not repeated for this guard.
+
 Reproduce each run with a new output directory:
 
 ```sh

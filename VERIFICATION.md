@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci` | October 14 clean installation passes; not repeated October 18 |
 | `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 175 passing tests; one opt-in real-model test skipped |
+| `npm test` | 176 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -28,7 +28,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
-The full suite comprises 114 engine, 30 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 115 engine, 30 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -650,6 +650,13 @@ macOS and Windows; the new local commits still need their own CI. Website browse
 interactive workspace trust, Codex native sessions, semantic filtering and native Windows
 acceptance were not repeated. In particular, noninteractive Claude treats the generated
 workspace as trusted, so this does not close interactive or desktop acceptance.
+
+Final harness review also found that incomplete or misspelled CLI flags could silently
+select the explicit baseline. Argument parsing now rejects unknown, duplicate and
+incomplete options before creating run state. Workspace typechecks and the full suite
+were rerun after this guard: 176 deterministic tests pass, with the same opt-in test
+skipped. The new regression covers accidental baseline selection; valid native invocation
+behavior is unchanged, and the retained native sessions were not repeated for this guard.
 
 ## Remaining acceptance work
 
