@@ -3,9 +3,44 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { recordingWrapper } from "../src/evaluation/native-hooks.js";
+import { claudeSettingsConfiguration, nativeHookDelivery, recordingWrapper } from "../src/evaluation/native-hooks.js";
 
 describe("native hook acceptance recorder", () => {
+  it("requires the full cited policy and matching successful adapter event for native delivery", () => {
+    const context = '<excerpt source="s1/canary.md">Canary enterprise support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.</excerpt>';
+    const receipt = { event: "UserPromptSubmit", code: 0, stderr: JSON.stringify({ host: "claude-code", outcome: "injected" }),
+      stdout: JSON.stringify({ hookSpecificOutput: { hookEventName: "UserPromptSubmit", additionalContext: context } }) };
+    expect(nativeHookDelivery("claude-code", "positive", receipt)).toBe(true);
+    for (const change of [
+      { code: 1 }, { event: "SessionStart" }, { stdout: "eleven hours" },
+      { stdout: receipt.stdout.replace('source=\\"s1/canary.md\\"', 'source=\\"other.md\\"') },
+      { stdout: receipt.stdout.replace("not a resolution deadline", "a resolution deadline") },
+      { stderr: JSON.stringify({ host: "codex", outcome: "injected" }) },
+    ]) expect(nativeHookDelivery("claude-code", "positive", { ...receipt, ...change })).toBe(false);
+    expect(nativeHookDelivery("claude-code", "positive", null)).toBe(false);
+    const empty = { ...receipt, stdout: "", stderr: JSON.stringify({ host: "claude-code", outcome: "empty" }) };
+    expect(nativeHookDelivery("claude-code", "irrelevant", empty)).toBe(true);
+    expect(nativeHookDelivery("claude-code", "irrelevant", { ...empty, stdout: " " })).toBe(false);
+    expect(nativeHookDelivery("claude-code", "revoked", empty)).toBe(false);
+    const unavailable = { ...empty, stderr: JSON.stringify({ host: "claude-code", outcome: "context_unavailable" }) };
+    expect(nativeHookDelivery("claude-code", "revoked", unavailable)).toBe(true);
+    expect(nativeHookDelivery("claude-code", "unavailable", unavailable)).toBe(true);
+  });
+
+  it("does not mask project or local settings discovery with an explicit override", () => {
+    const workspace = join(tmpdir(), "workspace with spaces"), override = join(tmpdir(), "explicit.json");
+    for (const mode of ["project", "local"] as const) {
+      const config = claudeSettingsConfiguration(mode, workspace, override);
+      expect(config.path).toBe(join(workspace, ".claude", mode === "project" ? "settings.json" : "settings.local.json"));
+      expect(config.args).toEqual(["--setting-sources", "project,local"]);
+      expect(config.args).not.toContain(override);
+      expect(config.location).toBe(`.claude/${mode === "project" ? "settings.json" : "settings.local.json"}`);
+    }
+    const explicit = claudeSettingsConfiguration("explicit", workspace, override);
+    expect(explicit.path).toBe(override);
+    expect(explicit.args).toEqual(["--setting-sources", "project,local", "--settings", override]);
+  });
+
   it("forwards the host event and adapter output while excluding private event values from evidence", async () => {
     const root = await mkdtemp(join(tmpdir(), "othie-native-recorder-"));
     const nested = join(root, "fixture with spaces"); await mkdir(nested);

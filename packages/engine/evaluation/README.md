@@ -129,6 +129,25 @@ are used; host sessions may use the subscription/provider configured for that ho
 No global hook configuration is changed. Claude Code receives explicit settings,
 disables tools and MCP servers, and does not persist sessions.
 
+Pass `--claude-settings project` or `--claude-settings local` to test discovery of
+`.claude/settings.json` or `.claude/settings.local.json` in the isolated Git repository.
+These modes omit `--settings`, exclude user settings, and load only project/local
+sources. The default `--claude-settings explicit` retains the explicit-settings baseline.
+Add `--launch-directory nested` to start either host below the project root in a
+directory with spaces. Every run preserves `protocol.json` before the first session,
+including configuration mode, launch directory and compiled-artifact hashes. Native
+session wall times are recorded separately from the adapter's diagnostics; model
+response time is not a hook-latency measurement. Positive delivery requires the entire
+cited canary policy, including its first-response/resolution qualification.
+
+```sh
+npm run eval:native-hooks -- --host claude-code --claude-settings local --launch-directory nested --out /tmp/othie-native-claude-local
+```
+
+Noninteractive Claude Code skips the workspace trust dialog, so discovery acceptance
+does not establish interactive hook approval or desktop UI acceptance. See the official
+[hook trust reference](https://code.claude.com/docs/en/hooks#workspace-trust).
+
 For Codex, pass `--host codex`, optionally with `--local-model qwen3.5:4b-mlx` to use an
 installed loopback Ollama model. Codex receives an invocation-local hook configuration,
 ignores user configuration, disables plugins, uses read-only tool permissions, and does
