@@ -11,6 +11,19 @@ import { runEngine } from "../engine/lifecycle.js";
 export type NativeHost = "codex" | "claude-code";
 export type ClaudeSettings = "explicit" | "project" | "local";
 export type LaunchDirectory = "root" | "nested";
+export function nativeHookArguments(argv: string[]): ReadonlyMap<string, string> {
+  const allowed = new Set(["host", "out", "codex-hooks", "claude-settings", "launch-directory", "local-model"]);
+  const values = new Map<string, string>();
+  for (let index = 0; index < argv.length; index += 2) {
+    const flag = argv[index]!, name = flag.slice(2), value = argv[index + 1];
+    if (!flag.startsWith("--") || !allowed.has(name)) throw new Error(`Unknown native acceptance argument: ${flag}`);
+    if (values.has(name)) throw new Error(`Duplicate native acceptance argument: ${flag}`);
+    if (!value || value.startsWith("--")) throw new Error(`${flag} requires a value`);
+    values.set(name, value);
+  }
+  return values;
+}
+
 type NativeCondition = "positive" | "irrelevant" | "revoked" | "unavailable";
 type HookReceipt = { event: string; model?: string | null; stdout: string; stderr: string; code: number };
 const canaryPolicy = "Canary enterprise support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.";
@@ -214,11 +227,11 @@ export async function runNativeHookAcceptance(host: NativeHost, out: string, loc
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const argument = (name: string) => { const index = process.argv.indexOf(`--${name}`); return index < 0 ? undefined : process.argv[index + 1]; };
+  const values = nativeHookArguments(process.argv.slice(2));
+  const argument = (name: string) => values.get(name);
   const host = argument("host");
   if (host !== "codex" && host !== "claude-code") throw new Error("--host must be codex or claude-code");
   const out = resolve(argument("out") ?? `packages/engine/evaluation/results/native-${host}-${Date.now()}`);
-  await mkdir(resolve(out, ".."), { recursive: true });
   const codexHooks = argument("codex-hooks") ?? "session";
   if (codexHooks !== "session" && codexHooks !== "project") throw new Error("--codex-hooks must be session or project");
   const claudeSettings = argument("claude-settings") ?? "explicit";
@@ -227,6 +240,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   if (launchDirectory !== "root" && launchDirectory !== "nested") throw new Error("--launch-directory must be root or nested");
   if (host !== "claude-code" && argument("claude-settings")) throw new Error("--claude-settings requires --host claude-code");
   if (host !== "codex" && (argument("codex-hooks") || argument("local-model"))) throw new Error("--codex-hooks and --local-model require --host codex");
+  await mkdir(resolve(out, ".."), { recursive: true });
   void runNativeHookAcceptance(host, out, argument("local-model"), codexHooks, { claudeSettings, launchDirectory }).then((report) => {
     process.stdout.write(JSON.stringify({ report: join(out, "summary.json"), passed: report.passed }) + "\n");
     if (!report.passed) process.exitCode = 1;

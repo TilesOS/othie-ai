@@ -3,9 +3,22 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { claudeSettingsConfiguration, nativeHookDelivery, recordingWrapper, redactNativeTranscript } from "../src/evaluation/native-hooks.js";
+import { claudeSettingsConfiguration, nativeHookArguments, nativeHookDelivery, recordingWrapper, redactNativeTranscript } from "../src/evaluation/native-hooks.js";
 
 describe("native hook acceptance recorder", () => {
+  it("rejects ambiguous or incomplete CLI modes instead of silently running a different baseline", () => {
+    const base = ["--host", "claude-code"];
+    for (const args of [
+      [...base, "--claude-settings"], [...base, "--claude-settings", "--out", "somewhere"],
+      [...base, "--claude-setting", "local"], [...base, "--claude-settings", "local", "--claude-settings", "explicit"],
+      [...base, "--launch-directory"], [...base, "local"],
+    ]) expect(() => nativeHookArguments(args)).toThrow();
+    expect(Object.fromEntries(nativeHookArguments([...base, "--claude-settings", "local", "--launch-directory", "nested", "--out", "path with spaces"])))
+      .toEqual({ host: "claude-code", "claude-settings": "local", "launch-directory": "nested", out: "path with spaces" });
+    expect(Object.fromEntries(nativeHookArguments(["--host", "codex", "--codex-hooks", "project", "--local-model", "local-model"])))
+      .toEqual({ host: "codex", "codex-hooks": "project", "local-model": "local-model" });
+  });
+
   it("redacts account telemetry, identifiers and encoded host paths while preserving synthetic evidence", () => {
     const transcript = [
       { type: "system", cwd: "/private/fixture/workspace", session_id: "PRIVATE_SESSION", memory_paths: { auto: "PRIVATE_ENCODED_PATH" }, messaging_socket_path: "PRIVATE_SOCKET" },

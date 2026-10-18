@@ -133,6 +133,8 @@ Pass `--claude-settings project` or `--claude-settings local` to test discovery 
 `.claude/settings.json` or `.claude/settings.local.json` in the isolated Git repository.
 These modes omit `--settings`, exclude user settings, and load only project/local
 sources. The default `--claude-settings explicit` retains the explicit-settings baseline.
+Unknown, duplicate and incomplete CLI arguments are rejected before creating run state,
+so a misspelled discovery option cannot silently select the explicit baseline.
 Add `--launch-directory nested` to start either host below the project root in a
 directory with spaces. Claude's shared project settings are read from the primary
 working directory, while local settings can be read from the Git root on macOS.
