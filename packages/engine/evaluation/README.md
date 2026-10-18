@@ -134,7 +134,12 @@ Pass `--claude-settings project` or `--claude-settings local` to test discovery 
 These modes omit `--settings`, exclude user settings, and load only project/local
 sources. The default `--claude-settings explicit` retains the explicit-settings baseline.
 Add `--launch-directory nested` to start either host below the project root in a
-directory with spaces. Every run preserves `protocol.json` before the first session,
+directory with spaces. Claude's shared project settings are read from the primary
+working directory, while local settings can be read from the Git root on macOS.
+Consequently a shared root settings file is a deliberate discovery boundary probe
+when launching below that root; missing delivery fails the run and remains recorded.
+See the official [settings locations](https://code.claude.com/docs/en/settings) reference.
+Every run preserves `protocol.json` before the first session,
 including configuration mode, launch directory and compiled-artifact hashes. Native
 session wall times are recorded separately from the adapter's diagnostics; model
 response time is not a hook-latency measurement. Positive delivery requires the entire
@@ -164,6 +169,8 @@ answer; adapter execution alone cannot establish that a host/model consumed the 
 Native stdout/stderr transcripts contain synthetic session metadata and may contain host
 paths. Inspect/redact them before publishing. New output directories prevent overwriting
 previous evidence. Temporary engines, credentials, and settings are removed after use.
+Structured transcripts redact session/request identifiers, memory and socket locations,
+and account rate-limit metadata in addition to literal fixture/repository/home paths.
 
 ## Compiler-quality corpus
 

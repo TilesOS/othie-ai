@@ -32,8 +32,19 @@ hooks. No settings are installed automatically by this package.
 
 The configuration follows the official [hook reference](https://code.claude.com/docs/en/hooks)
 checked October 2, 2026, including exec-form command arguments. Older hosts may require an
-upgrade to support that form. The automated tests verify the adapter contract; a live
-Claude Code session and Windows native-host run remain separate acceptance checks.
+upgrade to support that form. The automated tests verify the adapter contract;
+native-host checks cover only the recorded versions and configuration paths below.
+
+Native noninteractive checks on macOS with Claude Code 2.1.283 verify project and local
+settings discovery from the repository root, and root `.claude/settings.local.json`
+discovery from a nested launch directory. Shared `.claude/settings.json` is read from
+the session's starting directory: start Claude Code at the repository root to load a
+shared root hook, or supply its absolute path with `--settings`. A nested-launch probe
+with only shared root settings did not run the hook. This distinction follows the
+official [settings locations reference](https://code.claude.com/docs/en/settings).
+Interactive workspace trust and desktop UI acceptance remain separate from these
+noninteractive checks. Full synthetic session evidence is linked from
+[the verification report](../../VERIFICATION.md).
 
 Remove only this handler from `hooks.UserPromptSubmit` to disable delivery, retaining any
 other handlers. MCP tool access continues independently.

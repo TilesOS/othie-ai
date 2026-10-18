@@ -1,0 +1,41 @@
+{
+  "protocol_version": "hook-latency-v1",
+  "recorded_at": "2026-10-18T22:19:10.616Z",
+  "synthetic_only": true,
+  "platform": "darwin",
+  "arch": "arm64",
+  "node": "v24.18.0",
+  "options": {
+    "repeats": 1,
+    "deadline_ms": 2000,
+    "host_timeout_ms": 3000
+  },
+  "hosts": [
+    "codex",
+    "claude-code"
+  ],
+  "conditions": [
+    "positive",
+    "irrelevant",
+    "stalled-engine",
+    "delayed-input-stalled-engine",
+    "stalled-input",
+    "revoked",
+    "unavailable"
+  ],
+  "fixture": {
+    "source": "Canary support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.\n",
+    "positive_prompt": "What is the Canary support policy weekend first-response target?",
+    "irrelevant_prompt": "Refactor a JavaScript sorting comparator. Do not use tools."
+  },
+  "fixture_sha256": "4c41c472c3d990ea29c3eee07a55f915029fa55af1a581573a831f3dd202e1da",
+  "adapter_sha256": {
+    "codex": "f509052788ddea2779ebf8988000e12d51ba1f64bb8eb2267aa7623fd34ea7a4",
+    "claude-code": "dbbef2fad3f47b69bbc9d8f19c994f5f88e3eee7ab99097301c76439bc39d9e4"
+  },
+  "cli_sha256": "d8164cd510b1c806493a540b2e366b0197037eaf9a336441405952d20a1a8e05",
+  "hook_runtime_sha256": "a851901b0c27190723c9dcbfe2e0d6e5401b78bdcf12fc8f8ee93a4def24ffeb",
+  "engine_state": "Fresh engine, index, sources and credentials per repeat; fixed condition order; host order alternates per repeat.",
+  "timing": "Parent monotonic clock from before spawn through process close, including module startup, stdin, CLI startup, IPC, validation and output. Adapter elapsed_ms starts at Node's performance time origin, including module initialization.",
+  "limitations": "Compiled adapters invoked directly, not native host sessions. Synthetic lexical excerpt fallback; extraction, embeddings and synthesis disabled. No semantic filtering or model latency claim. Timeout controls use the host outer budget; no assumption of exact timer scheduling. Repeats are local observations, not independent samples or macOS/Windows acceptance."
+}

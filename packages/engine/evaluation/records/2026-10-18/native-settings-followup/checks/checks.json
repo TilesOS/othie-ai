@@ -1,0 +1,22 @@
+[
+  {
+    "name": "build",
+    "command": "npm run build",
+    "exit_code": 0
+  },
+  {
+    "name": "typecheck",
+    "command": "npm run typecheck",
+    "exit_code": 0
+  },
+  {
+    "name": "tests",
+    "command": "npm test",
+    "exit_code": 0
+  },
+  {
+    "name": "website-lint",
+    "command": "npm run lint --workspace=@othie/website",
+    "exit_code": 0
+  }
+]

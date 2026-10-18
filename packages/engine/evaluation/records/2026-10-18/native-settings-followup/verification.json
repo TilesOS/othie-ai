@@ -1,0 +1,130 @@
+{
+  "recorded_at": "2026-10-18T22:20:08.803Z",
+  "code": "2fe3015",
+  "initial_root_harness_code": "b75d3dd",
+  "synthetic_only": true,
+  "platform": "darwin",
+  "node": "v24.18.0",
+  "checks": [
+    {
+      "name": "build",
+      "command": "npm run build",
+      "exit_code": 0
+    },
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "exit_code": 0
+    },
+    {
+      "name": "tests",
+      "command": "npm test",
+      "exit_code": 0
+    },
+    {
+      "name": "website-lint",
+      "command": "npm run lint --workspace=@othie/website",
+      "exit_code": 0
+    }
+  ],
+  "tests": {
+    "passed": 175,
+    "skipped_opt_in_real_model": 1,
+    "by_workspace": {
+      "engine": 114,
+      "hooks": 30,
+      "website": 14,
+      "codex": 10,
+      "claude_code": 7
+    }
+  },
+  "production_audit_advisories": 0,
+  "native": [
+    {
+      "mode": "explicit",
+      "configuration": "explicit-settings",
+      "launch_directory": "root",
+      "attempts": 4,
+      "passed": 4,
+      "min_session_ms": 2942.929125,
+      "max_session_ms": 6551.618625000001
+    },
+    {
+      "mode": "project-root",
+      "configuration": ".claude/settings.json",
+      "launch_directory": "root",
+      "attempts": 4,
+      "passed": 4,
+      "min_session_ms": 2751.6032080000004,
+      "max_session_ms": 10797.225916
+    },
+    {
+      "mode": "local-root",
+      "configuration": ".claude/settings.local.json",
+      "launch_directory": "root",
+      "attempts": 4,
+      "passed": 4,
+      "min_session_ms": 2769.2466669999994,
+      "max_session_ms": 5350.359417
+    },
+    {
+      "mode": "project-nested",
+      "configuration": ".claude/settings.json",
+      "launch_directory": "nested",
+      "attempts": 4,
+      "passed": 0,
+      "min_session_ms": 2548.540583,
+      "max_session_ms": 5103.955709
+    },
+    {
+      "mode": "local-nested",
+      "configuration": ".claude/settings.local.json",
+      "launch_directory": "nested",
+      "attempts": 4,
+      "passed": 4,
+      "min_session_ms": 2976.560707999999,
+      "max_session_ms": 3891.442583
+    },
+    {
+      "mode": "explicit-nested",
+      "configuration": "explicit-settings",
+      "launch_directory": "nested",
+      "attempts": 4,
+      "passed": 4,
+      "min_session_ms": 2672.4180420000002,
+      "max_session_ms": 6141.128125
+    }
+  ],
+  "native_attempts": 24,
+  "native_passed": 20,
+  "native_rescore_matches": true,
+  "native_attempts_match_summaries": true,
+  "native_compiled_hashes_match": true,
+  "strict_latency": {
+    "passed": true,
+    "attempts": 14,
+    "min_wall_ms": 268.73491600000125,
+    "max_wall_ms": 2037.2681669999997
+  },
+  "actual_default_latency": {
+    "passed": true,
+    "attempts": 8,
+    "min_wall_ms": 315.13129200000003,
+    "max_wall_ms": 441.69116600000007
+  },
+  "merged_ci": {
+    "commit": "449c3fc",
+    "run_id": 38682973490,
+    "macos": "success",
+    "windows": "success",
+    "local_followup_ci": "not run"
+  },
+  "limitations": [
+    "One run per native configuration; no statistical or general quality claim.",
+    "Shared root project settings fail discovery from a nested launch directory; all four failures are retained.",
+    "Native process times include model generation; internal diagnostics do not measure complete hook lifetime.",
+    "Strict serial adapter checks use synthetic lexical excerpts and disabled model providers.",
+    "No interactive trust, desktop UI, native Codex sessions, local-model consumption, semantic filtering, native Windows/logon, installer or larger coding benchmark acceptance.",
+    "Installed dependencies used; clean installation not repeated."
+  ]
+}

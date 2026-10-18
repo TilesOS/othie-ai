@@ -1,20 +1,23 @@
 # Othie verification
 
-Updated October 14, 2026 on Linux with Node.js 24.19.0. Earlier model and native-host
-observations below were recorded on macOS with Node.js 24.18.0. The deterministic suite uses
+Updated October 18, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
+observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
 
 ## Checks run
 
 | Check | Result |
 | --- | --- |
-| `npm ci` | Clean lockfile installation passes |
+| `npm ci` | October 14 clean installation passes; not repeated October 18 |
 | `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 172 passing tests; one opt-in real-model test skipped |
+| `npm test` | 175 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
+| October 18 native Claude settings discovery | 20/24 checks pass; shared root settings fail all four nested-launch delivery checks and remain recorded |
+| October 18 serial adapter latency | Fresh-engine 14/14 at 2,000/3,000 ms budgets; actual-default normal paths 8/8 at 315–442 ms |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
 | Evaluation-only semantic applicability, initial trials | Boundaries 42/56 versus lexical 51/56; larger applicability corpus 54/80 versus paired lexical 61/80; both fail acceptance |
@@ -25,7 +28,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `git diff --check` | Pass |
 | `npm audit --omit=dev` | Zero reported production dependency advisories |
 
-The full suite comprises 111 engine, 30 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 114 engine, 30 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -51,8 +54,11 @@ This verifies the October 6 dependency and applicability changes. The
 [run for `7eb19f8`](https://github.com/TilesOS/othie-ai/actions/runs/37877299841), inspected
 October 14, passes clean installation, workspace typechecks and tests on both runners,
 plus Windows startup-script syntax. This verifies the October 8 evaluator changes.
-Startup-deadline changes through `c410e6f` also pass both runners; CI for the combined
-history is tracked in PR #1. Automated
+Startup-deadline changes through `c410e6f` also pass both runners. The
+[merged-history run for `449c3fc`](https://github.com/TilesOS/othie-ai/actions/runs/38682973490),
+inspected October 18, passes both macOS and Windows jobs, including clean installation,
+typechecks, the then-current tests and Windows startup-script syntax. The October 18
+local follow-up commits have not yet had their own CI run. Automated
 runner results do not establish native desktop-host or logon-startup acceptance.
 
 ## Delivery and credential coverage
@@ -600,14 +606,61 @@ The [CI run for `c410e6f`](https://github.com/TilesOS/othie-ai/actions/runs/3867
 passes both macOS and Windows jobs. CI for the combined history is tracked in
 [PR #1](https://github.com/TilesOS/othie-ai/pull/1).
 
+## October 18 native settings discovery follow-up
+
+The [new native records](packages/engine/evaluation/records/2026-10-18/native-settings-followup/README.md)
+preserve 24 synthetic Claude Code 2.1.283 sessions using the host's existing
+`claude-opus-5-5` default on macOS. The harness now supports shared project settings,
+local project settings and nested launch directories without an explicit `--settings`
+fallback masking discovery. Protocols are saved before sessions and include launch
+mode and compiled-artifact hashes. Positive delivery requires the full policy,
+first-response/resolution qualification and citation as well as the correct native answer.
+
+Explicit settings, shared project settings and local project settings each pass all
+four conditions from the repository root: positive context, repository-only no-op,
+live credential revocation and unavailable engine. Local root settings and an explicit
+settings path also pass all four from a nested directory with spaces. Shared root
+`.claude/settings.json` is not discovered from that nested launch: all four conditions
+lack an adapter receipt, and the positive answer is `unknown`. Those failures remain
+scored as failures. The setup guide now documents starting at the root for shared
+settings or supplying an explicit settings path. This matches the official
+[settings locations reference](https://code.claude.com/docs/en/settings).
+
+All 20 sessions with hooks report 253–371 ms of internal adapter time. Complete native
+sessions, including model responses, take 2,549–10,797 ms across all 24 attempts; these
+are separate measurement boundaries and do not establish native hook process latency.
+All sources and prompts are synthetic, tools/MCP are disabled, model providers inside
+Othie are disabled, and no model artifacts or global hook configuration were installed.
+Structured transcript redaction now removes account rate-limit metadata, session/request
+identifiers and encoded memory/socket locations as well as literal host paths. Publication
+hashes preserve the relationship to the original local records without changing scores,
+adapter receipts or timings.
+
+Separate serial compiled-adapter checks pass 14/14 fresh-engine conditions at the default
+2,000/3,000 ms budgets, including authenticated stalls, delayed input and unclosed stdin.
+The actual-default normal-path evaluator passes 8/8 in 315–442 ms. Complete fresh-engine
+process time ranges from 269 to 2,037 ms; stalls use the outer watchdog gate. These run
+after workspace checks without overlapping build/test work and establish only this
+synthetic lexical workload on this Mac, independently of native model-session timings.
+
+The full build, workspace typechecks, website lint, production dependency audit and all
+175 deterministic tests pass, with one opt-in real-model test skipped. Installed
+dependencies were used; `npm ci` was not repeated. The merged-history CI now passes on
+macOS and Windows; the new local commits still need their own CI. Website browser/UI,
+interactive workspace trust, Codex native sessions, semantic filtering and native Windows
+acceptance were not repeated. In particular, noninteractive Claude treats the generated
+workspace as trusted, so this does not close interactive or desktop acceptance.
+
 ## Remaining acceptance work
 
 - Codex project-file discovery and persisted interactive hook-trust acceptance; Claude
-  project/local settings discovery and desktop UI acceptance beyond explicit CLI settings.
+  interactive workspace trust and desktop UI acceptance beyond the recorded noninteractive
+  settings discovery. Shared Claude root settings require a root launch or explicit path;
+  the nested-launch discovery failure remains recorded.
 - Codex local-model context consumption after the observed positive-context failure.
 - Windows native-host and logon-startup acceptance beyond the historical automated CI
-  suite; CI through `c410e6f` passes both runners, while the combined-history CI is
-  tracked in PR #1. Native Windows host/session acceptance remains open.
+  suite; CI through merged `449c3fc` passes both runners, while the October 18 local
+  follow-up still needs CI. Native Windows host/session acceptance remains open.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
 - Compiler classification, relevance, linked evidence, and packing: deterministic recovery

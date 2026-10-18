@@ -1,0 +1,23 @@
+{
+  "host": "codex",
+  "condition": "revoked",
+  "repeat": 1,
+  "code": 0,
+  "stdout": "",
+  "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"codex\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"context_unavailable\",\"elapsed_ms\":427}\n",
+  "wall_ms": 441.69116600000007,
+  "timed_out": false,
+  "oversized": false,
+  "diagnostics": {
+    "schema_version": "1",
+    "event": "othie_prompt_hook",
+    "host": "codex",
+    "surface": "code",
+    "phase": "turn_start",
+    "outcome": "context_unavailable",
+    "elapsed_ms": 427
+  },
+  "delivery_passed": true,
+  "hook_deadline_met": true,
+  "passed": true
+}

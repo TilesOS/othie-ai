@@ -1,0 +1,85 @@
+{
+  "protocol": "native-hooks-v2",
+  "recorded_at": "2026-10-18T22:17:22.503Z",
+  "synthetic_only": true,
+  "platform": "darwin",
+  "node": "v24.18.0",
+  "host": "claude-code",
+  "host_version": "2.1.283 (Claude Code)",
+  "hook_configuration": "explicit-settings",
+  "launch_directory": "nested",
+  "settings_sources": [
+    "project",
+    "local"
+  ],
+  "requested_model": "host default",
+  "context_token_cap": 500,
+  "policy": "Canary enterprise support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.",
+  "compiled_artifacts": [
+    {
+      "path": "integrations/claude-code/dist/src/user-prompt-submit.js",
+      "sha256": "dbbef2fad3f47b69bbc9d8f19c994f5f88e3eee7ab99097301c76439bc39d9e4"
+    },
+    {
+      "path": "packages/engine/dist/src/cli.js",
+      "sha256": "d8164cd510b1c806493a540b2e366b0197037eaf9a336441405952d20a1a8e05"
+    },
+    {
+      "path": "packages/hooks/dist/src/index.js",
+      "sha256": "a851901b0c27190723c9dcbfe2e0d6e5401b78bdcf12fc8f8ee93a4def24ffeb"
+    }
+  ],
+  "hook_adapter_sha256": "dbbef2fad3f47b69bbc9d8f19c994f5f88e3eee7ab99097301c76439bc39d9e4",
+  "limitations": "Native noninteractive CLI sessions only. Does not establish interactive or desktop UI trust, Windows behavior, startup, model quality, or installer acceptance.",
+  "observed_models": [
+    "claude-opus-5-5"
+  ],
+  "trust": "Generated isolated settings; noninteractive workspace trust; no tools; user settings excluded",
+  "passed": true,
+  "records": [
+    {
+      "host": "claude-code",
+      "host_model": "claude-opus-5-5",
+      "condition": "positive",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "11",
+      "answer": "11",
+      "elapsed_ms": 6141.128125,
+      "delivery_passed": true,
+      "passed": true
+    },
+    {
+      "host": "claude-code",
+      "host_model": "claude-opus-5-5",
+      "condition": "irrelevant",
+      "prompt": "The repository function double(n) returns n * 2. What is double(21)? Reply with the number only. Do not use tools.",
+      "expected": "42",
+      "answer": "42",
+      "elapsed_ms": 2672.4180420000002,
+      "delivery_passed": true,
+      "passed": true
+    },
+    {
+      "host": "claude-code",
+      "host_model": "claude-opus-5-5",
+      "condition": "revoked",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "unknown",
+      "answer": "unknown",
+      "elapsed_ms": 3307.829167,
+      "delivery_passed": true,
+      "passed": true
+    },
+    {
+      "host": "claude-code",
+      "host_model": "claude-opus-5-5",
+      "condition": "unavailable",
+      "prompt": "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.",
+      "expected": "unknown",
+      "answer": "unknown",
+      "elapsed_ms": 2701.015416,
+      "delivery_passed": true,
+      "passed": true
+    }
+  ]
+}

@@ -7,7 +7,7 @@ when Othie is empty, unavailable, late, or returns an invalid response.
 | Host | Delivery | Setup location | Automated coverage | Native-host acceptance |
 | --- | --- | --- | --- | --- |
 | Codex | `UserPromptSubmit` command hook | Project `.codex/hooks.json` | Fixtures, compiled-process behavior, and live-engine credential/revocation/restart tests | CLI invocation-local hooks: four conditions pass; project discovery/trust remains open |
-| Claude Code | `UserPromptSubmit` command hook | Project `.claude/settings.local.json` | Same shared contract, setup checks, and live-engine credential/revocation/restart tests | CLI explicit settings: four conditions pass; project discovery/UI remains open |
+| Claude Code | `UserPromptSubmit` command hook | Project `.claude/settings.local.json` | Same shared contract, setup checks, and live-engine credential/revocation/restart tests | macOS CLI: explicit/project/local settings pass at root; local and explicit settings pass from nested directories; shared root settings are not discovered from nested launches; interactive trust/UI remains open |
 | Claude Desktop | MCP stdio bridge | Host MCP configuration printed by `host-config --host claude` | Engine/bridge SDK process tests and configuration tests | Not recorded |
 | Cursor | MCP stdio bridge | Host MCP configuration printed by `host-config --host cursor` | Configuration tests and shared bridge tests | Not recorded |
 | VS Code | MCP stdio bridge | Host MCP configuration printed by `host-config --host vscode` | Compiled configuration tests and shared bridge tests | Not recorded |
@@ -36,5 +36,8 @@ hook processes; it does not launch the native Codex or Claude Code applications.
 
 Native macOS acceptance is recorded in the [October 3 evidence](../packages/engine/evaluation/records/2026-10-03/README.md).
 These noninteractive sessions prove the tested configuration paths and model responses,
-not desktop UI or persisted hook trust. Codex project-hook discovery and local-model
-consumption remain open after failed probes. Windows native-host acceptance is unrecorded.
+not desktop UI or persisted hook trust. The [October 18 Claude settings evidence](../packages/engine/evaluation/records/2026-10-18/native-settings-followup/README.md)
+adds project/local discovery and nested-launch checks, including the shared-root settings
+discovery failure. Start Claude at the root when using shared root settings, or pass an
+explicit settings path. Codex project-hook discovery and local-model consumption remain
+open after failed probes. Windows native-host acceptance is unrecorded.
