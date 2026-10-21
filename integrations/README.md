@@ -6,7 +6,7 @@ when Othie is empty, unavailable, late, or returns an invalid response.
 
 | Host | Delivery | Setup location | Automated coverage | Native-host acceptance |
 | --- | --- | --- | --- | --- |
-| Codex | `UserPromptSubmit` command hook | Project `.codex/hooks.json` | Fixtures, compiled-process behavior, and live-engine credential/revocation/restart tests | CLI invocation-local hooks: four conditions pass; project discovery/trust remains open |
+| Codex | `UserPromptSubmit` command hook | Project `.codex/hooks.json` | Fixtures, compiled-process behavior, and live-engine credential/revocation/restart tests | macOS CLI: four conditions pass with invocation-local hooks and trusted project hooks from root/nested launches; interactive hook trust/UI and local-model consumption remain open |
 | Claude Code | `UserPromptSubmit` command hook | Project `.claude/settings.local.json` | Same shared contract, setup checks, and live-engine credential/revocation/restart tests | macOS CLI: explicit/project/local settings pass at root; local and explicit settings pass from nested directories; shared root settings are not discovered from nested launches; interactive trust/UI remains open |
 | Claude Desktop | MCP stdio bridge | Host MCP configuration printed by `host-config --host claude` | Engine/bridge SDK process tests and configuration tests | Not recorded |
 | Cursor | MCP stdio bridge | Host MCP configuration printed by `host-config --host cursor` | Configuration tests and shared bridge tests | Not recorded |
@@ -39,5 +39,7 @@ These noninteractive sessions prove the tested configuration paths and model res
 not desktop UI or persisted hook trust. The [October 18 Claude settings evidence](../packages/engine/evaluation/records/2026-10-18/native-settings-followup/README.md)
 adds project/local discovery and nested-launch checks, including the shared-root settings
 discovery failure. Start Claude at the root when using shared root settings, or pass an
-explicit settings path. Codex project-hook discovery and local-model consumption remain
-open after failed probes. Windows native-host acceptance is unrecorded.
+explicit settings path. The [October 20 Codex records](../packages/engine/evaluation/records/2026-10-20/codex-project-followup/README.md)
+verify trusted project-hook discovery from root and nested launches. They retain the
+original project-trust setup failure and the local-model positive-context failure;
+interactive persisted hook trust remains open. Windows native-host acceptance is unrecorded.

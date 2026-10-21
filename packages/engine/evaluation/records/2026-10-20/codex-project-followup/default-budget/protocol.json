@@ -1,0 +1,36 @@
+{
+  "protocol_version": "hook-latency-v1",
+  "recorded_at": "2026-10-21T03:32:39.602Z",
+  "synthetic_only": true,
+  "platform": "darwin",
+  "node": "v24.18.0",
+  "repeats": 1,
+  "hook_deadline_ms": 2000,
+  "outer_timeout_ms": 3000,
+  "context_token_cap": 500,
+  "deadline_environment_overrides": "removed from child environment",
+  "policy": "Canary support policy requires the first response within eleven hours. This is a first-response target, not a resolution deadline.",
+  "queries": {
+    "positive": "According to Canary support policy, what is the first-response target?",
+    "irrelevant": "Refactor the JavaScript sorting comparator. Do not use tools."
+  },
+  "compiled_artifacts": [
+    {
+      "path": "packages/engine/dist/src/cli.js",
+      "sha256": "d8164cd510b1c806493a540b2e366b0197037eaf9a336441405952d20a1a8e05"
+    },
+    {
+      "path": "integrations/codex/dist/src/user-prompt-submit.js",
+      "sha256": "f509052788ddea2779ebf8988000e12d51ba1f64bb8eb2267aa7623fd34ea7a4"
+    },
+    {
+      "path": "integrations/claude-code/dist/src/user-prompt-submit.js",
+      "sha256": "dbbef2fad3f47b69bbc9d8f19c994f5f88e3eee7ab99097301c76439bc39d9e4"
+    },
+    {
+      "path": "packages/hooks/dist/src/index.js",
+      "sha256": "a851901b0c27190723c9dcbfe2e0d6e5401b78bdcf12fc8f8ee93a4def24ffeb"
+    }
+  ],
+  "limitations": "Compiled adapter processes against a synthetic live engine, with extraction, embeddings and synthesis disabled. Parent wall time includes process startup and exit. No native Codex/Claude Code session, model consumption, semantic applicability, desktop UI or Windows hardware acceptance. Repeated local timings are observations, not a general latency guarantee."
+}

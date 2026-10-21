@@ -1,0 +1,18 @@
+{
+  "host": "codex",
+  "host_model": null,
+  "condition": "irrelevant",
+  "prompt": "The repository function double(n) returns n * 2. What is double(21)? Reply with the number only. Do not use tools.",
+  "expected": "42",
+  "answer": "42",
+  "elapsed_ms": 6637.796958,
+  "response": {
+    "code": 0,
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"<redacted>\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"`--dangerously-bypass-hook-trust` is enabled. Enabled hooks may run without review for this invocation.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"error\",\"message\":\"`--dangerously-bypass-hook-trust` is enabled. Enabled hooks may run without review for this invocation.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in <user-home>/.codex/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"agent_message\",\"text\":\"42\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":14056,\"cached_input_tokens\":11904,\"cache_write_input_tokens\":0,\"output_tokens\":5,\"reasoning_output_tokens\":0}}\n",
+    "stderr": "Reading additional input from stdin...\n2026-10-21T03:21:56.574212Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-10-21T03:21:56.576166Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-10-21T03:21:56.577592Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-10-21T03:21:56.578882Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n",
+    "timed_out": false
+  },
+  "receipt": null,
+  "delivery_passed": false,
+  "passed": false
+}

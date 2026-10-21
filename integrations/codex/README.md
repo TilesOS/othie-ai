@@ -59,6 +59,15 @@ The example resolves repository files from the Git root so it
 also works when Codex starts in a subdirectory. It intentionally does not install itself
 or modify `~/.codex`.
 
+Native noninteractive macOS checks with Codex CLI 0.156.1 verify trusted project-file
+discovery from the Git root and a nested directory with spaces. All four conditions
+pass with the host's `gpt-6-astra` default: cited delivery, repository-only no-op, live
+credential revocation and engine unavailability. These use project trust in a disposable
+Codex home and a one-shot hook-trust bypass; they do not verify interactive `/hooks`
+approval or desktop UI behavior. The installed `qwen3.5:4b-mlx` model still answers
+`unknown` for positive context despite complete cited adapter delivery. See the
+[recorded discovery checks and failures](../../packages/engine/evaluation/records/2026-10-20/codex-project-followup/README.md).
+
 To remove the prototype, delete its `UserPromptSubmit` handler from `.codex/hooks.json`
 (or delete that file if it contains nothing else). The MCP tools continue to work
 independently of the hook.

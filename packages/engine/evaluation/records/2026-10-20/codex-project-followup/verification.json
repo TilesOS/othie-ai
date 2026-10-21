@@ -1,0 +1,136 @@
+{
+  "recorded_at": "2026-10-21T03:33:30.875Z",
+  "local_date": "2026-10-20",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "node": "v24.18.0",
+  "previous_head": "51e45f8",
+  "code_commits": [
+    "a327a0a",
+    "5182d18",
+    "bc0ca91"
+  ],
+  "checks": {
+    "build": 0,
+    "final_typecheck": 0,
+    "website_lint": 0,
+    "final_tests": {
+      "exit_code": 0,
+      "passed": 178,
+      "skipped": 1,
+      "by_workspace": {
+        "engine": 117,
+        "hooks": 30,
+        "website": 14,
+        "claude-code": 7,
+        "codex": 10
+      }
+    },
+    "production_audit": {
+      "exit_code": 0,
+      "vulnerabilities": 0
+    },
+    "npm_ci": "not repeated; installed dependencies unchanged"
+  },
+  "native_runs": [
+    {
+      "name": "project-override-failure",
+      "protocol": "native-hooks-v2",
+      "passed": false,
+      "passing_conditions": 0,
+      "conditions": 4,
+      "observed_models": [],
+      "native_elapsed_ms": {
+        "min": 4848.890375000003,
+        "max": 6637.796958
+      }
+    },
+    {
+      "name": "project-root",
+      "protocol": "native-hooks-v3",
+      "passed": true,
+      "passing_conditions": 4,
+      "conditions": 4,
+      "observed_models": [
+        "gpt-6-astra"
+      ],
+      "native_elapsed_ms": {
+        "min": 4122.972208,
+        "max": 5768.94075
+      }
+    },
+    {
+      "name": "project-nested",
+      "protocol": "native-hooks-v3",
+      "passed": true,
+      "passing_conditions": 4,
+      "conditions": 4,
+      "observed_models": [
+        "gpt-6-astra"
+      ],
+      "native_elapsed_ms": {
+        "min": 4169.071791,
+        "max": 5307.293250000001
+      }
+    },
+    {
+      "name": "local-project",
+      "protocol": "native-hooks-v3",
+      "passed": false,
+      "passing_conditions": 3,
+      "conditions": 4,
+      "observed_models": [
+        "qwen3.5:4b-mlx"
+      ],
+      "native_elapsed_ms": {
+        "min": 2020.4509170000001,
+        "max": 5907.966834
+      }
+    },
+    {
+      "name": "session-baseline",
+      "protocol": "native-hooks-v3",
+      "passed": true,
+      "passing_conditions": 4,
+      "conditions": 4,
+      "observed_models": [
+        "gpt-6-astra"
+      ],
+      "native_elapsed_ms": {
+        "min": 5065.356915999999,
+        "max": 6096.980667000001
+      }
+    }
+  ],
+  "latency": {
+    "fresh_engine": {
+      "passed": true,
+      "attempts": 14,
+      "options": {
+        "repeats": 1,
+        "deadline_ms": 2000,
+        "host_timeout_ms": 3000
+      },
+      "process_wall_ms": {
+        "min": 256.76929200000006,
+        "max": 2037.4399169999997
+      }
+    },
+    "actual_default": {
+      "passed": true,
+      "attempts": 8,
+      "process_wall_ms": {
+        "min": 256.13070800000014,
+        "max": 275.410792
+      }
+    }
+  },
+  "limitations": [
+    "Native sessions were recorded before the final shared argument parser refactor. Valid native flags are unchanged; final full suite and typechecks cover the refactor. Latency evaluators ran afterward.",
+    "Project trust is persisted only in a disposable Codex home; hook approval uses a one-shot bypass. Interactive persisted hook trust and desktop UI acceptance remain open.",
+    "The local-model positive answer remains unknown despite complete cited delivery. This run does not isolate host request construction, provider handling, or model consumption as the cause.",
+    "Native model-session times are not complete native hook-process timings.",
+    "Website browser acceptance, semantic quality evaluations, Windows native sessions, logon startup, signed installers, and fresh remote CI were not run.",
+    "Both restricted attempts stopped after writing protocols and before any scored conditions; their protocols are preserved."
+  ]
+}
