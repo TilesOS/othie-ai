@@ -160,7 +160,18 @@ installed loopback Ollama model. Codex receives an invocation-local hook configu
 ignores user configuration, disables plugins, uses read-only tool permissions, and does
 not persist its session. One-shot hook trust is bypassed only for the generated,
 inspected acceptance hook; this does not test persisted `/hooks` trust. Pass
-`--codex-hooks project` to probe `.codex/hooks.json` discovery instead of session configuration. Host skill discovery is suppressed through the installed CLI's experimental
+`--codex-hooks project` to probe `.codex/hooks.json` discovery instead of session configuration.
+Project mode uses a private disposable `CODEX_HOME` with only the generated repository's
+project trust in `config.toml`. It omits `--ignore-user-config` and all session hook/trust
+overrides: the installed CLI gates project layers on trust from the user config before
+applying session overrides. Hosted project runs copy the existing file-backed
+`auth.json` into that temporary home with private permissions; the original login and
+configuration are not modified. Keychain-only logins are not supported by this mode;
+it fails before model sessions if no file login is available. Local-model project runs
+do not copy authentication. The complete temporary home is removed in cleanup.
+Project trust is distinct from hook trust, which still uses the one-shot bypass.
+Add `--launch-directory nested` to test discovery below the trusted Git root.
+Host skill discovery is suppressed through the installed CLI's experimental
 feature switch; that behavior is version-dependent. The Codex runner currently rejects
 Windows because command quoting has not had native Windows acceptance.
 

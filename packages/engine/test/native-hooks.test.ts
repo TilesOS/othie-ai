@@ -1,9 +1,9 @@
 import { spawn } from "node:child_process";
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { claudeSettingsConfiguration, nativeHookArguments, nativeHookDelivery, recordingWrapper, redactNativeTranscript } from "../src/evaluation/native-hooks.js";
+import { claudeSettingsConfiguration, codexHookConfiguration, createCodexProjectHome, nativeHookArguments, nativeHookDelivery, recordingWrapper, redactNativeTranscript } from "../src/evaluation/native-hooks.js";
 
 describe("native hook acceptance recorder", () => {
   it("rejects ambiguous or incomplete CLI modes instead of silently running a different baseline", () => {
@@ -69,6 +69,40 @@ describe("native hook acceptance recorder", () => {
     const explicit = claudeSettingsConfiguration("explicit", workspace, override);
     expect(explicit.path).toBe(override);
     expect(explicit.args).toEqual(["--setting-sources", "project,local", "--settings", override]);
+  });
+
+  it("uses persisted disposable project trust without session hook overrides or inherited user settings", async () => {
+    const root = await mkdtemp(join(tmpdir(), "othie-codex-project-home-"));
+    const authenticationHome = join(root, "existing-home"), home = join(root, "isolated-home");
+    const workspace = join(root, 'workspace with spaces and "quotes"');
+    try {
+      await mkdir(authenticationHome);
+      await writeFile(join(authenticationHome, "auth.json"), "SYNTHETIC_LOGIN");
+      await writeFile(join(authenticationHome, "config.toml"), "PRIVATE_USER_SETTINGS");
+      await createCodexProjectHome(home, workspace, authenticationHome);
+      const config = await readFile(join(home, "config.toml"), "utf8");
+      expect(config).toBe(`[projects.${JSON.stringify(workspace)}]\ntrust_level = "trusted"\n`);
+      expect(config).not.toMatch(/PRIVATE_|hooks|model/);
+      expect(await readFile(join(home, "auth.json"), "utf8")).toBe("SYNTHETIC_LOGIN");
+      await writeFile(join(home, "auth.json"), "SYNTHETIC_REFRESH");
+      expect(await readFile(join(authenticationHome, "auth.json"), "utf8")).toBe("SYNTHETIC_LOGIN");
+      expect(await readFile(join(authenticationHome, "config.toml"), "utf8")).toBe("PRIVATE_USER_SETTINGS");
+      if (process.platform !== "win32") {
+        expect((await stat(home)).mode & 0o777).toBe(0o700);
+        for (const file of ["config.toml", "auth.json"]) expect((await stat(join(home, file))).mode & 0o777).toBe(0o600);
+      }
+      await expect(createCodexProjectHome(home, workspace, authenticationHome)).rejects.toThrow();
+      const localHome = join(root, "local-home");
+      await createCodexProjectHome(localHome, workspace);
+      await expect(readFile(join(localHome, "auth.json"))).rejects.toThrow();
+      const discovery = codexHookConfiguration("project", "GENERATED_COMMAND");
+      expect(discovery.args).toEqual([]);
+      expect(discovery.trust).toContain("disposable Codex home");
+      const session = codexHookConfiguration("session", "GENERATED_COMMAND");
+      expect(session.args).toContain("--ignore-user-config");
+      expect(session.args.join(" ")).toContain("hooks.UserPromptSubmit");
+      expect(session.args.join(" ")).toContain("GENERATED_COMMAND");
+    } finally { await rm(root, { recursive: true, force: true }); }
   });
 
   it("forwards the host event and adapter output while excluding private event values from evidence", async () => {

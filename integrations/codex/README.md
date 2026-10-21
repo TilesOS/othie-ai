@@ -52,7 +52,10 @@ npm run engine -- engine foreground --config config.json
 
 Merge [hooks.example.json](hooks.example.json) into the repository's
 `.codex/hooks.json`, replace `/absolute/path/to/node`, and review/trust the hook with
-Codex's `/hooks` command. The example resolves repository files from the Git root so it
+Codex's `/hooks` command. The repository must also be a trusted Codex project so its
+`.codex/` configuration layer can load; approving a hook is a separate step. See the
+official [hook discovery and trust guide](https://learn.chatgpt.com/docs/hooks).
+The example resolves repository files from the Git root so it
 also works when Codex starts in a subdirectory. It intentionally does not install itself
 or modify `~/.codex`.
 

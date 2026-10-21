@@ -9,6 +9,7 @@ import { createCredential, revokeCredential } from "../engine/credentials.js";
 import { runEngine } from "../engine/lifecycle.js";
 
 export type NativeHost = "codex" | "claude-code";
+export type CodexHooks = "session" | "project";
 export type ClaudeSettings = "explicit" | "project" | "local";
 export type LaunchDirectory = "root" | "nested";
 export function nativeHookArguments(argv: string[]): ReadonlyMap<string, string> {
@@ -71,12 +72,31 @@ export function claudeSettingsConfiguration(mode: ClaudeSettings, workspace: str
   };
 }
 
+// Project layers are gated on trust in the user config, before session overrides
+// are applied. Use a private disposable home rather than altering the real one.
+export async function createCodexProjectHome(home: string, workspace: string, authenticationHome?: string): Promise<void> {
+  await mkdir(home, { mode: 0o700 });
+  await writeFile(join(home, "config.toml"), `[projects.${JSON.stringify(workspace)}]\ntrust_level = "trusted"\n`, { flag: "wx", mode: 0o600 });
+  if (authenticationHome) {
+    const authentication = await readFile(join(authenticationHome, "auth.json"));
+    await writeFile(join(home, "auth.json"), authentication, { flag: "wx", mode: 0o600 });
+  }
+}
+
+export function codexHookConfiguration(mode: CodexHooks, command: string) {
+  return {
+    args: mode === "session" ? ["--ignore-user-config", "-c",
+      `hooks.UserPromptSubmit=[{hooks=[{type="command",command=${JSON.stringify(command)},timeout=3,additionalContextLimit=600}]}]`] : [],
+    trust: `${mode === "session" ? "Invocation-local generated hook; user config ignored" : "Project-file generated hook; project trust in disposable Codex home; existing file login copied only for hosted sessions"}; one-shot hook trust bypass; plugins disabled; experimental host-skill-discovery suppression`,
+  };
+}
+
 export function shellQuote(value: string): string { return `'${value.replaceAll("'", "'\\''")}'`; }
-async function processOutput(command: string, args: string[], cwd: string, timeoutMs = 120_000) {
+async function processOutput(command: string, args: string[], cwd: string, timeoutMs = 120_000, environment: NodeJS.ProcessEnv = {}) {
   return new Promise<{ code: number | null; stdout: string; stderr: string; timed_out: boolean }>((done, reject) => {
     // Keep a native acceptance session independent of the calling desktop thread.
     const env = Object.fromEntries(Object.entries(process.env).filter(([name]) => !name.startsWith("CODEX_") || name === "CODEX_HOME"));
-    const child = spawn(command, args, { cwd, env, stdio: ["ignore", "pipe", "pipe"] });
+    const child = spawn(command, args, { cwd, env: { ...env, ...environment }, stdio: ["ignore", "pipe", "pipe"] });
     let stdout = "", stderr = "", timedOut = false;
     const timer = setTimeout(() => { timedOut = true; child.kill("SIGKILL"); }, timeoutMs);
     child.stdout.setEncoding("utf8").on("data", (chunk: string) => { stdout += chunk; if (stdout.length > 2_000_000) child.kill("SIGKILL"); });
@@ -108,7 +128,7 @@ child.stdin.end(event);
 `;
 }
 
-export async function runNativeHookAcceptance(host: NativeHost, out: string, localModel?: string, codexHooks: "session" | "project" = "session",
+export async function runNativeHookAcceptance(host: NativeHost, out: string, localModel?: string, codexHooks: CodexHooks = "session",
   options: { claudeSettings?: ClaudeSettings; launchDirectory?: LaunchDirectory } = {}) {
   if (process.platform === "win32" && host === "codex") throw new Error("Windows Codex command quoting needs native acceptance before use");
   await mkdir(out, { mode: 0o700 });
@@ -157,16 +177,21 @@ export async function runNativeHookAcceptance(host: NativeHost, out: string, loc
     // No persisted global hook trust or host configuration is changed.
     await writeFile(join(workspace, ".codex", "config.toml"), "");
   }
+  const codexConfiguration = codexHookConfiguration(codexHooks, handler.command);
+  const codexHome = host === "codex" && codexHooks === "project" ? join(root, "codex-home") : undefined;
+  if (codexHome) await createCodexProjectHome(codexHome, workspace,
+    localModel ? undefined : process.env.CODEX_HOME ?? join(homedir(), ".codex"));
   const executable = host === "codex" ? "codex" : "claude";
   const version = await processOutput(executable, ["--version"], workspace, 10_000);
   if (version.code !== 0 || version.timed_out) throw new Error("Could not identify native host version");
   const compiledArtifacts = await Promise.all([adapter, cli, join(repository, "packages/hooks/dist/src/index.js")].map(async (path) => ({
     path: path.slice(repository.length), sha256: createHash("sha256").update(await readFile(path)).digest("hex"),
   })));
-  const protocol = { protocol: "native-hooks-v2", recorded_at: new Date().toISOString(), synthetic_only: true,
+  const protocol = { protocol: "native-hooks-v3", recorded_at: new Date().toISOString(), synthetic_only: true,
     platform: process.platform, node: process.version, host, host_version: version.stdout.trim(),
     hook_configuration: host === "codex" ? codexHooks : claudeSettings.location, launch_directory: launchDirectory,
     settings_sources: host === "claude-code" ? ["project", "local"] : null,
+    codex_home: host === "codex" ? codexHome ? "disposable-project-trust" : "existing-login-user-config-ignored" : null,
     requested_model: localModel ?? "host default", context_token_cap: 500,
     policy: canaryPolicy, compiled_artifacts: compiledArtifacts,
     hook_adapter_sha256: createHash("sha256").update(await readFile(adapter)).digest("hex"),
@@ -187,16 +212,15 @@ export async function runNativeHookAcceptance(host: NativeHost, out: string, loc
         ? "The repository function double(n) returns n * 2. What is double(21)? Reply with the number only. Do not use tools."
         : "According to Canary enterprise support policy, what is the weekend first-response target in hours? Use only supplied context; if missing reply unknown. Reply with the number only. Do not use tools.";
       const args = host === "codex"
-        ? ["exec", "--ignore-user-config", "--ephemeral", "--json", "--sandbox", "read-only", "--dangerously-bypass-hook-trust",
-          "-c", `projects.${JSON.stringify(workspace)}.trust_level=\"trusted\"`,
-          ...(codexHooks === "session" ? ["-c", `hooks.UserPromptSubmit=[{hooks=[{type=\"command\",command=${JSON.stringify((handler as {command: string}).command)},timeout=3,additionalContextLimit=600}]}]`] : []),
+        ? ["exec", "--ephemeral", "--json", "--sandbox", "read-only", "--dangerously-bypass-hook-trust",
+          ...codexConfiguration.args,
           "--disable", "plugins", "--enable", "skip_host_skill_discovery",
           ...(localModel ? ["--oss", "--local-provider", "ollama", "--model", localModel] : []), prompt]
         : ["--print", "--verbose", "--output-format", "stream-json", "--include-hook-events", "--no-session-persistence",
           ...claudeSettings.args, "--strict-mcp-config", "--mcp-config", mcpPath,
           "--tools", "", "--permission-mode", "dontAsk", "--max-budget-usd", "2", prompt];
       const started = performance.now();
-      const response = await processOutput(executable, args, cwd);
+      const response = await processOutput(executable, args, cwd, 120_000, codexHome ? { CODEX_HOME: codexHome } : {});
       const elapsedMs = performance.now() - started;
       const receipt = await readFile(receiptPath, "utf8").then((text) => JSON.parse(text) as HookReceipt, () => null);
       const events = response.stdout.split("\n").filter(Boolean).flatMap((line) => { try { return [JSON.parse(line) as Record<string, unknown>]; } catch { return []; } });
@@ -219,7 +243,7 @@ export async function runNativeHookAcceptance(host: NativeHost, out: string, loc
     }
     const report = { ...protocol,
       observed_models: [...new Set(records.map((record) => record.host_model).filter(Boolean))],
-      trust: host === "codex" ? `${codexHooks === "session" ? "Invocation-local generated hook" : "Project-file generated hook"}; one-shot trust bypass; user config ignored; plugins disabled; experimental host-skill-discovery suppression` : "Generated isolated settings; noninteractive workspace trust; no tools; user settings excluded",
+      trust: host === "codex" ? codexConfiguration.trust : "Generated isolated settings; noninteractive workspace trust; no tools; user settings excluded",
       passed: records.every((record) => record.passed), records: records.map(({ response, receipt, ...record }) => record) };
     await writeFile(join(out, "summary.json"), JSON.stringify(report, null, 2) + "\n", { flag: "wx", mode: 0o600 });
     return report;
