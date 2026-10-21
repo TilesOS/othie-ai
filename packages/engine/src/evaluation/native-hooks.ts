@@ -31,7 +31,7 @@ const canaryPolicy = "Canary enterprise support policy requires the first respon
 // Native hosts can report account utilization and encoded private paths even in
 // synthetic sessions. Redact structured metadata before retaining transcripts.
 export function redactNativeTranscript(text: string, paths: ReadonlyArray<readonly [string, string]>): string {
-  const privateFields = new Set(["session_id", "uuid", "hook_id", "request_id", "memory_paths", "messaging_socket_path", "rate_limit_info"]);
+  const privateFields = new Set(["session_id", "thread_id", "turn_id", "uuid", "hook_id", "request_id", "memory_paths", "messaging_socket_path", "rate_limit_info"]);
   const redactPaths = (value: string) => {
     for (const [path, replacement] of paths) value = value.replaceAll(path, replacement);
     return value;
@@ -219,7 +219,7 @@ export async function runNativeHookAcceptance(host: NativeHost, out: string, loc
     }
     const report = { ...protocol,
       observed_models: [...new Set(records.map((record) => record.host_model).filter(Boolean))],
-      trust: host === "codex" ? "Invocation-local generated hook; one-shot trust bypass; user config ignored; plugins disabled; experimental host-skill-discovery suppression" : "Generated isolated settings; noninteractive workspace trust; no tools; user settings excluded",
+      trust: host === "codex" ? `${codexHooks === "session" ? "Invocation-local generated hook" : "Project-file generated hook"}; one-shot trust bypass; user config ignored; plugins disabled; experimental host-skill-discovery suppression` : "Generated isolated settings; noninteractive workspace trust; no tools; user settings excluded",
       passed: records.every((record) => record.passed), records: records.map(({ response, receipt, ...record }) => record) };
     await writeFile(join(out, "summary.json"), JSON.stringify(report, null, 2) + "\n", { flag: "wx", mode: 0o600 });
     return report;

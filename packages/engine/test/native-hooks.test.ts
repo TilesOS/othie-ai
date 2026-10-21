@@ -23,6 +23,7 @@ describe("native hook acceptance recorder", () => {
     const transcript = [
       { type: "system", cwd: "/private/fixture/workspace", session_id: "PRIVATE_SESSION", memory_paths: { auto: "PRIVATE_ENCODED_PATH" }, messaging_socket_path: "PRIVATE_SOCKET" },
       { type: "rate_limit_event", rate_limit_info: { utilization: "PRIVATE_ACCOUNT_UTILIZATION" }, uuid: "PRIVATE_UUID" },
+      { type: "thread.started", thread_id: "PRIVATE_THREAD", turn_id: "PRIVATE_TURN" },
       { type: "assistant", message: { content: [{ text: "11" }], request_id: "PRIVATE_REQUEST" } },
       { type: "system", hook_id: "PRIVATE_HOOK", stdout: '{"hookSpecificOutput":{"additionalContext":"synthetic cited context"}}', exit_code: 0 },
     ].map((event) => JSON.stringify(event)).join("\n") + "\nwarning at /private/fixture/file\n";
