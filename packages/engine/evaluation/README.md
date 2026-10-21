@@ -121,6 +121,10 @@ This preserves the October 14 normal-path baseline with one live engine. Use
 `eval:hook-latency` for fresh engines and deadline/stall controls, or the native
 session runner below for host/model acceptance.
 
+Both latency CLIs reject unknown, duplicate and incomplete flags before creating run
+state. A misspelled deadline option cannot silently measure a default-budget baseline;
+the actual-default runner accepts only `--out` and `--repeats`.
+
 `npm run eval:native-hooks -- --host claude-code --out /tmp/othie-native-claude` launches
 the installed native host in noninteractive mode against an isolated synthetic engine.
 The four sessions cover positive cited delivery, a repository-only no-op, live credential

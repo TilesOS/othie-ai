@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { evaluationArguments } from "./arguments.js";
 import { createHash } from "node:crypto";
 import { mkdir, mkdtemp, readFile, realpath, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -195,13 +196,14 @@ export async function runHookLatencyAcceptance(out: string, input: Partial<Optio
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const argument = (name: string) => { const index = process.argv.indexOf(`--${name}`); return index < 0 ? undefined : process.argv[index + 1]; };
-  const out = resolve(argument("out") ?? `packages/engine/evaluation/results/hook-latency-${Date.now()}`);
-  await mkdir(resolve(out, ".."), { recursive: true });
-  const input = Object.fromEntries(["repeats", "deadline-ms", "host-timeout-ms"].flatMap((name) =>
-    argument(name) === undefined ? [] : [[name.replaceAll("-", "_"), Number(argument(name))]]));
-  void runHookLatencyAcceptance(out, input).then((report) => {
+  try {
+    const values = evaluationArguments(process.argv.slice(2), ["out", "repeats", "deadline-ms", "host-timeout-ms"], "hook latency");
+    const out = resolve(values.get("out") ?? `packages/engine/evaluation/results/hook-latency-${Date.now()}`);
+    const input = Object.fromEntries(["repeats", "deadline-ms", "host-timeout-ms"].flatMap((name) =>
+      values.has(name) ? [[name.replaceAll("-", "_"), Number(values.get(name))]] : []));
+    await mkdir(resolve(out, ".."), { recursive: true });
+    const report = await runHookLatencyAcceptance(out, input);
     process.stdout.write(JSON.stringify({ report: join(out, "summary.json"), passed: report.passed }) + "\n");
     if (!report.passed) process.exitCode = 1;
-  }).catch(() => { process.stderr.write("Hook latency acceptance failed; inspect preserved records.\n"); process.exitCode = 1; });
+  } catch { process.stderr.write("Hook latency acceptance failed; check arguments and any preserved records.\n"); process.exitCode = 1; }
 }

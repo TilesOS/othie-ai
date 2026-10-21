@@ -7,22 +7,14 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { configSchema } from "../config.js";
 import { createCredential, revokeCredential } from "../engine/credentials.js";
 import { runEngine } from "../engine/lifecycle.js";
+import { evaluationArguments } from "./arguments.js";
 
 export type NativeHost = "codex" | "claude-code";
 export type CodexHooks = "session" | "project";
 export type ClaudeSettings = "explicit" | "project" | "local";
 export type LaunchDirectory = "root" | "nested";
 export function nativeHookArguments(argv: string[]): ReadonlyMap<string, string> {
-  const allowed = new Set(["host", "out", "codex-hooks", "claude-settings", "launch-directory", "local-model"]);
-  const values = new Map<string, string>();
-  for (let index = 0; index < argv.length; index += 2) {
-    const flag = argv[index]!, name = flag.slice(2), value = argv[index + 1];
-    if (!flag.startsWith("--") || !allowed.has(name)) throw new Error(`Unknown native acceptance argument: ${flag}`);
-    if (values.has(name)) throw new Error(`Duplicate native acceptance argument: ${flag}`);
-    if (!value || value.startsWith("--")) throw new Error(`${flag} requires a value`);
-    values.set(name, value);
-  }
-  return values;
+  return evaluationArguments(argv, ["host", "out", "codex-hooks", "claude-settings", "launch-directory", "local-model"], "native acceptance");
 }
 
 type NativeCondition = "positive" | "irrelevant" | "revoked" | "unavailable";

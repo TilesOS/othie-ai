@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { evaluationArguments } from "./arguments.js";
 import { createHash } from "node:crypto";
 import { mkdir, mkdtemp, readFile, realpath, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -112,12 +113,12 @@ export async function runHookLatency(out: string, repeats = 3) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const arg = (name: string) => { const index = process.argv.indexOf(`--${name}`); return index < 0 ? undefined : process.argv[index + 1]; };
   try {
-    const out = resolve(arg("out") ?? `packages/engine/evaluation/results/hook-latency-${Date.now()}`);
+    const values = evaluationArguments(process.argv.slice(2), ["out", "repeats"], "default hook latency");
+    const out = resolve(values.get("out") ?? `packages/engine/evaluation/results/hook-latency-${Date.now()}`);
     await mkdir(resolve(out, ".."), { recursive: true });
-    const report = await runHookLatency(out, Number(arg("repeats") ?? 3));
+    const report = await runHookLatency(out, Number(values.get("repeats") ?? 3));
     process.stdout.write(JSON.stringify({ report: join(out, "summary.json"), passed: report.passed }) + "\n");
     if (!report.passed) process.exitCode = 1;
-  } catch { process.stderr.write("Hook latency evaluation failed; inspect preserved records.\n"); process.exitCode = 1; }
+  } catch { process.stderr.write("Hook latency evaluation failed; check arguments and any preserved records.\n"); process.exitCode = 1; }
 }
