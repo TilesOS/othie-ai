@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import { evaluationArguments } from "./arguments.js";
+import { parseHookDiagnostic } from "./hook-diagnostics.js";
 import { createHash } from "node:crypto";
 import { mkdir, mkdtemp, readFile, realpath, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -18,6 +19,20 @@ const policy = "Canary support policy requires the first response within eleven 
 const repository = fileURLToPath(new URL(import.meta.url.includes("/dist/") ? "../../../../../" : "../../../../", import.meta.url));
 const adapterPath = (host: Host) => join(repository, "integrations", host, "dist/src/user-prompt-submit.js");
 const cliPath = join(repository, "packages/engine/dist/src/cli.js");
+
+
+export function defaultHookDelivery(host: Host, condition: "positive" | "irrelevant" | "revoked" | "unavailable", stdout: string, stderr: string) {
+  const diagnostics = parseHookDiagnostic(stderr);
+  const expected = condition === "positive" ? "injected" : condition === "irrelevant" ? "empty" : "context_unavailable";
+  if (diagnostics?.host !== host || diagnostics.outcome !== expected) return false;
+  if (condition !== "positive") return stdout === "";
+  try {
+    const output = JSON.parse(stdout).hookSpecificOutput;
+    return diagnostics.token_count !== undefined && output.hookEventName === "UserPromptSubmit"
+      && typeof output.additionalContext === "string" && output.additionalContext.includes(policy)
+      && output.additionalContext.includes('source="s1/canary.md"');
+  } catch { return false; }
+}
 
 /** Parent timing includes spawn, module loading, stdin, CLI/IPC, validation,
  * output and process exit. No native host or model is launched. */
@@ -92,13 +107,8 @@ export async function runHookLatency(out: string, repeats = 3) {
       if (condition === "unavailable") { await running!.close(); running = undefined; }
       for (let repeat = 1; repeat <= repeats; repeat++) for (const host of repeat % 2 ? hosts : [...hosts].reverse()) {
         const response = await invoke(host, configPath, credentials.get(host)!, workspace, condition === "irrelevant" ? irrelevant : positive);
-        let diagnostics: Record<string, unknown> | null = null, context: string | null = null;
-        try { diagnostics = JSON.parse(response.stderr); } catch { /* Preserve failed output. */ }
-        try { context = JSON.parse(response.stdout).hookSpecificOutput.additionalContext; } catch { /* Empty is expected for no-ops. */ }
-        const expected = condition === "positive" ? "injected" : condition === "irrelevant" ? "empty" : "context_unavailable";
-        const delivery = diagnostics?.host === host && diagnostics?.outcome === expected && (condition === "positive"
-          ? typeof context === "string" && context.includes(policy) && context.includes('source="s1/canary.md"')
-          : response.stdout === "");
+        const diagnostics = parseHookDiagnostic(response.stderr);
+        const delivery = defaultHookDelivery(host, condition, response.stdout, response.stderr);
         const latency = response.wall_ms < hookDeadlineMs;
         const record = { host, condition, repeat, ...response, diagnostics, delivery_passed: delivery, hook_deadline_met: latency,
           passed: delivery && latency && response.code === 0 && !response.timed_out && !response.oversized };

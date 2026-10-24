@@ -38,7 +38,7 @@ describe("native hook acceptance recorder", () => {
 
   it("requires the full cited policy and matching successful adapter event for native delivery", () => {
     const context = '<excerpt source="s1/canary.md">Canary enterprise support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.</excerpt>';
-    const receipt = { event: "UserPromptSubmit", code: 0, stderr: JSON.stringify({ host: "claude-code", outcome: "injected" }),
+    const receipt = { event: "UserPromptSubmit", code: 0, stderr: JSON.stringify({ schema_version: "1", event: "othie_prompt_hook", host: "claude-code", surface: "code", phase: "turn_start", outcome: "injected", elapsed_ms: 10, token_count: 50 }),
       stdout: JSON.stringify({ hookSpecificOutput: { hookEventName: "UserPromptSubmit", additionalContext: context } }) };
     expect(nativeHookDelivery("claude-code", "positive", receipt)).toBe(true);
     for (const change of [
@@ -48,13 +48,21 @@ describe("native hook acceptance recorder", () => {
       { stderr: JSON.stringify({ host: "codex", outcome: "injected" }) },
     ]) expect(nativeHookDelivery("claude-code", "positive", { ...receipt, ...change })).toBe(false);
     expect(nativeHookDelivery("claude-code", "positive", null)).toBe(false);
-    const empty = { ...receipt, stdout: "", stderr: JSON.stringify({ host: "claude-code", outcome: "empty" }) };
+    const empty = { ...receipt, stdout: "", stderr: JSON.stringify({ schema_version: "1", event: "othie_prompt_hook", host: "claude-code", surface: "code", phase: "turn_start", outcome: "empty", elapsed_ms: 10 }) };
     expect(nativeHookDelivery("claude-code", "irrelevant", empty)).toBe(true);
     expect(nativeHookDelivery("claude-code", "irrelevant", { ...empty, stdout: " " })).toBe(false);
     expect(nativeHookDelivery("claude-code", "revoked", empty)).toBe(false);
-    const unavailable = { ...empty, stderr: JSON.stringify({ host: "claude-code", outcome: "context_unavailable" }) };
+    const unavailable = { ...empty, stderr: empty.stderr.replace("empty", "context_unavailable") };
     expect(nativeHookDelivery("claude-code", "revoked", unavailable)).toBe(true);
     expect(nativeHookDelivery("claude-code", "unavailable", unavailable)).toBe(true);
+    for (const [condition, valid] of [["positive", receipt], ["irrelevant", empty], ["revoked", unavailable], ["unavailable", unavailable]] as const) {
+      const diagnostic = JSON.parse(valid.stderr);
+      for (const change of [
+        { prompt: "PRIVATE_PROMPT" }, { elapsed_ms: "PRIVATE_PATH" }, { mode: "PRIVATE_PROFILE" },
+        { token_count: 501 }, { schema_version: "2" }, { event: "other" }, { elapsed_ms: -1 },
+      ]) expect(nativeHookDelivery("claude-code", condition, { ...valid, stderr: JSON.stringify({ ...diagnostic, ...change }) })).toBe(false);
+      expect(nativeHookDelivery("claude-code", condition, { ...valid, stderr: valid.stderr + "\nwarning PRIVATE_SECRET" })).toBe(false);
+    }
   });
 
   it("does not mask project or local settings discovery with an explicit override", () => {

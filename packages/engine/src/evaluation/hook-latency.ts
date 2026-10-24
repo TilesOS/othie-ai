@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import { evaluationArguments } from "./arguments.js";
+import { parseHookDiagnostic } from "./hook-diagnostics.js";
 import { createHash } from "node:crypto";
 import { mkdir, mkdtemp, readFile, realpath, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -72,23 +73,9 @@ function invoke(adapter: string, cli: string, config: string, credential: string
   });
 }
 
-// Keep failed or malformed diagnostic output in the raw attempt; never promote it
-// to a successful result just because the process exited before its outer timeout.
-const diagnosticSchema = z.object({
-  schema_version: z.literal("1"), event: z.literal("othie_prompt_hook"), host: z.enum(["codex", "claude-code"]),
-  surface: z.literal("code"), phase: z.literal("turn_start"),
-  outcome: z.enum(["injected", "empty", "context_timeout", "context_unavailable", "invalid_event", "invalid_options", "invalid_context_response"]),
-  elapsed_ms: z.number().int().nonnegative(),
-  mode: z.enum(["deterministic", "synthesized", "fallback", "empty"]).optional(),
-  token_count: z.number().int().nonnegative().max(500).optional(),
-  omitted_items: z.number().int().nonnegative().optional(), rule_count: z.number().int().nonnegative().optional(),
-  excerpt_count: z.number().int().nonnegative().optional(), synthesis_count: z.number().int().nonnegative().optional(),
-  conflict_count: z.number().int().nonnegative().optional(),
-}).strict();
 
 export function scoreHookLatencyAttempt(host: Host, condition: Condition, result: ProcessResult, options: Options, engineReceived: boolean) {
-  let diagnostic: z.infer<typeof diagnosticSchema> | null = null;
-  try { diagnostic = diagnosticSchema.parse(JSON.parse(result.stderr)); } catch { /* Preserve invalid output as failure. */ }
+  const diagnostic = parseHookDiagnostic(result.stderr);
   const expected = condition === "positive" ? "injected" : condition === "irrelevant" ? "empty"
     : condition === "revoked" || condition === "unavailable" ? "context_unavailable" : "context_timeout";
   let citedDelivery = false;

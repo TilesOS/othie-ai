@@ -8,6 +8,7 @@ import { configSchema } from "../config.js";
 import { createCredential, revokeCredential } from "../engine/credentials.js";
 import { runEngine } from "../engine/lifecycle.js";
 import { evaluationArguments } from "./arguments.js";
+import { parseHookDiagnostic } from "./hook-diagnostics.js";
 
 export type NativeHost = "codex" | "claude-code";
 export type CodexHooks = "session" | "project";
@@ -44,12 +45,12 @@ export function redactNativeTranscript(text: string, paths: ReadonlyArray<readon
 export function nativeHookDelivery(host: NativeHost, condition: NativeCondition, receipt: HookReceipt | null): boolean {
   if (!receipt || receipt.code !== 0 || receipt.event !== "UserPromptSubmit") return false;
   try {
-    const diagnostics = JSON.parse(receipt.stderr);
+    const diagnostics = parseHookDiagnostic(receipt.stderr);
     const expected = condition === "positive" ? "injected" : condition === "irrelevant" ? "empty" : "context_unavailable";
-    if (diagnostics.host !== host || diagnostics.outcome !== expected) return false;
+    if (diagnostics?.host !== host || diagnostics.outcome !== expected) return false;
     if (condition !== "positive") return receipt.stdout === "";
     const output = JSON.parse(receipt.stdout).hookSpecificOutput;
-    return output.hookEventName === "UserPromptSubmit" && typeof output.additionalContext === "string"
+    return diagnostics.token_count !== undefined && output.hookEventName === "UserPromptSubmit" && typeof output.additionalContext === "string"
       && output.additionalContext.includes(canaryPolicy) && output.additionalContext.includes('source="s1/canary.md"');
   } catch { return false; }
 }
