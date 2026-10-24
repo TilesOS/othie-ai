@@ -1,0 +1,25 @@
+{
+  "repeat": 2,
+  "mode": "original",
+  "request_sha256": "479a0fe361ef274be1a9862e35991ba31ed80cd6c20a025d17b0f76977428118",
+  "response_sha256": "b4a0be4bdda895ec898a56636a3caed0f01a2701353582d85eb493498a639372",
+  "status": 200,
+  "completed": true,
+  "answer": "unknown",
+  "reasoning": [
+    "The user is asking about Canary enterprise support policy and specifically the weekend first-response target in hours. They want me to use only the supplied context and reply with just the number.\n\nLooking at the provided environment context, I can see:\n- CWD: `/temporary-fixture/workspace with spaces`\n- Shell: `zsh`\n- Current date/timezone info\n- Filesystem structure with permission profile\n\nThis information doesn't contain anything about Canary enterprise support policy or weekend first-response targets. The environment context only describes the shell and file system setup, not any actual documents or policies.\n\nSince the user explicitly asked me to \"Use only supplied context; if missing reply unknown\" and there's no information about Canary enterprise support policy in the provided context, I should simply state that the answer is unknown."
+  ],
+  "usage": {
+    "input_tokens": 8126,
+    "input_tokens_details": {
+      "cached_tokens": 8125
+    },
+    "output_tokens": 168,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8294
+  },
+  "elapsed_ms": 3246.8934169999993,
+  "context_answer_passed": false
+}

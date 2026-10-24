@@ -1,0 +1,128 @@
+{
+  "protocol": "synthetic-local-provider-transport-v1",
+  "upstream": "Ollama 0.35.1 on 127.0.0.1:11436",
+  "forwarder": "127.0.0.1:11434; request body forwarded unchanged; headers omitted from evidence",
+  "snapshot": "provider-request.json",
+  "projection": "Cache key and client metadata removed; host and fixture paths replaced. Original request hash is separate from redacted fixture hash.",
+  "snapshot_sha256": "f0495a59206123ec469fe2e47b265357f0d73e7e03504f61a12020c6ec05217e",
+  "records": [
+    {
+      "condition": "positive",
+      "endpoint": "/v1/responses",
+      "request_body_sha256": "d7efec28d7619514f2d9756b643db996f488ddcc2e9e2c00e9cf039b19c46aba",
+      "model": "qwen3.5:4b-mlx",
+      "messages": [
+        {
+          "role": "developer",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        },
+        {
+          "role": "developer",
+          "type": "message",
+          "contains_complete_policy": true,
+          "contains_complete_adapter_context": true
+        }
+      ],
+      "adapter_delivery_passed": true,
+      "native_answer": "unknown"
+    },
+    {
+      "condition": "irrelevant",
+      "endpoint": "/v1/responses",
+      "request_body_sha256": "4fb2ddfc0c4a462ec3549c90f2c707baa70f469681ed70f3524315a05b23a944",
+      "model": "qwen3.5:4b-mlx",
+      "messages": [
+        {
+          "role": "developer",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        }
+      ],
+      "adapter_delivery_passed": true,
+      "native_answer": "42"
+    },
+    {
+      "condition": "revoked",
+      "endpoint": "/v1/responses",
+      "request_body_sha256": "d6be693b643e2f1c0ea75aea11058c676811272ad08b6e45adf55378d38948e6",
+      "model": "qwen3.5:4b-mlx",
+      "messages": [
+        {
+          "role": "developer",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        }
+      ],
+      "adapter_delivery_passed": true,
+      "native_answer": "unknown"
+    },
+    {
+      "condition": "unavailable",
+      "endpoint": "/v1/responses",
+      "request_body_sha256": "ee00c64ef41a0288a8312e8b5b186ceb4e3334421b47717e793a63db077e6569",
+      "model": "qwen3.5:4b-mlx",
+      "messages": [
+        {
+          "role": "developer",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "contains_complete_policy": false,
+          "contains_complete_adapter_context": false
+        }
+      ],
+      "adapter_delivery_passed": true,
+      "native_answer": "unknown"
+    }
+  ]
+}

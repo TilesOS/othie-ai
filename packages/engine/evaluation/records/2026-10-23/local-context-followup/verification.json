@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-24T03:53:04.946Z",
+  "synthetic_only": true,
+  "code_commits": [
+    "9e61e99",
+    "cf8f09b",
+    "b750070"
+  ],
+  "deterministic_tests": 180,
+  "opt_in_model_tests_skipped": 1,
+  "final_checks": {
+    "clean_install": true,
+    "build": true,
+    "typecheck": true,
+    "website_lint": true,
+    "production_audit_findings": 0,
+    "full_audit_findings": 0
+  },
+  "native": {
+    "hosted_project": {
+      "delivery": 4,
+      "passed": 4,
+      "total": 4
+    },
+    "local_final": {
+      "delivery": 4,
+      "passed": 3,
+      "total": 4,
+      "positive_answer": "unknown"
+    }
+  },
+  "latency": {
+    "strict_passed": 14,
+    "strict_total": 14,
+    "default_passed": 8,
+    "default_total": 8
+  },
+  "final_compiled_artifacts_match_native_and_latency_records": true,
+  "scope": "Native/latency runs follow production dependency refresh and precede the development-only Vitest/Vite refresh. Final full suite/build/typecheck/lint run after the toolchain refresh; native adapter/CLI/runtime hashes are unchanged.",
+  "services": {
+    "temporary_ollama_stopped": true,
+    "proxy_stopped": true,
+    "website_server_stopped": true
+  },
+  "remaining": [
+    "local-model developer-message consumption",
+    "interactive hook approval",
+    "native desktop and Windows sessions",
+    "semantic quality and larger native coding benchmark",
+    "signed installers",
+    "fresh remote CI"
+  ]
+}

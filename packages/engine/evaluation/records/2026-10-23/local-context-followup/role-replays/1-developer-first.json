@@ -1,0 +1,25 @@
+{
+  "repeat": 1,
+  "mode": "developer-first",
+  "request_sha256": "3d00f8428d4abc0451da63edf98a9578665d241a33025847d6b71adf8f4d8337",
+  "response_sha256": "13ab6467b7a2d87b154efdf30cb343b013356c737c0532608a9b846317483d9b",
+  "status": 200,
+  "completed": true,
+  "answer": "unknown",
+  "reasoning": [
+    "The user is asking about Canary enterprise support policy regarding weekend first-response targets in hours. They specifically want me to:\n1. Use only the supplied context\n2. If information is missing, reply \"unknown\"\n3. Reply with just the number\n\nLooking at the environment context provided, I only see:\n- CWD: /temporary-fixture/workspace with spaces\n- Shell: zsh\n- Current date and timezone info\n- Filesystem structure showing a temporary workspace root\n- Permission profile for restricted file system access\n\nThere is no information about Canary enterprise support policy in the supplied context. This means I need to reply \"unknown\" since the user explicitly instructed me to use only the supplied context and if missing, reply unknown."
+  ],
+  "usage": {
+    "input_tokens": 8126,
+    "input_tokens_details": {
+      "cached_tokens": 8122
+    },
+    "output_tokens": 154,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8280
+  },
+  "elapsed_ms": 2334.1055420000002,
+  "context_answer_passed": false
+}

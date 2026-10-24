@@ -1,0 +1,25 @@
+{
+  "repeat": 1,
+  "mode": "hook-as-user",
+  "request_sha256": "2c495ac40f005554bc266d8896ef779de2bad5c7462ebb75e9077028ea6c2c8f",
+  "response_sha256": "d82cc77135c6ce58e1dbceba7a8da03de693426330bb5023b31cb57e5a676709",
+  "status": 200,
+  "completed": true,
+  "answer": "**11**",
+  "reasoning": [
+    "The user is asking about the weekend first-response target according to Canary enterprise support policy, and they want me to reply with only the number using only the supplied context.\n\nLooking at the context provided, I can see in the excerpt that \"Canary enterprise support policy requires the first response within eleven hours on weekends.\"\n\nSo the answer is 11 hours. The user specifically asked to reply with the number only and not use tools."
+  ],
+  "usage": {
+    "input_tokens": 8342,
+    "input_tokens_details": {
+      "cached_tokens": 8192
+    },
+    "output_tokens": 95,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8437
+  },
+  "elapsed_ms": 1533.5874590000003,
+  "context_answer_passed": false
+}

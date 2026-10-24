@@ -1,0 +1,25 @@
+{
+  "repeat": 2,
+  "mode": "minimal-system",
+  "request_sha256": "f362cc21a2d7d41214bdf9b448222f45a0466f16f7ffa11b6adf8aaf5b79d088",
+  "response_sha256": "4a2dd292ffb6fe9304f302424cd811747bf59d74e038c7b833e15a10542ecdda",
+  "status": 200,
+  "completed": true,
+  "answer": "11",
+  "reasoning": [
+    "The user wants to know the weekend first-response target in hours according to Canary enterprise support policy based on the provided context.\n\n1.  **Analyze the request**: The user is asking for a specific number (hours) regarding the first-response target on weekends. They want me to use *only* the supplied context and reply with the number only. If the information is missing, I must reply \"unknown\".\n2.  **Analyze the provided context**:\n    *   `<excerpt>Canary enterprise support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.<citation source=\"s1/canary.md\" at=\"lines 1-2\"/></excerpt>`\n    *   The text explicitly states: \"requires the first response within **eleven** hours on weekends\".\n3.  **Extract the answer**: The number is 11.\n4.  **Format the output**: The user requested \"Reply with the number only.\"\n5.  **Verify constraints**:\n    *   Use supplied context? Yes, the text provides \"eleven hours\".\n    *   Reply with the number only? Yes.\n    *   Do not use tools? N/A (I am not using any tools here).\n\nAnswer: 11."
+  ],
+  "usage": {
+    "input_tokens": 216,
+    "input_tokens_details": {
+      "cached_tokens": 215
+    },
+    "output_tokens": 276,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 492
+  },
+  "elapsed_ms": 4217.994582999992,
+  "context_answer_passed": true
+}

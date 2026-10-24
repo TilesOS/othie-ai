@@ -1,0 +1,25 @@
+{
+  "repeat": 3,
+  "mode": "original",
+  "request_sha256": "479a0fe361ef274be1a9862e35991ba31ed80cd6c20a025d17b0f76977428118",
+  "response_sha256": "b72e855080b5f7b9466fe205d9e2ae83f78a343977e00687567f18d7078fc42c",
+  "status": 200,
+  "completed": true,
+  "answer": "unknown",
+  "reasoning": [
+    "The user is asking about Canary enterprise support policy and specifically about weekend first-response targets in hours. They want me to reply with only the number, using only supplied context and not using any tools.\n\nLooking at the provided information, I have:\n- An environment context showing `/tmp/workspace with spaces` as a temporary fixture\n- Filesystem permissions info\n- No other relevant context about Canary enterprise support policy\n\nThe user explicitly states \"Use only supplied context; if missing reply unknown\" and asks me to \"Reply with the number only. Do not use tools.\"\n\nSince there is no information about Canary enterprise support policy in the provided context, I should reply \"unknown\"."
+  ],
+  "usage": {
+    "input_tokens": 8126,
+    "input_tokens_details": {
+      "cached_tokens": 8125
+    },
+    "output_tokens": 140,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8266
+  },
+  "elapsed_ms": 5485.535042000003,
+  "context_answer_passed": false
+}

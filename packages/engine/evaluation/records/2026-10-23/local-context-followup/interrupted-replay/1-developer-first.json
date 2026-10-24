@@ -1,0 +1,25 @@
+{
+  "repeat": 1,
+  "mode": "developer-first",
+  "request_sha256": "7070c67fcc1fa3d36b92aba75dec2fab4bc4ffa682f4e94464db271acab9f5f2",
+  "response_sha256": "5318442bdb4fde97417496de1c972ea001662cb8501f6c25eb52a22b31f34164",
+  "status": 200,
+  "completed": true,
+  "answer": "I'll search the workspace for any documentation about Canary enterprise support policy and weekend first-response targets.",
+  "reasoning": [
+    "The user is asking about Canary enterprise support policy regarding weekend first-response targets. They want me to use only supplied context and if the information is missing, I should reply 'unknown'.\n\nLet me check the filesystem for any relevant context files in this workspace."
+  ],
+  "usage": {
+    "input_tokens": 8196,
+    "input_tokens_details": {
+      "cached_tokens": 8192
+    },
+    "output_tokens": 133,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8329
+  },
+  "elapsed_ms": 2140.7725410000003,
+  "context_answer_passed": false
+}

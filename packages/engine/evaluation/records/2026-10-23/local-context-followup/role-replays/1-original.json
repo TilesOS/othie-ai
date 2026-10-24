@@ -1,0 +1,25 @@
+{
+  "repeat": 1,
+  "mode": "original",
+  "request_sha256": "479a0fe361ef274be1a9862e35991ba31ed80cd6c20a025d17b0f76977428118",
+  "response_sha256": "3c718f848667d4a2df3768e62ad195185fc371d976dc2fbc7848ed720b306fb6",
+  "status": 200,
+  "completed": true,
+  "answer": "unknown",
+  "reasoning": [
+    "The user is asking about Canary enterprise support policy regarding weekend first-response targets. They specifically want me to:\n1. Answer using only supplied context\n2. If information is missing, I should say \"unknown\"\n3. Only reply with the number\n\nLooking at the available information, there's no actual context provided about Canary enterprise support policy. The environment context only mentions:\n- A workspace path \"/workspace with spaces\" (which seems like a placeholder)\n- Shell (zsh), current date (2026-10-23), timezone (America/New_York)\n\nThere's no information about any software company called \"Canary\" or their support policies in the context. Since I'm instructed to use only supplied context and if it's missing to reply \"unknown\", I should answer \"unknown\" since there is no provided information about Canary enterprise support policy."
+  ],
+  "usage": {
+    "input_tokens": 8126,
+    "input_tokens_details": {
+      "cached_tokens": 7959
+    },
+    "output_tokens": 184,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8310
+  },
+  "elapsed_ms": 2868.184,
+  "context_answer_passed": false
+}

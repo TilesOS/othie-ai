@@ -1,0 +1,34 @@
+{
+  "host": "codex",
+  "host_model": "gpt-6-astra",
+  "condition": "irrelevant",
+  "prompt": "The repository function double(n) returns n * 2. What is double(21)? Reply with the number only. Do not use tools.",
+  "expected": "42",
+  "answer": "42",
+  "elapsed_ms": 4932.103875000001,
+  "response": {
+    "code": 0,
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"<redacted>\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"`--dangerously-bypass-hook-trust` is enabled. Enabled hooks may run without review for this invocation.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"error\",\"message\":\"`--dangerously-bypass-hook-trust` is enabled. Enabled hooks may run without review for this invocation.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in <temporary-fixture>/codex-home/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"agent_message\",\"text\":\"42\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":14084,\"cached_input_tokens\":11904,\"cache_write_input_tokens\":0,\"output_tokens\":5,\"reasoning_output_tokens\":0}}\n",
+    "stderr": "Reading additional input from stdin...\n",
+    "timed_out": false
+  },
+  "receipt": {
+    "event": "UserPromptSubmit",
+    "input_fields": [
+      "cwd",
+      "hook_event_name",
+      "model",
+      "permission_mode",
+      "prompt",
+      "session_id",
+      "transcript_path",
+      "turn_id"
+    ],
+    "model": "gpt-6-astra",
+    "stdout": "",
+    "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"codex\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"empty\",\"elapsed_ms\":321,\"mode\":\"empty\",\"token_count\":74,\"omitted_items\":0,\"rule_count\":0,\"excerpt_count\":0,\"synthesis_count\":0,\"conflict_count\":0}\n",
+    "code": 0
+  },
+  "delivery_passed": true,
+  "passed": true
+}

@@ -1,0 +1,34 @@
+
+ RUN  v5.0.0 <othie-repository>
+
+ ❯ packages/engine/test/native-hooks.test.ts (6 tests | 1 failed) 71ms
+   ❯ native hook acceptance recorder (6)
+     × requires the full cited policy and matching successful adapter event for native delivery 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/engine/test/native-hooks.test.ts > native hook acceptance recorder > requires the full cited policy and matching successful adapter event for native delivery
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/engine/test/native-hooks.test.ts:63:131
+     61|         { prompt: "PRIVATE_PROMPT" }, { elapsed_ms: "PRIVATE_PATH" }, …
+     62|         { token_count: 501 }, { schema_version: "2" }, { event: "other…
+     63|       ]) expect(nativeHookDelivery("claude-code", condition, { ...vali…
+       |                                                                                                                                   ^
+     64|       expect(nativeHookDelivery("claude-code", condition, { ...valid, …
+     65|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  23:40:10
+   Duration  424ms (import 49%, transform 31%, tests 20%, worker 1%)
+

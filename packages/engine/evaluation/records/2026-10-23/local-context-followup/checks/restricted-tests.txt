@@ -1,0 +1,285 @@
+
+> othie-ai@0.1.0 test
+> npm run test --workspaces --if-present
+
+
+> @othie/engine@0.1.0 pretest
+> npm run build && npm run build:integrations --prefix ../..
+
+
+> @othie/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> othie-ai@0.1.0 build:integrations
+> npm run build --workspace=@othie/codex-integration --workspace=@othie/claude-code-integration
+
+
+> @othie/codex-integration@0.1.0 prebuild
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/codex-integration@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/claude-code-integration@0.1.0 prebuild
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/claude-code-integration@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/engine@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.0 <othie-repository>/packages/engine
+
+Othie watcher error; reconciliation will retry
+Othie watcher error; reconciliation will retry
+Othie watcher error; reconciliation will retry
+ ❯ test/hook-delivery.integration.test.ts (1 test | 1 failed) 139ms
+   ❯ authenticated cross-host prompt delivery (1)
+     × delivers eligible context, stays silent for irrelevant tasks, and respects deletion/restart and profile grants 138ms
+ ❯ test/hook-latency.test.ts (5 tests | 1 failed) 153ms
+   ❯ process-level hook latency acceptance (5)
+     × runs both compiled adapters against fresh live state and preserves attempts without overwrites 148ms
+ ❯ test/hook-default-latency.test.ts (1 test | 1 failed) 161ms
+   × records complete adapter processes with default deadlines despite inherited overrides and preserves existing evidence 160ms
+ ❯ test/mcp.integration.test.ts (1 test | 1 failed) 120ms
+   ❯ real MCP stdio bridge (1)
+     × serves two simultaneous hosts through one writer and survives engine restart 119ms
+ ❯ test/credentials.test.ts (5 tests | 1 failed) 241ms
+   ❯ credential administration (5)
+     × revokes a grant through the compiled CLI while the engine remains live 97ms
+ ❯ test/lifecycle.integration.test.ts (4 tests | 3 failed) 7080ms
+   ❯ engine lifecycle (4)
+     × rejects a second process before starting workers and exits cleanly 122ms
+     × cleans up the lock and workers after a failed bind, then permits restart 1933ms
+     × recovers a lock left by a terminated engine 5023ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/credentials.test.ts > credential administration > revokes a grant through the compiled CLI while the engine remains live
+Error: listen EPERM: operation not permitted <temporary-socket>
+ ❯ src/engine/ipc.ts:28:81
+     26|       }catch(error){response={id:response.id,ok:false,error:error inst…
+     27|     })();});});
+     28|   await new Promise<void>((resolve,reject)=>{server.once("error",rejec…
+       |                                                                                 ^
+     29|   if(platform()!=="win32")await chmod(path,0o600);
+     30|   return {path,close:async()=>{await new Promise<void>((resolve)=>serv…
+ ❯ serveEngine src/engine/ipc.ts:28:9
+ ❯ runEngine src/engine/lifecycle.ts:20:14
+ ❯ test/credentials.test.ts:72:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  test/hook-default-latency.test.ts > records complete adapter processes with default deadlines despite inherited overrides and preserves existing evidence
+Error: listen EPERM: operation not permitted <temporary-socket>
+ ❯ src/engine/ipc.ts:28:81
+     26|       }catch(error){response={id:response.id,ok:false,error:error inst…
+     27|     })();});});
+     28|   await new Promise<void>((resolve,reject)=>{server.once("error",rejec…
+       |                                                                                 ^
+     29|   if(platform()!=="win32")await chmod(path,0o600);
+     30|   return {path,close:async()=>{await new Promise<void>((resolve)=>serv…
+ ❯ serveEngine src/engine/ipc.ts:28:9
+ ❯ runEngine src/engine/lifecycle.ts:20:14
+ ❯ runHookLatency src/evaluation/hook-default-latency.ts:83:15
+ ❯ test/hook-default-latency.test.ts:12:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  test/hook-delivery.integration.test.ts > authenticated cross-host prompt delivery > delivers eligible context, stays silent for irrelevant tasks, and respects deletion/restart and profile grants
+Error: listen EPERM: operation not permitted <temporary-socket>
+ ❯ src/engine/ipc.ts:28:81
+     26|       }catch(error){response={id:response.id,ok:false,error:error inst…
+     27|     })();});});
+     28|   await new Promise<void>((resolve,reject)=>{server.once("error",rejec…
+       |                                                                                 ^
+     29|   if(platform()!=="win32")await chmod(path,0o600);
+     30|   return {path,close:async()=>{await new Promise<void>((resolve)=>serv…
+ ❯ serveEngine src/engine/ipc.ts:28:9
+ ❯ runEngine src/engine/lifecycle.ts:20:14
+ ❯ test/hook-delivery.integration.test.ts:49:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  test/hook-latency.test.ts > process-level hook latency acceptance > runs both compiled adapters against fresh live state and preserves attempts without overwrites
+Error: listen EPERM: operation not permitted <temporary-socket>
+ ❯ src/engine/ipc.ts:28:81
+     26|       }catch(error){response={id:response.id,ok:false,error:error inst…
+     27|     })();});});
+     28|   await new Promise<void>((resolve,reject)=>{server.once("error",rejec…
+       |                                                                                 ^
+     29|   if(platform()!=="win32")await chmod(path,0o600);
+     30|   return {path,close:async()=>{await new Promise<void>((resolve)=>serv…
+ ❯ serveEngine src/engine/ipc.ts:28:9
+ ❯ runEngine src/engine/lifecycle.ts:20:14
+ ❯ runHookLatencyAcceptance src/evaluation/hook-latency.ts:156:17
+ ❯ test/hook-latency.test.ts:51:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  test/lifecycle.integration.test.ts > engine lifecycle > rejects a second process before starting workers and exits cleanly
+Error: listen EPERM: operation not permitted <temporary-socket>
+ ❯ src/engine/ipc.ts:28:81
+     26|       }catch(error){response={id:response.id,ok:false,error:error inst…
+     27|     })();});});
+     28|   await new Promise<void>((resolve,reject)=>{server.once("error",rejec…
+       |                                                                                 ^
+     29|   if(platform()!=="win32")await chmod(path,0o600);
+     30|   return {path,close:async()=>{await new Promise<void>((resolve)=>serv…
+ ❯ serveEngine src/engine/ipc.ts:28:9
+ ❯ runEngine src/engine/lifecycle.ts:20:14
+ ❯ test/lifecycle.integration.test.ts:23:48
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  test/lifecycle.integration.test.ts > engine lifecycle > cleans up the lock and workers after a failed bind, then permits restart
+Error: listen EPERM: operation not permitted <temporary-socket>
+ ❯ src/engine/ipc.ts:28:81
+     26|       }catch(error){response={id:response.id,ok:false,error:error inst…
+     27|     })();});});
+     28|   await new Promise<void>((resolve,reject)=>{server.once("error",rejec…
+       |                                                                                 ^
+     29|   if(platform()!=="win32")await chmod(path,0o600);
+     30|   return {path,close:async()=>{await new Promise<void>((resolve)=>serv…
+ ❯ serveEngine src/engine/ipc.ts:28:9
+ ❯ runEngine src/engine/lifecycle.ts:20:14
+ ❯ test/lifecycle.integration.test.ts:43:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  test/lifecycle.integration.test.ts > engine lifecycle > recovers a lock left by a terminated engine
+Error: Timed out waiting for condition
+ ❯ waitFor test/helpers.ts:13:236
+
+ ❯ test/lifecycle.integration.test.ts:50:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  test/mcp.integration.test.ts > real MCP stdio bridge > serves two simultaneous hosts through one writer and survives engine restart
+Error: listen EPERM: operation not permitted <temporary-socket>
+ ❯ src/engine/ipc.ts:28:81
+     26|       }catch(error){response={id:response.id,ok:false,error:error inst…
+     27|     })();});});
+     28|   await new Promise<void>((resolve,reject)=>{server.once("error",rejec…
+       |                                                                                 ^
+     29|   if(platform()!=="win32")await chmod(path,0o600);
+     30|   return {path,close:async()=>{await new Promise<void>((resolve)=>serv…
+ ❯ serveEngine src/engine/ipc.ts:28:9
+ ❯ runEngine src/engine/lifecycle.ts:20:14
+ ❯ test/mcp.integration.test.ts:15:476
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+
+ Test Files  6 failed | 19 passed | 1 skipped (26)
+      Tests  8 failed | 109 passed | 1 skipped (118)
+   Start at  23:37:01
+   Duration  9.40s (import 48%, tests 47%, transform 5%)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path <othie-repository>/packages/engine
+npm error workspace @othie/engine@0.1.0
+npm error location <othie-repository>/packages/engine
+npm error command failed
+npm error command sh -c vitest run
+
+
+> @othie/hooks@0.1.0 test
+> vitest run test
+
+
+ RUN  v5.0.0 <othie-repository>/packages/hooks
+
+
+ Test Files  2 passed (2)
+      Tests  30 passed (30)
+   Start at  23:37:10
+   Duration  1.19s (tests 88%, import 9%, transform 3%)
+
+
+> @othie/website@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.0 <othie-repository>/apps/website
+
+
+ Test Files  2 passed (2)
+      Tests  14 passed (14)
+   Start at  23:37:12
+   Duration  104ms (transform 65%, import 21%, tests 7%, worker 6%)
+
+
+> @othie/claude-code-integration@0.1.0 pretest
+> npm run build
+
+
+> @othie/claude-code-integration@0.1.0 prebuild
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/claude-code-integration@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/claude-code-integration@0.1.0 test
+> vitest run test
+
+
+ RUN  v5.0.0 <othie-repository>/integrations/claude-code
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  23:37:12
+   Duration  233ms (import 70%, transform 16%, tests 13%, worker 1%)
+
+
+> @othie/codex-integration@0.1.0 pretest
+> npm run build
+
+
+> @othie/codex-integration@0.1.0 prebuild
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/codex-integration@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/codex-integration@0.1.0 test
+> vitest run test
+
+
+ RUN  v5.0.0 <othie-repository>/integrations/codex
+
+
+ Test Files  2 passed (2)
+      Tests  10 passed (10)
+   Start at  23:37:13
+   Duration  611ms (tests 76%, import 17%, transform 6%)
+

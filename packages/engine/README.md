@@ -124,7 +124,9 @@ It does not edit user or global Codex configuration.
 `UserPromptSubmit` adapter on the same shared runtime. Both remeasure XML tokens before
 delivery and can emit opt-in content-free JSON diagnostics on stderr. They never read
 host transcripts or block prompts. The [compatibility matrix](../../integrations/README.md)
-distinguishes automated contract checks from native-host acceptance.
+distinguishes automated contract checks from native-host acceptance. Native and both
+latency evaluators validate those diagnostics against one strict content-free schema;
+matching host/outcome fields alone cannot pass with unexpected content-bearing fields.
 
 ## CLI
 

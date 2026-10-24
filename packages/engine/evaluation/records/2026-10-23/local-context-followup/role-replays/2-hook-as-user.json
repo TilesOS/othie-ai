@@ -1,0 +1,25 @@
+{
+  "repeat": 2,
+  "mode": "hook-as-user",
+  "request_sha256": "6b1c75c4a48e77e897ae8bdf52a0781ff0f647fb827baecaeed599af448bfb52",
+  "response_sha256": "cb5cf156e886096935720618f80e7eaeb3a11043e758d54a87c57c3004b67172",
+  "status": 200,
+  "completed": true,
+  "answer": "11",
+  "reasoning": [
+    "The user is asking about Canary enterprise support policy weekend first-response targets. They've provided context that explicitly states the answer: \"Canary enterprise support policy requires the first response within eleven hours on weekends.\"\n\nThey want only the number as a reply."
+  ],
+  "usage": {
+    "input_tokens": 8272,
+    "input_tokens_details": {
+      "cached_tokens": 8268
+    },
+    "output_tokens": 55,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8327
+  },
+  "elapsed_ms": 991.6245000000054,
+  "context_answer_passed": true
+}

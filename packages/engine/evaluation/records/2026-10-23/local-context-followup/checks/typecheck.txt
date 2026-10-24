@@ -1,0 +1,40 @@
+
+> othie-ai@0.1.0 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @othie/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @othie/hooks@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @othie/website@0.1.0 typecheck
+> tsc --noEmit
+
+
+> @othie/claude-code-integration@0.1.0 pretypecheck
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/claude-code-integration@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @othie/codex-integration@0.1.0 pretypecheck
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/codex-integration@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+

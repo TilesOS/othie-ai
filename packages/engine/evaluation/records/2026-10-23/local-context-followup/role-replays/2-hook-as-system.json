@@ -1,0 +1,25 @@
+{
+  "repeat": 2,
+  "mode": "hook-as-system",
+  "request_sha256": "8f3cbf98b576e48ff2c0bbecc8c5f701b1bdc220e3cdb667192c6cb94923d864",
+  "response_sha256": "d11adf5f79fe7da69c48a9691df254fefed80958b1a49bdc89d758ae04e5bc8f",
+  "status": 200,
+  "completed": true,
+  "answer": "11",
+  "reasoning": [
+    "The user is asking me to recall information from the provided context about Canary enterprise support policy's weekend first-response target in hours. I need to reply with just the number based on the context provided, and I must not use any tools.\n\nFrom the context: \"Canary enterprise support policy requires the first response within eleven hours on weekends.\"\n\nSo the answer is 11."
+  ],
+  "usage": {
+    "input_tokens": 8272,
+    "input_tokens_details": {
+      "cached_tokens": 8268
+    },
+    "output_tokens": 82,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8354
+  },
+  "elapsed_ms": 1484.3581249999988,
+  "context_answer_passed": true
+}

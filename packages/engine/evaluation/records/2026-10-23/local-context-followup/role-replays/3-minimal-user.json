@@ -1,0 +1,25 @@
+{
+  "repeat": 3,
+  "mode": "minimal-user",
+  "request_sha256": "8c11ee45b60bc7db47123c1ce6034f9c50cb10723ff930396b6fd522c4501e10",
+  "response_sha256": "f9c18a4fc7c67e0629e51503508be61a3dc2ac48bf4ed53f07cad67846fcf43a",
+  "status": 200,
+  "completed": true,
+  "answer": "11",
+  "reasoning": [
+    "The user wants to know the weekend first-response target in hours according to the Canary enterprise support policy mentioned in the context.\n\nI need to check the provided context for this information.\nContext snippet: \"Canary enterprise support policy requires the first response within eleven hours on weekends.\"\nIt explicitly mentions \"eleven hours\".\n\nThe instruction says: \"Reply with the number only; if missing reply unknown.\"\nSo I should extract the number 11.\n\nI need to follow the rule: \"Answer using the supplied policy. Reply with the number only; if missing reply unknown.\"\nAlso, \"Do not use tools.\"\nSince I have the information in the context, I will output the number found.\n\nThe text says \"eleven hours\". The number is 11.\n\nI should output just \"11\"."
+  ],
+  "usage": {
+    "input_tokens": 216,
+    "input_tokens_details": {
+      "cached_tokens": 215
+    },
+    "output_tokens": 175,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 391
+  },
+  "elapsed_ms": 2956.5614999999816,
+  "context_answer_passed": true
+}

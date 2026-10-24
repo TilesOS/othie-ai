@@ -42,4 +42,9 @@ discovery failure. Start Claude at the root when using shared root settings, or 
 explicit settings path. The [October 20 Codex records](../packages/engine/evaluation/records/2026-10-20/codex-project-followup/README.md)
 verify trusted project-hook discovery from root and nested launches. They retain the
 original project-trust setup failure and the local-model positive-context failure;
-interactive persisted hook trust remains open. Windows native-host acceptance is unrecorded.
+interactive persisted hook trust remains open. The [October 23 transport records](../packages/engine/evaluation/records/2026-10-23/local-context-followup/README.md)
+show the complete positive context reaching Ollama in a developer message, followed by
+an `unknown` answer. Evaluation-only system/user role comparisons pass, narrowing the
+failure to developer-message handling in the installed provider/model combination;
+local-model consumption remains unaccepted. Final hosted project hooks pass 4/4 with
+strict content-free diagnostic validation. Windows native-host acceptance is unrecorded.

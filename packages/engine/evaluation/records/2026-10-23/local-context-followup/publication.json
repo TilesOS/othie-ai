@@ -1,0 +1,588 @@
+{
+  "recorded_at": "2026-10-24T03:53:04.915Z",
+  "redaction": "Host paths and native identifiers/account metadata removed; scores, timings, answers, adapter receipts retained.",
+  "files": [
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-baseline/irrelevant.json",
+      "path": "local-baseline/irrelevant.json",
+      "original_sha256": "423985b461a630475633690a9e36cb306acd4ea5c66433169d4277374ea12161",
+      "published_sha256": "423985b461a630475633690a9e36cb306acd4ea5c66433169d4277374ea12161"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-baseline/positive.json",
+      "path": "local-baseline/positive.json",
+      "original_sha256": "71ec021f6a7c326e0e061dd0372513cd304cc672a5f431956b43d122efb73f6e",
+      "published_sha256": "71ec021f6a7c326e0e061dd0372513cd304cc672a5f431956b43d122efb73f6e"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-baseline/protocol.json",
+      "path": "local-baseline/protocol.json",
+      "original_sha256": "fbd4359bfc056acfac2872d89533460fcbdd573cad25a010d70225a3cf004aa9",
+      "published_sha256": "fbd4359bfc056acfac2872d89533460fcbdd573cad25a010d70225a3cf004aa9"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-baseline/revoked.json",
+      "path": "local-baseline/revoked.json",
+      "original_sha256": "6f7f58f7200959419fef04fb9f0f5a4b7b68696f99ffbbd7ef24e237cc310dd0",
+      "published_sha256": "6f7f58f7200959419fef04fb9f0f5a4b7b68696f99ffbbd7ef24e237cc310dd0"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-baseline/summary.json",
+      "path": "local-baseline/summary.json",
+      "original_sha256": "779a27446af6af2b19287a3d4761d59f45c2d05965989e373ea518fb25cf1628",
+      "published_sha256": "779a27446af6af2b19287a3d4761d59f45c2d05965989e373ea518fb25cf1628"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-baseline/unavailable.json",
+      "path": "local-baseline/unavailable.json",
+      "original_sha256": "482850bbef778ceb619e212a4fa8b763dc351cfd02a2935c0d53d0d4d1bd60d7",
+      "published_sha256": "482850bbef778ceb619e212a4fa8b763dc351cfd02a2935c0d53d0d4d1bd60d7"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-captured/irrelevant.json",
+      "path": "local-captured/irrelevant.json",
+      "original_sha256": "a43900580b44d4758397e96b852636dc2cba686934644e14968b2c6dab3e4bdf",
+      "published_sha256": "a43900580b44d4758397e96b852636dc2cba686934644e14968b2c6dab3e4bdf"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-captured/positive.json",
+      "path": "local-captured/positive.json",
+      "original_sha256": "7cfc04893202a9279ba9228c3787723c6957e3a06309b53c10e3f64a8875ee11",
+      "published_sha256": "7cfc04893202a9279ba9228c3787723c6957e3a06309b53c10e3f64a8875ee11"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-captured/protocol.json",
+      "path": "local-captured/protocol.json",
+      "original_sha256": "59a3e45f2ffa25b89396a01c33f8e4a245cba582422f1e502bef7a98bc251d8e",
+      "published_sha256": "59a3e45f2ffa25b89396a01c33f8e4a245cba582422f1e502bef7a98bc251d8e"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-captured/revoked.json",
+      "path": "local-captured/revoked.json",
+      "original_sha256": "037ef18588296e758cdbeb34785fa7676c35cca148719add024f20105963ab56",
+      "published_sha256": "037ef18588296e758cdbeb34785fa7676c35cca148719add024f20105963ab56"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-captured/summary.json",
+      "path": "local-captured/summary.json",
+      "original_sha256": "7bb3034cfefc7eba8a23d3d5efa4c5092fd185aa64eae2fe48bff3a9c91c9781",
+      "published_sha256": "7bb3034cfefc7eba8a23d3d5efa4c5092fd185aa64eae2fe48bff3a9c91c9781"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-provider-captured/unavailable.json",
+      "path": "local-captured/unavailable.json",
+      "original_sha256": "77bae5092ff18e4285353af4a5a1b801c453825dec959461c69edde553fe4f74",
+      "published_sha256": "77bae5092ff18e4285353af4a5a1b801c453825dec959461c69edde553fe4f74"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-final/irrelevant.json",
+      "path": "local-final/irrelevant.json",
+      "original_sha256": "3938bcba80066ecce1b2e8a932793bde69fcdf39aeb435d7ded4e78ffd65c4e3",
+      "published_sha256": "3938bcba80066ecce1b2e8a932793bde69fcdf39aeb435d7ded4e78ffd65c4e3"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-final/positive.json",
+      "path": "local-final/positive.json",
+      "original_sha256": "d7a7a830f150ac24b048c6c01abbbacb4fdc999af4691b9dfa505690da680bed",
+      "published_sha256": "d7a7a830f150ac24b048c6c01abbbacb4fdc999af4691b9dfa505690da680bed"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-final/protocol.json",
+      "path": "local-final/protocol.json",
+      "original_sha256": "3d7c970420f84f1e95a7f69ef725a6ecf365313e4d039b98a5bb48139fb61794",
+      "published_sha256": "3d7c970420f84f1e95a7f69ef725a6ecf365313e4d039b98a5bb48139fb61794"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-final/revoked.json",
+      "path": "local-final/revoked.json",
+      "original_sha256": "299133257cb45efbe0cbeac4616fc7514574a7002bb049c134d806bb6b673009",
+      "published_sha256": "299133257cb45efbe0cbeac4616fc7514574a7002bb049c134d806bb6b673009"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-final/summary.json",
+      "path": "local-final/summary.json",
+      "original_sha256": "844ef2b440cb4a8e3fc2e37f450dbb61fac08635b432b9f59f56594f155ad98d",
+      "published_sha256": "844ef2b440cb4a8e3fc2e37f450dbb61fac08635b432b9f59f56594f155ad98d"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-local-final/unavailable.json",
+      "path": "local-final/unavailable.json",
+      "original_sha256": "1f96584f624b3a09ffde4a98deedd6ef1c33ca5acf0e50dcb453c5d1d600910a",
+      "published_sha256": "1f96584f624b3a09ffde4a98deedd6ef1c33ca5acf0e50dcb453c5d1d600910a"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-hosted-project/irrelevant.json",
+      "path": "hosted-project/irrelevant.json",
+      "original_sha256": "66496e30f303a332ed21ecfd3cd0320ac9f118aa21475def6aa4dbc8db0c8785",
+      "published_sha256": "66496e30f303a332ed21ecfd3cd0320ac9f118aa21475def6aa4dbc8db0c8785"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-hosted-project/positive.json",
+      "path": "hosted-project/positive.json",
+      "original_sha256": "6da5993a7ed41aa2b36e6796c6b4b97e12caff72e82f27347f3e3abd3e86a847",
+      "published_sha256": "6da5993a7ed41aa2b36e6796c6b4b97e12caff72e82f27347f3e3abd3e86a847"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-hosted-project/protocol.json",
+      "path": "hosted-project/protocol.json",
+      "original_sha256": "8253c31acf28ceb983727ba8e0f3ab64fbbf5e7da2117be5e77411ed8bd10e0f",
+      "published_sha256": "8253c31acf28ceb983727ba8e0f3ab64fbbf5e7da2117be5e77411ed8bd10e0f"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-hosted-project/revoked.json",
+      "path": "hosted-project/revoked.json",
+      "original_sha256": "9a023a3e8391d554c553d804925ffd9ce447b1e0bce80db87e3e56fb2c29ed21",
+      "published_sha256": "9a023a3e8391d554c553d804925ffd9ce447b1e0bce80db87e3e56fb2c29ed21"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-hosted-project/summary.json",
+      "path": "hosted-project/summary.json",
+      "original_sha256": "2824e8cbaf9218d4f435b420ae8b393ec4c61d1b12ecde2d3f381b7295d58958",
+      "published_sha256": "2824e8cbaf9218d4f435b420ae8b393ec4c61d1b12ecde2d3f381b7295d58958"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-hosted-project/unavailable.json",
+      "path": "hosted-project/unavailable.json",
+      "original_sha256": "7af4c7ffaf61ba5f77beadcca44e7f63150028e4393b110431df374990866e6c",
+      "published_sha256": "7af4c7ffaf61ba5f77beadcca44e7f63150028e4393b110431df374990866e6c"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/1-developer-first.json",
+      "path": "role-replays/1-developer-first.json",
+      "original_sha256": "d0c775e6e782a9c6f4a7f2175c35060e637c56b0fdf06b9be34572da4e5702e5",
+      "published_sha256": "d0c775e6e782a9c6f4a7f2175c35060e637c56b0fdf06b9be34572da4e5702e5"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/1-hook-as-system.json",
+      "path": "role-replays/1-hook-as-system.json",
+      "original_sha256": "a3c35eb3d4be5d2c8064144459266340cf08dc972f5c3278c1a2af9411b5d425",
+      "published_sha256": "a3c35eb3d4be5d2c8064144459266340cf08dc972f5c3278c1a2af9411b5d425"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/1-hook-as-user.json",
+      "path": "role-replays/1-hook-as-user.json",
+      "original_sha256": "d9b48624527623b9986f4ea0eae25830a95e4cdf3111b9a30b53f8c542fdb469",
+      "published_sha256": "d9b48624527623b9986f4ea0eae25830a95e4cdf3111b9a30b53f8c542fdb469"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/1-minimal-absent.json",
+      "path": "role-replays/1-minimal-absent.json",
+      "original_sha256": "b34bd959bbb9d06ffc3adfa227a658c9f2a68b926698dbd9ca182738753ef12d",
+      "published_sha256": "b34bd959bbb9d06ffc3adfa227a658c9f2a68b926698dbd9ca182738753ef12d"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/1-minimal-developer.json",
+      "path": "role-replays/1-minimal-developer.json",
+      "original_sha256": "2cffc5f5c149977f90b86b3689e9a8df653bfd283af1bcdc39beefe8db223893",
+      "published_sha256": "2cffc5f5c149977f90b86b3689e9a8df653bfd283af1bcdc39beefe8db223893"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/1-minimal-system.json",
+      "path": "role-replays/1-minimal-system.json",
+      "original_sha256": "6453dbb7910f7a7e26e505af548f49fd281e18b3cbb90351977107a8263d9d5b",
+      "published_sha256": "6453dbb7910f7a7e26e505af548f49fd281e18b3cbb90351977107a8263d9d5b"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/1-minimal-user.json",
+      "path": "role-replays/1-minimal-user.json",
+      "original_sha256": "f9ccab4ca32050bdd2ac8742ef73491191df134d7ad28e27fb42f40225d91c6b",
+      "published_sha256": "f9ccab4ca32050bdd2ac8742ef73491191df134d7ad28e27fb42f40225d91c6b"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/1-original.json",
+      "path": "role-replays/1-original.json",
+      "original_sha256": "c4a699878026e009a7741a6ef29b6185b26c26024671e798fa5895c41397def0",
+      "published_sha256": "c4a699878026e009a7741a6ef29b6185b26c26024671e798fa5895c41397def0"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/2-developer-first.json",
+      "path": "role-replays/2-developer-first.json",
+      "original_sha256": "ea5df34dd662ed93d4e0a0cf20d39e6ea2b8db2b4d6ecf2e154aea4b34fac8f7",
+      "published_sha256": "ea5df34dd662ed93d4e0a0cf20d39e6ea2b8db2b4d6ecf2e154aea4b34fac8f7"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/2-hook-as-system.json",
+      "path": "role-replays/2-hook-as-system.json",
+      "original_sha256": "de8e3da71b16d3a883fe685e93cb950ceb55f9b3d88cebbe28e0d0d2921af497",
+      "published_sha256": "de8e3da71b16d3a883fe685e93cb950ceb55f9b3d88cebbe28e0d0d2921af497"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/2-hook-as-user.json",
+      "path": "role-replays/2-hook-as-user.json",
+      "original_sha256": "83ffbedcc42d4e101b59b87d43ac498fc1a254ccce05aa05446c7717b0c5e60f",
+      "published_sha256": "83ffbedcc42d4e101b59b87d43ac498fc1a254ccce05aa05446c7717b0c5e60f"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/2-minimal-absent.json",
+      "path": "role-replays/2-minimal-absent.json",
+      "original_sha256": "f7d87bd05e1878c959e6f2e91c4b81cb24907954fcc6544e29d764406e09400a",
+      "published_sha256": "f7d87bd05e1878c959e6f2e91c4b81cb24907954fcc6544e29d764406e09400a"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/2-minimal-developer.json",
+      "path": "role-replays/2-minimal-developer.json",
+      "original_sha256": "bb2074efb6b17ae45f6f50ad214a2781d65e82340e4056247015c432d0d1054c",
+      "published_sha256": "bb2074efb6b17ae45f6f50ad214a2781d65e82340e4056247015c432d0d1054c"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/2-minimal-system.json",
+      "path": "role-replays/2-minimal-system.json",
+      "original_sha256": "73d6b2c482439b9d6b9e8a7c8e1c5419728438de36cefac797f953d0b888ee55",
+      "published_sha256": "73d6b2c482439b9d6b9e8a7c8e1c5419728438de36cefac797f953d0b888ee55"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/2-minimal-user.json",
+      "path": "role-replays/2-minimal-user.json",
+      "original_sha256": "132a72a43fefbeb70bd8446f837e9693f434b722a5bdc343eeaaf7fc1c7c7d9b",
+      "published_sha256": "132a72a43fefbeb70bd8446f837e9693f434b722a5bdc343eeaaf7fc1c7c7d9b"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/2-original.json",
+      "path": "role-replays/2-original.json",
+      "original_sha256": "f45296cfa73aa9f8659c637c976b4715168b3c61e9e11736b607d908ea73667f",
+      "published_sha256": "f45296cfa73aa9f8659c637c976b4715168b3c61e9e11736b607d908ea73667f"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/3-developer-first.json",
+      "path": "role-replays/3-developer-first.json",
+      "original_sha256": "d7e526f96bd5aa002025dae923728cc6c8a8e699fe810aab4f2f244c9d0c2cfb",
+      "published_sha256": "d7e526f96bd5aa002025dae923728cc6c8a8e699fe810aab4f2f244c9d0c2cfb"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/3-hook-as-system.json",
+      "path": "role-replays/3-hook-as-system.json",
+      "original_sha256": "583e6e0c498f3896108048e81a2fa96c9c20f3b71bb52a94a04d7db214d0d8ae",
+      "published_sha256": "583e6e0c498f3896108048e81a2fa96c9c20f3b71bb52a94a04d7db214d0d8ae"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/3-hook-as-user.json",
+      "path": "role-replays/3-hook-as-user.json",
+      "original_sha256": "a70418fbde0b17b6b3075f241e1a5199640206718f318320f8e3462594df89b7",
+      "published_sha256": "a70418fbde0b17b6b3075f241e1a5199640206718f318320f8e3462594df89b7"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/3-minimal-absent.json",
+      "path": "role-replays/3-minimal-absent.json",
+      "original_sha256": "cc4cb9f7c071a518331f8f6badfec372d0c050f02a5e47b49105c348826a2bac",
+      "published_sha256": "cc4cb9f7c071a518331f8f6badfec372d0c050f02a5e47b49105c348826a2bac"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/3-minimal-developer.json",
+      "path": "role-replays/3-minimal-developer.json",
+      "original_sha256": "06e9ecd2e8d093d4818c528d4525d02b2be3b4ce51905368976702369284a53d",
+      "published_sha256": "06e9ecd2e8d093d4818c528d4525d02b2be3b4ce51905368976702369284a53d"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/3-minimal-system.json",
+      "path": "role-replays/3-minimal-system.json",
+      "original_sha256": "856941e57db344108e26c460f1ac66f3caec5c27818b0d07c754311a64d000e7",
+      "published_sha256": "856941e57db344108e26c460f1ac66f3caec5c27818b0d07c754311a64d000e7"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/3-minimal-user.json",
+      "path": "role-replays/3-minimal-user.json",
+      "original_sha256": "e954a78ef38744e5ad4fac8066b5c6dcf6e6b8556542c5c0d74a3c27b7f4a7e4",
+      "published_sha256": "e954a78ef38744e5ad4fac8066b5c6dcf6e6b8556542c5c0d74a3c27b7f4a7e4"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/3-original.json",
+      "path": "role-replays/3-original.json",
+      "original_sha256": "e6afd8de7515eddf0041c885bfd1fc35028ede3c28b2bdac0fbd72f9637d0cc6",
+      "published_sha256": "e6afd8de7515eddf0041c885bfd1fc35028ede3c28b2bdac0fbd72f9637d0cc6"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/protocol.json",
+      "path": "role-replays/protocol.json",
+      "original_sha256": "7c3608812434336921e1933d2c4e1ccca2c84c00c2394a72a6acf9b65933bcd9",
+      "published_sha256": "7c3608812434336921e1933d2c4e1ccca2c84c00c2394a72a6acf9b65933bcd9"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-final/summary.json",
+      "path": "role-replays/summary.json",
+      "original_sha256": "4f2830dad13c7fd0ab6f8866ced49ed0dbafabe18ccc32474ba88005ce99c7bf",
+      "published_sha256": "4f2830dad13c7fd0ab6f8866ced49ed0dbafabe18ccc32474ba88005ce99c7bf"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-replays/1-developer-first.json",
+      "path": "interrupted-replay/1-developer-first.json",
+      "original_sha256": "d52c845672cd5455bf2be57cc40a2ce9c8bda74ed55dd137adf1807ff94bcf04",
+      "published_sha256": "d52c845672cd5455bf2be57cc40a2ce9c8bda74ed55dd137adf1807ff94bcf04"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-replays/1-hook-as-system.json",
+      "path": "interrupted-replay/1-hook-as-system.json",
+      "original_sha256": "47f0323c6131008c399f8269feba3e283c2ec4894f93a4de491962c888507cae",
+      "published_sha256": "47f0323c6131008c399f8269feba3e283c2ec4894f93a4de491962c888507cae"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-replays/1-hook-as-user.json",
+      "path": "interrupted-replay/1-hook-as-user.json",
+      "original_sha256": "ffa2e9fa3d8a87b9fe5c520c4acfda37ec0c2581752808a515baf0095cfc6a9a",
+      "published_sha256": "ffa2e9fa3d8a87b9fe5c520c4acfda37ec0c2581752808a515baf0095cfc6a9a"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-replays/1-original.json",
+      "path": "interrupted-replay/1-original.json",
+      "original_sha256": "59bca081501cc1bb94c23752b94c5b5f235be0024a4623a2c0e3d318b640400b",
+      "published_sha256": "59bca081501cc1bb94c23752b94c5b5f235be0024a4623a2c0e3d318b640400b"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-role-replays/protocol.json",
+      "path": "interrupted-replay/protocol.json",
+      "original_sha256": "9f99d2c3f06b91bca0e2a916dacf2168de6dc78734b939beb14670b6e4575210",
+      "published_sha256": "9f99d2c3f06b91bca0e2a916dacf2168de6dc78734b939beb14670b6e4575210"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-claude-code-delayed-input-stalled-engine.json",
+      "path": "strict-latency/1-claude-code-delayed-input-stalled-engine.json",
+      "original_sha256": "02ec07d1cc4fedc71e3656dac8b51dcb4172ebed9390ad76bc9037e8d7b9d02d",
+      "published_sha256": "02ec07d1cc4fedc71e3656dac8b51dcb4172ebed9390ad76bc9037e8d7b9d02d"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-claude-code-irrelevant.json",
+      "path": "strict-latency/1-claude-code-irrelevant.json",
+      "original_sha256": "3029abb0b869b48e73f9b4c96db57a6aa8791b537e3a5bad5af72786260dcb2c",
+      "published_sha256": "3029abb0b869b48e73f9b4c96db57a6aa8791b537e3a5bad5af72786260dcb2c"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-claude-code-positive.json",
+      "path": "strict-latency/1-claude-code-positive.json",
+      "original_sha256": "c7d1227137048f5bb1212457faab4276ea57c59b13d45c72966d3bacad7fe9c2",
+      "published_sha256": "c7d1227137048f5bb1212457faab4276ea57c59b13d45c72966d3bacad7fe9c2"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-claude-code-revoked.json",
+      "path": "strict-latency/1-claude-code-revoked.json",
+      "original_sha256": "4a93694619fe058fda4dec48f047f4ac5c8a645f7cb790b8358e131a05dd3569",
+      "published_sha256": "4a93694619fe058fda4dec48f047f4ac5c8a645f7cb790b8358e131a05dd3569"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-claude-code-stalled-engine.json",
+      "path": "strict-latency/1-claude-code-stalled-engine.json",
+      "original_sha256": "ee7a9721432e76c8a6f5ef2701e7c98fb9f1718268fff4aba1fe4aba73216f90",
+      "published_sha256": "ee7a9721432e76c8a6f5ef2701e7c98fb9f1718268fff4aba1fe4aba73216f90"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-claude-code-stalled-input.json",
+      "path": "strict-latency/1-claude-code-stalled-input.json",
+      "original_sha256": "2d25b06bca8448995dda6219faa52201fcbef8af52f0ef664a120542cf8a7db8",
+      "published_sha256": "2d25b06bca8448995dda6219faa52201fcbef8af52f0ef664a120542cf8a7db8"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-claude-code-unavailable.json",
+      "path": "strict-latency/1-claude-code-unavailable.json",
+      "original_sha256": "e93442356e7747a0135c8e3925c950ac8b9b2ac9b0fde77a00028236cd70c897",
+      "published_sha256": "e93442356e7747a0135c8e3925c950ac8b9b2ac9b0fde77a00028236cd70c897"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-codex-delayed-input-stalled-engine.json",
+      "path": "strict-latency/1-codex-delayed-input-stalled-engine.json",
+      "original_sha256": "0ba00a3d3c512f1b2cf4497cf1b0aac337930ee96f8314f9113ccdfae9110512",
+      "published_sha256": "0ba00a3d3c512f1b2cf4497cf1b0aac337930ee96f8314f9113ccdfae9110512"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-codex-irrelevant.json",
+      "path": "strict-latency/1-codex-irrelevant.json",
+      "original_sha256": "bfd30c54d590f12df7ad9f28ef3b8c0cde02383101d2a758a1d27732cac808b0",
+      "published_sha256": "bfd30c54d590f12df7ad9f28ef3b8c0cde02383101d2a758a1d27732cac808b0"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-codex-positive.json",
+      "path": "strict-latency/1-codex-positive.json",
+      "original_sha256": "13887c33a2856d84a05e3fdf26627bd01989b9a02749fd85cc4e8d6552bb758a",
+      "published_sha256": "13887c33a2856d84a05e3fdf26627bd01989b9a02749fd85cc4e8d6552bb758a"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-codex-revoked.json",
+      "path": "strict-latency/1-codex-revoked.json",
+      "original_sha256": "b42d8cc469709de9c614188284c03aa59803791871c0ce46926af50c227078dd",
+      "published_sha256": "b42d8cc469709de9c614188284c03aa59803791871c0ce46926af50c227078dd"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-codex-stalled-engine.json",
+      "path": "strict-latency/1-codex-stalled-engine.json",
+      "original_sha256": "4d22a2c4aa62aeb938c9fa71e8838a619beebeeccfe193e7e82b78140ac3467e",
+      "published_sha256": "4d22a2c4aa62aeb938c9fa71e8838a619beebeeccfe193e7e82b78140ac3467e"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-codex-stalled-input.json",
+      "path": "strict-latency/1-codex-stalled-input.json",
+      "original_sha256": "269b29a9c4a5e331effce94174da658acd0159ecf33159a0b7c09ed75a4413e4",
+      "published_sha256": "269b29a9c4a5e331effce94174da658acd0159ecf33159a0b7c09ed75a4413e4"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/1-codex-unavailable.json",
+      "path": "strict-latency/1-codex-unavailable.json",
+      "original_sha256": "ad38e177be987cc9388dbfd39c21084679c709d62bee95a767fa1f18d34aa85b",
+      "published_sha256": "ad38e177be987cc9388dbfd39c21084679c709d62bee95a767fa1f18d34aa85b"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/protocol.json",
+      "path": "strict-latency/protocol.json",
+      "original_sha256": "6816371112eb86f136680dae24e612507494c828e2f9bf340f204e79a0e21cc7",
+      "published_sha256": "6816371112eb86f136680dae24e612507494c828e2f9bf340f204e79a0e21cc7"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-strict-latency/summary.json",
+      "path": "strict-latency/summary.json",
+      "original_sha256": "b2dd38ab9c5120940e2630f70d81bf1527404986dedf3045c6c29f7d4ae4a641",
+      "published_sha256": "b2dd38ab9c5120940e2630f70d81bf1527404986dedf3045c6c29f7d4ae4a641"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-default-latency/irrelevant-claude-code-1.json",
+      "path": "default-latency/irrelevant-claude-code-1.json",
+      "original_sha256": "db0c1645a071b940fefbe5a9e5b18e7a66a025b6107de53d6f0574ecf56c1f99",
+      "published_sha256": "db0c1645a071b940fefbe5a9e5b18e7a66a025b6107de53d6f0574ecf56c1f99"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-default-latency/irrelevant-codex-1.json",
+      "path": "default-latency/irrelevant-codex-1.json",
+      "original_sha256": "69414044347daee5c9817227582e853cdf1f8cd3b58d95aa9964c085465373ea",
+      "published_sha256": "69414044347daee5c9817227582e853cdf1f8cd3b58d95aa9964c085465373ea"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-default-latency/positive-claude-code-1.json",
+      "path": "default-latency/positive-claude-code-1.json",
+      "original_sha256": "59454d028fc85155b4fff7f7d494d492d2cf79464fa165dc8e1e8c1804e6f535",
+      "published_sha256": "59454d028fc85155b4fff7f7d494d492d2cf79464fa165dc8e1e8c1804e6f535"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-default-latency/positive-codex-1.json",
+      "path": "default-latency/positive-codex-1.json",
+      "original_sha256": "997977f9f086581707b1dc72f2cd49f687d54ab9f3967772a70d5f0eeed587ff",
+      "published_sha256": "997977f9f086581707b1dc72f2cd49f687d54ab9f3967772a70d5f0eeed587ff"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-default-latency/protocol.json",
+      "path": "default-latency/protocol.json",
+      "original_sha256": "886f19d229a47596dd6e9dd33deb21a834aaa75b4f2663f5fc78d740287c40dc",
+      "published_sha256": "886f19d229a47596dd6e9dd33deb21a834aaa75b4f2663f5fc78d740287c40dc"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-default-latency/revoked-claude-code-1.json",
+      "path": "default-latency/revoked-claude-code-1.json",
+      "original_sha256": "ad7b48f085b817b3d920e5364911ff079959df4c998324942af4eb55be1edf81",
+      "published_sha256": "ad7b48f085b817b3d920e5364911ff079959df4c998324942af4eb55be1edf81"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-default-latency/revoked-codex-1.json",
+      "path": "default-latency/revoked-codex-1.json",
+      "original_sha256": "346cd75729842038fde9e4fe6b2372aa4babbe03797ea6c45f59749fc9c6050d",
+      "published_sha256": "346cd75729842038fde9e4fe6b2372aa4babbe03797ea6c45f59749fc9c6050d"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-default-latency/summary.json",
+      "path": "default-latency/summary.json",
+      "original_sha256": "c08c156c45dd9b5ab89c37b62454c7b35bd33f50f2d6a9ed92f8e8c55a8259dc",
+      "published_sha256": "c08c156c45dd9b5ab89c37b62454c7b35bd33f50f2d6a9ed92f8e8c55a8259dc"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-default-latency/unavailable-claude-code-1.json",
+      "path": "default-latency/unavailable-claude-code-1.json",
+      "original_sha256": "624b44726f3c5162fcfafbd3a52ace9cf2364ccb182de22c407173d99ecc08b1",
+      "published_sha256": "624b44726f3c5162fcfafbd3a52ace9cf2364ccb182de22c407173d99ecc08b1"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-default-latency/unavailable-codex-1.json",
+      "path": "default-latency/unavailable-codex-1.json",
+      "original_sha256": "b19f1361937b10779fd849f5d52a407ab8b765069c7a761c416e016e90219cb0",
+      "published_sha256": "b19f1361937b10779fd849f5d52a407ab8b765069c7a761c416e016e90219cb0"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-tests-initial.txt",
+      "path": "checks/restricted-tests.txt",
+      "original_sha256": "522a7a0f96d5c173127e7e7a2c62c715fdf24f6934304e4d7104c7b30aada376",
+      "published_sha256": "36583703024d646209e73266ffd55503f7313a730301d81b07eae160de6863c4"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-tests.txt",
+      "path": "checks/initial-tests.txt",
+      "original_sha256": "ce4d1e085ca1455415e2b9afa7a59db670326ceaa1c1b75f0d498f93cbc3bb43",
+      "published_sha256": "324f5bf216a7cde891a1c7f8fd67dc46f23eb002629a7fa5e34810313fb19e78"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-diagnostics-regression.txt",
+      "path": "checks/diagnostics-regression.txt",
+      "original_sha256": "8c65062e181d3f84fe56642cc43e21060b5acbfe93c8fe0173e241bbfbcf0845",
+      "published_sha256": "5bae2f08c213f163767f664c4a0d6c5f8f2ab4e875622069fd7f3da334274444"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-patched-tests.txt",
+      "path": "checks/pre-toolchain-tests.txt",
+      "original_sha256": "acdb85a80dd840a129003a8947b728267081b556a62e64916e5c4ad155e6707f",
+      "published_sha256": "0e46a95b0673b8ffdaf9682483c1f0cbbdebbce7f454686b0d8752ef8c5f4eb8"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-patched-build.txt",
+      "path": "checks/pre-toolchain-build.txt",
+      "original_sha256": "d9fa89715adf56c684829d088eb47a6f8022ec4787382a70ba0d1caf652e9369",
+      "published_sha256": "d9fa89715adf56c684829d088eb47a6f8022ec4787382a70ba0d1caf652e9369"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-toolchain-tests.txt",
+      "path": "checks/final-tests.txt",
+      "original_sha256": "377511bf33831fef17c3ce589531e7e1ab17796e559b538630cc59f8d1c91432",
+      "published_sha256": "b42b49c4390ad93e867580c6d92d3c530f564380fd6359995d819090c5cbee78"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-toolchain-build.txt",
+      "path": "checks/build.txt",
+      "original_sha256": "f416ea2e76041038524101a4d7d7991e72c4cdd6734a3932eb35e8a22166b261",
+      "published_sha256": "f416ea2e76041038524101a4d7d7991e72c4cdd6734a3932eb35e8a22166b261"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-toolchain-typecheck.txt",
+      "path": "checks/typecheck.txt",
+      "original_sha256": "efb132c372624d0c664e4ee1373834550dd20e8c4c8047003819753ea99145fc",
+      "published_sha256": "efb132c372624d0c664e4ee1373834550dd20e8c4c8047003819753ea99145fc"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-toolchain-lint.txt",
+      "path": "checks/website-lint.txt",
+      "original_sha256": "4df74f7a76f4c1e796acfb5fd4f4fb526c87dc22017adcb98377c1da82012c48",
+      "published_sha256": "4df74f7a76f4c1e796acfb5fd4f4fb526c87dc22017adcb98377c1da82012c48"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-ci.txt",
+      "path": "checks/production-clean-install.txt",
+      "original_sha256": "bb1ba8c4743fadd3766f18707dd08d95d11efe148a2dbe1987bb91075f676c05",
+      "published_sha256": "bb1ba8c4743fadd3766f18707dd08d95d11efe148a2dbe1987bb91075f676c05"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-toolchain-install.txt",
+      "path": "checks/clean-install.txt",
+      "original_sha256": "7a54cc79061aa07d03c09c577817673f4c683da3f7ea02262a91b6e068495c04",
+      "published_sha256": "7a54cc79061aa07d03c09c577817673f4c683da3f7ea02262a91b6e068495c04"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-audit.json",
+      "path": "checks/production-audit-before.json",
+      "original_sha256": "a2b0f86a515e79ad046e86694ba7fed2cdd742b9337609333fcd97e4f0e2fc7c",
+      "published_sha256": "a2b0f86a515e79ad046e86694ba7fed2cdd742b9337609333fcd97e4f0e2fc7c"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-full-audit.json",
+      "path": "checks/full-audit-before.json",
+      "original_sha256": "0efd048d09510b55e4550adcfa9387e5ab4a8c198bc57ae8129c17a4a319b6e7",
+      "published_sha256": "0efd048d09510b55e4550adcfa9387e5ab4a8c198bc57ae8129c17a4a319b6e7"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-toolchain-audit.json",
+      "path": "checks/full-audit.json",
+      "original_sha256": "47f9c84237f15a4282de15408e790960fe5f023abd84f9fb078e0604dad6a234",
+      "published_sha256": "47f9c84237f15a4282de15408e790960fe5f023abd84f9fb078e0604dad6a234"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-toolchain-production-audit.json",
+      "path": "checks/production-audit.json",
+      "original_sha256": "47f9c84237f15a4282de15408e790960fe5f023abd84f9fb078e0604dad6a234",
+      "published_sha256": "47f9c84237f15a4282de15408e790960fe5f023abd84f9fb078e0604dad6a234"
+    },
+    {
+      "source": "<local-temporary>/othie-oct23-dependency-tree.json",
+      "path": "checks/dependencies.json",
+      "original_sha256": "19ece0c7fa02bf057f4696e2b55123402acb499320a77863e6bd74b3f75f00eb",
+      "published_sha256": "19ece0c7fa02bf057f4696e2b55123402acb499320a77863e6bd74b3f75f00eb"
+    }
+  ]
+}

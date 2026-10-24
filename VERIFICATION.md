@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated October 20, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated October 23, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -9,10 +9,10 @@ synthetic documents and provider fixtures; it requires no model training or down
 
 | Check | Result |
 | --- | --- |
-| `npm ci` | October 14 clean installation passes; not repeated October 20 |
-| `npm run build` | All workspaces pass; Next.js 16.3.8 exports the website routes |
+| `npm ci` | October 23 clean installation passes after production and development dependency updates |
+| `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 178 passing tests; one opt-in real-model test skipped |
+| `npm test` | 180 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -21,6 +21,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | October 20 native Codex project discovery | Trusted project hooks pass 8/8 from root/nested launches; session baseline 4/4; original project-trust probe fails 0/4 and remains recorded |
 | October 20 Codex local-model consumption | Complete cited adapter delivery 4/4; native answers 3/4, with positive answer still `unknown` |
 | October 20 serial adapter latency | Fresh-engine 14/14 at 2,000/3,000 ms budgets; actual-default normal paths 8/8 at 256–276 ms |
+| October 23 native Codex scorer/dependency refresh | Hosted project hooks 4/4; final local-model delivery 4/4 but native answers 3/4 |
+| October 23 local provider transport and role probes | Complete positive policy reaches developer message; original developer requests 0/3, system/user role interventions 12/12; minimal absent-policy control 2/3 |
+| October 23 serial adapter latency | Strict fresh-engine 14/14 at 2,000/3,000 ms budgets; actual-default normal paths 8/8 at 311–372 ms |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
 | Evaluation-only semantic applicability, initial trials | Boundaries 42/56 versus lexical 51/56; larger applicability corpus 54/80 versus paired lexical 61/80; both fail acceptance |
@@ -29,9 +32,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
 | Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
 | `git diff --check` | Pass |
-| `npm audit --omit=dev` | Zero reported production dependency advisories |
+| `npm audit` and `npm audit --omit=dev` | Zero reported development or production dependency advisories |
 
-The full suite comprises 117 engine, 30 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 119 engine, 30 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -711,6 +714,59 @@ Website browser/UI, fresh remote CI, semantic quality and native Windows accepta
 not repeated. The native sessions preceded the final shared-parser refactor; valid
 native flags are unchanged, and the final full suite/typechecks cover that refactor.
 
+## October 23 local context transport and diagnostic gate follow-up
+
+The [October 23 records](packages/engine/evaluation/records/2026-10-23/local-context-followup/README.md)
+preserve three local-model native runs (including the final scorer/dependency refresh),
+a hosted project-hook check, provider-boundary observations and role replays. Each local
+run supplies the full cited policy in all positive adapter receipts, but answers `unknown`;
+its three controls pass. Final hosted `gpt-6-astra` project-hook acceptance passes 4/4.
+The installed `qwen3.5:4b-mlx` digest is unchanged; no model artifacts were downloaded.
+
+A temporary loopback HTTP forwarder shows the complete positive adapter context in
+Codex's `/v1/responses` request to Ollama 0.35.1, in a developer message after the user
+query. No policy appears in the three controls. The captured request reaches the provider
+intact, narrowing the October 20 failure beyond host request construction in this run.
+The publication fixture removes cache/client metadata and redacts host/fixture paths;
+transport hashes remain distinct from published-fixture hashes.
+
+Three rotated replay repeats keep the redacted request and installed model defaults.
+Original developer-context requests pass 0/3, as do reordered and minimal developer
+variants. Changing only the hook role to system or user yields `11` in 6/6 original-host
+comparisons; minimal system/user comparisons pass another 6/6. The minimal absent-policy
+control passes 2/3, retaining a malformed thinking-delimiter answer. One reordered
+developer request also gives a non-answer. An initial exploratory pass and four completed
+attempts from a deliberately interrupted pre-redaction replay remain separate records.
+These observations narrow the problem to developer-message handling in this provider/model
+combination without separating provider conversion from model behavior. Role substitutions
+remain evaluation-only; production hook semantics and local-model acceptance are unchanged.
+Sampling, warm state and load are uncontrolled, and some final generation runs overlap.
+
+A regression exposes that native/default-latency scorers accept content-bearing additions
+to otherwise matching diagnostic events. Both now share the strict latency evaluator's
+schema, rejecting unknown fields, invalid metadata and extra output. Positive scoring
+requires token metadata, and the default scorer verifies the output event name. Production
+adapters are unchanged. The failing old-code regression and subsequent passing checks
+remain recorded.
+
+A refreshed audit reports Next.js and Zod findings. Next.js and eslint-config-next move
+from 16.3.8 to 16.4.3; Zod moves from 4.5.4 to 4.6.7. Clean `npm ci`, full build,
+typechecks, website lint and 180 deterministic tests pass; one opt-in model test is skipped.
+After a separate toolchain refresh, Vitest moves from 5.0.0 to 5.0.5 in all five
+workspaces and its compatible Vite dependency moves from 8.2.2 to 8.3.5. Final clean
+installation, build, typechecks, lint and all 180 tests pass again. Both full and
+production audits report zero findings; the earlier development-only audit remains recorded.
+A static website browser smoke check verifies home/demo interaction, download navigation, Windows
+unavailability and setup navigation, with no browser errors/warnings. A screenshot is
+retained. Responsive acceptance was not repeated.
+
+After generation and suite work, serial strict adapter latency passes 14/14 at the actual
+2,000/3,000 ms budgets in 307–2,028 ms, and actual-default normal paths pass 8/8 in
+311–372 ms. These exclude native-host/model overhead. Publication hashes and a manifest
+preserve privacy redactions and observed failures. Temporary model, proxy and website
+services are stopped. Interactive trust, native desktop/Windows, larger benchmarks,
+semantic quality, installers and fresh remote CI remain open.
+
 ## Remaining acceptance work
 
 - Codex persisted interactive hook-trust acceptance after verified noninteractive
@@ -719,10 +775,13 @@ native flags are unchanged, and the final full suite/typechecks cover that refac
   settings discovery. Shared Claude root settings require a root launch or explicit path;
   the nested-launch discovery failure remains recorded.
 - Codex local-model context consumption after the positive-context failure reproduced
-  October 20 with complete cited adapter delivery.
+  October 23 with complete cited adapter delivery and provider-boundary context. Role
+  comparisons narrow the failure to developer-message handling in the installed
+  provider/model combination; provider conversion versus model internals remains unresolved.
 - Windows native-host and logon-startup acceptance beyond the historical automated CI
-  suite; CI through merged `449c3fc` passes both runners, while the October 18 local
-  and October 20 follow-ups still need CI. Native Windows host/session acceptance remains open.
+  suite; CI through merged `449c3fc` passes both runners, while the October 18,
+  October 20 and October 23 follow-ups still need CI. Native Windows host/session
+  acceptance remains open.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
 - Compiler classification, relevance, linked evidence, and packing: deterministic recovery

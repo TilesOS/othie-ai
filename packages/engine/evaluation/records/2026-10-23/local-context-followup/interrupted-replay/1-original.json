@@ -1,0 +1,25 @@
+{
+  "repeat": 1,
+  "mode": "original",
+  "request_sha256": "caf60c2c675c5b704070b0ab36b37d02ff7106931b2bd6d37dbebc1a1306ba44",
+  "response_sha256": "a8b87a9244ea16852195e8577937f795e69b8464035632daf551dc9e3b88620b",
+  "status": 200,
+  "completed": true,
+  "answer": "unknown",
+  "reasoning": [
+    "The user is asking about Canary enterprise support policy and specifically wants to know the weekend first-response target in hours. They want me to use only the supplied context and reply with just the number.\n\nHowever, I don't see any attached context or files that contain this information. The user said \"Use only supplied context; if missing reply unknown\" but there's no context provided for this question.\n\nSince there's no information about Canary enterprise support policy in the supplied context (the environment context doesn't include any files or documents), I should reply \"unknown\"."
+  ],
+  "usage": {
+    "input_tokens": 8196,
+    "input_tokens_details": {
+      "cached_tokens": 3
+    },
+    "output_tokens": 116,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8312
+  },
+  "elapsed_ms": 4705.506458,
+  "context_answer_passed": false
+}

@@ -1,0 +1,24 @@
+{
+  "protocol": "local-context-role-replay-v1",
+  "recorded_at": "2026-10-24T03:42:34.067Z",
+  "synthetic_only": true,
+  "model": "qwen3.5:4b-mlx",
+  "digest": "61aa3858e9d3022e8fca725550089addd9289c4446f33bd09dfd12f95f2a6792",
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "source_sha256": "cdcf2f37f07bd5faaa895189051e806c4448583ddf18e38b6d2ea532ec751f43",
+  "script_sha256": "35b3322072265ba6f01698badceb473c897140b2a673fcabada2580f8a59acc2",
+  "repeats": 3,
+  "modes": [
+    "original",
+    "developer-first",
+    "hook-as-system",
+    "hook-as-user",
+    "minimal-developer",
+    "minimal-system",
+    "minimal-user",
+    "minimal-absent"
+  ],
+  "generation": "Captured request options and installed model defaults; no temperature/seed override. Rotated case order per repeat.",
+  "limitations": "Evaluation-only role interventions, not native-hook acceptance or a production role rewrite. Variable model sampling, warm state and machine load; no causal attribution between provider conversion and model internals. Timings include HTTP and generation, not hook latency."
+}

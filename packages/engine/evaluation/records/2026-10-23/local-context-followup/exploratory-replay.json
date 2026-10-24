@@ -1,0 +1,102 @@
+{
+  "protocol": "exploratory-role-replay-v1",
+  "input": "Original captured request before privacy projection; model defaults; one fixed-order exploratory pass, separate from three rotated final passes",
+  "records": [
+    {
+      "mode": "original",
+      "status": 200,
+      "elapsed_ms": 2237.247458,
+      "original_record_sha256": "a0758069eb596890b6397653d9d707b8ebd8555536a149f19a7c3d5e62f4b31e",
+      "request_sha256": "d7efec28d7619514f2d9756b643db996f488ddcc2e9e2c00e9cf039b19c46aba",
+      "response_sha256": "80e4c3d0e9cd626cae841dcac601d5ecfecbd0a2d317f5d5abf1f65caafc68ce",
+      "answer": "unknown",
+      "reasoning": [
+        "The user is asking about Canary enterprise support policy regarding weekend first-response targets in hours. They want me to answer based only on the provided context, and if the information is missing, I should reply 'unknown'.\n\nLooking at the environment context provided, I only see:\n- The workspace location\n- Shell, current date, timezone info\n- Filesystem structure with a restricted file_system entry\n\nThere's no policy document or any context about Canary enterprise support policies. The user explicitly stated \"Use only supplied context; if missing reply unknown.\"\n\nSince there is no information provided about Canary enterprise support weekend first-response targets in the environment context, I should reply 'unknown'."
+      ]
+    },
+    {
+      "mode": "developer-first",
+      "status": 200,
+      "elapsed_ms": 3805.617834,
+      "original_record_sha256": "6647e3f302f5c4abc5c97a7a555429fcdedf9f14f47bcd9d3260621bc84cbe99",
+      "request_sha256": "9fdc30242e0bebbe6fdacc232bc3c1861214a66e2ca2109972214e55d0b78ce2",
+      "response_sha256": "7a6c7c94a5ad643dc3d8146ce5d83ca32074e0b5ccf9ef3cbf66d99fcfd47e88",
+      "answer": "unknown",
+      "reasoning": [
+        "The user is asking about Canary enterprise support policy, specifically the weekend first-response target in hours. They want me to use only supplied context and if it's missing, I should reply \"unknown\".\n\nSince there's no actual context provided by the user (no files, documents, or prior conversation history), and this seems like a factual question that should come from some documentation or file in the workspace, I need to check if there's any relevant information available.\n\nHowever, looking at the environment_context, I'm just sitting in a root directory with no indication of what files are here. Let me first check what files might be in this workspace by listing its contents.\n\nWait, actually re-reading the user's instructions: \"Use only supplied context; if missing reply unknown.\" This is a very strict instruction - they're telling me to NOT use tools and just use the \"supplied context\". But there's no context provided in the prompt except the environment_context which doesn't contain any policy information.\n\nSince the user explicitly instructed me to \"Use only supplied context; if missing reply unknown\", and I have no actual context about Canary enterprise support policy, I should reply with \"unknown\" as per their instruction."
+      ]
+    },
+    {
+      "mode": "hook-as-system",
+      "status": 200,
+      "elapsed_ms": 811.3873749999993,
+      "original_record_sha256": "b7e53f0f4a968cf3538050593d17d6bf3a7ed15ff9f22cb4eb5d3dc8b8cdbe11",
+      "request_sha256": "52a94a4aa7b4d4523669685d56ecf082c13560e5f033ed2ec9be6ac2f0d83ce9",
+      "response_sha256": "361ca784974a0d3debbb3bcbddbc94aa0b573ef53bab4fcda9a567acf57cb8c1",
+      "answer": "11",
+      "reasoning": [
+        "The user is asking me to answer based on the provided context. According to the Canary enterprise support policy, the first response target on weekends is 11 hours. The question asks for the number only."
+      ]
+    },
+    {
+      "mode": "hook-as-user",
+      "status": 200,
+      "elapsed_ms": 1609.314375,
+      "original_record_sha256": "e45243a189c91a8d09d2c2d10b474278713bc510f3a4c0ef52e7f60216a184bf",
+      "request_sha256": "dc142df3ca49c72bb63cfdb649f3f992517688fbb86ef4f241da889994c9f5a7",
+      "response_sha256": "3eb5c5fbcece1f395bc019e5fbcbfa513fb735d2e0e63b38a66cfff21c25ed0e",
+      "answer": "11",
+      "reasoning": [
+        "The user is asking about Canary enterprise support policy and specifically wants to know the weekend first-response target in hours. They want me to use only the supplied context and reply with just the number without using tools.\n\nLooking at the context provided, I can see in the `s1/canary.md` citation at lines 1-2 that \"Canary enterprise support policy requires the first response within eleven hours on weekends.\"\n\nSo the answer is 11."
+      ]
+    },
+    {
+      "mode": "minimal-developer",
+      "status": 200,
+      "elapsed_ms": 14314.351875,
+      "original_record_sha256": "4c2bef93fcc20926f47d1ae7fcccf482577ee62f4c513817122a9a3a71e631c8",
+      "request_sha256": "07e3733b908f296566b713b9399a06423a702069d6480ffcac9b68e173b4fc85",
+      "response_sha256": "1c5879d2d8e59463a94976f26847caae721d6fdbdfb94d1777ef007daa6123d7",
+      "answer": "unknown",
+      "reasoning": [
+        "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Target: Answer using the supplied policy.\n    *   Constraint: Reply with the number only.\n    *   Constraint: If missing, reply \"unknown\".\n    *   Task: Determine the weekend first-response target in hours according to Canary enterprise support policy.\n    *   Output format: Number only (or \"unknown\"). No tools.\n\n2.  **Evaluate the Input Data:**\n    *   I need to check if there is any \"supplied policy\" available to me.\n    *   Looking at the context provided in the prompt, there is *no* actual policy document or text supplied. The prompt asks \"According to Canary enterprise support policy...\", implying the user expects me to know this information from somewhere specific (the \"supplied policy\").\n    *   However, in the context of this interaction, I am an AI model without access to external company-specific policies like \"Canary enterprise support policy\" unless they were explicitly provided in the conversation history or system instructions.\n    *   Since there is no text provided regarding Canary's policies in the input/context, I cannot retrieve the specific number from a \"supplied policy\".\n\n3.  **Determine the Output:**\n    *   The prompt explicitly states: \"Use only supplied context; if missing reply unknown.\"\n    *   There is no supplied context regarding Canary enterprise support policy.\n    *   Therefore, the answer must be \"unknown\".\n    *   The prompt asks to \"Reply with the number only; if missing reply unknown. Reply with the number only. Do not use tools.\"\n    *   Wait, there's a slight contradiction in instructions: \"Reply with the number only\" vs \"if missing reply unknown\". Usually, this means if I find it, give the number. If I don't find it, give the word \"unknown\".\n    *   Since the policy is not supplied, I must follow the \"if missing reply unknown\" instruction.\n\n4.  **Final Decision:**\n    *   The information is not available in the context.\n    *   Reply: unknown.\n\n5.  **Refining the Output:**\n    *   The prompt asks to reply with the number only if found, but explicitly allows \"unknown\" if missing.\n    *   So the output should be the word \"unknown\".\n\n    *Self-Correction/Verification:* Is there any hidden context I might be missing? No, this is a stateless session. I don't have access to Canary's internal SLAs or policies unless they were pasted in the few-shot examples or system prompt (which are not present here).\n    *   So, \"unknown\" is the correct response based on the instruction \"Use only supplied context; if missing reply unknown.\"\n\n6.  **Final Output Generation:**\n    *   The string should be just the word \"unknown\".\n\n    Wait, let me re-read the first instruction: \"Reply with the number only; if missing reply unknown.\"\n    This implies two conditions:\n    1. If found: Number.\n    2. If not found: \"unknown\".\n\n    Since I don't have the policy, I output \"unknown\".\n\n    Wait, is \"unknown\" considered a number? No. But the instruction says \"if missing reply unknown\". So that overrides the \"number only\" in the case of missing info.\n\n    Let's check if there is any specific instruction regarding the format for \"unknown\". It says \"Reply with the number only; if missing reply unknown.\"\n    So the output should be the string \"unknown\".\n\n    Wait, looking closely at \"Answer using the supplied policy.\" -> There is no policy.\n    So I must reply \"unknown\".\n\n    One more check: Does the prompt imply that I *should* know this? Sometimes prompts are trick questions to see if I hallucinate. But the constraint \"Use only supplied context; if missing reply unknown\" is a strong directive to avoid hallucination.\n\n    So, the answer is unknown.\n\n    Wait, I need to make sure I don't output any markdown or explanations. Just the word.\n    Actually, usually, these tests want the exact string.\n    \"unknown\"\n\n    Let me double check if there is any policy text in the system prompt that I might have missed? No, I am a general LLM. I don't have access to specific enterprise policies of \"Canary\" unless they were provided in this session. Since they weren't, the info is missing.\n\n    So, unknown."
+      ]
+    },
+    {
+      "mode": "minimal-system",
+      "status": 200,
+      "elapsed_ms": 4386.340042,
+      "original_record_sha256": "7ece2343330eb6f15a54af89b4db961936219b76f5fc3d589f0f6be70a1c5d7d",
+      "request_sha256": "436ea70b3d9f850ed695aa7337988f442c1bc2b6aab0ab8839e5769b1329b10a",
+      "response_sha256": "d51b039cfe7b48672c9b6a7272f54df6c3f863411d2fdd9fc71734dad8067098",
+      "answer": "11",
+      "reasoning": [
+        "The user wants to know the weekend first-response target in hours according to the Canary enterprise support policy mentioned in the context.\n\n1.  **Analyze the request:**\n    *   Target: Weekend first-response target in hours.\n    *   Source: Supplyed context only.\n    *   Constraint: Reply with the number only. If missing, reply \"unknown\". Do not use tools.\n\n2.  **Analyze the context:**\n    *   `<excerpt>Canary enterprise support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.<citation source=\"s1/canary.md\" at=\"lines 1-2\"/></excerpt>`\n    *   The text explicitly states: \"first response within eleven hours on weekends\".\n\n3.  **Extract the number:**\n    *   The number provided is \"eleven\".\n    *   In digits, this is 11.\n\n4.  **Verify constraints:**\n    *   Reply with the number only.\n    *   Do not use tools.\n    *   Do not explain reasoning.\n    *   Output should be \"11\" (representing eleven).\n\n5.  **Final Decision:**\n    *   The text says \"eleven hours\".\n    *   Convert \"eleven\" to the number \"11\".\n    *   Reply: 11."
+      ]
+    },
+    {
+      "mode": "minimal-user",
+      "status": 200,
+      "elapsed_ms": 2546.8369999999995,
+      "original_record_sha256": "410665e6952657ea5eac32d0600d83a938c4eca196dc1dbc588f9d7e7152000c",
+      "request_sha256": "e97906449d5d5f676a057e9529253c0a5a402c64a9c34e0816614a3be4ba0493",
+      "response_sha256": "8abaa93f9bcc89141f907ec465ba98e1e3344056f86627dce4d66867be616afc",
+      "answer": "11",
+      "reasoning": [
+        "The user wants to know the weekend first-response target in hours according to Canary enterprise support policy.\n\nI need to extract this information from the provided context snippet.\nThe context snippet states: \"Canary enterprise support policy requires the first response within eleven hours on weekends.\"\nThe relevant citation is `<citation source=\"s1/canary.md\" at=\"lines 1-2\"/>`.\n\nSo the number of hours is 11.\n\nThe instruction says to \"Reply with the number only; if missing reply unknown.\" and \"Do not use tools.\"\n\nBased on the context provided, the answer is clearly 11.\nI should output just \"11\"."
+      ]
+    },
+    {
+      "mode": "minimal-absent",
+      "status": 200,
+      "elapsed_ms": 23320.903292000003,
+      "original_record_sha256": "c32a66d8f80957f2360f2e3108ef948ba1dac3686b37147ac79cd9ebb55abe2f",
+      "request_sha256": "bb44a7a1290fc7476ddb9ea7d18f9b5d9e18b8201cb08b2347017cb4592bd9ac",
+      "response_sha256": "4883f6d32a8fcfee597cb7b6d18c19f1c609741b1d8130c4d5fb5177af3e5964",
+      "answer": "unknown",
+      "reasoning": [
+        "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Task: Answer a specific question based on a \"supplied policy\".\n    *   Question: \"According to Canary enterprise support policy, what is the weekend first-response target in hours?\"\n    *   Constraint 1: Use only supplied context.\n    *   Constraint 2: If missing context, reply \"unknown\".\n    *   Constraint 3: Reply with the number only.\n    *   Constraint 4: Do not use tools.\n\n2.  **Evaluate Available Context:**\n    *   I am an AI assistant. I do not have access to a specific document or policy titled \"Canary enterprise support policy\" unless it was provided in the conversation history or my internal knowledge base (which is limited and general).\n    *   Scanning the current conversation: There is no previous context provided about \"Canary enterprise support policy\".\n    *   The system instructions imply I should answer based on \"supplied policy\", but none exists in the prompt or conversation history.\n\n3.  **Determine the Answer:**\n    *   Since there is no information about \"Canary enterprise support policy\" in the supplied context (which is empty/non-existent for this specific query), I must follow the instruction: \"if missing reply unknown\".\n    *   The user asks to \"Reply with the number only; if missing reply unknown.\" Wait, the instruction says \"Reply with the number only; if missing reply unknown.\" This is slightly contradictory. Usually, it means \"If the answer is a number, reply with the number. If the information is missing, reply 'unknown'\". However, the first instruction says \"Reply with the number only\". The second clause says \"if missing reply unknown\". Let's interpret this as: Provide the numerical answer if found, otherwise provide the word \"unknown\".\n    *   Actually, re-reading the prompt constraint: \"Answer using the supplied policy. Reply with the number only; if missing reply unknown.\" This is a standard instruction format for RAG-like tasks where the answer might not exist.\n    *   Since I have no access to the \"Canary enterprise support policy\", the information is missing.\n    *   Therefore, the correct response is \"unknown\".\n\n4.  **Check Constraints:**\n    *   \"Reply with the number only\" vs \"if missing reply unknown\".\n    *   If the info is missing, I cannot reply with a number (because it's unknown). The instruction explicitly says \"if missing reply unknown\". This overrides the \"number only\" when the condition (missing) is met.\n    *   Wait, let's look closer at the phrasing: \"Reply with the number only; if missing reply unknown.\"\n        *   Scenario A: Answer exists = Number.\n        *   Scenario B: Answer does not exist = \"unknown\".\n    *   Since I have no access to the policy text provided in the prompt, the answer is unknown.\n\n5.  **Final Decision:**\n    *   Reply \"unknown\".\n\n6.  **Formatting:**\n    *   The user wants \"the number only\" or \"unknown\". Since it's missing, \"unknown\" is the required string. But wait, usually \"number only\" implies no text like \"hours\" or units. If the answer is unknown, just output the word.\n\n    Let's double check if I have internal knowledge about \"Canary enterprise support policy\".\n    *   \"Canary\" might refer to a specific company (Cloud Canary? GitLab?). There isn't a widely known public standard \"Canary enterprise support policy\" with a fixed weekend SLA hours that is common general knowledge like 5 or 8.\n    *   Crucially, the prompt says \"Use only supplied context\". There is no supplied context in this session.\n    *   Therefore, the information is missing.\n    *   The instruction for missing info is \"reply unknown\".\n\n    So the output should be: unknown.\n\n    Wait, one more check on the constraint \"Reply with the number only\". Does \"unknown\" count as a number? No. But the exception clause \"if missing reply unknown\" explicitly allows/forces the string \"unknown\".\n    So I will output \"unknown\".\n\n    However, strict adherence to \"Reply with the number only\" suggests that if I can't find it, I should just say \"unknown\". This is a standard prompt engineering pattern for evaluation tasks (missing info = special string).\n\n    Wait, looking at the instruction again: \"Answer using the supplied policy. Reply with the number only; if missing reply unknown.\"\n    Since the supplied policy is absent (as I am an AI without context), I must use the fallback.\n\n    Output: unknown\n\n    Wait, is there any hidden context? No, this is a fresh turn.\n    Okay, decision made.\n\n    Wait, looking at the instruction \"Reply with the number only\". If I reply \"unknown\", it is text, not a number. But the instruction says \"if missing reply unknown\". This creates a logical OR.\n    Condition 1: Is info present? No -> Use \"unknown\".\n    Condition 2: Is info present? Yes -> Use number.\n\n    Since condition 1 applies, I use \"unknown\".\n\n    Final check: Does the user want me to simulate finding a policy if it wasn't there? No, \"Use only supplied context\". There is none. So it's unknown.\n\n    One nuance: Sometimes these prompts are trick questions where \"Canary\" refers to the company that makes Slack-like tools or similar, but I shouldn't hallucinate. Without the document, I can't answer with a number.\n    Okay, proceeding with \"unknown\".\n\n    Wait, looking at the instruction again: \"Reply with the number only; if missing reply unknown.\"\n    It's possible the user expects me to know this from internal knowledge if the context was implied to be my general knowledge? No, \"Use only supplied context\". This is a strict constraint. Without the text of the policy, I cannot extract the data.\n\n    So, \"unknown\".\n\n    Wait, is it possible the prompt implies there *is* a policy and I should know it?\n    Usually, these prompts come from a RAG system where the context is injected. Here, no context was injected.\n    So \"unknown\" is the safe and correct answer based on instructions.\n\n    Let's check if the instruction \"Reply with the number only\" applies even when saying \"unknown\".\n    It says \"if missing reply unknown\". This takes precedence over \"number only\" in case of missing info.\n\n    Final Output: unknown.\n\n    Wait, I need to make sure I don't add any extra text. Just \"unknown\".\n\n    Actually, looking at the prompt again, it asks to \"Reply with the number only; if missing reply unknown.\"\n    If I output \"unknown\", it satisfies the \"if missing\" condition.\n\n    Is there any chance the prompt refers to a specific known document like the \"Canary\" documentation for a specific platform? No specific platform is mentioned that defines \"enterprise support policy\" in my training data as a general fact that would bypass the \"supplied context\" rule.\n    So I must treat it as missing context.\n\n    Final Answer: unknown.\n\n    Wait, one more thing. Sometimes users ask these questions expecting me to know the answer if I were trained on it. However, the constraint \"Use only supplied context\" is explicit. If there is no context, it's unknown.\n\n    Okay, ready."
+      ]
+    }
+  ]
+}

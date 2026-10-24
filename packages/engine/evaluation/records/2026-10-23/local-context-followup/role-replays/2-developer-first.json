@@ -1,0 +1,25 @@
+{
+  "repeat": 2,
+  "mode": "developer-first",
+  "request_sha256": "3d00f8428d4abc0451da63edf98a9578665d241a33025847d6b71adf8f4d8337",
+  "response_sha256": "354b3fdfddff5b81521e3df92592eb3ed73b01467647f3d2b58a8fc9d84da334",
+  "status": 200,
+  "completed": true,
+  "answer": "unknown",
+  "reasoning": [
+    "The user is asking about a specific policy detail regarding Canary enterprise support - specifically the weekend first-response target in hours. They want me to:\n1. Use only the supplied context\n2. If the information is missing, reply 'unknown'\n3. Reply with just the number\n\nHowever, looking at the environment context, I only have basic session info (cwd, shell, date, timezone, filesystem). There's no actual document or policy content provided about Canary enterprise support that I could reference.\n\nSince there's no context about Canary enterprise support policies in the supplied information, I should reply 'unknown' as instructed."
+  ],
+  "usage": {
+    "input_tokens": 8126,
+    "input_tokens_details": {
+      "cached_tokens": 8125
+    },
+    "output_tokens": 130,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8256
+  },
+  "elapsed_ms": 2311.244832999997,
+  "context_answer_passed": false
+}

@@ -1,0 +1,25 @@
+{
+  "repeat": 1,
+  "mode": "hook-as-system",
+  "request_sha256": "8f3cbf98b576e48ff2c0bbecc8c5f701b1bdc220e3cdb667192c6cb94923d864",
+  "response_sha256": "22f07ce78a9a1dc82bcd735d66429469a03aba7c031fe32f2f8666e6c0b7fe01",
+  "status": 200,
+  "completed": true,
+  "answer": "11",
+  "reasoning": [
+    "The user is asking about Canary enterprise support policy, specifically the weekend first-response target in hours. They want me to use only supplied context and reply with the number only if I can find the answer.\n\nLooking at the provided context, there's a citation source \"s1/canary.md\" at lines 1-2 that states: \"Canary enterprise support policy requires the first response within eleven hours on weekends.\"\n\nThe user wants just the number, so my answer should be \"11\"."
+  ],
+  "usage": {
+    "input_tokens": 8272,
+    "input_tokens_details": {
+      "cached_tokens": 8122
+    },
+    "output_tokens": 107,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 8379
+  },
+  "elapsed_ms": 1701.4377910000003,
+  "context_answer_passed": true
+}

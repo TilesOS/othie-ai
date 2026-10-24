@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-10-24T03:48:37.572Z",
+  "target": "Patched Next.js 16.4.3 static export served on loopback",
+  "pages": [
+    "/",
+    "/download/",
+    "/docs/setup/"
+  ],
+  "checks": {
+    "home_loaded": true,
+    "demo_product_change_updated_context": true,
+    "download_navigation": true,
+    "windows_selection_updated_unavailable_message": true,
+    "developer_setup_navigation": true
+  },
+  "console_errors_and_warnings": [],
+  "screenshot": "website-windows.png",
+  "limitations": "Desktop browser smoke check only. No responsive, visual-regression, installer, or native desktop host acceptance."
+}
