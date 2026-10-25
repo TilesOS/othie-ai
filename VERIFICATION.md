@@ -63,9 +63,14 @@ plus Windows startup-script syntax. This verifies the October 8 evaluator change
 Startup-deadline changes through `c410e6f` also pass both runners. The
 [merged-history run for `449c3fc`](https://github.com/TilesOS/othie-ai/actions/runs/38682973490),
 inspected October 18, passes both macOS and Windows jobs, including clean installation,
-typechecks, the then-current tests and Windows startup-script syntax. The October 18
-and October 20 local follow-up commits have not yet had their own CI run. Automated
-runner results do not establish native desktop-host or logon-startup acceptance.
+typechecks, the then-current tests and Windows startup-script syntax. The
+[run for `ff38e75`](https://github.com/TilesOS/othie-ai/actions/runs/40159571222), inspected
+October 25, passes both macOS and Windows jobs: clean installation, workspace typechecks
+and tests, plus Windows startup-script syntax. This now verifies the October 18, 20 and
+23 follow-ups. The new native-agent and lexical-retrieval commits still need CI.
+The [run and job evidence](packages/engine/evaluation/records/2026-10-24/native-agent-followup/checks/ci-ff38e75.json)
+records the inspected revision and individual steps. Automated runner results do not
+establish native desktop-host or logon-startup acceptance.
 
 ## Delivery and credential coverage
 
@@ -778,10 +783,10 @@ semantic quality, installers and fresh remote CI remain open.
   October 23 with complete cited adapter delivery and provider-boundary context. Role
   comparisons narrow the failure to developer-message handling in the installed
   provider/model combination; provider conversion versus model internals remains unresolved.
-- Windows native-host and logon-startup acceptance beyond the historical automated CI
-  suite; CI through merged `449c3fc` passes both runners, while the October 18,
-  October 20 and October 23 follow-ups still need CI. Native Windows host/session
-  acceptance remains open.
+- Windows native-host and logon-startup acceptance beyond automated CI. The October 25
+  inspection verifies `ff38e75`, including the October 18, 20 and 23 follow-ups, on both
+  macOS and Windows runners. The new native-agent and lexical-retrieval commits still
+  need CI. Native Windows host/session acceptance remains open.
 - A larger benchmark using native host coding tools and realistic fixed tasks; the first
   constrained-tool baseline is recorded, but supports no general quality/token claim.
 - Compiler classification, relevance, linked evidence, and packing: deterministic recovery
