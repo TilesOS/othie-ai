@@ -54,3 +54,8 @@ export const nativeAgentCases: AgentCase[] = [
 ];
 
 export const nativeAgentInstructions = "Work only in this synthetic repository. Implement the task in solution.js as a self-contained function solve without imports or exports. Use your native file editing and shell tools, inspect the repository, and run node --test before finishing. Only solution.js may be changed. Do not look outside this repository, search for benchmark fixtures or scoring data, access the network, or install dependencies. Company documents are maintained outside the repository; use any supplied context as evidence. If policy is absent, make your best implementation and state the assumption. Do not mutate input arguments.";
+
+export const nativeAgentPolicySources: Readonly<Record<string, string>> = {
+  "support-targets": "support.md", "refund-boundaries": "refunds.md", "telemetry-consent": "telemetry.md",
+  "expense-documentation": "expenses.md", "access-expiration": "access.md", "regional-renewal": "renewal.md",
+};

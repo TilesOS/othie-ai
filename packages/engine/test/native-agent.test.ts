@@ -2,8 +2,8 @@ import { mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { expect, it } from "vitest";
-import { nativeAgentCases } from "../src/evaluation/native-agent-cases.js";
-import { nativeAgentDelivery, nativeAgentEvents, nativeAgentFiles, nativeAgentIntegrity, nativeAgentOptions, nativeAgentProcess } from "../src/evaluation/native-agent.js";
+import { nativeAgentCases, nativeAgentDocuments } from "../src/evaluation/native-agent-cases.js";
+import { nativeAgentContextComplete, nativeAgentDelivery, nativeAgentEvents, nativeAgentFiles, nativeAgentIntegrity, nativeAgentOptions, nativeAgentProcess } from "../src/evaluation/native-agent.js";
 import { countTokens } from "../src/tokenizer.js";
 
 it("rejects ambiguous native agent options before creating output state", () => {
@@ -35,7 +35,7 @@ it("requires complete strict diagnostic receipts and exactly the expected contex
 it("uses native completion and successful command events without treating warnings as terminal errors", () => {
   const lines = [
     { type: "item.completed", item: { type: "error", message: "hook trust warning" } },
-    { type: "item.completed", item: { type: "command_execution", command: "node --test", exit_code: 0 } },
+    { type: "item.completed", item: { type: "command_execution", command: "node --test", exit_code: 0, aggregated_output: "ok 1 - public interface 0" } },
     { type: "turn.completed", usage: { input_tokens: 100, output_tokens: 10, cached_input_tokens: 20 } },
   ];
   const encoded = lines.map((line) => JSON.stringify(line)).join("\n");
@@ -45,6 +45,19 @@ it("uses native completion and successful command events without treating warnin
   expect(nativeAgentEvents(encoded + "\n" + JSON.stringify(lines[2])).completed).toBe(false);
   expect(nativeAgentEvents('{"type":"turn.completed"}').input_tokens).toBeNull();
   expect(nativeAgentEvents('{"type":"item.completed","item":{"type":"agent_message","text":"all tests passed"}}').ran_public_tests).toBe(false);
+  expect(nativeAgentEvents('{"type":"item.completed","item":{"type":"command_execution","command":"echo node --test","exit_code":0,"aggregated_output":"node --test"}}').ran_public_tests).toBe(false);
+});
+
+it("distinguishes delivery of unrelated excerpts from complete expected policy evidence", () => {
+  const scenario = nativeAgentCases.find((item) => item.id === "support-targets")!;
+  const policy = nativeAgentDocuments.find((item) => item.name === "support.md")!.text;
+  const unrelated = nativeAgentDocuments.find((item) => item.name === "brand.md")!.text;
+  expect(nativeAgentContextComplete(scenario, policy, true)).toBe(true);
+  expect(nativeAgentContextComplete(scenario, policy.replace("Saturday and Sunday are weekends.", ""), true)).toBe(false);
+  expect(nativeAgentContextComplete(scenario, unrelated, true)).toBe(false);
+  const control = nativeAgentCases.find((item) => item.control)!;
+  expect(nativeAgentContextComplete(control, unrelated, true)).toBe(false);
+  expect(nativeAgentContextComplete(control, "<empty/>", false)).toBe(true);
 });
 
 it("runs actual public tests and detects changed tests, extra files and solution symlinks", async () => {

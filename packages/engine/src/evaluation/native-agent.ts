@@ -14,7 +14,7 @@ import { gradeCode } from "./agent-grader.js";
 import { evaluationArguments } from "./arguments.js";
 import { parseHookDiagnostic } from "./hook-diagnostics.js";
 import type { AgentCondition } from "./local-agent.js";
-import { nativeAgentCases, nativeAgentDocuments, nativeAgentInstructions } from "./native-agent-cases.js";
+import { nativeAgentCases, nativeAgentDocuments, nativeAgentInstructions, nativeAgentPolicySources } from "./native-agent-cases.js";
 import { codexHookConfiguration, createCodexProjectHome, recordingWrapper, redactNativeTranscript, shellQuote } from "./native-hooks.js";
 
 const optionsSchema = z.object({
@@ -96,7 +96,7 @@ export function nativeAgentEvents(stdout: string) {
   return {
     completed: events.length > 0 && events.every(Boolean) && completed.length === 1 && !events.some((event) => event?.type === "turn.failed" || event?.type === "error"),
     command_calls: commands.length,
-    ran_public_tests: commands.some((item) => typeof item.command === "string" && /\bnode\s+--test\b/.test(item.command) && item.exit_code === 0),
+    ran_public_tests: commands.some((item) => typeof item.command === "string" && /\bnode\s+--test\b/.test(item.command) && item.exit_code === 0 && typeof item.aggregated_output === "string" && item.aggregated_output.includes("public interface 0")),
     input_tokens: usages.length === 1 && usages[0]!.success ? usages[0]!.data.input_tokens : null,
     output_tokens: usages.length === 1 && usages[0]!.success ? usages[0]!.data.output_tokens : null,
     cached_input_tokens: usages.length === 1 && usages[0]!.success ? usages[0]!.data.cached_input_tokens ?? null : null,
@@ -114,6 +114,13 @@ export function nativeAgentDelivery(receipt: unknown, expectedXml: string, expec
     const output = z.object({ hookSpecificOutput: z.object({ hookEventName: z.literal("UserPromptSubmit"), additionalContext: z.string() }).strict() }).strict().parse(JSON.parse(parsed.data.stdout));
     return output.hookSpecificOutput.additionalContext === `Othie context brief (source-backed; preserve the included citations):\n${expectedXml}`;
   } catch { return false; }
+}
+
+export function nativeAgentContextComplete(scenario: AgentCase, text: string, hasItems: boolean): boolean {
+  if (scenario.control) return !hasItems;
+  const policy = nativeAgentDocuments.find((document) => document.name === nativeAgentPolicySources[scenario.id]);
+  const sentences = policy ? [...new Intl.Segmenter("en", { granularity: "sentence" }).segment(policy.text)].map(({ segment }) => segment.trim()) : [];
+  return hasItems && sentences.length > 0 && sentences.every((sentence) => text.includes(sentence));
 }
 
 export async function nativeAgentIntegrity(workspace: string, files: Record<string, string>) {
@@ -161,8 +168,8 @@ export async function runNativeAgentBenchmark(input: z.input<typeof optionsSchem
     const protocol = { protocol_version: "native-agent-v2", recorded_at: new Date().toISOString(), synthetic_only: true,
       node: process.version, platform: process.platform, arch: process.arch, host: "codex", host_version: version.stdout.trim(),
       requested_model: options.model, reasoning_effort: "low", options: { ...options, out: "<output>" },
-      fixture_sha256: hash(JSON.stringify({ cases, documents: nativeAgentDocuments, instructions: nativeAgentInstructions, instructions_location: "AGENTS.md" })),
-      documents: nativeAgentDocuments, cases, instructions: nativeAgentInstructions,
+      fixture_sha256: hash(JSON.stringify({ cases, documents: nativeAgentDocuments, instructions: nativeAgentInstructions, instructions_location: "AGENTS.md", policy_sources: nativeAgentPolicySources })),
+      documents: nativeAgentDocuments, cases, instructions: nativeAgentInstructions, policy_sources: nativeAgentPolicySources,
       instructions_location: "AGENTS.md",
       full_document_tokens: countTokens(fullDocuments, "o200k_base"), tokenizer: "o200k_base",
       compiled_artifacts: await Promise.all([adapter, cli, fileURLToPath(import.meta.url), join(repository, "packages/hooks/dist/src/index.js")].map(async (path) => ({ path: path.slice(repository.length), sha256: hash(await readFile(path)) }))),
@@ -210,6 +217,7 @@ export async function runNativeAgentBenchmark(input: z.input<typeof optionsSchem
         const events = nativeAgentEvents(response.stdout);
         const receipt = await readFile(receiptPath, "utf8").then((text) => JSON.parse(text) as unknown, () => null);
         const deliveryPassed = condition !== "othie" ? receipt === null : nativeAgentDelivery(receipt, expected.text, hasItems, options.contextTokens) && hasItems === !scenario.control;
+        const contextComplete = condition !== "othie" ? null : nativeAgentContextComplete(scenario, expected.text, hasItems);
         const integrity = await nativeAgentIntegrity(workspace, files);
         const solutionStat = await lstat(join(workspace, "solution.js")).catch(() => null);
         const code = solutionStat?.isFile() && solutionStat.size <= 100_000 ? await readFile(join(workspace, "solution.js"), "utf8") : "";
@@ -217,13 +225,13 @@ export async function runNativeAgentBenchmark(input: z.input<typeof optionsSchem
         const publicGrade = await gradeCode(code, scenario.publicProbes, true);
         const operational = response.code === 0 && !response.timed_out && !response.output_limit && events.completed && integrity.passed && events.ran_public_tests;
         const record = { case_id: scenario.id, family: scenario.family, repeat, condition, order, prompt,
-          expected_noop: !!scenario.control, delivery_passed: deliveryPassed, integrity, ...events,
+          expected_noop: !!scenario.control, delivery_passed: deliveryPassed, context_complete: contextComplete, integrity, ...events,
           host_model: condition === "othie" && receipt && typeof receipt === "object" && "model" in receipt ? receipt.model : null,
           supplied_context_tokens: condition === "full_documents" ? countTokens(fullDocuments, "o200k_base") : condition === "othie" && hasItems ? expected.status.tokenCount : 0,
           expected_context: condition === "othie" ? { text: expected.text, status: expected.status } : null,
           response: { ...response, stdout: redact(response.stdout), stderr: redact(response.stderr) }, receipt,
           final_code: code, public_grade: publicGrade, grade, operational, wall_ms: wallMs,
-          correct: operational && deliveryPassed && publicGrade.passed === publicGrade.total && grade.passed === grade.total };
+          correct: operational && deliveryPassed && contextComplete !== false && publicGrade.passed === publicGrade.total && grade.passed === grade.total };
         await writeFile(join(options.out, `${id}.json`), redact(JSON.stringify(record, null, 2)) + "\n", { flag: "wx", mode: 0o600 });
         const { prompt: _prompt, response: _response, receipt: _receipt, final_code: _code, expected_context: _context, ...summary } = record;
         results.push({ ...summary, transcript: `${id}.json` });

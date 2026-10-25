@@ -137,7 +137,10 @@ README/AGENTS changes, extra root files, solution symlinks, failed/incomplete na
 watchdog expiry, missing successful test-command events, and invalid hook receipts fail
 the trajectory. Othie receipts must exactly match a fresh engine query for the actual
 prompt, including strict content-free diagnostics and token accounting. A failed
-retrieval no-op cannot count as correct even if the code passes all probes.
+retrieval no-op cannot count as correct even if the code passes all probes. Positive
+cases separately require every sentence of their fixed expected policy document in
+the engine XML. This distinguishes complete transport from retrieval of the wrong source;
+it is fixture-specific coverage, not a general semantic relevance score.
 
 Condition order rotates across cases/repeats. A new output directory contains the
 protocol before sessions, one immediately saved redacted trajectory per attempt, and
