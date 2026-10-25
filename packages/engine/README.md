@@ -168,6 +168,13 @@ documents to compare no added context, full documents, and Othie's bounded conte
 with the same hosted or installed Ollama model. It is a small component test, not a real coding-agent
 benchmark or a substitute for the planned local-model evaluation.
 
+The separate [native coding-agent pilot](evaluation/README.md#native-coding-agent-pilot)
+runs `npm run eval:native-agent` with actual Codex shell/edit tools, fresh workspaces,
+strict hook receipts and objective behavioral scoring. Its seven synthetic single-function
+tasks do not establish realistic multi-file, compiler-model or desktop trust acceptance.
+The [October 24–25 evidence](evaluation/records/2026-10-24/native-agent-followup/README.md)
+preserves both the initial retrieval failure and final comparison.
+
 Benchmark output records hardware/model identity, cold startup, warm queries, memory snapshot, and fallback frequency. Record results separately on actual Apple Silicon and Windows x64 hardware; the two-second setting is a synthesis deadline including queue wait, not an end-to-end performance promise.
 
 Operational logs belong on stderr and must contain status/latency metadata only—not prompts or document contents.

@@ -1,0 +1,226 @@
+{
+  "checked": 55,
+  "all_exist": true,
+  "links": [
+    {
+      "document": "README.md",
+      "target": "integrations/codex/README.md"
+    },
+    {
+      "document": "README.md",
+      "target": "integrations/claude-code/README.md"
+    },
+    {
+      "document": "README.md",
+      "target": "packages/engine/evaluation/README.md"
+    },
+    {
+      "document": "README.md",
+      "target": "packages/engine/evaluation/records/2026-10-03/README.md"
+    },
+    {
+      "document": "README.md",
+      "target": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md"
+    },
+    {
+      "document": "README.md",
+      "target": "packages/engine/evaluation/records/2026-10-04/compiler-followup/README.md"
+    },
+    {
+      "document": "README.md",
+      "target": "packages/engine/evaluation/records/2026-10-04/coverage-followup/README.md"
+    },
+    {
+      "document": "README.md",
+      "target": "packages/engine/evaluation/records/2026-10-05/classification-followup/README.md"
+    },
+    {
+      "document": "README.md",
+      "target": "packages/engine/README.md"
+    },
+    {
+      "document": "README.md",
+      "target": "MODELS.md"
+    },
+    {
+      "document": "README.md",
+      "target": "SECURITY.md"
+    },
+    {
+      "document": "README.md",
+      "target": "VERIFICATION.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/checks/ci-ff38e75.json"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-03/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-03/compiler-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-04/compiler-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-04/coverage-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-05/classification-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-05/deterministic-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-06/applicability-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-08/candidate-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-13/hook-latency-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-13/hook-latency-followup/workspace-tests.txt"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-14/hook-latency-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-14/combined-hook-verification/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-18/native-settings-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-20/codex-project-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-23/local-context-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "integrations/README.md"
+    },
+    {
+      "document": "VERIFICATION.md",
+      "target": "packages/engine/README.md"
+    },
+    {
+      "document": "packages/engine/README.md",
+      "target": "../../README.md"
+    },
+    {
+      "document": "packages/engine/README.md",
+      "target": "../../integrations/codex/README.md"
+    },
+    {
+      "document": "packages/engine/README.md",
+      "target": "../../integrations/claude-code/README.md"
+    },
+    {
+      "document": "packages/engine/README.md",
+      "target": "../../integrations/README.md"
+    },
+    {
+      "document": "packages/engine/README.md",
+      "target": "../../MODELS.md"
+    },
+    {
+      "document": "packages/engine/README.md",
+      "target": "evaluation/README.md"
+    },
+    {
+      "document": "packages/engine/README.md",
+      "target": "evaluation/README.md"
+    },
+    {
+      "document": "packages/engine/README.md",
+      "target": "evaluation/records/2026-10-24/native-agent-followup/README.md"
+    },
+    {
+      "document": "packages/engine/README.md",
+      "target": "../../VERIFICATION.md"
+    },
+    {
+      "document": "packages/engine/evaluation/README.md",
+      "target": "records/2026-10-03/README.md"
+    },
+    {
+      "document": "packages/engine/evaluation/README.md",
+      "target": "records/2026-10-04/compiler-followup/README.md"
+    },
+    {
+      "document": "packages/engine/evaluation/README.md",
+      "target": "records/2026-10-04/coverage-followup/README.md"
+    },
+    {
+      "document": "packages/engine/evaluation/README.md",
+      "target": "records/2026-10-05/classification-followup/README.md"
+    },
+    {
+      "document": "packages/engine/evaluation/README.md",
+      "target": "records/2026-10-05/deterministic-followup/README.md"
+    },
+    {
+      "document": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md",
+      "target": "final/protocol.json"
+    },
+    {
+      "document": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md",
+      "target": "final/summary.json"
+    },
+    {
+      "document": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md",
+      "target": "pilot/summary.json"
+    },
+    {
+      "document": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md",
+      "target": "query-truncation-with-corpus.json"
+    },
+    {
+      "document": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md",
+      "target": "restricted-pilot/protocol.json"
+    },
+    {
+      "document": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md",
+      "target": "restricted-final/failure.json"
+    },
+    {
+      "document": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md",
+      "target": "checks/ci-ff38e75.json"
+    },
+    {
+      "document": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md",
+      "target": "hosted-controls/summary.json"
+    },
+    {
+      "document": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md",
+      "target": "strict-latency/summary.json"
+    },
+    {
+      "document": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md",
+      "target": "default-latency/summary.json"
+    }
+  ]
+}

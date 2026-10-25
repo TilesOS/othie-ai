@@ -1,0 +1,5 @@
+Native codex / positive: delivery=true, answer=true
+Native codex / irrelevant: delivery=true, answer=true
+Native codex / revoked: delivery=true, answer=true
+Native codex / unavailable: delivery=true, answer=true
+{"report":"<othie-repository>/packages/engine/evaluation/records/2026-10-24/native-agent-followup/hosted-controls/summary.json","passed":true}

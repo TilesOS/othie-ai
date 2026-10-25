@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated October 23, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated October 25, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -9,10 +9,10 @@ synthetic documents and provider fixtures; it requires no model training or down
 
 | Check | Result |
 | --- | --- |
-| `npm ci` | October 23 clean installation passes after production and development dependency updates |
+| `npm ci` | October 24 clean installation passes with the existing dependency lockfile |
 | `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 180 passing tests; one opt-in real-model test skipped |
+| `npm test` | 189 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -24,6 +24,10 @@ synthetic documents and provider fixtures; it requires no model training or down
 | October 23 native Codex scorer/dependency refresh | Hosted project hooks 4/4; final local-model delivery 4/4 but native answers 3/4 |
 | October 23 local provider transport and role probes | Complete positive policy reaches developer message; original developer requests 0/3, system/user role interventions 12/12; minimal absent-policy control 2/3 |
 | October 23 serial adapter latency | Strict fresh-engine 14/14 at 2,000/3,000 ms budgets; actual-default normal paths 8/8 at 311–372 ms |
+| October 24–25 native Codex coding-agent pilot | 21/21 operational sessions; Othie and full documents each 7/7 tasks and 46/46 probes; task-only 3/7 tasks and 31/46 probes |
+| Late-query retrieval regression | Preserves tail subjects beyond the old 20-term prefix, including a 4,000-term query through SQLite, excerpts and rule selection |
+| October 25 hosted project-hook controls | Positive, no-op, revoked and unavailable sessions pass 4/4 with complete cited positive evidence |
+| October 25 serial adapter latency | Strict fresh-engine 14/14 at 2,000/3,000 ms budgets; actual-default normal paths 8/8 at 260–275 ms |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
 | Evaluation-only semantic applicability, initial trials | Boundaries 42/56 versus lexical 51/56; larger applicability corpus 54/80 versus paired lexical 61/80; both fail acceptance |
@@ -34,7 +38,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `git diff --check` | Pass |
 | `npm audit` and `npm audit --omit=dev` | Zero reported development or production dependency advisories |
 
-The full suite comprises 119 engine, 30 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 128 engine, 30 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -772,6 +776,51 @@ preserve privacy redactions and observed failures. Temporary model, proxy and we
 services are stopped. Interactive trust, native desktop/Windows, larger benchmarks,
 semantic quality, installers and fresh remote CI remain open.
 
+## October 24–25 native coding-agent and late-query follow-up
+
+The [native coding-agent records](packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md)
+extend the earlier four-case constrained-tool benchmark to seven small JavaScript
+tasks using actual Codex shell/edit tools. Each condition gets a fresh Git workspace,
+disposable login home, public interface tests, and separate resource-limited behavioral
+grading. Shared instructions live in `AGENTS.md`; external policy and hidden probes
+are absent from the workspace. Extraction, embeddings and synthesis remain disabled.
+
+One final repeat with requested/receipt model `gpt-6-astra` passes all 21 operational
+checks. Othie and full documents each pass 7/7 tasks and 46/46 behavioral probes;
+task-only passes 3/7 tasks and 31/46 probes. Task-only misses support, refund, expense
+and access-extension behavior. Othie supplies every sentence of the expected policy
+document in all six positive cases and injects nothing for the sorting control.
+Transport, fixed-policy coverage, native completion, test-command output and workspace
+integrity are checked separately. These are synthetic single-function tasks with one
+repeat, not realistic multi-file acceptance or a general quality claim.
+
+An initial three-session pilot fails support behavior under Othie despite complete
+transport: keyword selection keeps only the prompt's first 20 meaningful terms and
+never reaches the task's support subject. It returns brand excerpts instead. The fix
+preserves every meaningful term within the profile's query-character limit and uses
+balanced quoted SQLite OR expressions. Two failing old-code regressions now pass,
+including a 4,000-term prefix through SQLite and both excerpt/rules-only output. A
+same-input SQLite comparison recovers the support source from the unchanged original
+prompt; unrelated sources can still match. All 40 existing applicability queries have
+unchanged term lists. Semantic no-op/classification acceptance is not closed.
+
+The final pilot also moves shared instructions from the user prompt to `AGENTS.md`,
+so its native outcomes are not an isolated before/after test of the retrieval fix.
+Both prompt versions, initial failure, restricted startup attempts, final trajectories,
+objective scores and usage remain recorded. Reported cumulative input tokens are
+428,517 task-only, 439,695 full-document and 438,018 Othie; cached input and output
+counts are separate. Uncontrolled native turns, caching and provider state support
+no causal token-saving or latency claim. No model artifacts were downloaded.
+
+Clean installation, full build, final typechecks, website lint, 189 deterministic tests,
+and both dependency audits pass. One opt-in real-model test is skipped. Hosted project
+hook controls pass 4/4. After generation and suite work, serial strict adapter latency
+passes 14/14 at the actual 2,000/3,000 ms budgets in 258–2,037 ms; actual-default normal
+paths pass 8/8 in 260–275 ms. These adapter measurements exclude native generation/tools.
+Publication hashes and the manifest are verified against retained files and compiled
+artifacts. CI for the preceding `ff38e75` history now passes both runners; new local
+commits still need CI. Native Windows/desktop trust and realistic multi-file work remain open.
+
 ## Remaining acceptance work
 
 - Codex persisted interactive hook-trust acceptance after verified noninteractive
@@ -787,8 +836,9 @@ semantic quality, installers and fresh remote CI remain open.
   inspection verifies `ff38e75`, including the October 18, 20 and 23 follow-ups, on both
   macOS and Windows runners. The new native-agent and lexical-retrieval commits still
   need CI. Native Windows host/session acceptance remains open.
-- A larger benchmark using native host coding tools and realistic fixed tasks; the first
-  constrained-tool baseline is recorded, but supports no general quality/token claim.
+- A larger benchmark using realistic multi-file tasks, additional models and repeats.
+  The constrained-tool baseline and seven-case native Codex pilot are recorded, but
+  support no general quality/token claim.
 - Compiler classification, relevance, linked evidence, and packing: deterministic recovery
   removes model-selector disagreement, and the clarified prompt excludes the observed
   quoted title in fresh runs, while entitlement and assistant-permission classification

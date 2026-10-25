@@ -1,0 +1,9 @@
+
+ RUN  v5.0.5 <othie-repository>
+
+
+ Test Files  2 passed (2)
+      Tests  7 passed (7)
+   Start at  23:59:15
+   Duration  3.52s (tests 95%, import 3%, transform 1%)
+

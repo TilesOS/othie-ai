@@ -1,0 +1,208 @@
+{
+  "baseline_commit": "ff38e75",
+  "fix_commit": "554cd58",
+  "node": "v24.18.0",
+  "synthetic_only": true,
+  "method": "Same in-memory SQLite corpus; old prefix terms and flat OR expression versus current complete terms and balanced OR expression. No host/model calls. The initial native prompt remains unchanged.",
+  "limitations": "This isolates prefix truncation and SQL retrieval, not semantic relevance, packing, native model behavior or latency. Brand mentions support and can still match.",
+  "results": [
+    {
+      "id": "original-native-pilot-prompt",
+      "query_chars": 850,
+      "baseline_term_count": 20,
+      "fixed_term_count": 66,
+      "baseline_has_support_term": false,
+      "fixed_has_support_term": true,
+      "baseline_hits": [
+        "brand.md"
+      ],
+      "fixed_hits": [
+        "support.md",
+        "access.md",
+        "brand.md",
+        "telemetry.md",
+        "expenses.md",
+        "refunds.md"
+      ],
+      "baseline_has_expected_source": false,
+      "fixed_has_expected_source": true
+    },
+    {
+      "id": "four-thousand-term-prefix",
+      "query_chars": 46905,
+      "baseline_term_count": 20,
+      "fixed_term_count": 4002,
+      "baseline_has_support_term": false,
+      "fixed_has_support_term": true,
+      "baseline_hits": [],
+      "fixed_hits": [
+        "support.md",
+        "brand.md"
+      ],
+      "baseline_has_expected_source": false,
+      "fixed_has_expected_source": true
+    }
+  ],
+  "existing_applicability_query_terms": [
+    {
+      "id": "travel-approval",
+      "unchanged": true
+    },
+    {
+      "id": "receipt-boundary",
+      "unchanged": true
+    },
+    {
+      "id": "contractor-exception",
+      "unchanged": true
+    },
+    {
+      "id": "consent-negation",
+      "unchanged": true
+    },
+    {
+      "id": "opposing-export-rules",
+      "unchanged": true
+    },
+    {
+      "id": "reference-injection-control",
+      "unchanged": true
+    },
+    {
+      "id": "repository-only-control",
+      "unchanged": true
+    },
+    {
+      "id": "regional-defaults",
+      "unchanged": true
+    },
+    {
+      "id": "mixed-policy-exclusions",
+      "unchanged": true
+    },
+    {
+      "id": "linked-access-extension",
+      "unchanged": true
+    },
+    {
+      "id": "long-whole-evidence",
+      "unchanged": true
+    },
+    {
+      "id": "descriptive-sentence-control",
+      "unchanged": true
+    },
+    {
+      "id": "authoritative-instruction-control",
+      "unchanged": true
+    },
+    {
+      "id": "removable-drive-policy",
+      "unchanged": true
+    },
+    {
+      "id": "legitimate-assistant-policy",
+      "unchanged": true
+    },
+    {
+      "id": "support-history-boundary",
+      "unchanged": true
+    },
+    {
+      "id": "quoted-policy-boundary",
+      "unchanged": true
+    },
+    {
+      "id": "qualification-after-description",
+      "unchanged": true
+    },
+    {
+      "id": "new-descriptive-control",
+      "unchanged": true
+    },
+    {
+      "id": "new-instruction-control",
+      "unchanged": true
+    },
+    {
+      "id": "all-non-policy-control",
+      "unchanged": true
+    },
+    {
+      "id": "active-quoted-policy",
+      "unchanged": true
+    },
+    {
+      "id": "historical-replacement",
+      "unchanged": true
+    },
+    {
+      "id": "human-assistant-use",
+      "unchanged": true
+    },
+    {
+      "id": "conditional-replacement",
+      "unchanged": true
+    },
+    {
+      "id": "historical-display-control",
+      "unchanged": true
+    },
+    {
+      "id": "demonstration-quote-control",
+      "unchanged": true
+    },
+    {
+      "id": "assistant-directory-control",
+      "unchanged": true
+    },
+    {
+      "id": "badge-entry-task",
+      "unchanged": true
+    },
+    {
+      "id": "badge-loss-task",
+      "unchanged": true
+    },
+    {
+      "id": "assistant-summary-task",
+      "unchanged": true
+    },
+    {
+      "id": "support-subject-query",
+      "unchanged": true
+    },
+    {
+      "id": "receipt-subject-query",
+      "unchanged": true
+    },
+    {
+      "id": "telemetry-subject-query",
+      "unchanged": true
+    },
+    {
+      "id": "assistant-credential-task",
+      "unchanged": true
+    },
+    {
+      "id": "export-opposition-task",
+      "unchanged": true
+    },
+    {
+      "id": "historical-badge-task-control",
+      "unchanged": true
+    },
+    {
+      "id": "customer-css-task-control",
+      "unchanged": true
+    },
+    {
+      "id": "receipt-font-task-control",
+      "unchanged": true
+    },
+    {
+      "id": "support-chart-task-control",
+      "unchanged": true
+    }
+  ]
+}

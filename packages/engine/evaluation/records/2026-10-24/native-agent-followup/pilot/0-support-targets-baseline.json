@@ -1,0 +1,58 @@
+{
+  "case_id": "support-targets",
+  "family": "external-policy",
+  "repeat": 0,
+  "condition": "baseline",
+  "order": [
+    "baseline",
+    "full_documents",
+"othie"
+  ],
+  "prompt": "Work only in this synthetic repository. Implement the task in solution.js as a self-contained function solve without imports or exports. Use your native file editing and shell tools, inspect the repository, and run node --test before finishing. Only solution.js may be changed. Do not look outside this repository, search for benchmark fixtures or scoring data, access the network, or install dependencies. Company documents are maintained outside the repository; use any supplied context as evidence. If policy is absent, make your best implementation and state the assumption. Do not mutate input arguments.\n\nTask:\nImplement solve(tier, day) in solution.js returning the first-response target in hours for standard or enterprise support tickets, according to company support policy. day is a lowercase weekday name. Preserve the function interface.",
+  "expected_noop": false,
+  "delivery_passed": true,
+  "integrity": {
+    "passed": true,
+    "changes": []
+  },
+  "completed": true,
+  "command_calls": 3,
+  "ran_public_tests": true,
+  "input_tokens": 60702,
+  "output_tokens": 467,
+  "cached_input_tokens": 53760,
+  "host_model": null,
+  "supplied_context_tokens": 0,
+  "expected_context": null,
+  "response": {
+    "code": 0,
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"<redacted>\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in <temporary-fixture>/0-support-targets-baseline-home/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"agent_message\",\"text\":\"I’ll inspect the repository for policy context, implement `solve` in `solution.js`, and run `node --test`.\\n\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd; rg --files -g '\\\"'!node_modules'\\\"' -g '\\\"'! .git'\\\"'\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd; rg --files -g '\\\"'!node_modules'\\\"' -g '\\\"'! .git'\\\"'\\\"\",\"aggregated_output\":\"error: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/33591_1792900404743\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\nerror: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/33592_1792900404754\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\n<temporary-fixture>/0-support-targets-baseline\\nREADME.md\\nsolution.test.cjs\\nsolution.js\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_3\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -c 'ls -a; cat README.md solution.js solution.test.cjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -c 'ls -a; cat README.md solution.js solution.test.cjs'\",\"aggregated_output\":\"error: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/33604_1792900406918\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\n.\\n..\\n.git\\nREADME.md\\nsolution.js\\nsolution.test.cjs\\nImplement the task in solution.js as a self-contained function solve, without imports or exports. Only solution.js is editable. Do not mutate inputs. Run node --test. Company documents are external; they are not in this repository. Public tests check only a few interface examples; final scoring checks separate policy boundaries.\\nfunction solve(tier, day) { return 24; }\\nconst { test } = require('node:test');\\nconst assert = require('node:assert/strict');\\nconst { readFileSync } = require('node:fs');\\nconst vm = require('node:vm');\\nconst probes = [{\\\"input\\\":[\\\"standard\\\",\\\"monday\\\"],\\\"expected\\\":\\\"number\\\"}];\\nfor (const [index, probe] of probes.entries()) test('public interface ' + index, () => {\\n  const args = JSON.stringify(probe.input);\\n  const result = JSON.parse(new vm.Script(readFileSync('solution.js', 'utf8') + '\\\\n' +\\n    '(() => { const args = ' + args + '; const before = JSON.stringify(args); const actual = solve(...args); return JSON.stringify({ actual, unchanged: before === JSON.stringify(args) }); })()'\\n  ).runInNewContext(Object.create(null), { timeout: 250, contextCodeGeneration: { strings: false, wasm: false } }));\\n  if (['number', 'boolean'].includes(probe.expected)) assert.equal(typeof result.actual, probe.expected);\\n  else assert.deepEqual(result.actual, probe.expected);\\n  assert.equal(result.unchanged, true);\\n});\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_4\",\"type\":\"agent_message\",\"text\":\"The repository contains no support policy, and the test only checks the return type and unchanged inputs. I’ll assume standard support targets 24 hours on weekdays and 48 hours on weekends, while enterprise support targets 4 hours every day.\\n\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_5\",\"type\":\"file_change\",\"changes\":[{\"path\":\"<temporary-fixture>/0-support-targets-baseline/solution.js\",\"kind\":\"update\"}],\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_5\",\"type\":\"file_change\",\"changes\":[{\"path\":\"<temporary-fixture>/0-support-targets-baseline/solution.js\",\"kind\":\"update\"}],\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_6\",\"type\":\"command_execution\",\"command\":\"/bin/bash -c 'node --test'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_6\",\"type\":\"command_execution\",\"command\":\"/bin/bash -c 'node --test'\",\"aggregated_output\":\"✔ public interface 0 (0.781833ms)\\nℹ tests 1\\nℹ suites 0\\nℹ pass 1\\nℹ fail 0\\nℹ cancelled 0\\nℹ skipped 0\\nℹ todo 0\\nℹ duration_ms 34.667042\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_7\",\"type\":\"agent_message\",\"text\":\"Implemented `solve` in `solution.js` without imports, exports, or input mutation.\\n\\nPolicy was absent, so assumed:\\n- Standard: 24 hours weekdays, 48 hours weekends.\\n- Enterprise: 4 hours every day.\\n\\n`node --test` passed (1 test). Only `solution.js` changed.\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":60702,\"cached_input_tokens\":53760,\"cache_write_input_tokens\":0,\"output_tokens\":467,\"reasoning_output_tokens\":18}}\n",
+    "stderr": "Reading additional input from stdin...\n",
+    "timed_out": false,
+    "output_limit": false
+  },
+  "receipt": null,
+  "final_code": "function solve(tier, day) {\n  // Assumed policy: enterprise responds within 4 hours every day;\n  // standard responds within 24 hours on weekdays and 48 on weekends.\n  if (tier === 'enterprise') return 4;\n  return day === 'saturday' || day === 'sunday' ? 48 : 24;\n}\n",
+  "public_grade": {
+    "checks": [
+true
+    ],
+    "passed": 1,
+    "total": 1
+  },
+  "grade": {
+    "checks": [
+      false,
+      false,
+      false,
+      false,
+      false,
+false
+    ],
+    "passed": 0,
+    "total": 6
+  },
+  "operational": true,
+  "wall_ms": 17510,
+  "correct": false
+}

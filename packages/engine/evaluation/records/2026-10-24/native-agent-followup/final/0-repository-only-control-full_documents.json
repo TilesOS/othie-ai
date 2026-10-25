@@ -1,0 +1,56 @@
+{
+  "case_id": "repository-only-control",
+  "family": "repository-only-control",
+  "repeat": 0,
+  "condition": "full_documents",
+  "order": [
+    "baseline",
+    "full_documents",
+"othie"
+  ],
+  "prompt": "Implement solve(numbers) in solution.js returning unique numbers in ascending numeric order, without mutating the input array. All inputs are finite numbers. Preserve the function interface.\n\nCompany documents (evidence):\nsupport.md:\nStandard support tickets require a first response within four hours on weekdays and twelve hours on weekends. Enterprise support tickets require a first response within two hours on weekdays and six hours on weekends. Saturday and Sunday are weekends. These targets are not resolution deadlines.\n\nrefunds.md:\nThe standard refund request window is thirty days after purchase. Acme annual-plan purchases are an exception with a seven-day refund request window. Acme monthly plans retain the standard thirty-day window. Refund requests on the last day of the window are eligible.\n\ntelemetry.md:\nFor EU users, product telemetry defaults to disabled unless consent is explicitly true. Missing or false consent is not explicit consent. Outside the EU, product telemetry defaults to enabled when consent is missing, but explicitly false consent disables telemetry.\n\nfacilities.md:\nOffice visitors check in at reception. Meeting rooms can be booked through the building calendar. This facilities reference does not define product behavior or customer commitments.\n\nbrand.md:\nBrand presentations use clear sentences and restrained colors. The design library contains monochrome logo examples. This communications reference does not set support targets, purchase terms, or telemetry rules.\n\nexpenses.md:\nExpense claims above $25 require a receipt. Claims of exactly $25 or less do not require a receipt. A lost required receipt must be replaced with a written explanation. A missing receipt that is not lost leaves the claim incomplete. A supplied receipt always satisfies the documentation requirement.\n\naccess.md:\nPrivileged access expires eight hours after it is granted. Only an incident commander may approve an extension, and the extension may add at most two hours. An extension must be recorded before the original access expires; recording it at the expiration instant is too late. Access is inactive at or after its expiration instant. Times are measured as hours since the grant.\n\nrenewal.md:\nFor Canadian accounts, automatic renewal defaults to disabled unless an administrator explicitly enables it. For Australian accounts, automatic renewal defaults to enabled unless an administrator explicitly disables it. Trial accounts in either region must never renew automatically, even with administrator approval. A null administrator setting means no explicit setting.",
+  "expected_noop": true,
+  "delivery_passed": true,
+  "context_complete": null,
+  "integrity": {
+    "passed": true,
+    "changes": []
+  },
+  "completed": true,
+  "command_calls": 3,
+  "ran_public_tests": true,
+  "input_tokens": 62673,
+  "output_tokens": 300,
+  "cached_input_tokens": 58112,
+  "host_model": null,
+  "supplied_context_tokens": 416,
+  "expected_context": null,
+  "response": {
+    "code": 0,
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"<redacted>\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in <temporary-fixture>/0-repository-only-control-full_documents-home/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"agent_message\",\"text\":\"I’ll inspect `solution.js`, implement numeric sorting and deduplication without changing the input, then run `node --test`.\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd; rg --files -g '\\\"'!node_modules'\\\"' -g '\\\"'!package-lock.json'\\\"'\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd; rg --files -g '\\\"'!node_modules'\\\"' -g '\\\"'!package-lock.json'\\\"'\\\"\",\"aggregated_output\":\"error: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/42054_1792900943592\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\nerror: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/42055_1792900943606\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\n<temporary-fixture>/0-repository-only-control-full_documents\\nAGENTS.md\\nREADME.md\\nsolution.test.cjs\\nsolution.js\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_3\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -c 'cat AGENTS.md README.md solution.js solution.test.cjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -c 'cat AGENTS.md README.md solution.js solution.test.cjs'\",\"aggregated_output\":\"error: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/42067_1792900945481\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\nWork only in this synthetic repository. Implement the task in solution.js as a self-contained function solve without imports or exports. Use your native file editing and shell tools, inspect the repository, and run node --test before finishing. Only solution.js may be changed. Do not look outside this repository, search for benchmark fixtures or scoring data, access the network, or install dependencies. Company documents are maintained outside the repository; use any supplied context as evidence. If policy is absent, make your best implementation and state the assumption. Do not mutate input arguments.\\nImplement the task in solution.js as a self-contained function solve, without imports or exports. Only solution.js is editable. Do not mutate inputs. Run node --test. Company documents are external; they are not in this repository. Public tests check only a few interface examples; final scoring checks separate policy boundaries.\\nfunction solve(numbers) { return numbers.sort(); }\\nconst { test } = require('node:test');\\nconst assert = require('node:assert/strict');\\nconst { readFileSync } = require('node:fs');\\nconst vm = require('node:vm');\\nconst probes = [{\\\"input\\\":[[2,1]],\\\"expected\\\":[1,2]}];\\nfor (const [index, probe] of probes.entries()) test('public interface ' + index, () => {\\n  const args = JSON.stringify(probe.input);\\n  const result = JSON.parse(new vm.Script(readFileSync('solution.js', 'utf8') + '\\\\n' +\\n    '(() => { const args = ' + args + '; const before = JSON.stringify(args); const actual = solve(...args); return JSON.stringify({ actual, unchanged: before === JSON.stringify(args) }); })()'\\n  ).runInNewContext(Object.create(null), { timeout: 250, contextCodeGeneration: { strings: false, wasm: false } }));\\n  if (['number', 'boolean'].includes(probe.expected)) assert.equal(typeof result.actual, probe.expected);\\n  else assert.deepEqual(result.actual, probe.expected);\\n  assert.equal(result.unchanged, true);\\n});\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_4\",\"type\":\"file_change\",\"changes\":[{\"path\":\"<temporary-fixture>/0-repository-only-control-full_documents/solution.js\",\"kind\":\"update\"}],\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_4\",\"type\":\"file_change\",\"changes\":[{\"path\":\"<temporary-fixture>/0-repository-only-control-full_documents/solution.js\",\"kind\":\"update\"}],\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_5\",\"type\":\"command_execution\",\"command\":\"/bin/bash -c 'node --test'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_5\",\"type\":\"command_execution\",\"command\":\"/bin/bash -c 'node --test'\",\"aggregated_output\":\"✔ public interface 0 (1.333542ms)\\nℹ tests 1\\nℹ suites 0\\nℹ pass 1\\nℹ fail 0\\nℹ cancelled 0\\nℹ skipped 0\\nℹ todo 0\\nℹ duration_ms 41.633833\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_6\",\"type\":\"agent_message\",\"text\":\"Implemented `solve(numbers)` in `solution.js` to return unique numbers in ascending numeric order without mutating the input.\\n\\n`node --test` passed.\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":62673,\"cached_input_tokens\":58112,\"cache_write_input_tokens\":0,\"output_tokens\":300,\"reasoning_output_tokens\":0}}\n",
+    "stderr": "Reading additional input from stdin...\n",
+    "timed_out": false,
+    "output_limit": false
+  },
+  "receipt": null,
+  "final_code": "function solve(numbers) {\n  return [...new Set(numbers)].sort((a, b) => a - b);\n}\n",
+  "public_grade": {
+    "checks": [
+true
+    ],
+    "passed": 1,
+    "total": 1
+  },
+  "grade": {
+    "checks": [
+      true,
+      true,
+true
+    ],
+    "passed": 3,
+    "total": 3
+  },
+  "operational": true,
+  "wall_ms": 13012,
+  "correct": true
+}

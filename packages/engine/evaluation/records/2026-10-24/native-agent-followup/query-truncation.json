@@ -1,0 +1,46 @@
+{
+  "baseline_commit": "ff38e75",
+  "fix_commit": "554cd58",
+  "node": "v24.18.0",
+  "synthetic_only": true,
+  "method": "Same in-memory SQLite corpus; old prefix terms and flat OR expression versus current complete terms and balanced OR expression. No host/model calls. The initial native prompt remains unchanged.",
+  "limitations": "This isolates prefix truncation and SQL retrieval, not semantic relevance, packing, native model behavior or latency. Brand mentions support and can still match.",
+  "results": [
+    {
+      "id": "original-native-pilot-prompt",
+      "query_chars": 850,
+      "baseline_term_count": 20,
+      "fixed_term_count": 66,
+      "baseline_has_support_term": false,
+      "fixed_has_support_term": true,
+      "baseline_hits": [
+        "brand.md"
+      ],
+      "fixed_hits": [
+        "support.md",
+        "access.md",
+        "brand.md",
+        "telemetry.md",
+        "expenses.md",
+        "refunds.md"
+      ],
+      "baseline_has_expected_source": false,
+      "fixed_has_expected_source": true
+    },
+    {
+      "id": "four-thousand-term-prefix",
+      "query_chars": 46905,
+      "baseline_term_count": 20,
+      "fixed_term_count": 4002,
+      "baseline_has_support_term": false,
+      "fixed_has_support_term": true,
+      "baseline_hits": [],
+      "fixed_hits": [
+        "support.md",
+        "brand.md"
+      ],
+      "baseline_has_expected_source": false,
+      "fixed_has_expected_source": true
+    }
+  ]
+}

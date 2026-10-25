@@ -1,0 +1,606 @@
+{
+  "protocol_version": "native-agent-v2",
+  "recorded_at": "2026-10-25T03:59:25.254Z",
+  "synthetic_only": true,
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "host": "codex",
+  "host_version": "codex-cli 0.156.1",
+  "requested_model": "gpt-6-astra",
+  "reasoning_effort": "low",
+  "options": {
+    "out": "<output>",
+    "model": "gpt-6-astra",
+    "repeats": 1,
+    "contextTokens": 500,
+    "timeoutMs": 180000,
+    "cases": [
+      "support-targets",
+      "refund-boundaries",
+      "telemetry-consent",
+      "repository-only-control",
+      "expense-documentation",
+      "access-expiration",
+      "regional-renewal"
+    ]
+  },
+  "fixture_sha256": "27ba46701948534f621277d345963cd9376e5f76a55c1420dc7d522b625322e4",
+  "documents": [
+    {
+      "name": "support.md",
+      "text": "Standard support tickets require a first response within four hours on weekdays and twelve hours on weekends. Enterprise support tickets require a first response within two hours on weekdays and six hours on weekends. Saturday and Sunday are weekends. These targets are not resolution deadlines."
+    },
+    {
+      "name": "refunds.md",
+      "text": "The standard refund request window is thirty days after purchase. Acme annual-plan purchases are an exception with a seven-day refund request window. Acme monthly plans retain the standard thirty-day window. Refund requests on the last day of the window are eligible."
+    },
+    {
+      "name": "telemetry.md",
+      "text": "For EU users, product telemetry defaults to disabled unless consent is explicitly true. Missing or false consent is not explicit consent. Outside the EU, product telemetry defaults to enabled when consent is missing, but explicitly false consent disables telemetry."
+    },
+    {
+      "name": "facilities.md",
+      "text": "Office visitors check in at reception. Meeting rooms can be booked through the building calendar. This facilities reference does not define product behavior or customer commitments."
+    },
+    {
+      "name": "brand.md",
+      "text": "Brand presentations use clear sentences and restrained colors. The design library contains monochrome logo examples. This communications reference does not set support targets, purchase terms, or telemetry rules."
+    },
+    {
+      "name": "expenses.md",
+      "text": "Expense claims above $25 require a receipt. Claims of exactly $25 or less do not require a receipt. A lost required receipt must be replaced with a written explanation. A missing receipt that is not lost leaves the claim incomplete. A supplied receipt always satisfies the documentation requirement."
+    },
+    {
+      "name": "access.md",
+      "text": "Privileged access expires eight hours after it is granted. Only an incident commander may approve an extension, and the extension may add at most two hours. An extension must be recorded before the original access expires; recording it at the expiration instant is too late. Access is inactive at or after its expiration instant. Times are measured as hours since the grant."
+    },
+    {
+      "name": "renewal.md",
+      "text": "For Canadian accounts, automatic renewal defaults to disabled unless an administrator explicitly enables it. For Australian accounts, automatic renewal defaults to enabled unless an administrator explicitly disables it. Trial accounts in either region must never renew automatically, even with administrator approval. A null administrator setting means no explicit setting."
+    }
+  ],
+  "cases": [
+    {
+      "id": "support-targets",
+      "family": "external-policy",
+      "task": "Implement solve(tier, day) in solution.js returning the first-response target in hours for standard or enterprise support tickets, according to company support policy. day is a lowercase weekday name. Preserve the function interface.",
+      "initial": "function solve(tier, day) { return 24; }\n",
+      "publicProbes": [
+        {
+          "input": [
+            "standard",
+            "monday"
+          ],
+          "expected": "number"
+        }
+      ],
+      "hiddenProbes": [
+        {
+          "input": [
+            "standard",
+            "monday"
+          ],
+          "expected": 4
+        },
+        {
+          "input": [
+            "standard",
+            "saturday"
+          ],
+          "expected": 12
+        },
+        {
+          "input": [
+            "standard",
+            "sunday"
+          ],
+          "expected": 12
+        },
+        {
+          "input": [
+            "enterprise",
+            "friday"
+          ],
+          "expected": 2
+        },
+        {
+          "input": [
+            "enterprise",
+            "saturday"
+          ],
+          "expected": 6
+        },
+        {
+          "input": [
+            "enterprise",
+            "sunday"
+          ],
+          "expected": 6
+        }
+      ]
+    },
+    {
+      "id": "refund-boundaries",
+      "family": "customer-exception",
+      "task": "Implement solve(customer, plan, daysSincePurchase) in solution.js returning whether a refund request is eligible according to company refund policy. customer is Acme or Other; plan is annual or monthly; daysSincePurchase is a nonnegative integer. Preserve the function interface.",
+      "initial": "function solve(customer, plan, daysSincePurchase) { return true; }\n",
+      "publicProbes": [
+        {
+          "input": [
+            "Other",
+            "monthly",
+            0
+          ],
+          "expected": "boolean"
+        }
+      ],
+      "hiddenProbes": [
+        {
+          "input": [
+            "Acme",
+            "annual",
+            7
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "Acme",
+            "annual",
+            8
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "Acme",
+            "monthly",
+            30
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "Acme",
+            "monthly",
+            31
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "Other",
+            "annual",
+            30
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "Other",
+            "annual",
+            31
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "Acme",
+            "annual",
+            0
+          ],
+          "expected": true
+        }
+      ]
+    },
+    {
+      "id": "telemetry-consent",
+      "family": "negation-and-scope",
+      "task": "Implement solve(region, consent) in solution.js returning whether telemetry is enabled by default according to company telemetry policy. region is EU or US; consent is true, false, or null (missing). Preserve the function interface.",
+      "initial": "function solve(region, consent) { return true; }\n",
+      "publicProbes": [
+        {
+          "input": [
+            "US",
+            true
+          ],
+          "expected": "boolean"
+        }
+      ],
+      "hiddenProbes": [
+        {
+          "input": [
+            "EU",
+            null
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "EU",
+            false
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "EU",
+            true
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "US",
+            null
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "US",
+            false
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "US",
+            true
+          ],
+          "expected": true
+        }
+      ]
+    },
+    {
+      "id": "repository-only-control",
+      "family": "repository-only-control",
+      "control": true,
+      "task": "Implement solve(numbers) in solution.js returning unique numbers in ascending numeric order, without mutating the input array. All inputs are finite numbers. Preserve the function interface.",
+      "initial": "function solve(numbers) { return numbers.sort(); }\n",
+      "publicProbes": [
+        {
+          "input": [
+            [
+              2,
+              1
+            ]
+          ],
+          "expected": [
+            1,
+            2
+          ]
+        }
+      ],
+      "hiddenProbes": [
+        {
+          "input": [
+            [
+              10,
+              2,
+              10,
+              -1
+            ]
+          ],
+          "expected": [
+            -1,
+            2,
+            10
+          ]
+        },
+        {
+          "input": [
+            []
+          ],
+          "expected": []
+        },
+        {
+          "input": [
+            [
+              1.5,
+              0,
+              -2,
+              1.5
+            ]
+          ],
+          "expected": [
+            -2,
+            0,
+            1.5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "expense-documentation",
+      "family": "threshold-and-exception",
+      "task": "Implement solve(amount, receiptState) in solution.js returning the expense claim documentation status according to company expense policy. amount is a nonnegative number and receiptState is supplied, lost, or missing. Return complete when no further documentation is needed, explanation when a written explanation must replace a lost receipt, or incomplete otherwise. Preserve the function interface.",
+      "initial": "function solve(amount, receiptState) { return 'complete'; }\n",
+      "publicProbes": [
+        {
+          "input": [
+            0,
+            "supplied"
+          ],
+          "expected": "complete"
+        }
+      ],
+      "hiddenProbes": [
+        {
+          "input": [
+            25,
+            "missing"
+          ],
+          "expected": "complete"
+        },
+        {
+          "input": [
+            25,
+            "lost"
+          ],
+          "expected": "complete"
+        },
+        {
+          "input": [
+            25.01,
+            "missing"
+          ],
+          "expected": "incomplete"
+        },
+        {
+          "input": [
+            25.01,
+            "lost"
+          ],
+          "expected": "explanation"
+        },
+        {
+          "input": [
+            100,
+            "supplied"
+          ],
+          "expected": "complete"
+        },
+        {
+          "input": [
+            0,
+            "missing"
+          ],
+          "expected": "complete"
+        }
+      ]
+    },
+    {
+      "id": "access-expiration",
+      "family": "linked-conditions",
+      "task": "Implement solve(elapsedHours, extension) in solution.js returning whether privileged access remains active under company access policy. elapsedHours is a nonnegative number. extension is null or an object with approver (incident-commander or manager), addedHours (a nonnegative number), and recordedAt (hours since grant). Invalid extensions have no effect. Preserve the function interface and do not mutate extension.",
+      "initial": "function solve(elapsedHours, extension) { return true; }\n",
+      "publicProbes": [
+        {
+          "input": [
+            0,
+            null
+          ],
+          "expected": "boolean"
+        }
+      ],
+      "hiddenProbes": [
+        {
+          "input": [
+            7.99,
+            null
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            8,
+            null
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            9.99,
+            {
+              "approver": "incident-commander",
+              "addedHours": 2,
+              "recordedAt": 7.99
+            }
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            10,
+            {
+              "approver": "incident-commander",
+              "addedHours": 2,
+              "recordedAt": 7
+            }
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            8,
+            {
+              "approver": "incident-commander",
+              "addedHours": 1,
+              "recordedAt": 8
+            }
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            8,
+            {
+              "approver": "manager",
+              "addedHours": 2,
+              "recordedAt": 7
+            }
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            8,
+            {
+              "approver": "incident-commander",
+              "addedHours": 3,
+              "recordedAt": 7
+            }
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            8.5,
+            {
+              "approver": "incident-commander",
+              "addedHours": 1,
+              "recordedAt": 7
+            }
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            9,
+            {
+              "approver": "incident-commander",
+              "addedHours": 1,
+              "recordedAt": 7
+            }
+          ],
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "regional-renewal",
+      "family": "default-and-override",
+      "task": "Implement solve(region, trial, administratorSetting) in solution.js returning whether automatic renewal is enabled under company renewal policy. region is CA or AU, trial is boolean, and administratorSetting is true, false, or null for missing. Preserve the function interface.",
+      "initial": "function solve(region, trial, administratorSetting) { return true; }\n",
+      "publicProbes": [
+        {
+          "input": [
+            "CA",
+            false,
+            true
+          ],
+          "expected": "boolean"
+        }
+      ],
+      "hiddenProbes": [
+        {
+          "input": [
+            "CA",
+            false,
+            null
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "AU",
+            false,
+            null
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "CA",
+            false,
+            true
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "AU",
+            false,
+            false
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "CA",
+            false,
+            false
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "AU",
+            false,
+            true
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "CA",
+            true,
+            true
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "AU",
+            true,
+            true
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "AU",
+            true,
+            null
+          ],
+          "expected": false
+        }
+      ]
+    }
+  ],
+  "instructions": "Work only in this synthetic repository. Implement the task in solution.js as a self-contained function solve without imports or exports. Use your native file editing and shell tools, inspect the repository, and run node --test before finishing. Only solution.js may be changed. Do not look outside this repository, search for benchmark fixtures or scoring data, access the network, or install dependencies. Company documents are maintained outside the repository; use any supplied context as evidence. If policy is absent, make your best implementation and state the assumption. Do not mutate input arguments.",
+  "policy_sources": {
+    "support-targets": "support.md",
+    "refund-boundaries": "refunds.md",
+    "telemetry-consent": "telemetry.md",
+    "expense-documentation": "expenses.md",
+    "access-expiration": "access.md",
+    "regional-renewal": "renewal.md"
+  },
+  "instructions_location": "AGENTS.md",
+  "full_document_tokens": 416,
+  "tokenizer": "o200k_base",
+  "compiled_artifacts": [
+    {
+      "path": "integrations/codex/dist/src/user-prompt-submit.js",
+      "sha256": "f509052788ddea2779ebf8988000e12d51ba1f64bb8eb2267aa7623fd34ea7a4"
+    },
+    {
+      "path": "packages/engine/dist/src/cli.js",
+      "sha256": "d8164cd510b1c806493a540b2e366b0197037eaf9a336441405952d20a1a8e05"
+    },
+    {
+      "path": "packages/engine/dist/src/evaluation/native-agent.js",
+      "sha256": "ead8a9e2eba6a7933f97060695ceae382b8188a7cbf72e5f779b80af15fb1ba8"
+    },
+    {
+      "path": "packages/hooks/dist/src/index.js",
+      "sha256": "a851901b0c27190723c9dcbfe2e0d6e5401b78bdcf12fc8f8ee93a4def24ffeb"
+    }
+  ],
+  "context_pipeline": "Real engine indexing, lexical excerpt retrieval and compiled prompt hook; extraction, embeddings and synthesis disabled",
+  "isolation": "Fresh Git workspace and disposable CODEX_HOME per trajectory; only existing file-backed login copied; user config/rules and plugins disabled; workspace-write tool sandbox; generated hook trusted for one invocation",
+  "limitations": "Small synthetic single-function tasks with native shell/edit tools, not realistic multi-file or interactive desktop acceptance. Separate hidden behavioral probes are not placed in the workspace; isolation from a deliberately hostile agent is not proven. Public-test execution is observed from native command events; file-integrity checks detect edited tests and extra root files. No extraction/embedding/synthesis quality claim. One requested hosted model, without a pinned provider snapshot or controlled cache/warm state. Condition order rotates; repeats are not independent statistical samples. Host wall time includes generation/tools and is not hook latency. Host usage is cumulative reported input/output, with cached input reported separately; local XML counts are not host token savings."
+}

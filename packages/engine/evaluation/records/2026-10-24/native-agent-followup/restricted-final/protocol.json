@@ -1,0 +1,151 @@
+{
+  "protocol_version": "native-agent-v2",
+  "recorded_at": "2026-10-25T03:58:20.082Z",
+  "synthetic_only": true,
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "host": "codex",
+  "host_version": "codex-cli 0.156.1",
+  "requested_model": "gpt-6-astra",
+  "reasoning_effort": "low",
+  "options": {
+    "out": "<output>",
+    "model": "gpt-6-astra",
+    "repeats": 1,
+    "contextTokens": 500,
+    "timeoutMs": 180000,
+    "cases": [
+      "support-targets"
+    ]
+  },
+  "fixture_sha256": "aea97031d5942d589c69cad02267fddd7ec826397dee35b84c9cec3e51de2729",
+  "documents": [
+    {
+      "name": "support.md",
+      "text": "Standard support tickets require a first response within four hours on weekdays and twelve hours on weekends. Enterprise support tickets require a first response within two hours on weekdays and six hours on weekends. Saturday and Sunday are weekends. These targets are not resolution deadlines."
+    },
+    {
+      "name": "refunds.md",
+      "text": "The standard refund request window is thirty days after purchase. Acme annual-plan purchases are an exception with a seven-day refund request window. Acme monthly plans retain the standard thirty-day window. Refund requests on the last day of the window are eligible."
+    },
+    {
+      "name": "telemetry.md",
+      "text": "For EU users, product telemetry defaults to disabled unless consent is explicitly true. Missing or false consent is not explicit consent. Outside the EU, product telemetry defaults to enabled when consent is missing, but explicitly false consent disables telemetry."
+    },
+    {
+      "name": "facilities.md",
+      "text": "Office visitors check in at reception. Meeting rooms can be booked through the building calendar. This facilities reference does not define product behavior or customer commitments."
+    },
+    {
+      "name": "brand.md",
+      "text": "Brand presentations use clear sentences and restrained colors. The design library contains monochrome logo examples. This communications reference does not set support targets, purchase terms, or telemetry rules."
+    },
+    {
+      "name": "expenses.md",
+      "text": "Expense claims above $25 require a receipt. Claims of exactly $25 or less do not require a receipt. A lost required receipt must be replaced with a written explanation. A missing receipt that is not lost leaves the claim incomplete. A supplied receipt always satisfies the documentation requirement."
+    },
+    {
+      "name": "access.md",
+      "text": "Privileged access expires eight hours after it is granted. Only an incident commander may approve an extension, and the extension may add at most two hours. An extension must be recorded before the original access expires; recording it at the expiration instant is too late. Access is inactive at or after its expiration instant. Times are measured as hours since the grant."
+    },
+    {
+      "name": "renewal.md",
+      "text": "For Canadian accounts, automatic renewal defaults to disabled unless an administrator explicitly enables it. For Australian accounts, automatic renewal defaults to enabled unless an administrator explicitly disables it. Trial accounts in either region must never renew automatically, even with administrator approval. A null administrator setting means no explicit setting."
+    }
+  ],
+  "cases": [
+    {
+      "id": "support-targets",
+      "family": "external-policy",
+      "task": "Implement solve(tier, day) in solution.js returning the first-response target in hours for standard or enterprise support tickets, according to company support policy. day is a lowercase weekday name. Preserve the function interface.",
+      "initial": "function solve(tier, day) { return 24; }\n",
+      "publicProbes": [
+        {
+          "input": [
+            "standard",
+            "monday"
+          ],
+          "expected": "number"
+        }
+      ],
+      "hiddenProbes": [
+        {
+          "input": [
+            "standard",
+            "monday"
+          ],
+          "expected": 4
+        },
+        {
+          "input": [
+            "standard",
+            "saturday"
+          ],
+          "expected": 12
+        },
+        {
+          "input": [
+            "standard",
+            "sunday"
+          ],
+          "expected": 12
+        },
+        {
+          "input": [
+            "enterprise",
+            "friday"
+          ],
+          "expected": 2
+        },
+        {
+          "input": [
+            "enterprise",
+            "saturday"
+          ],
+          "expected": 6
+        },
+        {
+          "input": [
+            "enterprise",
+            "sunday"
+          ],
+          "expected": 6
+        }
+      ]
+    }
+  ],
+  "instructions": "Work only in this synthetic repository. Implement the task in solution.js as a self-contained function solve without imports or exports. Use your native file editing and shell tools, inspect the repository, and run node --test before finishing. Only solution.js may be changed. Do not look outside this repository, search for benchmark fixtures or scoring data, access the network, or install dependencies. Company documents are maintained outside the repository; use any supplied context as evidence. If policy is absent, make your best implementation and state the assumption. Do not mutate input arguments.",
+  "policy_sources": {
+    "support-targets": "support.md",
+    "refund-boundaries": "refunds.md",
+    "telemetry-consent": "telemetry.md",
+    "expense-documentation": "expenses.md",
+    "access-expiration": "access.md",
+    "regional-renewal": "renewal.md"
+  },
+  "instructions_location": "AGENTS.md",
+  "full_document_tokens": 416,
+  "tokenizer": "o200k_base",
+  "compiled_artifacts": [
+    {
+      "path": "integrations/codex/dist/src/user-prompt-submit.js",
+      "sha256": "f509052788ddea2779ebf8988000e12d51ba1f64bb8eb2267aa7623fd34ea7a4"
+    },
+    {
+      "path": "packages/engine/dist/src/cli.js",
+      "sha256": "d8164cd510b1c806493a540b2e366b0197037eaf9a336441405952d20a1a8e05"
+    },
+    {
+      "path": "packages/engine/dist/src/evaluation/native-agent.js",
+      "sha256": "307e7041ccf220e409993f6b0d7a51f11c63e1ae2397f82e6e761cc73e45e4a5"
+    },
+    {
+      "path": "packages/hooks/dist/src/index.js",
+      "sha256": "a851901b0c27190723c9dcbfe2e0d6e5401b78bdcf12fc8f8ee93a4def24ffeb"
+    }
+  ],
+  "context_pipeline": "Real engine indexing, lexical excerpt retrieval and compiled prompt hook; extraction, embeddings and synthesis disabled",
+  "isolation": "Fresh Git workspace and disposable CODEX_HOME per trajectory; only existing file-backed login copied; user config/rules and plugins disabled; workspace-write tool sandbox; generated hook trusted for one invocation",
+  "limitations": "Small synthetic single-function tasks with native shell/edit tools, not realistic multi-file or interactive desktop acceptance. Separate hidden behavioral probes are not placed in the workspace; isolation from a deliberately hostile agent is not proven. Public-test execution is observed from native command events; file-integrity checks detect edited tests and extra root files. No extraction/embedding/synthesis quality claim. One requested hosted model, without a pinned provider snapshot or controlled cache/warm state. Condition order rotates; repeats are not independent statistical samples. Host wall time includes generation/tools and is not hook latency. Host usage is cumulative reported input/output, with cached input reported separately; local XML counts are not host token savings."
+}

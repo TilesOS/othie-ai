@@ -1,0 +1,15 @@
+Hook latency 1/codex/positive: passed=true, wall_ms=277
+Hook latency 1/claude-code/positive: passed=true, wall_ms=266
+Hook latency 1/codex/irrelevant: passed=true, wall_ms=265
+Hook latency 1/claude-code/irrelevant: passed=true, wall_ms=273
+Hook latency 1/codex/stalled-engine: passed=true, wall_ms=2029
+Hook latency 1/claude-code/stalled-engine: passed=true, wall_ms=2037
+Hook latency 1/codex/delayed-input-stalled-engine: passed=true, wall_ms=2036
+Hook latency 1/claude-code/delayed-input-stalled-engine: passed=true, wall_ms=2036
+Hook latency 1/codex/stalled-input: passed=true, wall_ms=2030
+Hook latency 1/claude-code/stalled-input: passed=true, wall_ms=2031
+Hook latency 1/codex/revoked: passed=true, wall_ms=287
+Hook latency 1/claude-code/revoked: passed=true, wall_ms=259
+Hook latency 1/codex/unavailable: passed=true, wall_ms=258
+Hook latency 1/claude-code/unavailable: passed=true, wall_ms=263
+{"report":"<othie-repository>/packages/engine/evaluation/records/2026-10-24/native-agent-followup/strict-latency/summary.json","passed":true}

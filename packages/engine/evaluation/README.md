@@ -4,8 +4,8 @@ This small, synthetic comparison probes whether the current Othie pipeline helps
 model answer tasks that depend on policy outside the active repository. It is
 not the roadmap's end-to-end coding-agent benchmark and is too small for a product
 claim or a local-versus-hosted model decision.
-The [2026-09-22 local result](../../../docs/context-delivery-smoke-evaluation-2026-09-22.md)
-records three repeated runs and their limitations.
+The [October 3 records](records/2026-10-03/README.md) retain coding-agent and
+compiler evaluations with their limitations.
 
 The runner creates three temporary policy documents, three unrelated reference
 documents, and an isolated Othie profile.

@@ -1,0 +1,91 @@
+{
+  "case_id": "support-targets",
+  "family": "external-policy",
+  "repeat": 0,
+  "condition": "othie",
+  "order": [
+    "baseline",
+    "full_documents",
+"othie"
+  ],
+  "prompt": "Work only in this synthetic repository. Implement the task in solution.js as a self-contained function solve without imports or exports. Use your native file editing and shell tools, inspect the repository, and run node --test before finishing. Only solution.js may be changed. Do not look outside this repository, search for benchmark fixtures or scoring data, access the network, or install dependencies. Company documents are maintained outside the repository; use any supplied context as evidence. If policy is absent, make your best implementation and state the assumption. Do not mutate input arguments.\n\nTask:\nImplement solve(tier, day) in solution.js returning the first-response target in hours for standard or enterprise support tickets, according to company support policy. day is a lowercase weekday name. Preserve the function interface.",
+  "expected_noop": false,
+  "delivery_passed": true,
+  "integrity": {
+    "passed": true,
+    "changes": []
+  },
+  "completed": true,
+  "command_calls": 2,
+  "ran_public_tests": true,
+  "input_tokens": 61442,
+  "output_tokens": 516,
+  "cached_input_tokens": 53504,
+  "host_model": "gpt-6-astra",
+  "supplied_context_tokens": 149,
+  "expected_context": {
+    "text": "<organization_context profile=\"company\" mode=\"fallback\"><items><excerpt>The design library contains monochrome logo examples. This communications reference does not set support targets, purchase terms, or telemetry rules.<citation source=\"s1/brand.md\" at=\"lines 1-1\"/></excerpt><excerpt>Brand presentations use clear sentences and restrained colors.<citation source=\"s1/brand.md\" at=\"lines 1-1\"/></excerpt></items><conflicts count=\"0\" detection=\"explicit_opposition_only\"></conflicts><status tokenizer=\"o200k_base\" tokenizer_estimate=\"false\" tokens=\"149\" omitted=\"0\" keyword=\"true\" vector=\"false\" corpus_revision=\"24\" rule_revision=\"0\"/></organization_context>",
+    "status": {
+      "profile": "company",
+      "mode": "fallback",
+      "tokenizer": "o200k_base",
+      "tokenizerEstimate": false,
+      "tokenCount": 149,
+      "omittedItems": 0,
+      "conflicts": 0,
+      "keywordAvailable": true,
+      "vectorAvailable": false,
+      "synthesisAttempted": false,
+      "synthesisReason": "Query embeddings unavailable",
+      "corpusRevision": 24,
+      "ruleRevision": 0
+    }
+  },
+  "response": {
+    "code": 0,
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"<redacted>\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"`--dangerously-bypass-hook-trust` is enabled. Enabled hooks may run without review for this invocation.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"error\",\"message\":\"`--dangerously-bypass-hook-trust` is enabled. Enabled hooks may run without review for this invocation.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in <temporary-fixture>/0-support-targets-othie-home/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"agent_message\",\"text\":\"I’ll inspect the repository and implement `solve`. The supplied context doesn’t specify support targets, so I’ll state any assumptions and run `node --test`.\\n\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_4\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd && rg --files -g '\\\"'!node_modules'\\\"' -g '\\\"'! .git'\\\"'\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_4\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd && rg --files -g '\\\"'!node_modules'\\\"' -g '\\\"'! .git'\\\"'\\\"\",\"aggregated_output\":\"error: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/34416_1792900435942\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\nerror: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/34417_1792900435954\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\n<temporary-fixture>/0-support-targets-othie\\nREADME.md\\nsolution.test.cjs\\nsolution.js\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_5\",\"type\":\"agent_message\",\"text\":\"There’s no support policy in the repository, and the test checks only the return type and unchanged inputs. I’ll assume standard targets are 24 hours on weekdays and 48 hours on weekends, with enterprise targets of 4 hours every day.\\n\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_6\",\"type\":\"file_change\",\"changes\":[{\"path\":\"<temporary-fixture>/0-support-targets-othie/solution.js\",\"kind\":\"update\"}],\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_6\",\"type\":\"file_change\",\"changes\":[{\"path\":\"<temporary-fixture>/0-support-targets-othie/solution.js\",\"kind\":\"update\"}],\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_7\",\"type\":\"command_execution\",\"command\":\"/bin/bash -c 'node --test'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_7\",\"type\":\"command_execution\",\"command\":\"/bin/bash -c 'node --test'\",\"aggregated_output\":\"✔ public interface 0 (0.716917ms)\\nℹ tests 1\\nℹ suites 0\\nℹ pass 1\\nℹ fail 0\\nℹ cancelled 0\\nℹ skipped 0\\nℹ todo 0\\nℹ duration_ms 35.862542\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_8\",\"type\":\"agent_message\",\"text\":\"Implemented `solve` in `solution.js` without imports, exports, or input mutation.\\n\\nPolicy was absent, so assumed:\\n- Standard: 24 hours weekdays, 48 hours weekends.\\n- Enterprise: 4 hours daily.\\n\\n`node --test` passed (1 test). Actual company policy remains unverified.\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":61442,\"cached_input_tokens\":53504,\"cache_write_input_tokens\":0,\"output_tokens\":516,\"reasoning_output_tokens\":34}}\n",
+    "stderr": "Reading additional input from stdin...\n2026-10-25T03:53:58.009640Z  WARN codex_sandboxing::violation: recorded sandbox violation: resource=filesystem backend=seatbelt reason=operation_not_permitted path=unknown\n",
+    "timed_out": false,
+    "output_limit": false
+  },
+  "receipt": {
+    "event": "UserPromptSubmit",
+    "input_fields": [
+      "cwd",
+      "hook_event_name",
+      "model",
+      "permission_mode",
+      "prompt",
+      "session_id",
+      "transcript_path",
+"turn_id"
+    ],
+    "model": "gpt-6-astra",
+    "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"Othie context brief (source-backed; preserve the included citations):\\n<organization_context profile=\\\"company\\\" mode=\\\"fallback\\\"><items><excerpt>The design library contains monochrome logo examples. This communications reference does not set support targets, purchase terms, or telemetry rules.<citation source=\\\"s1/brand.md\\\" at=\\\"lines 1-1\\\"/></excerpt><excerpt>Brand presentations use clear sentences and restrained colors.<citation source=\\\"s1/brand.md\\\" at=\\\"lines 1-1\\\"/></excerpt></items><conflicts count=\\\"0\\\" detection=\\\"explicit_opposition_only\\\"></conflicts><status tokenizer=\\\"o200k_base\\\" tokenizer_estimate=\\\"false\\\" tokens=\\\"149\\\" omitted=\\\"0\\\" keyword=\\\"true\\\" vector=\\\"false\\\" corpus_revision=\\\"24\\\" rule_revision=\\\"0\\\"/></organization_context>\"}}\n",
+    "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"codex\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"injected\",\"elapsed_ms\":270,\"mode\":\"fallback\",\"token_count\":149,\"omitted_items\":0,\"rule_count\":0,\"excerpt_count\":2,\"synthesis_count\":0,\"conflict_count\":0}\n",
+    "code": 0
+  },
+  "final_code": "function solve(tier, day) {\n  // Assumed targets: no support policy was supplied.\n  // Enterprise: 4 hours daily. Standard: 24 weekday / 48 weekend hours.\n  if (tier === 'enterprise') return 4;\n  const isWeekend = day === 'saturday' || day === 'sunday';\n  return isWeekend ? 48 : 24;\n}\n",
+  "public_grade": {
+    "checks": [
+true
+    ],
+    "passed": 1,
+    "total": 1
+  },
+  "grade": {
+    "checks": [
+      false,
+      false,
+      false,
+      false,
+      false,
+false
+    ],
+    "passed": 0,
+    "total": 6
+  },
+  "operational": true,
+  "wall_ms": 18186,
+  "correct": false
+}

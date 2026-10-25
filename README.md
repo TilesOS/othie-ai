@@ -64,6 +64,12 @@ repeats, with no token savings on that small corpus. The expanded compiler evalu
 still fails quality acceptance despite passing citation, budget, and reference-isolation
 checks. Native Codex and Claude Code CLI delivery sessions are recorded separately.
 
+The [October 24–25 native coding-agent pilot](packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md)
+uses actual Codex shell/edit tools on seven synthetic tasks. In one repeat, full
+documents and Othie each pass 7/7 tasks; task-only passes 3/7. The initial failure
+also exposes and fixes lost task subjects after long prompt prefixes. This pilot
+supports no general quality or token-saving claim; realistic multi-file tasks remain open.
+
 The [October 4 compiler follow-up](packages/engine/evaluation/records/2026-10-04/compiler-followup/README.md)
 fits both conflict sides at 200 tokens and scores 14/14, 12/14, and 14/14 across three
 fresh extractions with stricter source-specific diagnostics. The failing repeat omits a
