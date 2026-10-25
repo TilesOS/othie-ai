@@ -101,6 +101,62 @@ Code grading uses a separate resource-limited Node process with permissions enab
 no inherited environment, and a VM without host objects. That is defense in depth for
 synthetic local experiments, not a general sandbox for arbitrary untrusted programs.
 
+## Native coding-agent pilot
+
+`npm run eval:native-agent` runs Codex CLI with its native shell and editing tools
+under three conditions: task only (`baseline`), all eight synthetic company documents
+(`full_documents`), and the compiled Othie prompt hook (`othie`). The separate seven-case
+corpus preserves the four constrained-tool cases and adds expense documentation,
+access-extension timing, and regional renewal defaults. One case is a repository-only
+retrieval no-op. These are small single-function tasks, not a realistic multi-file benchmark.
+
+```sh
+npm run eval:native-agent -- --repeats 1 --out /tmp/othie-native-agent
+```
+
+The default requested model is `gpt-6-astra` with low reasoning effort. Pass `--model`
+to select an available hosted model, `--cases support-targets,access-expiration` for
+an explicit subset, `--context-tokens 200` for a lower engine cap, or `--timeout-ms`
+for the per-session watchdog (default 180,000 ms). This pilot uses the existing
+file-backed Codex login; it does not provision API keys or download models. Local
+provider comparisons and Windows process/quoting acceptance are not implemented.
+
+Each trajectory has a fresh Git workspace and disposable `CODEX_HOME`; only the
+existing file login is copied. User configuration/rules, plugins and host skill
+discovery are disabled. Tools use the workspace-write sandbox. The generated Othie
+hook receives invocation-local trust only. Temporary credentials, homes, engines and
+workspaces are removed afterward. Documents and hidden scoring probes are absent from
+the workspace; instructions prohibit looking outside it. This is not proven isolation
+from a hostile agent with host filesystem read access.
+
+The agent must edit `solution.js` and run `node --test`. Public tests expose only
+interface examples. Shared instructions live in the workspace's `AGENTS.md`; the
+prompt hook receives the task itself. A separate resource-limited grader checks policy boundaries and
+input preservation, irrespective of the final answer's success claim. Edited tests,
+README/AGENTS changes, extra root files, solution symlinks, failed/incomplete native turns,
+watchdog expiry, missing successful test-command events, and invalid hook receipts fail
+the trajectory. Othie receipts must exactly match a fresh engine query for the actual
+prompt, including strict content-free diagnostics and token accounting. A failed
+retrieval no-op cannot count as correct even if the code passes all probes.
+
+Condition order rotates across cases/repeats. A new output directory contains the
+protocol before sessions, one immediately saved redacted trajectory per attempt, and
+a final summary. Startup failures retain content-free stage metadata; existing output
+directories are rejected. Protocols contain fixtures, hidden probes and compiled hashes;
+trajectories contain native command events, hook receipts, final source, separate
+operational/delivery/behavior scores and usage. Raw session identifiers, private paths
+and rate-limit metadata are redacted. Session watchdogs terminate the native process
+group, including shell-tool descendants.
+
+Host input/output totals are cumulative usage reported by Codex across tool turns;
+cached input is a separate reported field, and missing usage stays `null`. Local
+`o200k_base` document/XML counts measure supplied evidence only and exclude the hook's
+wrapper. They do not establish host token savings. Whole-session wall time includes
+generation and tools. Shared engine state, caching, machine load, warm provider state
+and the unpinned hosted snapshot prevent a controlled timing or general performance
+claim. Model extraction, embeddings and synthesis remain disabled, so this pilot does
+not close compiler-quality acceptance or interactive desktop trust.
+
 ## Native prompt-hook acceptance
 
 `npm run eval:hook-default-latency -- --out /tmp/othie-hook-default-latency` measures compiled Codex
