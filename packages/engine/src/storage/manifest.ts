@@ -194,7 +194,15 @@ export class ManifestStore {
   }
 
   keywordSearch(profile: string, query: string, limit: number): ChunkRecord[] {
-    const sanitized = meaningfulTerms(query).map((word) => `"${word}"`).join(" OR ");
+    // Keep every permitted query term without producing a left-deep FTS query.
+    // Terms contain letters/numbers only; quoting prevents query syntax injection.
+    let expressions = meaningfulTerms(query).map((word) => `"${word}"`);
+    while (expressions.length > 1) {
+      const next: string[] = [];
+      for (let index = 0; index < expressions.length; index += 2) next.push(index + 1 < expressions.length ? `(${expressions[index]} OR ${expressions[index + 1]})` : expressions[index]!);
+      expressions = next;
+    }
+    const sanitized = expressions[0];
     if (!sanitized) return [];
     const rows = this.db.prepare(`SELECT c.* FROM chunks_fts f JOIN chunks c ON c.id=f.id JOIN documents d ON d.id=c.document_id
       WHERE chunks_fts MATCH ? AND c.profile=? AND d.active_revision_id=c.revision_id AND d.status='active'

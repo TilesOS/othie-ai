@@ -14,4 +14,11 @@ describe("lexical relevance", () => {
   it("still finds a scoped negated policy by its subject", () => {
     expect(hasLexicalOverlap("Employees must not enable telemetry without consent.", meaningfulTerms("Should telemetry not be enabled?"))).toBe(true);
   });
+  it("keeps task subjects after lengthy repository instructions and deduplicates them", () => {
+    const prefix = "Work inside this synthetic repository implementing functions using native file editing shell tools inspect source files execute tests avoid network access dependencies installs summaries assumptions";
+    const terms = meaningfulTerms(`${prefix}. Support tickets and telemetry consent. ${prefix}`);
+    expect(terms).toContain("support");
+    expect(terms).toContain("telemetry");
+    expect(terms.filter((term) => term === "repository")).toHaveLength(1);
+  });
 });

@@ -7,7 +7,9 @@ const stopwords = new Set([
 ]);
 
 export function meaningfulTerms(query: string): string[] {
-  return [...new Set((query.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []).filter((term) => term.length > 2 && !/^\p{N}+$/u.test(term) && !stopwords.has(term)))].slice(0, 20);
+  // The profile already bounds query characters. A prefix term cap can silently
+  // discard the task subject after repository/tool instructions in a native prompt.
+  return [...new Set((query.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []).filter((term) => term.length > 2 && !/^\p{N}+$/u.test(term) && !stopwords.has(term)))];
 }
 
 export function hasLexicalOverlap(text: string, terms: string[]): boolean {

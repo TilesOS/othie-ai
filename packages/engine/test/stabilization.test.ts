@@ -26,6 +26,28 @@ async function idle(engine: OthieEngine): Promise<void> {
 const localProvider = (generateJson: ModelProvider["generateJson"] = async () => ({ rules: [] })): ModelProvider => ({ id: "ollama", remote: false, embed: async (texts) => texts.map(() => [1, 0]), generateJson });
 
 describe("MVP regression cases", () => {
+  it("retrieves tail subjects throughout long allowed queries for excerpts and rules", async () => {
+    const f = await fixture();
+    f.config.profiles.company!.safeguards.max_query_chars = 100_000;
+    f.config.profiles.company!.providers = { embeddings: [], extraction: [], synthesis: [] };
+    const engine = new OthieEngine(f.config, f.data);
+    try {
+      const source = seed(engine, "company", "support", "Support tickets require a first response within eleven hours.", join(f.docs, "support.md"));
+      engine.store.replaceRules(source.documentId, source.revisionId, [rule(source)]);
+      // Far beyond SQLite's usual expression-depth limit. All terms are distinct
+      // and meaningful; arbitrary prefix caps must not discard the only subject.
+      const query = Array.from({ length: 4000 }, (_, i) => `preface${i}`).join(" ") + " support tickets";
+      expect(query.length).toBeLessThan(100_000);
+      expect(engine.store.keywordSearch("company", query, 40).map((chunk) => chunk.id)).toEqual([source.id]);
+      for (const exports of ["rules_and_excerpts", "rules_only"] as const) {
+        f.config.profiles.company!.permitted_exports = exports;
+        const result = await engine.context("company", { query });
+        expect(result.text).toContain("first response within eleven hours");
+        expect(result.brief.applicable_rules).toHaveLength(1);
+        expect(result.status.tokenCount).toBeLessThanOrEqual(500);
+      }
+    } finally { await engine.stop(); await rm(f.root, { recursive: true, force: true }); }
+  });
   it("isolates real Lance FTS/vector results, including top-k and restrictive export policies", async () => {
     const f = await fixture(); f.config.models.embedding.dimensions = 2;
     f.config.profiles.private = structuredClone(f.config.profiles.company!);
