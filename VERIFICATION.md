@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated October 25, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated October 28, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -71,10 +71,17 @@ typechecks, the then-current tests and Windows startup-script syntax. The
 [run for `ff38e75`](https://github.com/TilesOS/othie-ai/actions/runs/40159571222), inspected
 October 25, passes both macOS and Windows jobs: clean installation, workspace typechecks
 and tests, plus Windows startup-script syntax. This now verifies the October 18, 20 and
-23 follow-ups. The new native-agent and lexical-retrieval commits still need CI.
+23 follow-ups.
 The [run and job evidence](packages/engine/evaluation/records/2026-10-24/native-agent-followup/checks/ci-ff38e75.json)
 records the inspected revision and individual steps. Automated runner results do not
 establish native desktop-host or logon-startup acceptance.
+
+The [run for `5da7f3e`](https://github.com/TilesOS/othie-ai/actions/runs/40162718803),
+inspected October 28, also passes both macOS and Windows jobs: clean installation,
+workspace typechecks and the 189-test suite, plus Windows startup-script syntax.
+This verifies the October 24–25 native-agent harness and late-query retrieval changes.
+The [run and step record](packages/engine/evaluation/records/2026-10-28/multi-file-followup/ci-5da7f3e.json)
+retains the full checked revision. The new multi-file benchmark commits still need CI.
 
 ## Delivery and credential coverage
 
@@ -832,10 +839,10 @@ commits still need CI. Native Windows/desktop trust and realistic multi-file wor
   October 23 with complete cited adapter delivery and provider-boundary context. Role
   comparisons narrow the failure to developer-message handling in the installed
   provider/model combination; provider conversion versus model internals remains unresolved.
-- Windows native-host and logon-startup acceptance beyond automated CI. The October 25
-  inspection verifies `ff38e75`, including the October 18, 20 and 23 follow-ups, on both
-  macOS and Windows runners. The new native-agent and lexical-retrieval commits still
-  need CI. Native Windows host/session acceptance remains open.
+- Windows native-host and logon-startup acceptance beyond automated CI. The October 28
+  inspection verifies `5da7f3e`, including the October 24–25 native-agent and lexical
+  retrieval changes, on both macOS and Windows runners. The new multi-file benchmark
+  commits still need CI. Native Windows host/session acceptance remains open.
 - A larger benchmark using realistic multi-file tasks, additional models and repeats.
   The constrained-tool baseline and seven-case native Codex pilot are recorded, but
   support no general quality/token claim.
