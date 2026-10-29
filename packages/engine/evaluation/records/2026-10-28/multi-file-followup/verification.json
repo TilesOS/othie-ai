@@ -1,0 +1,160 @@
+{
+  "recorded_at": "2026-10-29T01:35:27.437876+00:00",
+  "local_date": "2026-10-28",
+  "timezone": "America/New_York",
+  "platform": "macOS arm64",
+  "node": "24.18.0",
+  "code_commits": [
+    "af81f3a",
+    "ed60d3e"
+  ],
+  "ci_evidence_commit": "61b9ccb",
+  "diagnostic_commit": "1d61c40",
+  "checks": [
+    {
+      "command": "npm ci",
+      "exit_code": 0,
+      "log": "npm-ci.txt"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "log": "build.txt"
+    },
+    {
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "log": "typecheck-final.txt"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "log": "test.txt"
+    },
+    {
+      "command": "npm run lint --workspace=@othie/website",
+      "exit_code": 0,
+      "log": "lint.txt"
+    },
+    {
+      "command": "npm audit --json",
+      "exit_code": 0,
+      "log": "audit.json"
+    },
+    {
+      "command": "npm audit --omit=dev --json",
+      "exit_code": 0,
+      "log": "audit-production.json"
+    }
+  ],
+  "passing_tests": 193,
+  "skipped_opt_in_tests": 1,
+  "native_benchmark": {
+    "completed": true,
+    "exit_code": 1,
+    "operational_sessions": 18,
+    "reason": "Four task-only behavior failures and two Othie no-op failures; all 18 operational sessions complete.",
+    "summary": "final/summary.json"
+  },
+  "hosted_controls": {
+    "passed": true,
+    "checks": 4,
+    "summary": "hosted-controls/summary.json"
+  },
+  "serial_latency": {
+    "strict_checks": 14,
+    "strict_passed": true,
+    "default_checks": 8,
+    "default_passed": true,
+    "strict_summary": "strict-latency/summary.json",
+    "default_summary": "default-latency/summary.json"
+  },
+  "restricted_attempts": [
+    {
+      "command": "native-agent --corpus multi-file --repeats 2",
+      "exit_code": 1,
+      "evidence": "restricted/failure.json",
+      "boundary": "Engine socket EPERM before sessions"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 1,
+      "evidence": "test-restricted.txt",
+      "boundary": "Eight IPC-dependent tests fail"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 143,
+      "evidence": "build-restricted.txt",
+      "boundary": "Stalled restricted Next.js build terminated before successful rerun"
+    },
+    {
+      "command": "npm audit --json",
+      "exit_code": 1,
+      "evidence": "audit-restricted.json",
+      "boundary": "Registry DNS blocked"
+    },
+    {
+      "command": "npm audit --omit=dev --json",
+      "exit_code": 1,
+      "evidence": "audit-production-restricted.json",
+      "boundary": "Registry DNS blocked"
+    }
+  ],
+  "local_links": {
+    "checked": 34,
+    "all_exist": true,
+    "evidence": "local-links.json"
+  },
+  "compiled_artifacts": [
+    {
+      "path": "integrations/codex/dist/src/user-prompt-submit.js",
+      "sha256": "f509052788ddea2779ebf8988000e12d51ba1f64bb8eb2267aa7623fd34ea7a4"
+    },
+    {
+      "path": "packages/engine/dist/src/cli.js",
+      "sha256": "d8164cd510b1c806493a540b2e366b0197037eaf9a336441405952d20a1a8e05"
+    },
+    {
+      "path": "packages/engine/dist/src/evaluation/native-agent.js",
+      "sha256": "c5d6d577b9eff2faed27a1867a6ea095331a34f77b69fa35e78b36c7f63694c5"
+    },
+    {
+      "path": "packages/engine/dist/src/evaluation/agent-grader.js",
+      "sha256": "fbcda57f442658fb070b1af6a9e3b645a043508996f5d038954252a39752b467"
+    },
+    {
+      "path": "packages/engine/dist/src/evaluation/native-agent-projects.js",
+      "sha256": "d8d9deb298eae72d3d86cf35e98cc8a7534136ae92679aba05fb1ca5efe1ea85"
+    },
+    {
+      "path": "packages/hooks/dist/src/index.js",
+      "sha256": "a851901b0c27190723c9dcbfe2e0d6e5401b78bdcf12fc8f8ee93a4def24ffeb"
+    },
+    {
+      "path": "packages/engine/dist/src/retrieval/terms.js",
+      "sha256": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6"
+    },
+    {
+      "path": "packages/engine/dist/src/retrieval/hybrid.js",
+      "sha256": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf"
+    },
+    {
+      "path": "packages/engine/dist/src/storage/manifest.js",
+      "sha256": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a"
+    },
+    {
+      "path": "packages/engine/dist/src/rules/selection.js",
+      "sha256": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f"
+    },
+    {
+      "path": "packages/engine/dist/src/context/packing.js",
+      "sha256": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee"
+    },
+    {
+      "path": "integrations/claude-code/dist/src/user-prompt-submit.js",
+      "sha256": "dbbef2fad3f47b69bbc9d8f19c994f5f88e3eee7ab99097301c76439bc39d9e4"
+    }
+  ],
+  "limitations": "New multi-file commits still need remote CI. Original array-task no-op failure remains. No general quality/token, production-scale repository, additional-model, compiler semantics, local-provider consumption, native desktop/Windows, interactive trust, installer or model redistribution acceptance."
+}

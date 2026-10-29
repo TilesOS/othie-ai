@@ -1,0 +1,51 @@
+
+> othie-ai@0.1.0 build
+> npm run build --workspaces --if-present
+
+
+> @othie/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/website@0.1.0 build
+> next build
+
+▲ Next.js 16.4.3 (Turbopack)
+✓ Running next.config.ts took 514ms
+
+  Creating an optimized production build ...
+npm error Lifecycle script `build` failed with error:
+npm error code 143
+npm error path <othie-repository>/apps/website
+npm error workspace @othie/website@0.1.0
+npm error location <othie-repository>/apps/website
+npm error command failed
+npm error command sh -c next build
+
+
+> @othie/claude-code-integration@0.1.0 prebuild
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/claude-code-integration@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/codex-integration@0.1.0 prebuild
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/codex-integration@0.1.0 build
+> tsc -p tsconfig.json

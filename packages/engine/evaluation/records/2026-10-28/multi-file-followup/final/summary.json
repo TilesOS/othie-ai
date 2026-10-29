@@ -1,0 +1,991 @@
+{
+  "protocol": "protocol.json",
+  "completed": true,
+  "all_correct": false,
+  "results": [
+    {
+      "case_id": "support-service",
+      "family": "multi-file-external-policy",
+      "repeat": 0,
+      "condition": "baseline",
+      "order": [
+        "baseline",
+        "full_documents",
+        "othie"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 4,
+      "ran_public_tests": true,
+      "input_tokens": 62869,
+      "output_tokens": 780,
+      "cached_input_tokens": 58240,
+      "host_model": null,
+      "supplied_context_tokens": 0,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 6,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 33398,
+      "correct": false,
+      "transcript": "0-support-service-baseline.json"
+    },
+    {
+      "case_id": "support-service",
+      "family": "multi-file-external-policy",
+      "repeat": 0,
+      "condition": "full_documents",
+      "order": [
+        "baseline",
+        "full_documents",
+        "othie"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 5,
+      "ran_public_tests": true,
+      "input_tokens": 81870,
+      "output_tokens": 1080,
+      "cached_input_tokens": 64640,
+      "host_model": null,
+      "supplied_context_tokens": 416,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 12,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 75609,
+      "correct": true,
+      "transcript": "0-support-service-full_documents.json"
+    },
+    {
+      "case_id": "support-service",
+      "family": "multi-file-external-policy",
+      "repeat": 0,
+      "condition": "othie",
+      "order": [
+        "baseline",
+        "full_documents",
+        "othie"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": true,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 4,
+      "ran_public_tests": true,
+      "input_tokens": 64386,
+      "output_tokens": 682,
+      "cached_input_tokens": 59264,
+      "host_model": "gpt-6-astra",
+      "supplied_context_tokens": 391,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 12,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 48423,
+      "correct": true,
+      "transcript": "0-support-service-othie.json"
+    },
+    {
+      "case_id": "refund-service",
+      "family": "multi-file-customer-exception",
+      "repeat": 0,
+      "condition": "full_documents",
+      "order": [
+        "full_documents",
+        "othie",
+        "baseline"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 4,
+      "ran_public_tests": true,
+      "input_tokens": 81085,
+      "output_tokens": 1051,
+      "cached_input_tokens": 71168,
+      "host_model": null,
+      "supplied_context_tokens": 416,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 12,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 31650,
+      "correct": true,
+      "transcript": "0-refund-service-full_documents.json"
+    },
+    {
+      "case_id": "refund-service",
+      "family": "multi-file-customer-exception",
+      "repeat": 0,
+      "condition": "othie",
+      "order": [
+        "full_documents",
+        "othie",
+        "baseline"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": true,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 4,
+      "ran_public_tests": true,
+      "input_tokens": 64476,
+      "output_tokens": 1103,
+      "cached_input_tokens": 59520,
+      "host_model": "gpt-6-astra",
+      "supplied_context_tokens": 280,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 12,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 31338,
+      "correct": true,
+      "transcript": "0-refund-service-othie.json"
+    },
+    {
+      "case_id": "refund-service",
+      "family": "multi-file-customer-exception",
+      "repeat": 0,
+      "condition": "baseline",
+      "order": [
+        "full_documents",
+        "othie",
+        "baseline"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 4,
+      "ran_public_tests": true,
+      "input_tokens": 63062,
+      "output_tokens": 877,
+      "cached_input_tokens": 58368,
+      "host_model": null,
+      "supplied_context_tokens": 0,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 9,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 35622,
+      "correct": false,
+      "transcript": "0-refund-service-baseline.json"
+    },
+    {
+      "case_id": "array-service-control",
+      "family": "multi-file-repository-only-control",
+      "repeat": 0,
+      "condition": "othie",
+      "order": [
+        "othie",
+        "baseline",
+        "full_documents"
+      ],
+      "expected_noop": true,
+      "delivery_passed": false,
+      "context_complete": false,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 4,
+      "ran_public_tests": true,
+      "input_tokens": 63856,
+      "output_tokens": 932,
+      "cached_input_tokens": 54144,
+      "host_model": "gpt-6-astra",
+      "supplied_context_tokens": 207,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 8,
+        "total": 8
+      },
+      "operational": true,
+      "wall_ms": 29583,
+      "correct": false,
+      "transcript": "0-array-service-control-othie.json"
+    },
+    {
+      "case_id": "array-service-control",
+      "family": "multi-file-repository-only-control",
+      "repeat": 0,
+      "condition": "baseline",
+      "order": [
+        "othie",
+        "baseline",
+        "full_documents"
+      ],
+      "expected_noop": true,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 4,
+      "ran_public_tests": true,
+      "input_tokens": 62618,
+      "output_tokens": 600,
+      "cached_input_tokens": 45952,
+      "host_model": null,
+      "supplied_context_tokens": 0,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 8,
+        "total": 8
+      },
+      "operational": true,
+      "wall_ms": 23886,
+      "correct": true,
+      "transcript": "0-array-service-control-baseline.json"
+    },
+    {
+      "case_id": "array-service-control",
+      "family": "multi-file-repository-only-control",
+      "repeat": 0,
+      "condition": "full_documents",
+      "order": [
+        "othie",
+        "baseline",
+        "full_documents"
+      ],
+      "expected_noop": true,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 5,
+      "ran_public_tests": true,
+      "input_tokens": 64632,
+      "output_tokens": 936,
+      "cached_input_tokens": 59520,
+      "host_model": null,
+      "supplied_context_tokens": 416,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 8,
+        "total": 8
+      },
+      "operational": true,
+      "wall_ms": 31879,
+      "correct": true,
+      "transcript": "0-array-service-control-full_documents.json"
+    },
+    {
+      "case_id": "support-service",
+      "family": "multi-file-external-policy",
+      "repeat": 1,
+      "condition": "full_documents",
+      "order": [
+        "full_documents",
+        "othie",
+        "baseline"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 5,
+      "ran_public_tests": true,
+      "input_tokens": 64885,
+      "output_tokens": 1127,
+      "cached_input_tokens": 59776,
+      "host_model": null,
+      "supplied_context_tokens": 416,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 12,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 34781,
+      "correct": true,
+      "transcript": "1-support-service-full_documents.json"
+    },
+    {
+      "case_id": "support-service",
+      "family": "multi-file-external-policy",
+      "repeat": 1,
+      "condition": "othie",
+      "order": [
+        "full_documents",
+        "othie",
+        "baseline"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": true,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 5,
+      "ran_public_tests": true,
+      "input_tokens": 81917,
+      "output_tokens": 1166,
+      "cached_input_tokens": 72704,
+      "host_model": "gpt-6-astra",
+      "supplied_context_tokens": 391,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 12,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 46810,
+      "correct": true,
+      "transcript": "1-support-service-othie.json"
+    },
+    {
+      "case_id": "support-service",
+      "family": "multi-file-external-policy",
+      "repeat": 1,
+      "condition": "baseline",
+      "order": [
+        "full_documents",
+        "othie",
+        "baseline"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 4,
+      "ran_public_tests": true,
+      "input_tokens": 62915,
+      "output_tokens": 767,
+      "cached_input_tokens": 41856,
+      "host_model": null,
+      "supplied_context_tokens": 0,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 6,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 32697,
+      "correct": false,
+      "transcript": "1-support-service-baseline.json"
+    },
+    {
+      "case_id": "refund-service",
+      "family": "multi-file-customer-exception",
+      "repeat": 1,
+      "condition": "othie",
+      "order": [
+        "othie",
+        "baseline",
+        "full_documents"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": true,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 4,
+      "ran_public_tests": true,
+      "input_tokens": 64415,
+      "output_tokens": 1078,
+      "cached_input_tokens": 59520,
+      "host_model": "gpt-6-astra",
+      "supplied_context_tokens": 280,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 12,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 35479,
+      "correct": true,
+      "transcript": "1-refund-service-othie.json"
+    },
+    {
+      "case_id": "refund-service",
+      "family": "multi-file-customer-exception",
+      "repeat": 1,
+      "condition": "baseline",
+      "order": [
+        "othie",
+        "baseline",
+        "full_documents"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 3,
+      "ran_public_tests": true,
+      "input_tokens": 62174,
+      "output_tokens": 718,
+      "cached_input_tokens": 45824,
+      "host_model": null,
+      "supplied_context_tokens": 0,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 8,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 22672,
+      "correct": false,
+      "transcript": "1-refund-service-baseline.json"
+    },
+    {
+      "case_id": "refund-service",
+      "family": "multi-file-customer-exception",
+      "repeat": 1,
+      "condition": "full_documents",
+      "order": [
+        "othie",
+        "baseline",
+        "full_documents"
+      ],
+      "expected_noop": false,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 5,
+      "ran_public_tests": true,
+      "input_tokens": 81942,
+      "output_tokens": 1046,
+      "cached_input_tokens": 76672,
+      "host_model": null,
+      "supplied_context_tokens": 416,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 12,
+        "total": 12
+      },
+      "operational": true,
+      "wall_ms": 38789,
+      "correct": true,
+      "transcript": "1-refund-service-full_documents.json"
+    },
+    {
+      "case_id": "array-service-control",
+      "family": "multi-file-repository-only-control",
+      "repeat": 1,
+      "condition": "baseline",
+      "order": [
+        "baseline",
+        "full_documents",
+        "othie"
+      ],
+      "expected_noop": true,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 3,
+      "ran_public_tests": true,
+      "input_tokens": 62449,
+      "output_tokens": 908,
+      "cached_input_tokens": 57984,
+      "host_model": null,
+      "supplied_context_tokens": 0,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 8,
+        "total": 8
+      },
+      "operational": true,
+      "wall_ms": 35940,
+      "correct": true,
+      "transcript": "1-array-service-control-baseline.json"
+    },
+    {
+      "case_id": "array-service-control",
+      "family": "multi-file-repository-only-control",
+      "repeat": 1,
+      "condition": "full_documents",
+      "order": [
+        "baseline",
+        "full_documents",
+        "othie"
+      ],
+      "expected_noop": true,
+      "delivery_passed": true,
+      "context_complete": null,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 5,
+      "ran_public_tests": true,
+      "input_tokens": 64896,
+      "output_tokens": 967,
+      "cached_input_tokens": 59648,
+      "host_model": null,
+      "supplied_context_tokens": 416,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 8,
+        "total": 8
+      },
+      "operational": true,
+      "wall_ms": 30083,
+      "correct": true,
+      "transcript": "1-array-service-control-full_documents.json"
+    },
+    {
+      "case_id": "array-service-control",
+      "family": "multi-file-repository-only-control",
+      "repeat": 1,
+      "condition": "othie",
+      "order": [
+        "baseline",
+        "full_documents",
+        "othie"
+      ],
+      "expected_noop": true,
+      "delivery_passed": false,
+      "context_complete": false,
+      "integrity": {
+        "passed": true,
+        "changes": []
+      },
+      "completed": true,
+      "command_calls": 4,
+      "ran_public_tests": true,
+      "input_tokens": 63052,
+      "output_tokens": 941,
+      "cached_input_tokens": 58368,
+      "host_model": "gpt-6-astra",
+      "supplied_context_tokens": 207,
+      "public_grade": {
+        "checks": [
+          true,
+          true
+        ],
+        "passed": 2,
+        "total": 2
+      },
+      "grade": {
+        "checks": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "passed": 8,
+        "total": 8
+      },
+      "operational": true,
+      "wall_ms": 33543,
+      "correct": false,
+      "transcript": "1-array-service-control-othie.json"
+    }
+  ]
+}

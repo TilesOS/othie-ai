@@ -9,10 +9,10 @@ synthetic documents and provider fixtures; it requires no model training or down
 
 | Check | Result |
 | --- | --- |
-| `npm ci` | October 24 clean installation passes with the existing dependency lockfile |
+| `npm ci` | October 28 clean installation passes with the existing dependency lockfile |
 | `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 189 passing tests; one opt-in real-model test skipped |
+| `npm test` | 193 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -28,6 +28,10 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Late-query retrieval regression | Preserves tail subjects beyond the old 20-term prefix, including a 4,000-term query through SQLite, excerpts and rule selection |
 | October 25 hosted project-hook controls | Positive, no-op, revoked and unavailable sessions pass 4/4 with complete cited positive evidence |
 | October 25 serial adapter latency | Strict fresh-engine 14/14 at 2,000/3,000 ms budgets; actual-default normal paths 8/8 at 260–275 ms |
+| October 28 native multi-file comparison, two repeats | 18/18 operational sessions; full documents 6/6 complete gates and 64/64 probes; Othie 4/6 gates and 64/64 probes with both no-op failures preserved; task-only 2/6 and 45/64 |
+| October 28 request-identifier diagnostic | Original array task retrieves four refund excerpts on `request`; query-only identifier intervention retrieves none; refund-positive control still retrieves four |
+| October 28 hosted project-hook controls | Positive, no-op, revoked and unavailable sessions pass 4/4 |
+| October 28 serial adapter latency | Strict fresh-engine 14/14 at 2,000/3,000 ms budgets (261–2,037 ms); actual-default paths 8/8 at 262–278 ms |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
 | Evaluation-only semantic applicability, initial trials | Boundaries 42/56 versus lexical 51/56; larger applicability corpus 54/80 versus paired lexical 61/80; both fail acceptance |
@@ -38,7 +42,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `git diff --check` | Pass |
 | `npm audit` and `npm audit --omit=dev` | Zero reported development or production dependency advisories |
 
-The full suite comprises 128 engine, 30 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 132 engine, 30 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -828,6 +832,53 @@ Publication hashes and the manifest are verified against retained files and comp
 artifacts. CI for the preceding `ff38e75` history now passes both runners; new local
 commits still need CI. Native Windows/desktop trust and realistic multi-file work remain open.
 
+## October 28 multi-file services and native no-op follow-up
+
+The [multi-file records](packages/engine/evaluation/records/2026-10-28/multi-file-followup/README.md)
+add a separately selected corpus of three miniature CommonJS service repositories:
+support targets, refund eligibility and an array-only control. The seven-case native
+pilot and constrained-tool fixtures remain unchanged. Each trajectory uses a fresh
+Git workspace and disposable login home. Three editable modules implement domain
+logic, ordered batch processing and a request endpoint; validators, contracts,
+instructions and public tests stay protected. Recursive integrity checks reject
+nested additions, protected edits, missing/oversized files and symlinks. Hidden
+grading runs in a separate resource-limited process with an in-memory relative
+module loader, no inherited environment and no Node filesystem/built-in imports.
+
+Two repeats with requested/receipt model `gpt-6-astra` complete all 18 operational
+sessions. Full documents pass 6/6 complete gates and 64/64 behavioral probes. Othie
+passes every behavioral probe and supplies complete expected policy in all four
+policy-dependent tasks, but passes only 4/6 complete gates: both array-only controls
+receive unwanted refund excerpts. Task-only passes 2/6 complete gates and 45/64
+probes; refund assumptions vary across repeats. Native completion, public tests,
+integrity, exact receipt transport, expected-policy/no-op coverage and behavioral
+results remain separate gates. The completed run exits 1 because task-only behavior
+and Othie no-op checks fail.
+
+The unchanged array task includes `Route solve(request)`. A same-engine diagnostic
+finds `request` as its only shared source term and retrieves four refund excerpts
+(207 XML tokens). A query-only intervention changing that identifier to `payload`
+returns no excerpts; the refund-positive control still returns four. This reproduces
+a lexical scope collision, not a production fix or general semantic acceptance.
+The native fixtures and production term handling remain unchanged.
+
+Reported cumulative input is 376,087 task-only, 439,310 full-document and 402,102
+Othie tokens, with cached input/output separately retained. These small fixed services,
+uncontrolled native turns, caching and provider state support no causal token-saving,
+latency or general coding-quality claim. They add multi-file integration and repeats;
+production-scale repositories, additional models and broader scope acceptance remain open.
+
+Clean installation, full build, final typechecks, website lint, 193 deterministic tests
+and both zero-finding audits pass; one opt-in model test is skipped. Hosted project
+controls pass 4/4. After all native generation, serial strict adapter latency passes
+14/14 at 2,000/3,000 ms budgets (261–2,037 ms), and actual-default paths pass 8/8
+at 262–278 ms. Native generation/tools are outside those adapter timings. Restricted
+startup/suite IPC failures, an interrupted restricted build and restricted audit DNS
+errors remain recorded separately from successful reruns. Publication hashes and a
+manifest verify redaction and current artifacts; the evidence verifier regrades every
+saved module snapshot. Prior history through `5da7f3e` now passes macOS/Windows CI;
+the new multi-file commits still need CI.
+
 ## Remaining acceptance work
 
 - Codex persisted interactive hook-trust acceptance after verified noninteractive
@@ -843,9 +894,10 @@ commits still need CI. Native Windows/desktop trust and realistic multi-file wor
   inspection verifies `5da7f3e`, including the October 24–25 native-agent and lexical
   retrieval changes, on both macOS and Windows runners. The new multi-file benchmark
   commits still need CI. Native Windows host/session acceptance remains open.
-- A larger benchmark using realistic multi-file tasks, additional models and repeats.
-  The constrained-tool baseline and seven-case native Codex pilot are recorded, but
-  support no general quality/token claim.
+- A larger benchmark using production-scale repositories, dependency changes and
+  additional models. The constrained-tool baseline, seven-case native pilot and
+  two-repeat miniature multi-file corpus are recorded, but support no general
+  quality/token claim. Both multi-file array no-op failures remain open.
 - Compiler classification, relevance, linked evidence, and packing: deterministic recovery
   removes model-selector disagreement, and the clarified prompt excludes the observed
   quoted title in fresh runs, while entitlement and assistant-permission classification
@@ -855,6 +907,8 @@ commits still need CI. Native Windows/desktop trust and realistic multi-file wor
   whole-evidence context still fails at 200 tokens. New boundary cases expose generic
   subject-word collisions even with correct classification. Controlled applicability
   trials now measure paired no-op precision and policy recall but fail acceptance.
+  Native multi-file tasks also reproduce a `request` identifier/refund-policy collision;
+  passing code probes does not close retrieval no-op acceptance.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve

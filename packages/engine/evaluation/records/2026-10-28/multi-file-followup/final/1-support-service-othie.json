@@ -1,0 +1,105 @@
+{
+  "case_id": "support-service",
+  "family": "multi-file-external-policy",
+  "repeat": 1,
+  "condition": "othie",
+  "order": [
+    "full_documents",
+    "othie",
+"baseline"
+  ],
+  "prompt": "Repair the support batch endpoint across src/domain.cjs, src/service.cjs and src/route.cjs using company support policy. Read CONTRACT.md and preserve exports. Domain solve(tier, day) returns the first-response target in hours; tier is standard or enterprise and day is a lowercase weekday. Service solve(items) maps {id, tier, day} tickets to {id, responseHours}. Route solve(request) validates and wraps the batch. Run node --test.",
+  "expected_noop": false,
+  "delivery_passed": true,
+  "context_complete": true,
+  "integrity": {
+    "passed": true,
+    "changes": []
+  },
+  "completed": true,
+  "command_calls": 5,
+  "ran_public_tests": true,
+  "input_tokens": 81917,
+  "output_tokens": 1166,
+  "cached_input_tokens": 72704,
+  "host_model": "gpt-6-astra",
+  "supplied_context_tokens": 391,
+  "expected_context": {
+    "text": "<organization_context profile=\"company\" mode=\"fallback\"><items><excerpt>Enterprise support tickets require a first response within two hours on weekdays and six hours on weekends.<citation source=\"s1/support.md\" at=\"lines 1-1\"/></excerpt><excerpt>Standard support tickets require a first response within four hours on weekdays and twelve hours on weekends.<citation source=\"s1/support.md\" at=\"lines 1-1\"/></excerpt><excerpt>Saturday and Sunday are weekends. These targets are not resolution deadlines.<citation source=\"s1/support.md\" at=\"lines 1-1\"/></excerpt><excerpt>The standard refund request window is thirty days after purchase.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt><excerpt>Acme monthly plans retain the standard thirty-day window.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt><excerpt>Refund requests on the last day of the window are eligible.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt><excerpt>Acme annual-plan purchases are an exception with a seven-day refund request window.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt><excerpt>The design library contains monochrome logo examples. This communications reference does not set support targets, purchase terms, or telemetry rules.<citation source=\"s1/brand.md\" at=\"lines 1-1\"/></excerpt><excerpt>Brand presentations use clear sentences and restrained colors.<citation source=\"s1/brand.md\" at=\"lines 1-1\"/></excerpt></items><conflicts count=\"0\" detection=\"explicit_opposition_only\"></conflicts><status tokenizer=\"o200k_base\" tokenizer_estimate=\"false\" tokens=\"391\" omitted=\"0\" keyword=\"true\" vector=\"false\" corpus_revision=\"24\" rule_revision=\"0\"/></organization_context>",
+    "status": {
+      "profile": "company",
+      "mode": "fallback",
+      "tokenizer": "o200k_base",
+      "tokenizerEstimate": false,
+      "tokenCount": 391,
+      "omittedItems": 0,
+      "conflicts": 0,
+      "keywordAvailable": true,
+      "vectorAvailable": false,
+      "synthesisAttempted": false,
+      "synthesisReason": "Query embeddings unavailable",
+      "corpusRevision": 24,
+      "ruleRevision": 0
+    }
+  },
+  "response": {
+    "code": 0,
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"<redacted>\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"`--dangerously-bypass-hook-trust` is enabled. Enabled hooks may run without review for this invocation.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"error\",\"message\":\"`--dangerously-bypass-hook-trust` is enabled. Enabled hooks may run without review for this invocation.\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in <temporary-fixture>/1-support-service-othie-home/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"agent_message\",\"text\":\"I’ll read the contract and endpoint code, apply the supplied support targets, and run `node --test`.\\n\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_4\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd && rg --files -g '\\\"'!node_modules'\\\"' -g '\\\"'!package-lock.json'\\\"'\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_4\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd && rg --files -g '\\\"'!node_modules'\\\"' -g '\\\"'!package-lock.json'\\\"'\\\"\",\"aggregated_output\":\"error: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/45032_1793237287206\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\nerror: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/45033_1793237287216\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\n<temporary-fixture>/1-support-service-othie\\nsrc/service.cjs\\nsrc/domain.cjs\\nsrc/validate.cjs\\nsrc/route.cjs\\nAGENTS.md\\npackage.json\\nREADME.md\\nCONTRACT.md\\nsolution.test.cjs\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_5\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat CONTRACT.md src/domain.cjs src/service.cjs src/route.cjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_5\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat CONTRACT.md src/domain.cjs src/service.cjs src/route.cjs'\",\"aggregated_output\":\"error: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/45035_1793237287261\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\nerror: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/45036_1793237287272\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\nThis endpoint computes support first-response targets. The public tests intentionally do not specify company policy values.\\nEach editable module exports a synchronous function named solve. The domain module handles one item, the service maps an array preserving order, and the route accepts an object with an items array. Valid requests return {status: 200, body: {items: serviceResult}}. Invalid requests return {status: 400, body: {error: 'invalid request'}}. Keep the existing validator unchanged. Domain arguments and service item shapes are described in the task. Do not mutate inputs. Use only relative CommonJS requires with explicit .cjs extensions; no built-in or third-party modules.\\nexports.solve = (tier, day) => 24;\\nconst domain = require('./domain.cjs');\\nexports.solve = values => [];\\nconst { validate } = require('./validate.cjs');\\nconst service = require('./service.cjs');\\nexports.solve = request => ({ status: 501, body: { error: 'unimplemented' } });\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_6\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -c 'cat AGENTS.md src/validate.cjs solution.test.cjs package.json README.md'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_6\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -c 'cat AGENTS.md src/validate.cjs solution.test.cjs package.json README.md'\",\"aggregated_output\":\"error: Can't create the symlink for multishells at \\\"<user-home>/.local/state/fnm_multishells/45038_1793237301104\\\". Maybe there are some issues with permissions for the directory? Operation not permitted (os error 1)\\nWork only in this synthetic repository. Read CONTRACT.md. Only src/domain.cjs, src/service.cjs, src/route.cjs may be changed; preserve module interfaces and every other file. Use native file editing and shell tools, inspect the repository, and run node --test before finishing. Do not look outside the repository, search for benchmark fixtures or scoring data, access the network, or install dependencies. Company documents are maintained outside the repository; use supplied context as evidence. If policy is absent, make your best implementation and state the assumption. Do not mutate input arguments.\\nexports.validate = request => !!request && Array.isArray(request.items) && request.items.every(item => !!item && typeof item.id === 'string' && ['standard','enterprise'].includes(item.tier) && ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'].includes(item.day));\\nconst {test} = require('node:test');\\nconst assert = require('node:assert/strict');\\nconst {solve} = require('./src/route.cjs');\\nconst probes = [{\\\"input\\\":[{\\\"items\\\":[]}],\\\"expected\\\":{\\\"status\\\":200,\\\"body\\\":{\\\"items\\\":[]}}},{\\\"input\\\":[null],\\\"expected\\\":{\\\"status\\\":400,\\\"body\\\":{\\\"error\\\":\\\"invalid request\\\"}}}];\\nfor (const [index, probe] of probes.entries()) test('public interface ' + index, () => {\\n  const before = JSON.stringify(probe.input);\\n  assert.deepEqual(solve(...probe.input), probe.expected);\\n  assert.equal(JSON.stringify(probe.input), before);\\n});\\n{\\\"private\\\":true,\\\"type\\\":\\\"commonjs\\\",\\\"scripts\\\":{\\\"test\\\":\\\"node --test\\\"}}\\nRepair the service described in CONTRACT.md and the task. Run node --test. Company documents are external. Public tests cover the request envelope; separate grading checks domain, service and endpoint behavior.\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_7\",\"type\":\"file_change\",\"changes\":[{\"path\":\"<temporary-fixture>/1-support-service-othie/src/domain.cjs\",\"kind\":\"update\"},{\"path\":\"<temporary-fixture>/1-support-service-othie/src/route.cjs\",\"kind\":\"update\"},{\"path\":\"<temporary-fixture>/1-support-service-othie/src/service.cjs\",\"kind\":\"update\"}],\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_7\",\"type\":\"file_change\",\"changes\":[{\"path\":\"<temporary-fixture>/1-support-service-othie/src/domain.cjs\",\"kind\":\"update\"},{\"path\":\"<temporary-fixture>/1-support-service-othie/src/route.cjs\",\"kind\":\"update\"},{\"path\":\"<temporary-fixture>/1-support-service-othie/src/service.cjs\",\"kind\":\"update\"}],\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_8\",\"type\":\"command_execution\",\"command\":\"/bin/bash -c 'node --test'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_8\",\"type\":\"command_execution\",\"command\":\"/bin/bash -c 'node --test'\",\"aggregated_output\":\"✔ public interface 0 (0.472958ms)\\n✔ public interface 1 (0.052458ms)\\nℹ tests 2\\nℹ suites 0\\nℹ pass 2\\nℹ fail 0\\nℹ cancelled 0\\nℹ skipped 0\\nℹ todo 0\\nℹ duration_ms 32.506084\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_9\",\"type\":\"command_execution\",\"command\":\"/bin/bash -c \\\"node <<'NODE'\\nconst assert = require('node:assert/strict');\\nconst domain = require('./src/domain.cjs');\\nconst service = require('./src/service.cjs');\\nconst route = require('./src/route.cjs');\\nconst days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];\\nconst items = Object.freeze(['standard', 'enterprise'].flatMap(tier => days.map((day, index) => {\\n  const expected = tier === 'enterprise' ? (index < 5 ? 2 : 6) : (index < 5 ? 4 : 12);\\n  assert.equal(domain.solve(tier, day), expected);\\n  return Object.freeze({id: \\\"'`${tier}-${day}`, tier, day});\\n})));\\nconst expected = items.map(({id, tier, day}) => ({id, responseHours: tier === '\\\"'enterprise' ? (days.indexOf(day) < 5 ? 2 : 6) : (days.indexOf(day) < 5 ? 4 : 12)}));\\nassert.deepEqual(service.solve(items), expected);\\nassert.deepEqual(route.solve(Object.freeze({items})), {status: 200, body: {items: expected}});\\nfor (const request of [undefined, null, {}, {items: {}}, {items: [null]}, {items: [{id: 1, tier: 'standard', day: 'monday'}]}, {items: [{id: 'x', tier: 'unknown', day: 'monday'}]}, {items: [{id: 'x', tier: 'standard', day: 'Monday'}]}]) {\\n  assert.deepEqual(route.solve(request), {status: 400, body: {error: 'invalid request'}});\\n}\\nconsole.log('Policy, mapping, validation, and frozen-input checks passed.');\\nNODE\\n git diff --stat\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_9\",\"type\":\"command_execution\",\"command\":\"/bin/bash -c \\\"node <<'NODE'\\nconst assert = require('node:assert/strict');\\nconst domain = require('./src/domain.cjs');\\nconst service = require('./src/service.cjs');\\nconst route = require('./src/route.cjs');\\nconst days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];\\nconst items = Object.freeze(['standard', 'enterprise'].flatMap(tier => days.map((day, index) => {\\n  const expected = tier === 'enterprise' ? (index < 5 ? 2 : 6) : (index < 5 ? 4 : 12);\\n  assert.equal(domain.solve(tier, day), expected);\\n  return Object.freeze({id: \\\"'`${tier}-${day}`, tier, day});\\n})));\\nconst expected = items.map(({id, tier, day}) => ({id, responseHours: tier === '\\\"'enterprise' ? (days.indexOf(day) < 5 ? 2 : 6) : (days.indexOf(day) < 5 ? 4 : 12)}));\\nassert.deepEqual(service.solve(items), expected);\\nassert.deepEqual(route.solve(Object.freeze({items})), {status: 200, body: {items: expected}});\\nfor (const request of [undefined, null, {}, {items: {}}, {items: [null]}, {items: [{id: 1, tier: 'standard', day: 'monday'}]}, {items: [{id: 'x', tier: 'unknown', day: 'monday'}]}, {items: [{id: 'x', tier: 'standard', day: 'Monday'}]}]) {\\n  assert.deepEqual(route.solve(request), {status: 400, body: {error: 'invalid request'}});\\n}\\nconsole.log('Policy, mapping, validation, and frozen-input checks passed.');\\nNODE\\n git diff --stat\\\"\",\"aggregated_output\":\"Policy, mapping, validation, and frozen-input checks passed.\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_10\",\"type\":\"agent_message\",\"text\":\"Implemented all three modules, preserving exports and the validator.\\n\\n- Enterprise: 2 hours weekdays, 6 weekends.\\n- Standard: 4 hours weekdays, 12 weekends.\\n- Source: `s1/support.md`, line 1.\\n- Batch order preserved; inputs unchanged; valid/invalid requests return the required envelopes.\\n\\n`node --test` passed (2/2). Additional checks passed for all tier/day combinations, validation, and frozen inputs.\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":81917,\"cached_input_tokens\":72704,\"cache_write_input_tokens\":0,\"output_tokens\":1166,\"reasoning_output_tokens\":13}}\n",
+    "stderr": "Reading additional input from stdin...\n",
+    "timed_out": false,
+    "output_limit": false
+  },
+  "receipt": {
+    "event": "UserPromptSubmit",
+    "input_fields": [
+      "cwd",
+      "hook_event_name",
+      "model",
+      "permission_mode",
+      "prompt",
+      "session_id",
+      "transcript_path",
+"turn_id"
+    ],
+    "model": "gpt-6-astra",
+    "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"Othie context brief (source-backed; preserve the included citations):\\n<organization_context profile=\\\"company\\\" mode=\\\"fallback\\\"><items><excerpt>Enterprise support tickets require a first response within two hours on weekdays and six hours on weekends.<citation source=\\\"s1/support.md\\\" at=\\\"lines 1-1\\\"/></excerpt><excerpt>Standard support tickets require a first response within four hours on weekdays and twelve hours on weekends.<citation source=\\\"s1/support.md\\\" at=\\\"lines 1-1\\\"/></excerpt><excerpt>Saturday and Sunday are weekends. These targets are not resolution deadlines.<citation source=\\\"s1/support.md\\\" at=\\\"lines 1-1\\\"/></excerpt><excerpt>The standard refund request window is thirty days after purchase.<citation source=\\\"s1/refunds.md\\\" at=\\\"lines 1-1\\\"/></excerpt><excerpt>Acme monthly plans retain the standard thirty-day window.<citation source=\\\"s1/refunds.md\\\" at=\\\"lines 1-1\\\"/></excerpt><excerpt>Refund requests on the last day of the window are eligible.<citation source=\\\"s1/refunds.md\\\" at=\\\"lines 1-1\\\"/></excerpt><excerpt>Acme annual-plan purchases are an exception with a seven-day refund request window.<citation source=\\\"s1/refunds.md\\\" at=\\\"lines 1-1\\\"/></excerpt><excerpt>The design library contains monochrome logo examples. This communications reference does not set support targets, purchase terms, or telemetry rules.<citation source=\\\"s1/brand.md\\\" at=\\\"lines 1-1\\\"/></excerpt><excerpt>Brand presentations use clear sentences and restrained colors.<citation source=\\\"s1/brand.md\\\" at=\\\"lines 1-1\\\"/></excerpt></items><conflicts count=\\\"0\\\" detection=\\\"explicit_opposition_only\\\"></conflicts><status tokenizer=\\\"o200k_base\\\" tokenizer_estimate=\\\"false\\\" tokens=\\\"391\\\" omitted=\\\"0\\\" keyword=\\\"true\\\" vector=\\\"false\\\" corpus_revision=\\\"24\\\" rule_revision=\\\"0\\\"/></organization_context>\"}}\n",
+    "stderr": "{\"schema_version\":\"1\",\"event\":\"othie_prompt_hook\",\"host\":\"codex\",\"surface\":\"code\",\"phase\":\"turn_start\",\"outcome\":\"injected\",\"elapsed_ms\":263,\"mode\":\"fallback\",\"token_count\":391,\"omitted_items\":0,\"rule_count\":0,\"excerpt_count\":9,\"synthesis_count\":0,\"conflict_count\":0}\n",
+    "code": 0
+  },
+  "final_code": null,
+  "final_files": {
+    "src/domain.cjs": "exports.solve = (tier, day) => {\n  const weekend = day === 'saturday' || day === 'sunday';\n  return tier === 'enterprise' ? (weekend ? 6 : 2) : (weekend ? 12 : 4);\n};\n",
+    "src/service.cjs": "const domain = require('./domain.cjs');\nexports.solve = items => items.map(({ id, tier, day }) => ({\n  id,\n  responseHours: domain.solve(tier, day)\n}));\n",
+    "src/route.cjs": "const { validate } = require('./validate.cjs');\nconst service = require('./service.cjs');\nexports.solve = request => {\n  if (!validate(request)) {\n    return { status: 400, body: { error: 'invalid request' } };\n  }\n  return { status: 200, body: { items: service.solve(request.items) } };\n};\n",
+    "src/validate.cjs": "exports.validate = request => !!request && Array.isArray(request.items) && request.items.every(item => !!item && typeof item.id === 'string' && ['standard','enterprise'].includes(item.tier) && ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'].includes(item.day));\n"
+  },
+  "public_grade": {
+    "checks": [
+      true,
+true
+    ],
+    "passed": 2,
+    "total": 2
+  },
+  "grade": {
+    "checks": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+true
+    ],
+    "passed": 12,
+    "total": 12
+  },
+  "operational": true,
+  "wall_ms": 46810,
+  "correct": true
+}

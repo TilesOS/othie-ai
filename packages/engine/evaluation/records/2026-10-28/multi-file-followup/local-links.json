@@ -1,0 +1,176 @@
+{
+  "checked": 34,
+  "all_exist": true,
+  "links": [
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/checks/ci-ff38e75.json",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-28/multi-file-followup/ci-5da7f3e.json",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-03/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-03/compiler-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-04/compiler-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-04/coverage-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-05/classification-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-05/deterministic-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-06/applicability-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-08/candidate-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-13/hook-latency-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-13/hook-latency-followup/workspace-tests.txt",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-14/hook-latency-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-14/combined-hook-verification/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-18/native-settings-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-20/codex-project-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-23/local-context-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-24/native-agent-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/evaluation/records/2026-10-28/multi-file-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "integrations/README.md",
+      "exists": true
+    },
+    {
+      "source": "VERIFICATION.md",
+      "target": "packages/engine/README.md",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/README.md",
+      "target": "records/2026-10-03/README.md",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/README.md",
+      "target": "records/2026-10-04/compiler-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/README.md",
+      "target": "records/2026-10-04/coverage-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/README.md",
+      "target": "records/2026-10-05/classification-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/README.md",
+      "target": "records/2026-10-05/deterministic-followup/README.md",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/records/2026-10-28/multi-file-followup/README.md",
+      "target": "final/protocol.json",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/records/2026-10-28/multi-file-followup/README.md",
+      "target": "final/summary.json",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/records/2026-10-28/multi-file-followup/README.md",
+      "target": "noop-probe.json",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/records/2026-10-28/multi-file-followup/README.md",
+      "target": "ci-5da7f3e.json",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/records/2026-10-28/multi-file-followup/README.md",
+      "target": "hosted-controls/summary.json",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/records/2026-10-28/multi-file-followup/README.md",
+      "target": "strict-latency/summary.json",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/records/2026-10-28/multi-file-followup/README.md",
+      "target": "default-latency/summary.json",
+      "exists": true
+    },
+    {
+      "source": "packages/engine/evaluation/records/2026-10-28/multi-file-followup/README.md",
+      "target": "restricted/failure.json",
+      "exists": true
+    }
+  ]
+}

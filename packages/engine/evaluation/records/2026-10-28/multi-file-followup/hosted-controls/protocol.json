@@ -1,0 +1,32 @@
+{
+  "protocol": "native-hooks-v3",
+  "recorded_at": "2026-10-29T01:26:02.179Z",
+  "synthetic_only": true,
+  "platform": "darwin",
+  "node": "v24.18.0",
+  "host": "codex",
+  "host_version": "codex-cli 0.156.1",
+  "hook_configuration": "project",
+  "launch_directory": "root",
+  "settings_sources": null,
+  "codex_home": "disposable-project-trust",
+  "requested_model": "host default",
+  "context_token_cap": 500,
+  "policy": "Canary enterprise support policy requires the first response within eleven hours on weekends. This is a first-response target, not a resolution deadline.",
+  "compiled_artifacts": [
+    {
+      "path": "integrations/codex/dist/src/user-prompt-submit.js",
+      "sha256": "f509052788ddea2779ebf8988000e12d51ba1f64bb8eb2267aa7623fd34ea7a4"
+    },
+    {
+      "path": "packages/engine/dist/src/cli.js",
+      "sha256": "d8164cd510b1c806493a540b2e366b0197037eaf9a336441405952d20a1a8e05"
+    },
+    {
+      "path": "packages/hooks/dist/src/index.js",
+      "sha256": "a851901b0c27190723c9dcbfe2e0d6e5401b78bdcf12fc8f8ee93a4def24ffeb"
+    }
+  ],
+  "hook_adapter_sha256": "f509052788ddea2779ebf8988000e12d51ba1f64bb8eb2267aa7623fd34ea7a4",
+  "limitations": "Native noninteractive CLI sessions only. Does not establish interactive or desktop UI trust, Windows behavior, startup, model quality, or installer acceptance."
+}

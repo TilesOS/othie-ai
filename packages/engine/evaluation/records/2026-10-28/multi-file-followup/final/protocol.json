@@ -1,0 +1,748 @@
+{
+  "protocol_version": "native-agent-v3",
+  "recorded_at": "2026-10-29T01:21:41.406Z",
+  "synthetic_only": true,
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "host": "codex",
+  "host_version": "codex-cli 0.156.1",
+  "requested_model": "gpt-6-astra",
+  "reasoning_effort": "low",
+  "options": {
+    "out": "<output>",
+    "model": "gpt-6-astra",
+    "repeats": 2,
+    "contextTokens": 500,
+    "timeoutMs": 180000,
+    "corpus": "multi-file",
+    "cases": [
+      "support-service",
+      "refund-service",
+      "array-service-control"
+    ]
+  },
+  "fixture_sha256": "585d70a61932c9113627ec5e9e4630cff25abf18613cb1e53afb3b906dbc85d6",
+  "documents": [
+    {
+      "name": "support.md",
+      "text": "Standard support tickets require a first response within four hours on weekdays and twelve hours on weekends. Enterprise support tickets require a first response within two hours on weekdays and six hours on weekends. Saturday and Sunday are weekends. These targets are not resolution deadlines."
+    },
+    {
+      "name": "refunds.md",
+      "text": "The standard refund request window is thirty days after purchase. Acme annual-plan purchases are an exception with a seven-day refund request window. Acme monthly plans retain the standard thirty-day window. Refund requests on the last day of the window are eligible."
+    },
+    {
+      "name": "telemetry.md",
+      "text": "For EU users, product telemetry defaults to disabled unless consent is explicitly true. Missing or false consent is not explicit consent. Outside the EU, product telemetry defaults to enabled when consent is missing, but explicitly false consent disables telemetry."
+    },
+    {
+      "name": "facilities.md",
+      "text": "Office visitors check in at reception. Meeting rooms can be booked through the building calendar. This facilities reference does not define product behavior or customer commitments."
+    },
+    {
+      "name": "brand.md",
+      "text": "Brand presentations use clear sentences and restrained colors. The design library contains monochrome logo examples. This communications reference does not set support targets, purchase terms, or telemetry rules."
+    },
+    {
+      "name": "expenses.md",
+      "text": "Expense claims above $25 require a receipt. Claims of exactly $25 or less do not require a receipt. A lost required receipt must be replaced with a written explanation. A missing receipt that is not lost leaves the claim incomplete. A supplied receipt always satisfies the documentation requirement."
+    },
+    {
+      "name": "access.md",
+      "text": "Privileged access expires eight hours after it is granted. Only an incident commander may approve an extension, and the extension may add at most two hours. An extension must be recorded before the original access expires; recording it at the expiration instant is too late. Access is inactive at or after its expiration instant. Times are measured as hours since the grant."
+    },
+    {
+      "name": "renewal.md",
+      "text": "For Canadian accounts, automatic renewal defaults to disabled unless an administrator explicitly enables it. For Australian accounts, automatic renewal defaults to enabled unless an administrator explicitly disables it. Trial accounts in either region must never renew automatically, even with administrator approval. A null administrator setting means no explicit setting."
+    }
+  ],
+  "cases": [
+    {
+      "id": "support-service",
+      "family": "multi-file-external-policy",
+      "initial": "",
+      "task": "Repair the support batch endpoint across src/domain.cjs, src/service.cjs and src/route.cjs using company support policy. Read CONTRACT.md and preserve exports. Domain solve(tier, day) returns the first-response target in hours; tier is standard or enterprise and day is a lowercase weekday. Service solve(items) maps {id, tier, day} tickets to {id, responseHours}. Route solve(request) validates and wraps the batch. Run node --test.",
+      "project": {
+        "entry": "src/route.cjs",
+        "editable": [
+          "src/domain.cjs",
+          "src/service.cjs",
+          "src/route.cjs"
+        ],
+        "files": {
+          "src/domain.cjs": "exports.solve = (tier, day) => 24;\n",
+          "src/service.cjs": "const domain = require('./domain.cjs');\nexports.solve = values => [];\n",
+          "src/route.cjs": "const { validate } = require('./validate.cjs');\nconst service = require('./service.cjs');\nexports.solve = request => ({ status: 501, body: { error: 'unimplemented' } });\n",
+          "src/validate.cjs": "exports.validate = request => !!request && Array.isArray(request.items) && request.items.every(item => !!item && typeof item.id === 'string' && ['standard','enterprise'].includes(item.tier) && ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'].includes(item.day));\n",
+          "package.json": "{\"private\":true,\"type\":\"commonjs\",\"scripts\":{\"test\":\"node --test\"}}\n",
+          "CONTRACT.md": "This endpoint computes support first-response targets. The public tests intentionally do not specify company policy values.\nEach editable module exports a synchronous function named solve. The domain module handles one item, the service maps an array preserving order, and the route accepts an object with an items array. Valid requests return {status: 200, body: {items: serviceResult}}. Invalid requests return {status: 400, body: {error: 'invalid request'}}. Keep the existing validator unchanged. Domain arguments and service item shapes are described in the task. Do not mutate inputs. Use only relative CommonJS requires with explicit .cjs extensions; no built-in or third-party modules.\n"
+        }
+      },
+      "publicProbes": [
+        {
+          "input": [
+            {
+              "items": []
+            }
+          ],
+          "expected": {
+            "status": 200,
+            "body": {
+              "items": []
+            }
+          }
+        },
+        {
+          "input": [
+            null
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        }
+      ],
+      "hiddenProbes": [
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            "standard",
+            "monday"
+          ],
+          "expected": 4
+        },
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            "standard",
+            "saturday"
+          ],
+          "expected": 12
+        },
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            "enterprise",
+            "friday"
+          ],
+          "expected": 2
+        },
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            "enterprise",
+            "sunday"
+          ],
+          "expected": 6
+        },
+        {
+          "module": "src/service.cjs",
+          "input": [
+            [
+              {
+                "id": "b",
+                "tier": "standard",
+                "day": "sunday"
+              },
+              {
+                "id": "a",
+                "tier": "enterprise",
+                "day": "monday"
+              }
+            ]
+          ],
+          "expected": [
+            {
+              "id": "b",
+              "responseHours": 12
+            },
+            {
+              "id": "a",
+              "responseHours": 2
+            }
+          ]
+        },
+        {
+          "module": "src/service.cjs",
+          "input": [
+            []
+          ],
+          "expected": []
+        },
+        {
+          "input": [
+            {
+              "items": [
+                {
+                  "id": "w",
+                  "tier": "enterprise",
+                  "day": "saturday"
+                },
+                {
+                  "id": "d",
+                  "tier": "standard",
+                  "day": "friday"
+                }
+              ]
+            }
+          ],
+          "expected": {
+            "status": 200,
+            "body": {
+              "items": [
+                {
+                  "id": "w",
+                  "responseHours": 6
+                },
+                {
+                  "id": "d",
+                  "responseHours": 4
+                }
+              ]
+            }
+          }
+        },
+        {
+          "input": [
+            {
+              "items": []
+            }
+          ],
+          "expected": {
+            "status": 200,
+            "body": {
+              "items": []
+            }
+          }
+        },
+        {
+          "input": [
+            {}
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        },
+        {
+          "input": [
+            null
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        },
+        {
+          "input": [
+            {
+              "items": [
+                {
+                  "id": "x",
+                  "tier": "standard",
+                  "day": "someday"
+                }
+              ]
+            }
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        },
+        {
+          "input": [
+            {
+              "items": [
+                {
+                  "id": "valid",
+                  "tier": "standard",
+                  "day": "monday"
+                },
+                {
+                  "id": 1
+                }
+              ]
+            }
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "refund-service",
+      "family": "multi-file-customer-exception",
+      "initial": "",
+      "task": "Repair the refund batch endpoint across src/domain.cjs, src/service.cjs and src/route.cjs using company refund policy. Read CONTRACT.md and preserve exports. Domain solve(customer, plan, daysSincePurchase) returns refund eligibility; customer is Acme or Other, plan is annual or monthly, and daysSincePurchase is a nonnegative integer. Service solve(items) maps {id, customer, plan, daysSincePurchase} purchases to {id, eligible}. Route solve(request) validates and wraps the batch. Run node --test.",
+      "project": {
+        "entry": "src/route.cjs",
+        "editable": [
+          "src/domain.cjs",
+          "src/service.cjs",
+          "src/route.cjs"
+        ],
+        "files": {
+          "src/domain.cjs": "exports.solve = (customer, plan, daysSincePurchase) => true;\n",
+          "src/service.cjs": "const domain = require('./domain.cjs');\nexports.solve = values => [];\n",
+          "src/route.cjs": "const { validate } = require('./validate.cjs');\nconst service = require('./service.cjs');\nexports.solve = request => ({ status: 501, body: { error: 'unimplemented' } });\n",
+          "src/validate.cjs": "exports.validate = request => !!request && Array.isArray(request.items) && request.items.every(item => !!item && typeof item.id === 'string' && ['Acme','Other'].includes(item.customer) && ['annual','monthly'].includes(item.plan) && Number.isInteger(item.daysSincePurchase) && item.daysSincePurchase >= 0);\n",
+          "package.json": "{\"private\":true,\"type\":\"commonjs\",\"scripts\":{\"test\":\"node --test\"}}\n",
+          "CONTRACT.md": "This endpoint computes refund eligibility. The public tests intentionally do not specify company policy values.\nEach editable module exports a synchronous function named solve. The domain module handles one item, the service maps an array preserving order, and the route accepts an object with an items array. Valid requests return {status: 200, body: {items: serviceResult}}. Invalid requests return {status: 400, body: {error: 'invalid request'}}. Keep the existing validator unchanged. Domain arguments and service item shapes are described in the task. Do not mutate inputs. Use only relative CommonJS requires with explicit .cjs extensions; no built-in or third-party modules.\n"
+        }
+      },
+      "publicProbes": [
+        {
+          "input": [
+            {
+              "items": []
+            }
+          ],
+          "expected": {
+            "status": 200,
+            "body": {
+              "items": []
+            }
+          }
+        },
+        {
+          "input": [
+            null
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        }
+      ],
+      "hiddenProbes": [
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            "Acme",
+            "annual",
+            7
+          ],
+          "expected": true
+        },
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            "Acme",
+            "annual",
+            8
+          ],
+          "expected": false
+        },
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            "Acme",
+            "monthly",
+            30
+          ],
+          "expected": true
+        },
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            "Acme",
+            "monthly",
+            31
+          ],
+          "expected": false
+        },
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            "Other",
+            "annual",
+            30
+          ],
+          "expected": true
+        },
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            "Other",
+            "annual",
+            31
+          ],
+          "expected": false
+        },
+        {
+          "module": "src/service.cjs",
+          "input": [
+            [
+              {
+                "id": "b",
+                "customer": "Acme",
+                "plan": "annual",
+                "daysSincePurchase": 8
+              },
+              {
+                "id": "a",
+                "customer": "Other",
+                "plan": "monthly",
+                "daysSincePurchase": 30
+              }
+            ]
+          ],
+          "expected": [
+            {
+              "id": "b",
+              "eligible": false
+            },
+            {
+              "id": "a",
+              "eligible": true
+            }
+          ]
+        },
+        {
+          "module": "src/service.cjs",
+          "input": [
+            []
+          ],
+          "expected": []
+        },
+        {
+          "input": [
+            {
+              "items": [
+                {
+                  "id": "e",
+                  "customer": "Acme",
+                  "plan": "annual",
+                  "daysSincePurchase": 7
+                },
+                {
+                  "id": "s",
+                  "customer": "Acme",
+                  "plan": "monthly",
+                  "daysSincePurchase": 31
+                }
+              ]
+            }
+          ],
+          "expected": {
+            "status": 200,
+            "body": {
+              "items": [
+                {
+                  "id": "e",
+                  "eligible": true
+                },
+                {
+                  "id": "s",
+                  "eligible": false
+                }
+              ]
+            }
+          }
+        },
+        {
+          "input": [
+            null
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        },
+        {
+          "input": [
+            {
+              "items": [
+                {
+                  "id": "x",
+                  "customer": "Other",
+                  "plan": "annual",
+                  "daysSincePurchase": -1
+                }
+              ]
+            }
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        },
+        {
+          "input": [
+            {
+              "items": [
+                {
+                  "id": "x",
+                  "customer": "Other",
+                  "plan": "annual",
+                  "daysSincePurchase": 0.5
+                }
+              ]
+            }
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "array-service-control",
+      "family": "multi-file-repository-only-control",
+      "control": true,
+      "initial": "",
+      "task": "Repair the array batch endpoint across src/domain.cjs, src/service.cjs and src/route.cjs. Read CONTRACT.md and preserve exports. Domain solve(numbers) returns unique finite numbers in ascending numeric order. Service solve(items) maps {id, numbers} groups to {id, values} while retaining group order. Route solve(request) validates and wraps the batch. Do not mutate arguments. Run node --test.",
+      "project": {
+        "entry": "src/route.cjs",
+        "editable": [
+          "src/domain.cjs",
+          "src/service.cjs",
+          "src/route.cjs"
+        ],
+        "files": {
+          "src/domain.cjs": "exports.solve = numbers => numbers.sort();\n",
+          "src/service.cjs": "const domain = require('./domain.cjs');\nexports.solve = values => [];\n",
+          "src/route.cjs": "const { validate } = require('./validate.cjs');\nconst service = require('./service.cjs');\nexports.solve = request => ({ status: 501, body: { error: 'unimplemented' } });\n",
+          "src/validate.cjs": "exports.validate = request => !!request && Array.isArray(request.items) && request.items.every(item => !!item && typeof item.id === 'string' && Array.isArray(item.numbers) && item.numbers.every(Number.isFinite));\n",
+          "package.json": "{\"private\":true,\"type\":\"commonjs\",\"scripts\":{\"test\":\"node --test\"}}\n",
+          "CONTRACT.md": "This array endpoint is completely specified in the task; it needs no external evidence.\nEach editable module exports a synchronous function named solve. The domain module handles one item, the service maps an array preserving order, and the route accepts an object with an items array. Valid requests return {status: 200, body: {items: serviceResult}}. Invalid requests return {status: 400, body: {error: 'invalid request'}}. Keep the existing validator unchanged. Domain arguments and service item shapes are described in the task. Do not mutate inputs. Use only relative CommonJS requires with explicit .cjs extensions; no built-in or third-party modules.\n"
+        }
+      },
+      "publicProbes": [
+        {
+          "input": [
+            {
+              "items": []
+            }
+          ],
+          "expected": {
+            "status": 200,
+            "body": {
+              "items": []
+            }
+          }
+        },
+        {
+          "input": [
+            null
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        }
+      ],
+      "hiddenProbes": [
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            [
+              10,
+              2,
+              -1,
+              10
+            ]
+          ],
+          "expected": [
+            -1,
+            2,
+            10
+          ]
+        },
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            [
+              1.5,
+              0,
+              -2,
+              1.5
+            ]
+          ],
+          "expected": [
+            -2,
+            0,
+            1.5
+          ]
+        },
+        {
+          "module": "src/domain.cjs",
+          "input": [
+            []
+          ],
+          "expected": []
+        },
+        {
+          "module": "src/service.cjs",
+          "input": [
+            [
+              {
+                "id": "z",
+                "numbers": [
+                  2,
+                  2,
+                  1
+                ]
+              },
+              {
+                "id": "a",
+                "numbers": []
+              }
+            ]
+          ],
+          "expected": [
+            {
+              "id": "z",
+              "values": [
+                1,
+                2
+              ]
+            },
+            {
+              "id": "a",
+              "values": []
+            }
+          ]
+        },
+        {
+          "input": [
+            {
+              "items": [
+                {
+                  "id": "x",
+                  "numbers": [
+                    10,
+                    2,
+                    10
+                  ]
+                }
+              ]
+            }
+          ],
+          "expected": {
+            "status": 200,
+            "body": {
+              "items": [
+                {
+                  "id": "x",
+                  "values": [
+                    2,
+                    10
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "input": [
+            {}
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        },
+        {
+          "input": [
+            null
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        },
+        {
+          "input": [
+            {
+              "items": [
+                {
+                  "id": "x",
+                  "numbers": [
+                    "1"
+                  ]
+                }
+              ]
+            }
+          ],
+          "expected": {
+            "status": 400,
+            "body": {
+              "error": "invalid request"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "instructions": {
+    "support-service": "Work only in this synthetic repository. Read CONTRACT.md. Only src/domain.cjs, src/service.cjs, src/route.cjs may be changed; preserve module interfaces and every other file. Use native file editing and shell tools, inspect the repository, and run node --test before finishing. Do not look outside the repository, search for benchmark fixtures or scoring data, access the network, or install dependencies. Company documents are maintained outside the repository; use supplied context as evidence. If policy is absent, make your best implementation and state the assumption. Do not mutate input arguments.",
+    "refund-service": "Work only in this synthetic repository. Read CONTRACT.md. Only src/domain.cjs, src/service.cjs, src/route.cjs may be changed; preserve module interfaces and every other file. Use native file editing and shell tools, inspect the repository, and run node --test before finishing. Do not look outside the repository, search for benchmark fixtures or scoring data, access the network, or install dependencies. Company documents are maintained outside the repository; use supplied context as evidence. If policy is absent, make your best implementation and state the assumption. Do not mutate input arguments.",
+    "array-service-control": "Work only in this synthetic repository. Read CONTRACT.md. Only src/domain.cjs, src/service.cjs, src/route.cjs may be changed; preserve module interfaces and every other file. Use native file editing and shell tools, inspect the repository, and run node --test before finishing. Do not look outside the repository, search for benchmark fixtures or scoring data, access the network, or install dependencies. Company documents are maintained outside the repository; use supplied context as evidence. If policy is absent, make your best implementation and state the assumption. Do not mutate input arguments."
+  },
+  "policy_sources": {
+    "support-service": "support.md",
+    "refund-service": "refunds.md"
+  },
+  "instructions_location": "AGENTS.md",
+  "full_document_tokens": 416,
+  "tokenizer": "o200k_base",
+  "compiled_artifacts": [
+    {
+      "path": "integrations/codex/dist/src/user-prompt-submit.js",
+      "sha256": "f509052788ddea2779ebf8988000e12d51ba1f64bb8eb2267aa7623fd34ea7a4"
+    },
+    {
+      "path": "packages/engine/dist/src/cli.js",
+      "sha256": "d8164cd510b1c806493a540b2e366b0197037eaf9a336441405952d20a1a8e05"
+    },
+    {
+      "path": "packages/engine/dist/src/evaluation/native-agent.js",
+      "sha256": "c5d6d577b9eff2faed27a1867a6ea095331a34f77b69fa35e78b36c7f63694c5"
+    },
+    {
+      "path": "packages/engine/dist/src/evaluation/agent-grader.js",
+      "sha256": "fbcda57f442658fb070b1af6a9e3b645a043508996f5d038954252a39752b467"
+    },
+    {
+      "path": "packages/engine/dist/src/evaluation/native-agent-projects.js",
+      "sha256": "d8d9deb298eae72d3d86cf35e98cc8a7534136ae92679aba05fb1ca5efe1ea85"
+    },
+    {
+      "path": "packages/hooks/dist/src/index.js",
+      "sha256": "a851901b0c27190723c9dcbfe2e0d6e5401b78bdcf12fc8f8ee93a4def24ffeb"
+    }
+  ],
+  "context_pipeline": "Real engine indexing, lexical excerpt retrieval and compiled prompt hook; extraction, embeddings and synthesis disabled",
+  "isolation": "Fresh Git workspace and disposable CODEX_HOME per trajectory; only existing file-backed login copied; user config/rules and plugins disabled; workspace-write tool sandbox; generated hook trusted for one invocation",
+  "limitations": "Small synthetic functions or miniature multi-file services with native shell/edit tools, not production repository or interactive desktop acceptance. Separate hidden behavioral probes are not placed in the workspace; isolation from a deliberately hostile agent is not proven. Public-test execution is observed from native command events; recursive integrity checks detect edited protected files, extra paths and symlinks outside .git. No extraction/embedding/synthesis quality claim. One requested hosted model, without a pinned provider snapshot or controlled cache/warm state. Condition order rotates; repeats are not independent statistical samples. Host wall time includes generation/tools and is not hook latency. Host usage is cumulative reported input/output, with cached input reported separately; local XML counts are not host token savings."
+}
