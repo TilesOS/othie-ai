@@ -160,6 +160,37 @@ and the unpinned hosted snapshot prevent a controlled timing or general performa
 claim. Model extraction, embeddings and synthesis remain disabled, so this pilot does
 not close compiler-quality acceptance or interactive desktop trust.
 
+### Multi-file service corpus
+
+Pass `--corpus multi-file` for three separate miniature CommonJS repositories:
+support response targets, refund eligibility, and a repository-only numeric-array
+control. The default `pilot` corpus and the constrained-tool fixtures are unchanged.
+`--cases` must name cases from the selected corpus.
+
+```sh
+npm run eval:native-agent -- --corpus multi-file --repeats 2 --out /tmp/othie-native-projects
+```
+
+Each repository has three editable files: domain logic, an ordered batch service,
+and a request endpoint. A protected validator, contract, package manifest, instructions
+and public tests define the interfaces without giving policy values. Hidden probes
+exercise domain boundaries, batch ordering, endpoint composition, invalid requests
+and input preservation. Direct module probes prevent a correct endpoint from masking
+broken domain/service behavior. Public tests check only the request envelope.
+
+Recursive integrity checks reject nested additions, missing or oversized files,
+symlinks, and changes outside the explicit editable list. Final module source is
+retained in each trajectory. Hidden grading uses a separate resource-limited process
+with an in-memory relative CommonJS loader; it exposes supplied `.cjs` modules only,
+with no Node filesystem, built-in imports or inherited environment. Each probe starts
+with fresh module state. Failed integrity leaves no modules available for grading.
+
+Protocol `native-agent-v3` records the corpus, complete project fixtures, per-case
+instructions and compiled grader/project hashes alongside the existing delivery,
+coverage, completion, public-test, behavior and usage gates. These synthetic service
+fixtures add multi-file integration; production repositories, dependency changes,
+larger corpora, additional models and general quality acceptance remain open.
+
 ## Native prompt-hook acceptance
 
 `npm run eval:hook-default-latency -- --out /tmp/othie-hook-default-latency` measures compiled Codex

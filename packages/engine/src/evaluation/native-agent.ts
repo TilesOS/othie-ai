@@ -2,19 +2,19 @@ import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { lstat, mkdir, mkdtemp, readFile, readdir, realpath, rm, writeFile } from "node:fs/promises";
 import { homedir, tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { z } from "zod";
 import { configSchema } from "../config.js";
 import { createCredential } from "../engine/credentials.js";
 import { runEngine } from "../engine/lifecycle.js";
 import { countTokens } from "../tokenizer.js";
-import type { AgentCase } from "./agent-cases.js";
-import { gradeCode } from "./agent-grader.js";
+import { gradeCode, gradeModules } from "./agent-grader.js";
 import { evaluationArguments } from "./arguments.js";
 import { parseHookDiagnostic } from "./hook-diagnostics.js";
 import type { AgentCondition } from "./local-agent.js";
 import { nativeAgentCases, nativeAgentDocuments, nativeAgentInstructions, nativeAgentPolicySources } from "./native-agent-cases.js";
+import { nativeAgentProjectCases, nativeAgentProjectInstructions, nativeAgentProjectPolicySources, type NativeAgentCase } from "./native-agent-projects.js";
 import { codexHookConfiguration, createCodexProjectHome, recordingWrapper, redactNativeTranscript, shellQuote } from "./native-hooks.js";
 
 const optionsSchema = z.object({
@@ -22,15 +22,17 @@ const optionsSchema = z.object({
   repeats: z.number().int().min(1).max(10).default(1),
   contextTokens: z.number().int().min(80).max(500).default(500),
   timeoutMs: z.number().int().min(10_000).max(600_000).default(180_000),
-  cases: z.array(z.string()).min(1).default(nativeAgentCases.map((item) => item.id)),
+  corpus: z.enum(["pilot", "multi-file"]).default("pilot"),
+  cases: z.array(z.string()).min(1).optional(),
 }).strict().superRefine((value, context) => {
-  if (new Set(value.cases).size !== value.cases.length || value.cases.some((id) => !nativeAgentCases.some((item) => item.id === id))) {
+  const corpus = value.corpus === "pilot" ? nativeAgentCases : nativeAgentProjectCases;
+  if (value.cases && (new Set(value.cases).size !== value.cases.length || value.cases.some((id) => !corpus.some((item) => item.id === id)))) {
     context.addIssue({ code: "custom", message: "Unknown or duplicate native agent cases" });
   }
-});
+}).transform((value) => ({ ...value, cases: value.cases ?? (value.corpus === "pilot" ? nativeAgentCases : nativeAgentProjectCases).map((item) => item.id) }));
 
 export function nativeAgentOptions(argv: string[]) {
-  const args = evaluationArguments(argv, ["out", "model", "repeats", "context-tokens", "timeout-ms", "cases"], "native agent");
+  const args = evaluationArguments(argv, ["out", "model", "repeats", "context-tokens", "timeout-ms", "cases", "corpus"], "native agent");
   return optionsSchema.parse({
     out: resolve(args.get("out") ?? `packages/engine/evaluation/results/native-agent-${Date.now()}`),
     ...(args.has("model") ? { model: args.get("model") } : {}),
@@ -38,10 +40,26 @@ export function nativeAgentOptions(argv: string[]) {
     ...(args.has("context-tokens") ? { contextTokens: Number(args.get("context-tokens")) } : {}),
     ...(args.has("timeout-ms") ? { timeoutMs: Number(args.get("timeout-ms")) } : {}),
     ...(args.has("cases") ? { cases: args.get("cases")!.split(",") } : {}),
+    ...(args.has("corpus") ? { corpus: args.get("corpus") } : {}),
   });
 }
 
-export function nativeAgentFiles(scenario: AgentCase): Record<string, string> {
+export function nativeAgentFiles(scenario: NativeAgentCase): Record<string, string> {
+  if (scenario.project) return {
+    ...scenario.project.files,
+    "AGENTS.md": nativeAgentProjectInstructions(scenario) + "\n",
+    "README.md": "Repair the service described in CONTRACT.md and the task. Run node --test. Company documents are external. Public tests cover the request envelope; separate grading checks domain, service and endpoint behavior.\n",
+    "solution.test.cjs": `const {test} = require('node:test');
+const assert = require('node:assert/strict');
+const {solve} = require('./${scenario.project.entry}');
+const probes = ${JSON.stringify(scenario.publicProbes)};
+for (const [index, probe] of probes.entries()) test('public interface ' + index, () => {
+  const before = JSON.stringify(probe.input);
+  assert.deepEqual(solve(...probe.input), probe.expected);
+  assert.equal(JSON.stringify(probe.input), before);
+});
+`,
+  };
   return {
     "solution.js": scenario.initial,
     "AGENTS.md": nativeAgentInstructions + "\n",
@@ -116,23 +134,38 @@ export function nativeAgentDelivery(receipt: unknown, expectedXml: string, expec
   } catch { return false; }
 }
 
-export function nativeAgentContextComplete(scenario: AgentCase, text: string, hasItems: boolean): boolean {
+export function nativeAgentContextComplete(scenario: NativeAgentCase, text: string, hasItems: boolean): boolean {
   if (scenario.control) return !hasItems;
-  const policy = nativeAgentDocuments.find((document) => document.name === nativeAgentPolicySources[scenario.id]);
+  const policy = nativeAgentDocuments.find((document) => document.name === (nativeAgentPolicySources[scenario.id] ?? nativeAgentProjectPolicySources[scenario.id]));
   const sentences = policy ? [...new Intl.Segmenter("en", { granularity: "sentence" }).segment(policy.text)].map(({ segment }) => segment.trim()) : [];
   return hasItems && sentences.length > 0 && sentences.every((sentence) => text.includes(sentence));
 }
 
-export async function nativeAgentIntegrity(workspace: string, files: Record<string, string>) {
-  const names = await readdir(workspace);
-  const changes: string[] = names.filter((name) => name !== ".git" && !Object.hasOwn(files, name));
+export async function nativeAgentIntegrity(workspace: string, files: Record<string, string>, editable: readonly string[] = ["solution.js"]) {
+  const directories = new Set(Object.keys(files).flatMap((name) => {
+    const parts = name.split("/"); return parts.slice(0, -1).map((_, index) => parts.slice(0, index + 1).join("/"));
+  }));
+  const changes = new Set<string>();
+  async function walk(directory = "") {
+    for (const item of await readdir(join(workspace, directory), { withFileTypes: true })) {
+      const name = directory ? `${directory}/${item.name}` : item.name;
+      if (name === ".git") continue;
+      if (item.isDirectory() && directories.has(name)) await walk(name);
+      else if (!item.isFile() || !Object.hasOwn(files, name)) changes.add(name);
+    }
+  }
+  await walk();
   for (const [name, original] of Object.entries(files)) {
     const path = join(workspace, name);
+    // Never follow a replaced parent directory into the host filesystem.
+    if ((await Promise.all(name.split("/").slice(0, -1).map((_, index) => lstat(join(workspace, ...name.split("/").slice(0, index + 1))).catch(() => null)))).some((stat) => !stat?.isDirectory())) {
+      changes.add(name); continue;
+    }
     const stat = await lstat(path).catch(() => null);
-    if (!stat?.isFile() || stat.size > 100_000) { changes.push(name); continue; }
-    if (name !== "solution.js" && await readFile(path, "utf8") !== original) changes.push(name);
+    if (!stat?.isFile() || stat.size > 100_000) { changes.add(name); continue; }
+    if (!editable.includes(name) && await readFile(path, "utf8") !== original) changes.add(name);
   }
-  return { passed: changes.length === 0, changes };
+  return { passed: changes.size === 0, changes: [...changes].sort() };
 }
 
 const hash = (value: string | Uint8Array) => createHash("sha256").update(value).digest("hex");
@@ -164,18 +197,21 @@ export async function runNativeAgentBenchmark(input: z.input<typeof optionsSchem
     const version = await nativeAgentProcess("codex", ["--version"], root, 10_000);
     if (version.code !== 0) throw new Error("Could not identify native Codex version");
     const fullDocuments = nativeAgentDocuments.map((doc) => `${doc.name}:\n${doc.text}`).join("\n\n");
-    const cases = options.cases.map((id) => nativeAgentCases.find((item) => item.id === id)!);
-    const protocol = { protocol_version: "native-agent-v2", recorded_at: new Date().toISOString(), synthetic_only: true,
+    const corpus: NativeAgentCase[] = options.corpus === "pilot" ? nativeAgentCases : nativeAgentProjectCases;
+    const cases = options.cases.map((id) => corpus.find((item) => item.id === id)!);
+    const instructions = options.corpus === "pilot" ? nativeAgentInstructions : Object.fromEntries(cases.map((scenario) => [scenario.id, nativeAgentProjectInstructions(scenario)]));
+    const policySources = options.corpus === "pilot" ? nativeAgentPolicySources : nativeAgentProjectPolicySources;
+    const protocol = { protocol_version: "native-agent-v3", recorded_at: new Date().toISOString(), synthetic_only: true,
       node: process.version, platform: process.platform, arch: process.arch, host: "codex", host_version: version.stdout.trim(),
       requested_model: options.model, reasoning_effort: "low", options: { ...options, out: "<output>" },
-      fixture_sha256: hash(JSON.stringify({ cases, documents: nativeAgentDocuments, instructions: nativeAgentInstructions, instructions_location: "AGENTS.md", policy_sources: nativeAgentPolicySources })),
-      documents: nativeAgentDocuments, cases, instructions: nativeAgentInstructions, policy_sources: nativeAgentPolicySources,
+      fixture_sha256: hash(JSON.stringify({ cases, documents: nativeAgentDocuments, instructions, instructions_location: "AGENTS.md", policy_sources: policySources })),
+      documents: nativeAgentDocuments, cases, instructions, policy_sources: policySources,
       instructions_location: "AGENTS.md",
       full_document_tokens: countTokens(fullDocuments, "o200k_base"), tokenizer: "o200k_base",
-      compiled_artifacts: await Promise.all([adapter, cli, fileURLToPath(import.meta.url), join(repository, "packages/hooks/dist/src/index.js")].map(async (path) => ({ path: path.slice(repository.length), sha256: hash(await readFile(path)) }))),
+      compiled_artifacts: await Promise.all([adapter, cli, fileURLToPath(import.meta.url), fileURLToPath(new URL("./agent-grader.js", import.meta.url)), fileURLToPath(new URL("./native-agent-projects.js", import.meta.url)), join(repository, "packages/hooks/dist/src/index.js")].map(async (path) => ({ path: path.slice(repository.length), sha256: hash(await readFile(path)) }))),
       context_pipeline: "Real engine indexing, lexical excerpt retrieval and compiled prompt hook; extraction, embeddings and synthesis disabled",
       isolation: "Fresh Git workspace and disposable CODEX_HOME per trajectory; only existing file-backed login copied; user config/rules and plugins disabled; workspace-write tool sandbox; generated hook trusted for one invocation",
-      limitations: "Small synthetic single-function tasks with native shell/edit tools, not realistic multi-file or interactive desktop acceptance. Separate hidden behavioral probes are not placed in the workspace; isolation from a deliberately hostile agent is not proven. Public-test execution is observed from native command events; file-integrity checks detect edited tests and extra root files. No extraction/embedding/synthesis quality claim. One requested hosted model, without a pinned provider snapshot or controlled cache/warm state. Condition order rotates; repeats are not independent statistical samples. Host wall time includes generation/tools and is not hook latency. Host usage is cumulative reported input/output, with cached input reported separately; local XML counts are not host token savings.",
+      limitations: "Small synthetic functions or miniature multi-file services with native shell/edit tools, not production repository or interactive desktop acceptance. Separate hidden behavioral probes are not placed in the workspace; isolation from a deliberately hostile agent is not proven. Public-test execution is observed from native command events; recursive integrity checks detect edited protected files, extra paths and symlinks outside .git. No extraction/embedding/synthesis quality claim. One requested hosted model, without a pinned provider snapshot or controlled cache/warm state. Condition order rotates; repeats are not independent statistical samples. Host wall time includes generation/tools and is not hook latency. Host usage is cumulative reported input/output, with cached input reported separately; local XML counts are not host token savings.",
     };
     await save(join(options.out, "protocol.json"), protocol);
     stage = "start_engine";
@@ -196,7 +232,7 @@ export async function runNativeAgentBenchmark(input: z.input<typeof optionsSchem
         stage = id;
         await mkdir(workspace);
         const files = nativeAgentFiles(scenario);
-        for (const [name, content] of Object.entries(files)) await writeFile(join(workspace, name), content);
+        for (const [name, content] of Object.entries(files)) { await mkdir(dirname(join(workspace, name)), { recursive: true }); await writeFile(join(workspace, name), content); }
         const init = await nativeAgentProcess("git", ["init", "--quiet"], workspace, 10_000);
         if (init.code !== 0) throw new Error("Could not initialize trajectory workspace");
         await createCodexProjectHome(home, workspace, process.env.CODEX_HOME ?? join(homedir(), ".codex"));
@@ -218,11 +254,15 @@ export async function runNativeAgentBenchmark(input: z.input<typeof optionsSchem
         const receipt = await readFile(receiptPath, "utf8").then((text) => JSON.parse(text) as unknown, () => null);
         const deliveryPassed = condition !== "othie" ? receipt === null : nativeAgentDelivery(receipt, expected.text, hasItems, options.contextTokens) && hasItems === !scenario.control;
         const contextComplete = condition !== "othie" ? null : nativeAgentContextComplete(scenario, expected.text, hasItems);
-        const integrity = await nativeAgentIntegrity(workspace, files);
+        const integrity = await nativeAgentIntegrity(workspace, files, scenario.project?.editable);
         const solutionStat = await lstat(join(workspace, "solution.js")).catch(() => null);
         const code = solutionStat?.isFile() && solutionStat.size <= 100_000 ? await readFile(join(workspace, "solution.js"), "utf8") : "";
-        const grade = await gradeCode(code, scenario.hiddenProbes);
-        const publicGrade = await gradeCode(code, scenario.publicProbes, true);
+        // Do not read through paths that failed the integrity gate (including
+        // symlinked parent directories). Preserve the failure with empty modules.
+        const finalFiles: Record<string, string> | null = scenario.project ? {} : null;
+        if (finalFiles && integrity.passed) for (const name of Object.keys(files).filter((name) => name.endsWith(".cjs") && name !== "solution.test.cjs")) finalFiles[name] = await readFile(join(workspace, name), "utf8");
+        const grade = scenario.project ? await gradeModules(finalFiles!, scenario.project.entry, scenario.hiddenProbes) : await gradeCode(code, scenario.hiddenProbes);
+        const publicGrade = scenario.project ? await gradeModules(finalFiles!, scenario.project.entry, scenario.publicProbes, true) : await gradeCode(code, scenario.publicProbes, true);
         const operational = response.code === 0 && !response.timed_out && !response.output_limit && events.completed && integrity.passed && events.ran_public_tests;
         const record = { case_id: scenario.id, family: scenario.family, repeat, condition, order, prompt,
           expected_noop: !!scenario.control, delivery_passed: deliveryPassed, context_complete: contextComplete, integrity, ...events,
@@ -230,10 +270,10 @@ export async function runNativeAgentBenchmark(input: z.input<typeof optionsSchem
           supplied_context_tokens: condition === "full_documents" ? countTokens(fullDocuments, "o200k_base") : condition === "othie" && hasItems ? expected.status.tokenCount : 0,
           expected_context: condition === "othie" ? { text: expected.text, status: expected.status } : null,
           response: { ...response, stdout: redact(response.stdout), stderr: redact(response.stderr) }, receipt,
-          final_code: code, public_grade: publicGrade, grade, operational, wall_ms: wallMs,
+          final_code: scenario.project ? null : code, final_files: finalFiles, public_grade: publicGrade, grade, operational, wall_ms: wallMs,
           correct: operational && deliveryPassed && contextComplete !== false && publicGrade.passed === publicGrade.total && grade.passed === grade.total };
         await writeFile(join(options.out, `${id}.json`), redact(JSON.stringify(record, null, 2)) + "\n", { flag: "wx", mode: 0o600 });
-        const { prompt: _prompt, response: _response, receipt: _receipt, final_code: _code, expected_context: _context, ...summary } = record;
+        const { prompt: _prompt, response: _response, receipt: _receipt, final_code: _code, final_files: _files, expected_context: _context, ...summary } = record;
         results.push({ ...summary, transcript: `${id}.json` });
         process.stderr.write(`Native agent ${scenario.id} / ${condition} / repeat ${repeat + 1}: ${grade.passed}/${grade.total}; operational=${operational}; delivery=${deliveryPassed}\n`);
         await rm(workspace, { recursive: true, force: true }); await rm(home, { recursive: true, force: true });

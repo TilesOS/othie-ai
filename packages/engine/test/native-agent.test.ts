@@ -1,18 +1,77 @@
-import { mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { expect, it } from "vitest";
 import { nativeAgentCases, nativeAgentDocuments } from "../src/evaluation/native-agent-cases.js";
 import { nativeAgentContextComplete, nativeAgentDelivery, nativeAgentEvents, nativeAgentFiles, nativeAgentIntegrity, nativeAgentOptions, nativeAgentProcess } from "../src/evaluation/native-agent.js";
 import { countTokens } from "../src/tokenizer.js";
+import { nativeAgentProjectCases } from "../src/evaluation/native-agent-projects.js";
+import { gradeModules } from "../src/evaluation/agent-grader.js";
 
 it("rejects ambiguous native agent options before creating output state", () => {
   for (const args of [
     ["--wat", "1"], ["--out", "a", "--out", "b"], ["--repeats"], ["positional"],
     ["--repeats", "0"], ["--timeout-ms", "NaN"], ["--context-tokens", "501"],
     ["--cases", "unknown"], ["--cases", "support-targets,support-targets"], ["--cases", ""], ["--model", " "],
+    ["--corpus", "unknown"], ["--corpus", "multi-file", "--cases", "support-targets"],
   ]) expect(() => nativeAgentOptions(args)).toThrow();
   expect(nativeAgentOptions(["--cases", "support-targets", "--repeats", "2"]).cases).toEqual(["support-targets"]);
+  expect(nativeAgentOptions(["--corpus", "multi-file"]).cases).toEqual(nativeAgentProjectCases.map((item) => item.id));
+  expect(nativeAgentOptions([]).cases).toEqual(nativeAgentCases.map((item) => item.id));
+});
+
+const projectDomains: Record<string, string> = {
+  "support-service": "exports.solve = (tier, day) => ['saturday','sunday'].includes(day) ? (tier === 'enterprise' ? 6 : 12) : (tier === 'enterprise' ? 2 : 4);",
+  "refund-service": "exports.solve = (customer, plan, days) => days <= (customer === 'Acme' && plan === 'annual' ? 7 : 30);",
+  "array-service-control": "exports.solve = numbers => [...new Set(numbers)].sort((a,b) => a-b);",
+};
+function referenceProject(id: string): Record<string, string> {
+  const scenario = nativeAgentProjectCases.find((item) => item.id === id)!;
+  const expression = id === "support-service" ? "{id: item.id, responseHours: domain.solve(item.tier, item.day)}" : id === "refund-service" ? "{id: item.id, eligible: domain.solve(item.customer, item.plan, item.daysSincePurchase)}" : "{id: item.id, values: domain.solve(item.numbers)}";
+  return { ...scenario.project!.files,
+    "src/domain.cjs": projectDomains[id]!,
+    "src/service.cjs": `const domain = require('./domain.cjs'); exports.solve = items => items.map(item => (${expression}));`,
+    "src/route.cjs": "const {validate} = require('./validate.cjs'); const service = require('./service.cjs'); exports.solve = request => validate(request) ? {status: 200, body: {items: service.solve(request.items)}} : {status: 400, body: {error: 'invalid request'}};",
+  };
+}
+
+it("grades domain boundaries, batch integration, validation and input preservation separately", async () => {
+  for (const scenario of nativeAgentProjectCases) {
+    const files = referenceProject(scenario.id);
+    const result = await gradeModules(files, scenario.project!.entry, scenario.hiddenProbes);
+    expect(result.passed, scenario.id).toBe(result.total);
+    const initial = await gradeModules(scenario.project!.files, scenario.project!.entry, scenario.hiddenProbes);
+    expect(initial.passed).toBeLessThan(initial.total);
+    // A correct endpoint alone cannot hide broken lower layers.
+    const endpointOnly = { ...files, "src/domain.cjs": scenario.project!.files["src/domain.cjs"]! };
+    expect((await gradeModules(endpointOnly, scenario.project!.entry, scenario.hiddenProbes)).passed).toBeLessThan(result.total);
+  }
+  const refund = nativeAgentProjectCases.find((item) => item.id === "refund-service")!;
+  const exclusive = { ...referenceProject(refund.id), "src/domain.cjs": projectDomains[refund.id]!.replace("days <=", "days <") };
+  expect((await gradeModules(exclusive, refund.project!.entry, refund.hiddenProbes)).passed).toBeLessThan(refund.hiddenProbes.length);
+});
+
+it("runs multi-file public tests and rejects nested additions, protected edits and directory symlinks", async () => {
+  const root = await mkdtemp(join(tmpdir(), "othie-native-project-test-"));
+  try {
+    const scenario = nativeAgentProjectCases[0]!;
+    const files = nativeAgentFiles(scenario);
+    for (const [name, content] of Object.entries(files)) { await mkdir(dirname(join(root, name)), { recursive: true }); await writeFile(join(root, name), content); }
+    for (const name of scenario.project!.editable) await writeFile(join(root, name), referenceProject(scenario.id)[name]!);
+    expect((await nativeAgentProcess(process.execPath, ["--test"], root, 5000)).code).toBe(0);
+    expect((await nativeAgentIntegrity(root, files, scenario.project!.editable)).passed).toBe(true);
+    await writeFile(join(root, "src/extra.cjs"), "unexpected");
+    await writeFile(join(root, "src/validate.cjs"), "exports.validate = () => true;");
+    expect((await nativeAgentIntegrity(root, files, scenario.project!.editable)).changes).toEqual(["src/extra.cjs", "src/validate.cjs"]);
+    if (process.platform !== "win32") {
+      await rm(join(root, "src"), { recursive: true });
+      await symlink(tmpdir(), join(root, "src"));
+      const result = await nativeAgentIntegrity(root, files, scenario.project!.editable);
+      expect(result.passed).toBe(false);
+      expect(result.changes).toContain("src");
+      expect(result.changes).toContain("src/domain.cjs");
+    }
+  } finally { await rm(root, { recursive: true, force: true }); }
 });
 
 it("requires complete strict diagnostic receipts and exactly the expected context", () => {

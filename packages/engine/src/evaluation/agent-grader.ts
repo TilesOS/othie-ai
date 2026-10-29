@@ -51,7 +51,7 @@ export function gradeCode(code: string, probes: Probe[], publicOnly = false): Pr
 }
 
 export function gradeModules(modules: Record<string, string>, entry: string, probes: ModuleProbe[], publicOnly = false): Promise<Grade> {
-  return grade({ modules, entry, probes, publicOnly });
+  return grade({ modules: Object.fromEntries(Object.entries(modules).filter(([name]) => name.endsWith(".cjs"))), entry, probes, publicOnly });
 }
 
 async function grade(input: { code?: string; modules?: Record<string, string>; entry?: string; probes: Probe[]; publicOnly: boolean }): Promise<Grade> {
