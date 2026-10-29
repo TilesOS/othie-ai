@@ -1,0 +1,180 @@
+{
+  "protocol": "native-multi-file-noop-diagnostic-v1",
+  "recorded_at": "2026-10-29T01:27:49.868Z",
+  "synthetic_only": true,
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "corpus_sha256": "f6b6463670e26fc0664549fa8cbb03e26d25caba0ef25d4b188db233157c4ae1",
+  "compiled_terms_sha256": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+  "limitations": "Same-engine diagnostic with original native task, a one-identifier query intervention and a refund-positive control. The original native fixture is unchanged. Identifier substitution is not a production fix or semantic no-op acceptance. Providers are disabled; unrelated lexical matches remain possible.",
+  "records": [
+    {
+      "id": "original-control",
+      "query": "Repair the array batch endpoint across src/domain.cjs, src/service.cjs and src/route.cjs. Read CONTRACT.md and preserve exports. Domain solve(numbers) returns unique finite numbers in ascending numeric order. Service solve(items) maps {id, numbers} groups to {id, values} while retaining group order. Route solve(request) validates and wraps the batch. Do not mutate arguments. Run node --test.",
+      "terms": [
+        "repair",
+        "array",
+        "batch",
+        "endpoint",
+        "across",
+        "src",
+        "domain",
+        "cjs",
+        "service",
+        "route",
+        "read",
+        "contract",
+        "preserve",
+        "exports",
+        "solve",
+        "numbers",
+        "returns",
+        "unique",
+        "finite",
+        "ascending",
+        "numeric",
+        "order",
+        "items",
+        "maps",
+        "groups",
+        "values",
+        "while",
+        "retaining",
+        "group",
+        "request",
+        "validates",
+        "wraps",
+        "mutate",
+        "arguments",
+        "run",
+        "node",
+        "test"
+      ],
+      "source_overlaps": [
+        {
+          "name": "refunds.md",
+          "shared_terms": [
+            "request"
+          ]
+        }
+      ],
+      "text": "<organization_context profile=\"company\" mode=\"fallback\"><items><excerpt>The standard refund request window is thirty days after purchase.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt><excerpt>Acme monthly plans retain the standard thirty-day window.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt><excerpt>Refund requests on the last day of the window are eligible.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt><excerpt>Acme annual-plan purchases are an exception with a seven-day refund request window.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt></items><conflicts count=\"0\" detection=\"explicit_opposition_only\"></conflicts><status tokenizer=\"o200k_base\" tokenizer_estimate=\"false\" tokens=\"207\" omitted=\"0\" keyword=\"true\" vector=\"false\" corpus_revision=\"24\" rule_revision=\"0\"/></organization_context>",
+      "status": {
+        "profile": "company",
+        "mode": "fallback",
+        "tokenizer": "o200k_base",
+        "tokenizerEstimate": false,
+        "tokenCount": 207,
+        "omittedItems": 0,
+        "conflicts": 0,
+        "keywordAvailable": true,
+        "vectorAvailable": false,
+        "synthesisAttempted": false,
+        "synthesisReason": "Query embeddings unavailable",
+        "corpusRevision": 24,
+        "ruleRevision": 0
+      },
+      "excerpts": 4,
+      "rules": 0
+    },
+    {
+      "id": "identifier-substitution",
+      "query": "Repair the array batch endpoint across src/domain.cjs, src/service.cjs and src/route.cjs. Read CONTRACT.md and preserve exports. Domain solve(numbers) returns unique finite numbers in ascending numeric order. Service solve(items) maps {id, numbers} groups to {id, values} while retaining group order. Route solve(payload) validates and wraps the batch. Do not mutate arguments. Run node --test.",
+      "terms": [
+        "repair",
+        "array",
+        "batch",
+        "endpoint",
+        "across",
+        "src",
+        "domain",
+        "cjs",
+        "service",
+        "route",
+        "read",
+        "contract",
+        "preserve",
+        "exports",
+        "solve",
+        "numbers",
+        "returns",
+        "unique",
+        "finite",
+        "ascending",
+        "numeric",
+        "order",
+        "items",
+        "maps",
+        "groups",
+        "values",
+        "while",
+        "retaining",
+        "group",
+        "payload",
+        "validates",
+        "wraps",
+        "mutate",
+        "arguments",
+        "run",
+        "node",
+        "test"
+      ],
+      "source_overlaps": [],
+      "text": "<organization_context profile=\"company\" mode=\"empty\"><items></items><conflicts count=\"0\" detection=\"explicit_opposition_only\"></conflicts><status tokenizer=\"o200k_base\" tokenizer_estimate=\"false\" tokens=\"74\" omitted=\"0\" keyword=\"true\" vector=\"false\" corpus_revision=\"24\" rule_revision=\"0\"/></organization_context>",
+      "status": {
+        "profile": "company",
+        "mode": "empty",
+        "tokenizer": "o200k_base",
+        "tokenizerEstimate": false,
+        "tokenCount": 74,
+        "omittedItems": 0,
+        "conflicts": 0,
+        "keywordAvailable": true,
+        "vectorAvailable": false,
+        "synthesisAttempted": false,
+        "synthesisReason": "Query embeddings unavailable",
+        "corpusRevision": 24,
+        "ruleRevision": 0
+      },
+      "excerpts": 0,
+      "rules": 0
+    },
+    {
+      "id": "refund-positive",
+      "query": "What is the refund request window?",
+      "terms": [
+        "refund",
+        "request",
+        "window"
+      ],
+      "source_overlaps": [
+        {
+          "name": "refunds.md",
+          "shared_terms": [
+            "refund",
+            "request",
+            "window"
+          ]
+        }
+      ],
+      "text": "<organization_context profile=\"company\" mode=\"fallback\"><items><excerpt>The standard refund request window is thirty days after purchase.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt><excerpt>Refund requests on the last day of the window are eligible.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt><excerpt>Acme annual-plan purchases are an exception with a seven-day refund request window.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt><excerpt>Acme monthly plans retain the standard thirty-day window.<citation source=\"s1/refunds.md\" at=\"lines 1-1\"/></excerpt></items><conflicts count=\"0\" detection=\"explicit_opposition_only\"></conflicts><status tokenizer=\"o200k_base\" tokenizer_estimate=\"false\" tokens=\"207\" omitted=\"0\" keyword=\"true\" vector=\"false\" corpus_revision=\"24\" rule_revision=\"0\"/></organization_context>",
+      "status": {
+        "profile": "company",
+        "mode": "fallback",
+        "tokenizer": "o200k_base",
+        "tokenizerEstimate": false,
+        "tokenCount": 207,
+        "omittedItems": 0,
+        "conflicts": 0,
+        "keywordAvailable": true,
+        "vectorAvailable": false,
+        "synthesisAttempted": false,
+        "synthesisReason": "Query embeddings unavailable",
+        "corpusRevision": 24,
+        "ruleRevision": 0
+      },
+      "excerpts": 4,
+      "rules": 0
+    }
+  ]
+}
