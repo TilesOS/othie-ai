@@ -85,7 +85,15 @@ inspected October 28, also passes both macOS and Windows jobs: clean installatio
 workspace typechecks and the 189-test suite, plus Windows startup-script syntax.
 This verifies the October 24–25 native-agent harness and late-query retrieval changes.
 The [run and step record](packages/engine/evaluation/records/2026-10-28/multi-file-followup/ci-5da7f3e.json)
-retains the full checked revision. The new multi-file benchmark commits still need CI.
+retains the full checked revision.
+
+The [run for `9f416fe`](https://github.com/TilesOS/othie-ai/actions/runs/40813801524),
+inspected October 29, passes clean installation, workspace typechecks and the
+193-test suite on macOS and Windows, plus Windows startup-script syntax. This
+verifies the multi-file module-grader, corpus, integrity and no-op diagnostic history.
+The [run and step record](packages/engine/evaluation/records/2026-10-29/query-scope-followup/ci-9f416fe.json)
+retains the full revision and both jobs. New query-scope evaluator commits still
+need CI; automated jobs do not establish native Windows host/session acceptance.
 
 ## Delivery and credential coverage
 
@@ -876,8 +884,8 @@ at 262–278 ms. Native generation/tools are outside those adapter timings. Rest
 startup/suite IPC failures, an interrupted restricted build and restricted audit DNS
 errors remain recorded separately from successful reruns. Publication hashes and a
 manifest verify redaction and current artifacts; the evidence verifier regrades every
-saved module snapshot. Prior history through `5da7f3e` now passes macOS/Windows CI;
-the new multi-file commits still need CI.
+saved module snapshot. Prior history through `5da7f3e` passed macOS/Windows CI at
+that inspection; the October 29 inspection above additionally verifies `9f416fe`.
 
 ## Remaining acceptance work
 
@@ -890,9 +898,9 @@ the new multi-file commits still need CI.
   October 23 with complete cited adapter delivery and provider-boundary context. Role
   comparisons narrow the failure to developer-message handling in the installed
   provider/model combination; provider conversion versus model internals remains unresolved.
-- Windows native-host and logon-startup acceptance beyond automated CI. The October 28
-  inspection verifies `5da7f3e`, including the October 24–25 native-agent and lexical
-  retrieval changes, on both macOS and Windows runners. The new multi-file benchmark
+- Windows native-host and logon-startup acceptance beyond automated CI. The October 29
+  inspection verifies `9f416fe`, including the multi-file native-agent and no-op
+  diagnostic history, on both macOS and Windows runners. New query-scope evaluator
   commits still need CI. Native Windows host/session acceptance remains open.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
