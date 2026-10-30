@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated October 28, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated October 29, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -9,10 +9,10 @@ synthetic documents and provider fixtures; it requires no model training or down
 
 | Check | Result |
 | --- | --- |
-| `npm ci` | October 28 clean installation passes with the existing dependency lockfile |
+| `npm ci` | October 29 clean installation passes with the existing dependency lockfile |
 | `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 193 passing tests; one opt-in real-model test skipped |
+| `npm test` | 198 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -32,6 +32,8 @@ synthetic documents and provider fixtures; it requires no model training or down
 | October 28 request-identifier diagnostic | Original array task retrieves four refund excerpts on `request`; query-only identifier intervention retrieves none; refund-positive control still retrieves four |
 | October 28 hosted project-hook controls | Positive, no-op, revoked and unavailable sessions pass 4/4 |
 | October 28 serial adapter latency | Strict fresh-engine 14/14 at 2,000/3,000 ms budgets (261–2,037 ms); actual-default paths 8/8 at 262–278 ms |
+| October 29 query-scope shadow comparison | 324 results; per export mode lexical 30/30 recall and 4/24 no-ops; removing `request` 28/30 and 12/24; argument masking 22/30 and 8/24; both interventions fail acceptance |
+| October 29 prior-history CI inspection | `9f416fe` passes macOS and Windows installation, typechecks and 193 tests; Windows startup syntax passes |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
 | Evaluation-only semantic applicability, initial trials | Boundaries 42/56 versus lexical 51/56; larger applicability corpus 54/80 versus paired lexical 61/80; both fail acceptance |
@@ -42,7 +44,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `git diff --check` | Pass |
 | `npm audit` and `npm audit --omit=dev` | Zero reported development or production dependency advisories |
 
-The full suite comprises 132 engine, 30 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 137 engine, 30 shared-hook, 14 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -887,6 +889,45 @@ manifest verify redaction and current artifacts; the evidence verifier regrades 
 saved module snapshot. Prior history through `5da7f3e` passed macOS/Windows CI at
 that inspection; the October 29 inspection above additionally verifies `9f416fe`.
 
+## October 29 query scope and recall follow-up
+
+The [query-scope records](packages/engine/evaluation/records/2026-10-29/query-scope-followup/README.md)
+compare unchanged lexical retrieval with two evaluation-only interventions: removing
+`request`, and masking simple function-call argument identifiers. The 27-case corpus
+keeps all three native multi-file tasks unchanged and adds paired signature/prose
+controls, policy subjects expressed as code, both opposing export policies, and a
+4,000-term prefix. Two fresh seeded SQLite/Lance repeats per export mode reverse case
+order and rotate strategy order. Reference excerpts and manually supplied whole-document
+authoritative rules isolate scope from model extraction/classification and grouping.
+
+Both export modes have the same scores: lexical retrieval preserves 30/30 complete
+positive policies but passes only 4/24 no-op checks; removing `request` scores 28/30
+and 12/24; argument masking scores 22/30 and 8/24. All final citations are exact and
+token counts/caps pass. Removing `request` loses the request-subject query; argument
+masking loses telemetry, refund, access and both opposing export policies when their
+subject appears only inside the signature. Generic prose collisions remain. The
+combined gain from removing `request` cannot compensate for lost recall. Neither
+intervention changes production retrieval or closes the original native no-op failures.
+
+The 324 final results retain missing sentences/sources, additional sources, exact
+evidence, XML and component timings. Positive scores require every original expected
+sentence; extra positive sources are reported separately. All 40 prior applicability
+queries retain identical term lists, without repeating model extraction or semantic
+filtering. The initial macOS temporary-path citation mismatch is preserved and fixed
+by canonicalizing the evaluator root; an end-to-end regression checks mapped exact
+citations and refusal to overwrite prior evidence. A mapped intermediate run is also
+retained. Each comparison exits 1 because acceptance gates remain unsatisfied.
+
+Clean installation, full workspace build/typechecks, website lint, 198 deterministic
+tests and both zero-finding dependency audits pass. One opt-in model test is skipped.
+The record-local verifier checks manifests/redaction, final compiled hashes, all final
+evidence/token gates, independently recomputed scores, repeat/order integrity,
+intermediate results and prior CI steps. No production adapter path changed, and no
+new native/model sessions or serial adapter latency measurements were run. Component
+timings establish no end-to-end hook latency or host token advantage. The prior
+multi-file history through `9f416fe` now passes macOS/Windows CI; the new evaluator
+commits still need CI.
+
 ## Remaining acceptance work
 
 - Codex persisted interactive hook-trust acceptance after verified noninteractive
@@ -917,6 +958,10 @@ that inspection; the October 29 inspection above additionally verifies `9f416fe`
   trials now measure paired no-op precision and policy recall but fail acceptance.
   Native multi-file tasks also reproduce a `request` identifier/refund-policy collision;
   passing code probes does not close retrieval no-op acceptance.
+  The paired query-scope corpus rejects both a global `request` exclusion and simple
+  call-argument masking: each improves selected no-ops while losing required policies.
+  A next scope candidate must preserve code-expressed policy subjects and opposing
+  requirements while distinguishing prose uses of generic policy vocabulary.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve

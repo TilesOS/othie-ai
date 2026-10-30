@@ -1,0 +1,62 @@
+{
+  "recorded_on": "2026-10-29",
+  "validation": [
+    {
+      "command": "npm ci",
+      "exit_code": 0,
+      "log": "install.txt"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "log": "tests.txt",
+      "passing_tests": 198,
+      "skipped_opt_in_model_tests": 1
+    },
+    {
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "log": "typecheck.txt"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "log": "build.txt"
+    },
+    {
+      "command": "npm run lint --workspace=@othie/website",
+      "exit_code": 0,
+      "log": "lint.txt"
+    },
+    {
+      "command": "npm audit --json",
+      "exit_code": 0,
+      "log": "audit-full.json"
+    },
+    {
+      "command": "npm audit --omit=dev --json",
+      "exit_code": 0,
+      "log": "audit-production.json"
+    },
+    {
+      "command": "npm run typecheck",
+      "stage": "final, after restoring generated Next.js declaration",
+      "exit_code": 0,
+      "log": "typecheck-final.txt"
+    }
+  ],
+  "scope": {
+    "command": "node packages/engine/dist/src/evaluation/query-scope.js --out <new-output-directory> --repeats 2",
+    "exit_code": 1,
+    "completed": true,
+    "rows": 324,
+    "reason": "Completed comparison with preserved no-op and positive-recall failures",
+    "stdout": "scope-final.stdout.txt",
+    "stderr": "scope-final.stderr.txt"
+  },
+  "not_repeated": [
+    "native model sessions",
+    "serial strict/default adapter latency",
+    "interactive desktop or Windows host acceptance"
+  ]
+}
