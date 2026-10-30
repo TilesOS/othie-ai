@@ -27,7 +27,8 @@
     "eval:native-hooks": "npm run build --workspace=@othie/engine && npm run build:integrations && node packages/engine/dist/src/evaluation/native-hooks.js",
     "eval:hook-latency": "npm run build --workspace=@othie/engine && npm run build:integrations && node packages/engine/dist/src/evaluation/hook-latency.js",
     "eval:hook-default-latency": "npm run build --workspace=@othie/engine && npm run build:integrations && node packages/engine/dist/src/evaluation/hook-default-latency.js",
-    "eval:quality": "npm run build --workspace=@othie/engine && node packages/engine/dist/src/evaluation/model-quality.js"
+    "eval:quality": "npm run build --workspace=@othie/engine && node packages/engine/dist/src/evaluation/model-quality.js",
+    "eval:query-scope": "npm run build --workspace=@othie/engine && node packages/engine/dist/src/evaluation/query-scope.js"
   },
   "overrides": {
     "sharp": "0.35.5",

@@ -478,6 +478,35 @@ remain inspectable. Scores measure source, qualifier and explicit-conflict diagn
 state remains uncontrolled, and repeats are not independent samples. Both semantic
 quality and native-hook latency acceptance remain necessary before production use.
 
+## Query scope shadow evaluation
+
+The deterministic scope evaluator compares unchanged lexical retrieval with two
+evaluation-only interventions: removing the term `request`, and masking simple
+function-call argument identifiers. It includes the unchanged native multi-file
+tasks, prose and signature controls, policy subjects expressed as code, opposing
+export policies, and a 4,000-term prefix. Existing native/quality fixtures and
+production term handling remain unchanged.
+
+```sh
+npm run eval:query-scope -- --out /tmp/othie-query-scope --repeats 2
+```
+
+Each repeat creates fresh seeded SQLite/Lance stores for reference excerpts and
+rules-only export. The latter uses manually supplied whole-document authoritative
+rules to isolate scope from extraction and grouping. Providers are disabled. Case
+order reverses and strategy order rotates across repeats. The new output directory
+contains original fixtures, hashes of compiled components, every query/evidence
+result, and separate positive recall/no-op scores. Every expected original sentence
+must survive, including exceptions, negations and both opposing sources. Additional
+retrieved sources are reported separately for positives; controls require no items.
+Invalid arguments and existing output directories are rejected.
+
+Exit 1 can represent a completed comparison with failed scope gates. A combined
+gain cannot compensate for lost positive recall. Component timings exclude engine
+startup, ingestion, IPC and native hooks; these are neither adapter latency nor
+semantic acceptance. The 40 existing applicability queries are checked for term
+identity only, without rerunning model extraction or semantic filtering.
+
 ## Complete adapter-process latency
 
 `npm run eval:hook-latency -- --out /tmp/othie-hook-latency` launches both compiled
