@@ -928,6 +928,15 @@ timings establish no end-to-end hook latency or host token advantage. The prior
 multi-file history through `9f416fe` now passes macOS/Windows CI; the new evaluator
 commits still need CI.
 
+## November 1 CI follow-up
+
+The [run for `298dbe9`](https://github.com/TilesOS/othie-ai/actions/runs/41000334837),
+inspected November 1, passes clean installation, workspace typechecks and tests on
+macOS and Windows, plus Windows startup-script syntax. This verifies the October 29
+query-scope evaluator history. The [run and step record](packages/engine/evaluation/records/2026-11-01/policy-guard-followup/ci-298dbe9.json)
+retains the full revision and both jobs. Automated jobs do not establish native
+Windows host/session acceptance; subsequent local changes still need CI.
+
 ## Remaining acceptance work
 
 - Codex persisted interactive hook-trust acceptance after verified noninteractive
@@ -942,7 +951,8 @@ commits still need CI.
 - Windows native-host and logon-startup acceptance beyond automated CI. The October 29
   inspection verifies `9f416fe`, including the multi-file native-agent and no-op
   diagnostic history, on both macOS and Windows runners. New query-scope evaluator
-  commits still need CI. Native Windows host/session acceptance remains open.
+  commits are now verified through `298dbe9` by the November 1 inspection above.
+  Native Windows host/session acceptance remains open.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
   two-repeat miniature multi-file corpus are recorded, but support no general
