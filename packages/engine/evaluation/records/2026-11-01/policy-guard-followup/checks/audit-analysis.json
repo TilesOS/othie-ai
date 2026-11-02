@@ -1,6 +1,6 @@
 {
   "status": "open-development-dependency-finding",
-  "recorded_at": "2026-11-02T03:48:00Z",
+  "recorded_at": "2026-11-02T03:50:24.995655+00:00",
   "advisory": "https://github.com/advisories/GHSA-g3hv-75wg-m249",
   "maintainer_documentation": "https://github.com/isaacs/minimatch/blob/v11.0.1/README.md",
   "audit_affected_range": "<11.0.1",

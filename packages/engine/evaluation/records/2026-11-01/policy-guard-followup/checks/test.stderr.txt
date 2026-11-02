@@ -1,0 +1,14 @@
+Hook latency 1/codex/positive: passed=true, wall_ms=527
+Hook latency 1/claude-code/positive: passed=true, wall_ms=394
+Hook latency 1/codex/irrelevant: passed=true, wall_ms=359
+Hook latency 1/claude-code/irrelevant: passed=true, wall_ms=344
+Hook latency 1/codex/stalled-engine: passed=true, wall_ms=5032
+Hook latency 1/claude-code/stalled-engine: passed=true, wall_ms=5038
+Hook latency 1/codex/delayed-input-stalled-engine: passed=true, wall_ms=5037
+Hook latency 1/claude-code/delayed-input-stalled-engine: passed=true, wall_ms=5038
+Hook latency 1/codex/stalled-input: passed=true, wall_ms=5030
+Hook latency 1/claude-code/stalled-input: passed=true, wall_ms=5029
+Hook latency 1/codex/revoked: passed=true, wall_ms=291
+Hook latency 1/claude-code/revoked: passed=true, wall_ms=266
+Hook latency 1/codex/unavailable: passed=true, wall_ms=266
+Hook latency 1/claude-code/unavailable: passed=true, wall_ms=262

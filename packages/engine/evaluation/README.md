@@ -523,6 +523,9 @@ Protocol `query-scope-shadow-v2` records the selected corpus, original case IDs,
 strategies and extension artifact hash. The default remains the original corpus
 and three strategies. A gain on the original cases is insufficient if the added
 counterexamples lose required evidence. Neither corpus changes production retrieval.
+The [November 1 record](records/2026-11-01/policy-guard-followup/README.md)
+preserves a failed guarded comparison: all original positives survive, but two
+implicit refund requests lose evidence on every repeat and broader no-ops remain.
 
 ## Complete adapter-process latency
 

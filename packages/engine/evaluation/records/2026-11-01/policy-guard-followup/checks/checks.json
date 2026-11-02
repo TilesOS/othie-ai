@@ -1,0 +1,102 @@
+{
+  "recorded_at": "2026-11-02T03:46:19.119583+00:00",
+  "validation": [
+    {
+      "name": "install",
+      "command": [
+        "npm",
+        "ci"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 29.189
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.385
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.816
+    },
+    {
+      "name": "test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 38.781
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint",
+        "--workspace=@othie/website"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 4.387
+    },
+    {
+      "name": "audit-full",
+      "command": [
+        "npm",
+        "audit",
+        "--json"
+      ],
+      "exit_code": 1,
+      "wall_seconds": 12.614
+    },
+    {
+      "name": "audit-production",
+      "command": [
+        "npm",
+        "audit",
+        "--omit=dev",
+        "--json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.383
+    }
+  ],
+  "focused": {
+    "exit_code": 0,
+    "passed": 7
+  },
+  "scope": {
+    "command": [
+      "node",
+      "packages/engine/dist/src/evaluation/query-scope.js",
+      "--corpus",
+      "policy-guard",
+      "--out",
+      "<record>/final",
+      "--repeats",
+      "2"
+    ],
+    "exit_code": 1,
+    "completed": true
+  },
+  "restored_generated_declarations_typecheck": {
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "log": "typecheck-restored.txt"
+  }
+}

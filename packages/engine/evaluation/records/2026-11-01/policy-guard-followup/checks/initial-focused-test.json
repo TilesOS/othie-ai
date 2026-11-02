@@ -1,0 +1,9 @@
+{
+  "command": "npm run build --workspace=@othie/engine && npm exec --workspace=@othie/engine -- vitest run test/query-scope.test.ts",
+  "exit_code": 1,
+  "tests_passed": 6,
+  "tests_failed": 1,
+  "failure": "The new test incorrectly expected implicit-telemetry retrieval to fail after argument masking.",
+  "observation": "The telemetry argument is removed but consent outside the signature independently retrieves telemetry.md. The recorded query result correctly passes complete evidence recall.",
+  "correction": "Retain the fixture and candidate unchanged; expect successful telemetry recall and assert the observed implicit-refund failure instead. Term removal alone is not scored as lost evidence."
+}
