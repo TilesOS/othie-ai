@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import { nativeAgentProjectCases } from "../src/evaluation/native-agent-projects.js";
 import { queryScopeCases, queryScopeDocuments } from "../src/evaluation/query-scope-cases.js";
+import { policyGuardCases } from "../src/evaluation/policy-guard-cases.js";
 import { queryScopeOptions, queryScopeTerms, scoreQueryScope } from "../src/evaluation/query-scope.js";
 import { meaningfulTerms } from "../src/retrieval/terms.js";
 
@@ -46,7 +47,21 @@ it("requires full original sentences and both opposition sources while exposing 
 
 it("rejects ambiguous scope options before output creation", () => {
   expect(queryScopeOptions(["--out", "/tmp/example"]).repeats).toBe(2);
-  for (const args of [[], ["--out", "x", "--bogus", "1"], ["--out", "x", "--out", "y"], ["--out"], ["--out", "x", "extra"], ["--out", "x", "--repeats", "0"], ["--out", "x", "--repeats", "1.5"]]) expect(() => queryScopeOptions(args)).toThrow();
+  expect(queryScopeOptions(["--out", "/tmp/example"]).corpus).toBe("original");
+  expect(queryScopeOptions(["--out", "/tmp/example", "--corpus", "policy-guard"]).corpus).toBe("policy-guard");
+  for (const args of [[], ["--out", "x", "--bogus", "1"], ["--out", "x", "--out", "y"], ["--out"], ["--out", "x", "extra"], ["--out", "x", "--repeats", "0"], ["--out", "x", "--repeats", "1.5"], ["--out", "x", "--corpus", "unknown"], ["--out", "x", "--corpus"], ["--out", "x", "--corpus", "original", "--corpus", "policy-guard"]]) expect(() => queryScopeOptions(args)).toThrow();
+});
+
+it("retains policy-cued arguments while exposing implicit requests and incidental cues", () => {
+  expect(policyGuardCases.slice(0, queryScopeCases.length)).toEqual(queryScopeCases);
+  expect(new Set(policyGuardCases.map(({ id }) => id)).size).toBe(policyGuardCases.length);
+  const terms = (id: string) => queryScopeTerms(policyGuardCases.find((item) => item.id === id)!.query, "policy-guarded-arguments");
+  expect(terms("telemetry-code-argument")).toContain("telemetry");
+  expect(terms("export-code-argument")).toContain("export");
+  expect(terms("native-array-service-control")).not.toContain("request");
+  expect(terms("implicit-telemetry")).not.toContain("telemetry");
+  expect(terms("quoted-policy-cue")).toContain("request");
+  expect(terms("negated-policy-cue")).toContain("request");
 });
 
 it("scores real seeded retrieval with mapped exact citations and preserves failed scope gates", async () => {
@@ -72,5 +87,37 @@ it("scores real seeded retrieval with mapped exact citations and preserves faile
     }
     await expect(promisify(execFile)(process.execPath, [compiled, "--out", out, "--repeats", "1"], { timeout: 5_000 })).rejects.toMatchObject({ code: 1 });
     expect(JSON.parse(await readFile(join(out, "summary.json"), "utf8"))).toEqual(summary);
+  } finally { await rm(root, { recursive: true, force: true }); }
+}, 35_000);
+
+it("separates original gains from added recall failures in the guarded corpus", async () => {
+  const root = await mkdtemp(join(tmpdir(), "othie-guard-test-"));
+  try {
+    const out = join(root, "evidence");
+    const compiled = fileURLToPath(new URL("../dist/src/evaluation/query-scope.js", import.meta.url));
+    await expect(promisify(execFile)(process.execPath, [compiled, "--out", out, "--repeats", "1", "--corpus", "policy-guard"], { timeout: 30_000 })).rejects.toMatchObject({ code: 1 });
+    const summary = JSON.parse(await readFile(join(out, "summary.json"), "utf8"));
+    expect(summary.completed).toBe(true);
+    expect(summary.rows).toBe(policyGuardCases.length * 2 * 4);
+    type Score = { mode: string; strategy: string; positive: { correct: number; total: number }; no_op: { correct: number; total: number } };
+    for (const mode of ["excerpts", "rules_only"]) {
+      const original = summary.subsets.original.find((item: Score) => item.mode === mode && item.strategy === "policy-guarded-arguments");
+      expect(original.positive).toEqual({ correct: 15, total: 15 });
+      const added = summary.subsets.counterexamples.find((item: Score) => item.mode === mode && item.strategy === "policy-guarded-arguments");
+      expect(added.positive.correct).toBeLessThan(added.positive.total);
+      expect(added.no_op.correct).toBeLessThan(added.no_op.total);
+    }
+    const rows = JSON.parse(await readFile(join(out, "results.json"), "utf8"));
+    for (const mode of ["excerpts", "rules_only"]) {
+      const row = (id: string, strategy: string) => rows.find((item: { id: string; strategy: string; mode: string }) => item.id === id && item.strategy === strategy && item.mode === mode);
+      expect(row("implicit-telemetry", "lexical").correct).toBe(true);
+      // Consent remains outside the signature and independently recovers
+      // telemetry; missing an argument term alone is not a recall failure.
+      expect(row("implicit-telemetry", "policy-guarded-arguments").correct).toBe(true);
+      expect(row("implicit-refund", "lexical").correct).toBe(true);
+      expect(row("implicit-refund", "policy-guarded-arguments").correct).toBe(false);
+      expect(row("export-code-argument", "policy-guarded-arguments").correct).toBe(true);
+      expect(row("negated-policy-cue", "policy-guarded-arguments").correct).toBe(false);
+    }
   } finally { await rm(root, { recursive: true, force: true }); }
 }, 35_000);

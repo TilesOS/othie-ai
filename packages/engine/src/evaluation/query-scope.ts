@@ -13,12 +13,21 @@ import { evaluationArguments } from "./arguments.js";
 import { applicabilityQualityCases } from "./quality-cases.js";
 import { diagnosticScores } from "./quality-metrics.js";
 import { queryScopeCases, queryScopeDocuments, type QueryScopeCase } from "./query-scope-cases.js";
+import { policyGuardCases } from "./policy-guard-cases.js";
 
 export const queryScopeStrategies = ["lexical", "drop-request", "mask-call-arguments"] as const;
-export type QueryScopeStrategy = typeof queryScopeStrategies[number];
+export const policyGuardStrategies = [...queryScopeStrategies, "policy-guarded-arguments"] as const;
+export type QueryScopeStrategy = typeof policyGuardStrategies[number];
 
-/** Shadow interventions only. Neither is used by production retrieval. */
+/** Shadow interventions only. None is used by production retrieval. */
 export function queryScopeTerms(query: string, strategy: QueryScopeStrategy): string[] {
+  if (strategy === "policy-guarded-arguments") {
+    // Hypothesis, not an intent classifier: explicit policy vocabulary protects
+    // argument subjects. Incidental/quoted/negated cues and implicit requests are
+    // deliberately scored in the extension rather than silently assumed safe.
+    const policyCue = /\b(?:polic(?:y|ies)|requirements?|company\s+defaults)\b/i.test(query);
+    return queryScopeTerms(query, policyCue ? "lexical" : "mask-call-arguments");
+  }
   if (strategy === "mask-call-arguments") {
     // Deliberately narrow: simple identifier lists, not a language parser. Keep
     // function names, quoted prose and terms repeated outside the argument list.
@@ -48,11 +57,13 @@ export function scoreQueryScope(scenario: QueryScopeCase, evidence: readonly { s
 }
 
 export function queryScopeOptions(argv: string[]) {
-  const args = evaluationArguments(argv, ["out", "repeats"], "query scope");
+  const args = evaluationArguments(argv, ["out", "repeats", "corpus"], "query scope");
   const out = args.get("out");
   const repeats = Number(args.get("repeats") ?? "2");
   if (!out || !Number.isInteger(repeats) || repeats < 1 || repeats > 5) throw new Error("query scope requires --out and --repeats between 1 and 5");
-  return { out: resolve(out), repeats };
+  const corpus = args.get("corpus") ?? "original";
+  if (corpus !== "original" && corpus !== "policy-guard") throw new Error("query scope corpus must be original or policy-guard");
+  return { out: resolve(out), repeats, corpus };
 }
 
 const hash = (value: string) => createHash("sha256").update(value).digest("hex");
@@ -68,14 +79,17 @@ type ScopeResult = ReturnType<typeof scoreQueryScope> & {
 };
 
 export async function runQueryScope(options: ReturnType<typeof queryScopeOptions>) {
+  const cases = options.corpus === "policy-guard" ? policyGuardCases : queryScopeCases;
+  const strategies = options.corpus === "policy-guard" ? policyGuardStrategies : queryScopeStrategies;
   await mkdir(options.out, { recursive: false, mode: 0o700 });
   const save = (name: string, data: unknown) => writeFile(join(options.out, name), JSON.stringify(data, null, 2) + "\n", { flag: "wx", mode: 0o600 });
-  const artifactNames = ["query-scope.js", "query-scope-cases.js", "../retrieval/terms.js", "../storage/manifest.js", "../retrieval/hybrid.js", "../rules/selection.js", "../context/compiler.js", "../context/packing.js"];
+  const artifactNames = ["query-scope.js", "query-scope-cases.js", "policy-guard-cases.js", "../retrieval/terms.js", "../storage/manifest.js", "../retrieval/hybrid.js", "../rules/selection.js", "../context/compiler.js", "../context/packing.js"];
   const artifacts = Object.fromEntries(await Promise.all(artifactNames.map(async (name) => [name, hash(await readFile(new URL(name, import.meta.url), "utf8"))])));
-  await save("protocol.json", { protocol: "query-scope-shadow-v1", recorded_at: new Date().toISOString(),
+  await save("protocol.json", { protocol: "query-scope-shadow-v2", corpus: options.corpus, recorded_at: new Date().toISOString(),
     synthetic_only: true, node: process.version, platform: process.platform, repeats: options.repeats,
-    strategies: queryScopeStrategies, documents: queryScopeDocuments, cases: queryScopeCases,
-    fixture_sha256: hash(JSON.stringify({ documents: queryScopeDocuments, cases: queryScopeCases })), artifacts,
+    strategies, documents: queryScopeDocuments, cases,
+    original_case_ids: queryScopeCases.map(({ id }) => id),
+    fixture_sha256: hash(JSON.stringify({ documents: queryScopeDocuments, cases })), artifacts,
     limitations: "Evaluation-only query interventions. Providers disabled. Fresh seeded SQLite/Lance stores per repeat/export mode; not ingestion, model extraction, semantic acceptance, native-host or adapter latency. Excerpts use reference chunks; rules-only uses manually supplied whole-document authoritative rules to isolate scope from extraction/grouping. Positive recall requires every expected sentence; extra sources are reported separately. Case order reverses and strategy order rotates on fresh repeats." });
   const root = await realpath(await mkdtemp(join(tmpdir(), "othie-query-scope-")));
   const results: ScopeResult[] = [];
@@ -107,9 +121,9 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           }
         }
         await engine.lance.addText(chunks);
-        const cases = repeat % 2 ? [...queryScopeCases].reverse() : queryScopeCases;
-        for (const scenario of cases) for (let offset = 0; offset < queryScopeStrategies.length; offset++) {
-          const strategy = queryScopeStrategies[(offset + repeat) % queryScopeStrategies.length]!;
+        const orderedCases = repeat % 2 ? [...cases].reverse() : cases;
+        for (const scenario of orderedCases) for (let offset = 0; offset < strategies.length; offset++) {
+          const strategy = strategies[(offset + repeat) % strategies.length]!;
           const start = performance.now();
           const terms = queryScopeTerms(scenario.query, strategy);
           // An all-removed query still exercises the compiler's empty-term path.
@@ -125,14 +139,18 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
         }
       } finally { await engine.stop(); }
     }
-    const scores = ["excerpts", "rules_only"].flatMap((mode) => queryScopeStrategies.map((strategy) => {
-      const rows = results.filter((item) => item.mode === mode && item.strategy === strategy);
+    const scoresFor = (subset: readonly ScopeResult[]) => ["excerpts", "rules_only"].flatMap((mode) => strategies.map((strategy) => {
+      const rows = subset.filter((item) => item.mode === mode && item.strategy === strategy);
       return { mode, strategy, ...diagnosticScores(rows), citations_exact: rows.every((row) => row.citations_exact), caps_passed: rows.every((row) => row.cap_passed) };
     }));
-    const unchanged = queryScopeStrategies.map((strategy) => ({ strategy, total: applicabilityQualityCases.length,
+    const scores = scoresFor(results);
+    const originalIds = new Set(queryScopeCases.map(({ id }) => id));
+    const subsets = { original: scoresFor(results.filter((item) => originalIds.has(item.id))),
+      counterexamples: scoresFor(results.filter((item) => !originalIds.has(item.id))) };
+    const unchanged = strategies.map((strategy) => ({ strategy, total: applicabilityQualityCases.length,
       unchanged: applicabilityQualityCases.filter((scenario) => JSON.stringify(queryScopeTerms(scenario.query, strategy)) === JSON.stringify(meaningfulTerms(scenario.query))).length }));
     await save("results.json", results);
-    const summary = { completed: true, results: "results.json", scores, previous_applicability_query_terms: unchanged,
+    const summary = { completed: true, results: "results.json", scores, subsets, previous_applicability_query_terms: unchanged,
       all_correct: results.every((item) => item.correct), rows: results.length };
     await save("summary.json", summary);
     return summary;

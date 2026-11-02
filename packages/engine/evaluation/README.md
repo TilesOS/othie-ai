@@ -507,6 +507,23 @@ startup, ingestion, IPC and native hooks; these are neither adapter latency nor
 semantic acceptance. The 40 existing applicability queries are checked for term
 identity only, without rerunning model extraction or semantic filtering.
 
+The opt-in `--corpus policy-guard` extension keeps those 27 original cases and
+adds 18 counterexamples, plus a fourth evaluation-only strategy. The candidate
+preserves call arguments if the query contains `policy`, `policies`, `requirement`,
+`requirements` or `company defaults`; otherwise it uses simple argument masking.
+This tests an explicit vocabulary guard, not a semantic intent classifier.
+Implicit policy requests, incidental/quoted/negated cues and mixed tasks are
+scored separately from the original cases in `summary.subsets`.
+
+```sh
+npm run eval:query-scope -- --corpus policy-guard --out /tmp/othie-policy-guard --repeats 2
+```
+
+Protocol `query-scope-shadow-v2` records the selected corpus, original case IDs,
+strategies and extension artifact hash. The default remains the original corpus
+and three strategies. A gain on the original cases is insufficient if the added
+counterexamples lose required evidence. Neither corpus changes production retrieval.
+
 ## Complete adapter-process latency
 
 `npm run eval:hook-latency -- --out /tmp/othie-hook-latency` launches both compiled
