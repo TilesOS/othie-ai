@@ -937,8 +937,21 @@ query-scope evaluator history. The [run and step record](packages/engine/evaluat
 retains the full revision and both jobs. Automated jobs do not establish native
 Windows host/session acceptance; subsequent local changes still need CI.
 
+The November 1 [full audit and compatibility inspection](packages/engine/evaluation/records/2026-11-01/policy-guard-followup/checks/audit-analysis.json)
+finds 16 moderate development dependency entries from the newly reported
+[minimatch advisory](https://github.com/advisories/GHSA-g3hv-75wg-m249); the
+production-only audit remains clean. Patched 11.0.1 uses a different module API
+from installed legacy v3 ESLint-rule consumers. No forced override, incompatible
+ESLint/Next-config downgrade or audit suppression was applied. A compatible
+development-toolchain migration remains open; exploitability through this
+project's lint inputs was not established.
+
 ## Remaining acceptance work
 
+- Resolve the November 1 development-tool minimatch audit finding with a compatible
+  ESLint/plugin migration or upstream fix. Production audit has no findings;
+  development audit acceptance is open. Preserve rule execution and glob behavior
+  when evaluating replacements for legacy callable-module consumers.
 - Codex persisted interactive hook-trust acceptance after verified noninteractive
   project-file discovery from root/nested launches; Claude
   interactive workspace trust and desktop UI acceptance beyond the recorded noninteractive

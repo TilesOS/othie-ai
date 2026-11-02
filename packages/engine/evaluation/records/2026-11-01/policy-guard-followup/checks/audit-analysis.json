@@ -1,0 +1,64 @@
+{
+  "status": "open-development-dependency-finding",
+  "recorded_at": "2026-11-02T03:48:00Z",
+  "advisory": "https://github.com/advisories/GHSA-g3hv-75wg-m249",
+  "maintainer_documentation": "https://github.com/isaacs/minimatch/blob/v11.0.1/README.md",
+  "audit_affected_range": "<11.0.1",
+  "audit_patched_version": "11.0.1",
+  "audit_entries": 16,
+  "severity": "moderate",
+  "underlying_advisories": 1,
+  "production_audit_total": 0,
+  "installed_versions": [
+    "3.1.5",
+    "10.2.6"
+  ],
+  "registry_versions_record": "minimatch-v3-versions.json",
+  "consumers": [
+    {
+      "path": "node_modules/eslint-plugin-react/lib/rules/no-danger.js",
+      "sha256": "61f9fd97581e959d75bfb7ef030e9fb7b74c2df224980bed89f6463d05d2734a",
+      "snippets": [
+        {
+          "line": 10,
+          "text": "const minimatch = require('minimatch');"
+        },
+        {
+          "line": 83,
+          "text": "const enableCheckingCustomComponent = customComponentNames.some((name) => minimatch(functionName, name));"
+        }
+      ]
+    },
+    {
+      "path": "node_modules/eslint-plugin-import/lib/rules/no-import-module-exports.js",
+      "sha256": "d83581c24ae4fb0fc00dce02f3deec9e0bdf4cc624bf1b7e374e2aee79d3ba66",
+      "snippets": [
+        {
+          "line": 1,
+          "text": "'use strict';var _minimatch = require('minimatch');var _minimatch2 = _interopRequireDefault(_minimatch);"
+        },
+        {
+          "line": 62,
+          "text": "var isException = !!options.exceptions && options.exceptions.some(function (glob) {return (0, _minimatch2['default'])(fileName, glob);});"
+        }
+      ]
+    },
+    {
+      "path": "node_modules/@typescript-eslint/typescript-estree/dist/useProgramFromProjectService.js",
+      "sha256": "603b04b58090d455fe2f2f56c7ab643f4377f63704dfa87d995d553bad9ad258",
+      "snippets": [
+        {
+          "line": 41,
+          "text": "const minimatch_1 = require(\"minimatch\");"
+        },
+        {
+          "line": 204,
+          "text": "return !!allowDefaultProject?.some(pattern => (0, minimatch_1.minimatch)(filePath, pattern, { dot: true }));"
+        }
+      ]
+    }
+  ],
+  "assessment": "The legacy consumers call the CommonJS module as a function; v11 documents a named minimatch export and a matcher rewrite without backports. A global major override is not a compatible patch. Audit-offered ESLint/Next-config downgrades were not applied. No lockfile, dependency, override or audit-suppression changes were made.",
+  "limits": "The maintainer description concerns amplification at optimizationLevel >= 2 in 10.2.6, while the audit range includes all older releases. This inspection does not establish exploitation via project lint inputs and does not suppress or reclassify the audit entries.",
+  "next_work": "Evaluate an ESLint/plugin migration or upstream compatibility fixes as a separate change, preserving representative glob behavior and rule execution checks."
+}
