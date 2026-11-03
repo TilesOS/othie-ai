@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-11-03T04:55:16.561Z",
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "protocol": "legacy-minimatch-consumer-probe-v1",
+  "lockfile_sha256": "510599e6e9ea7eb68168be8e484697631fdbe6b235881c22f1216ce5fdd5b13f",
+  "intervention": "replace three legacy consumer CommonJS cache exports in this process only",
+  "candidate": {
+    "version": "11.0.4",
+    "module_type": "object"
+  },
+  "consumers": [
+    {
+      "plugin": "eslint-plugin-react",
+      "installed_version": "3.1.5",
+      "installed_module_type": "function"
+    },
+    {
+      "plugin": "eslint-plugin-import",
+      "installed_version": "3.1.5",
+      "installed_module_type": "function"
+    },
+    {
+      "plugin": "eslint-plugin-jsx-a11y",
+      "installed_version": "3.1.5",
+      "installed_module_type": "function"
+    }
+  ],
+  "results": [
+    {
+      "id": "react-custom-component",
+      "rule": "react/no-danger",
+      "fatal_errors": null,
+      "detected": false,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": true
+    },
+    {
+      "id": "import-exception",
+      "rule": "import/no-import-module-exports",
+      "fatal_errors": null,
+      "detected": false,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": true
+    },
+    {
+      "id": "accessibility-control",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "fatal_errors": null,
+      "detected": false,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": true
+    }
+  ],
+  "all_passed": false,
+  "limits": "Not a complete dependency migration, npm resolution simulation, glob parity proof or exploitability assessment. Fresh process required for each condition. Repository dependencies and module files unchanged."
+}

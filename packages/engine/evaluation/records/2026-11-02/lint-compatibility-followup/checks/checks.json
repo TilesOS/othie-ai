@@ -1,0 +1,99 @@
+{
+  "recorded_at": "2026-11-03T04:56:27.161000+00:00",
+  "node": "v24.18.0",
+  "validation": [
+    {
+      "name": "install",
+      "command": [
+        "npm",
+        "ci"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 7.48
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.437
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.803
+    },
+    {
+      "name": "test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 39.204
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint",
+        "--workspace=@othie/website"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 1.016
+    },
+    {
+      "name": "audit-full",
+      "command": [
+        "npm",
+        "audit",
+        "--json",
+        "--fetch-retries=0",
+        "--fetch-timeout=15000"
+      ],
+      "exit_code": 1,
+      "wall_seconds": 1.043
+    },
+    {
+      "name": "audit-production",
+      "command": [
+        "npm",
+        "audit",
+        "--omit=dev",
+        "--json",
+        "--fetch-retries=0",
+        "--fetch-timeout=15000"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.477
+    }
+  ],
+  "final_verification": [
+    {
+      "name": "final-typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "previous-evidence",
+      "command": [
+        "node",
+        "packages/engine/evaluation/records/2026-11-01/policy-guard-followup/verify-evidence.mjs"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

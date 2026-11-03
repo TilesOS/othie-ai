@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 1, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 2, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -9,10 +9,10 @@ synthetic documents and provider fixtures; it requires no model training or down
 
 | Check | Result |
 | --- | --- |
-| `npm ci` | November 1 clean installation passes with the existing dependency lockfile |
+| `npm ci` | November 2 clean installation passes with the existing dependency lockfile |
 | `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 200 passing tests; one opt-in real-model test skipped |
+| `npm test` | 205 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -36,6 +36,8 @@ synthetic documents and provider fixtures; it requires no model training or down
 | October 29 prior-history CI inspection | `9f416fe` passes macOS and Windows installation, typechecks and 193 tests; Windows startup syntax passes |
 | November 1 guarded query scope | 720 results; per export mode lexical 48/48 recall and 4/42 no-ops; vocabulary guard 44/48 and 12/42; guarded candidate fails acceptance despite preserving all original positives |
 | November 1 prior-history CI inspection | `298dbe9` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
+| November 2 lint compatibility | Five website tests pass, including legacy plugin glob matches/nonmatches and output ignores; isolated v11 exports cause all three probed legacy branches to throw |
+| November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
 | Evaluation-only semantic applicability, initial trials | Boundaries 42/56 versus lexical 51/56; larger applicability corpus 54/80 versus paired lexical 61/80; both fail acceptance |
@@ -44,9 +46,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
 | Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
 | `git diff --check` | Pass |
-| `npm audit` and `npm audit --omit=dev` | November 1: 16 moderate development entries from one minimatch advisory; zero production findings; compatible remediation remains open |
+| `npm audit` and `npm audit --omit=dev` | November 2: 16 moderate development entries from one minimatch advisory; zero production findings; compatible remediation remains open |
 
-The full suite comprises 139 engine, 30 shared-hook, 14 website, 10 Codex, and seven
+The full suite comprises 139 engine, 30 shared-hook, 19 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -985,26 +987,44 @@ New local commits still need remote CI.
 
 ## November 2 lint compatibility follow-up
 
-Five website tests now execute the installed ESLint configuration against virtual
+The [lint compatibility records](packages/engine/evaluation/records/2026-11-02/lint-compatibility-followup/README.md)
+retain five website tests that execute the installed ESLint configuration against virtual
 files. They check Next/React/accessibility/TypeScript diagnostics, React custom
 component globs, import exception globs, accessibility control-component globs,
 and generated-output ignores. Each glob rule has a matching and nonmatching
 control; these include legacy callable-minimatch branches absent from normal site
-lint. The focused tests, website typecheck and website lint pass. CI now also runs
-website lint on both runners. Remote acceptance of this CI change remains open.
+lint. Clean installation, full build, workspace typechecks, website lint and all 205
+tests pass, with one opt-in model test skipped. The build-generated `next-env.d.ts`
+path change was restored and final typechecks passed again. The preceding guarded
+scope evidence verifier also passes. CI now also runs website lint on both runners.
+Remote acceptance of the new tests/workflow change remains open.
 
 The refreshed full audit still reports the same 16 moderate development entries.
 Registry metadata still lists minimatch 3.1.5 as the latest v3 release and 10.2.6
 as the latest v10 release; the newer Next ESLint config retains legacy plugin
-dependencies. No dependency migration or advisory suppression has been applied.
-These compatibility checks prepare a migration; they do not resolve the finding.
+dependencies; ESLint 10.14.0 still declares affected minimatch 10.2.6. A separate
+process probe substitutes actual minimatch 11.0.4 exports into the three legacy
+consumers: all throw callable-minimatch `TypeError`s, versus all three expected
+diagnostics with the installed modules. This API probe changes no module files
+or dependencies and is not a full migration or exploitability assessment. No
+dependency migration or advisory suppression has been applied. These checks
+prepare a migration; they do not resolve the finding. The production audit stays clean.
+
+The [run for `5937f7c`](https://github.com/TilesOS/othie-ai/actions/runs/41387563741),
+inspected November 2, passes clean installation, workspace typechecks/tests and
+Windows startup-script syntax on both runners. The [run and step record](packages/engine/evaluation/records/2026-11-02/lint-compatibility-followup/ci-5937f7c.json)
+verifies the full revision and closes the November 1 guarded-scope history's CI
+gap. New local commits still need CI; native Windows/session acceptance remains open.
+No native/model sessions or adapter latency probes were rerun for this lint-only change.
 
 ## Remaining acceptance work
 
 - Resolve the November 1 development-tool minimatch audit finding with a compatible
   ESLint/plugin migration or upstream fix. Production audit has no findings;
   development audit acceptance is open. Preserve rule execution and glob behavior
-  when evaluating replacements for legacy callable-module consumers.
+  when evaluating replacements for legacy callable-module consumers. November 2
+  adds executable matching/nonmatching controls and confirms the v11 module API
+  break in three legacy plugin branches; broader glob parity is still needed.
 - Codex persisted interactive hook-trust acceptance after verified noninteractive
   project-file discovery from root/nested launches; Claude
   interactive workspace trust and desktop UI acceptance beyond the recorded noninteractive
@@ -1017,7 +1037,8 @@ These compatibility checks prepare a migration; they do not resolve the finding.
 - Windows native-host and logon-startup acceptance beyond automated CI. The October 29
   inspection verifies `9f416fe`, including the multi-file native-agent and no-op
   diagnostic history, on both macOS and Windows runners. New query-scope evaluator
-  commits are now verified through `298dbe9` by the November 1 inspection above.
+  commits are now verified through `5937f7c` by the November 2 inspection above.
+  New lint-test/workflow commits still need remote CI.
   Native Windows host/session acceptance remains open.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
