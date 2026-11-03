@@ -983,6 +983,22 @@ adapter latency probes were rerun for this offline evaluator change. Component
 timings establish no hook latency, semantic applicability or host token advantage.
 New local commits still need remote CI.
 
+## November 2 lint compatibility follow-up
+
+Five website tests now execute the installed ESLint configuration against virtual
+files. They check Next/React/accessibility/TypeScript diagnostics, React custom
+component globs, import exception globs, accessibility control-component globs,
+and generated-output ignores. Each glob rule has a matching and nonmatching
+control; these include legacy callable-minimatch branches absent from normal site
+lint. The focused tests, website typecheck and website lint pass. CI now also runs
+website lint on both runners. Remote acceptance of this CI change remains open.
+
+The refreshed full audit still reports the same 16 moderate development entries.
+Registry metadata still lists minimatch 3.1.5 as the latest v3 release and 10.2.6
+as the latest v10 release; the newer Next ESLint config retains legacy plugin
+dependencies. No dependency migration or advisory suppression has been applied.
+These compatibility checks prepare a migration; they do not resolve the finding.
+
 ## Remaining acceptance work
 
 - Resolve the November 1 development-tool minimatch audit finding with a compatible
