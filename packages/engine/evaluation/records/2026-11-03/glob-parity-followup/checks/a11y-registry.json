@@ -1,0 +1,4 @@
+{
+  "version": "6.10.2",
+  "dependencies.minimatch": "^3.1.2"
+}

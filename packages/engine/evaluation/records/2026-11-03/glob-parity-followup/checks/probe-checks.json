@@ -1,0 +1,14 @@
+[
+  {
+    "mode": "baseline",
+    "exit_code": 0
+  },
+  {
+    "mode": "raw",
+    "exit_code": 1
+  },
+  {
+    "mode": "callable",
+    "exit_code": 1
+  }
+]

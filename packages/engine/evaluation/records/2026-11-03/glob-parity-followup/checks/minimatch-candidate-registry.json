@@ -1,0 +1,20 @@
+{
+  "version": "11.0.4",
+  "dist": {
+    "shasum": "3ed156790c2754647ee94dab305a3f93cd16481e",
+    "tarball": "https://registry.npmjs.org/minimatch/-/minimatch-11.0.4.tgz",
+    "fileCount": 37,
+    "integrity": "sha512-/UJ1dEoVQTjPNDh6SGlUo+ueLMmoHTas4q+8yaAR/5t6nLAIiBDJtoYUh20IYleix7ehiQkgczb84PE3uzHkxg==",
+    "signatures": [
+      {
+        "sig": "MEYCIQDEOeaSawo61fW1jAgx8gXxhufIx5hP7bJh3WfnbiMv/QIhAO+SIVo+m3JRC8B5Ti4otnhcSp9jp/+U0weE+jVCaN28",
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+      },
+      {
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+        "sig": "MEUCIQDfCsOpk1DAzxLPZBaZc8LtmA88slF1VwDQ3O1CVWAsfQIgM2gTDEXrw1VHKX029WGt7y3xbflqIDfCJJ61BjTl3Zc="
+      }
+    ],
+    "unpackedSize": 428799
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "phase": "initial raw-export error classification",
+  "verifier_failure": "Expected six makeRe failures; the initial classifier counted zero.",
+  "cause": "Raw v11 __esModule namespace has no default export; legacy default.makeRe access fails before a method can be called.",
+  "affected_rows": [
+    {
+      "id": "import-make-re-braces-match",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": true,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": false,
+      "missing_make_re_failure": false,
+      "passed": false
+    },
+    {
+      "id": "import-make-re-braces-miss",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": false,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": false,
+      "missing_make_re_failure": false,
+      "passed": false
+    },
+    {
+      "id": "import-make-re-extglob-match",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": true,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": false,
+      "missing_make_re_failure": false,
+      "passed": false
+    },
+    {
+      "id": "import-make-re-extglob-miss",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": false,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": false,
+      "missing_make_re_failure": false,
+      "passed": false
+    },
+    {
+      "id": "import-make-re-globstar-match",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": true,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": false,
+      "missing_make_re_failure": false,
+      "passed": false
+    },
+    {
+      "id": "import-make-re-globstar-miss",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": false,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": false,
+      "missing_make_re_failure": false,
+      "passed": false
+    }
+  ],
+  "correction": "Classify both undefined default.makeRe access and non-callable makeRe. Fixtures and pass/fail outcomes unchanged."
+}

@@ -1,0 +1,546 @@
+{
+  "protocol": "lint-glob-parity-v1",
+  "recorded_at": "2026-11-03T05:06:27.942Z",
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "mode": "callable",
+  "lockfile_sha256": "510599e6e9ea7eb68168be8e484697631fdbe6b235881c22f1216ce5fdd5b13f",
+  "fixture_sha256": "10fe406b654886d5289ab7413f9f24387277e62c5693ee0e23c49e78706b65fd",
+  "candidate": {
+    "version": "11.0.4",
+    "module_type": "object",
+    "replacement_type": "function",
+    "make_re_type": "undefined",
+    "constructor_type": "function",
+    "constructor_make_re_type": "undefined",
+    "entry_sha256": "235c5458355f1449cc100f1cea1a43d45f788a4feb524a83497aa146bea88f32"
+  },
+  "consumers": [
+    {
+      "plugin": "eslint-plugin-react",
+      "plugin_version": "7.37.5",
+      "minimatch_version": "3.1.5",
+      "module_type": "function"
+    },
+    {
+      "plugin": "eslint-plugin-import",
+      "plugin_version": "2.32.0",
+      "minimatch_version": "3.1.5",
+      "module_type": "function"
+    },
+    {
+      "plugin": "eslint-plugin-jsx-a11y",
+      "plugin_version": "6.10.2",
+      "minimatch_version": "3.1.5",
+      "module_type": "function"
+    }
+  ],
+  "results": [
+    {
+      "id": "react-star-match",
+      "rule": "react/no-danger",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-star-match",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-star-miss",
+      "rule": "react/no-danger",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-star-miss",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-question-match",
+      "rule": "react/no-danger",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-question-match",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-question-miss",
+      "rule": "react/no-danger",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-question-miss",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-class-match",
+      "rule": "react/no-danger",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-class-match",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-class-miss",
+      "rule": "react/no-danger",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-class-miss",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-braces-match",
+      "rule": "react/no-danger",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-braces-match",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-braces-miss",
+      "rule": "react/no-danger",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-braces-miss",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-extglob-match",
+      "rule": "react/no-danger",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-extglob-match",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-extglob-miss",
+      "rule": "react/no-danger",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-extglob-miss",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-negation-match",
+      "rule": "react/no-danger",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-negation-match",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-negation-miss",
+      "rule": "react/no-danger",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "a11y-negation-miss",
+      "rule": "jsx-a11y/label-has-associated-control",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-exception-globstar-match",
+      "rule": "import/no-import-module-exports",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-exception-globstar-miss",
+      "rule": "import/no-import-module-exports",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-exception-braces-match",
+      "rule": "import/no-import-module-exports",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-exception-braces-miss",
+      "rule": "import/no-import-module-exports",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-exception-extglob-match",
+      "rule": "import/no-import-module-exports",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-exception-extglob-miss",
+      "rule": "import/no-import-module-exports",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-exception-class-match",
+      "rule": "import/no-import-module-exports",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-exception-class-miss",
+      "rule": "import/no-import-module-exports",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-exception-dotfile-match",
+      "rule": "import/no-import-module-exports",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-exception-dotfile-miss",
+      "rule": "import/no-import-module-exports",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-make-re-braces-match",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": true,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": true,
+      "make_re_access_failure": true,
+      "passed": false
+    },
+    {
+      "id": "import-make-re-braces-miss",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": false,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": true,
+      "make_re_access_failure": true,
+      "passed": false
+    },
+    {
+      "id": "import-make-re-extglob-match",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": true,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": true,
+      "make_re_access_failure": true,
+      "passed": false
+    },
+    {
+      "id": "import-make-re-extglob-miss",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": false,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": true,
+      "make_re_access_failure": true,
+      "passed": false
+    },
+    {
+      "id": "import-make-re-globstar-match",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": true,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": true,
+      "make_re_access_failure": true,
+      "passed": false
+    },
+    {
+      "id": "import-make-re-globstar-miss",
+      "rule": "import/no-internal-modules",
+      "expected_diagnostic": false,
+      "observed_diagnostic": null,
+      "fatal_errors": null,
+      "config_errors": null,
+      "runtime_error": "TypeError",
+      "callable_minimatch_failure": true,
+      "make_re_access_failure": true,
+      "passed": false
+    },
+    {
+      "id": "import-namespace-match-base",
+      "rule": "import/no-namespace",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-namespace-match-base-control",
+      "rule": "import/no-namespace",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-namespace-comment",
+      "rule": "import/no-namespace",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-namespace-question",
+      "rule": "import/no-namespace",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-namespace-question-control",
+      "rule": "import/no-namespace",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-namespace-unicode-bmp",
+      "rule": "import/no-namespace",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "import-namespace-unicode-astral",
+      "rule": "import/no-namespace",
+      "expected_diagnostic": true,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": false
+    },
+    {
+      "id": "react-pascal-match",
+      "rule": "react/jsx-pascal-case",
+      "expected_diagnostic": false,
+      "observed_diagnostic": false,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    },
+    {
+      "id": "react-pascal-miss",
+      "rule": "react/jsx-pascal-case",
+      "expected_diagnostic": true,
+      "observed_diagnostic": true,
+      "fatal_errors": 0,
+      "config_errors": 0,
+      "runtime_error": null,
+      "passed": true
+    }
+  ],
+  "passed": 42,
+  "total": 49,
+  "all_passed": false,
+  "limits": "Only three legacy plugin cache entries are replaced. The callable adapter is an evaluation-only API intervention. No npm override, dependency migration, production shim, complete glob proof, Windows simulation or exploitability claim."
+}

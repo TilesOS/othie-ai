@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-11-03T05:03:08.371Z",
+  "queries": [
+    {
+      "url": "https://api.github.com/repos/TilesOS/othie-ai/actions/runs?head_sha=2fde37d0ffaf5fb270f562d0be325a3ee50b8541&per_page=10",
+      "response": {
+        "total_count": 0,
+        "workflow_runs": []
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/TilesOS/othie-ai/actions/runs?head_sha=17cf004442fa59ef7fec73b091b4282b44a00e08&per_page=10",
+      "response": {
+        "total_count": 0,
+        "workflow_runs": []
+      }
+    }
+  ],
+  "limits": "No matching remote CI runs were returned for the two inspected full revisions. This does not establish CI acceptance for these or newer local commits."
+}

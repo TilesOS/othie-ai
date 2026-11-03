@@ -1,0 +1,8 @@
+{
+  "name": "minimatch",
+  "version": "11.0.4",
+  "integrity": "sha512-/UJ1dEoVQTjPNDh6SGlUo+ueLMmoHTas4q+8yaAR/5t6nLAIiBDJtoYUh20IYleix7ehiQkgczb84PE3uzHkxg==",
+  "entry": "dist/commonjs/index.js",
+  "entry_sha256": "235c5458355f1449cc100f1cea1a43d45f788a4feb524a83497aa146bea88f32",
+  "origin": "Previously installed disposable candidate from the November 2 lint compatibility record; no new package installation."
+}

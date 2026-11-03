@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 2, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 3, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci` | November 2 clean installation passes with the existing dependency lockfile |
 | `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 205 passing tests; one opt-in real-model test skipped |
+| `npm test` | 254 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -37,6 +37,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 1 guarded query scope | 720 results; per export mode lexical 48/48 recall and 4/42 no-ops; vocabulary guard 44/48 and 12/42; guarded candidate fails acceptance despite preserving all original positives |
 | November 1 prior-history CI inspection | `298dbe9` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | November 2 lint compatibility | Five website tests pass, including legacy plugin glob matches/nonmatches and output ignores; isolated v11 exports cause all three probed legacy branches to throw |
+| November 3 broader lint glob comparison | 49/49 installed-plugin controls pass; raw v11 0/49; callable v11 42/49, with six missing-`makeRe` failures and one Unicode diagnostic change |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
@@ -46,9 +47,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
 | Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
 | `git diff --check` | Pass |
-| `npm audit` and `npm audit --omit=dev` | November 2: 16 moderate development entries from one minimatch advisory; zero production findings; compatible remediation remains open |
+| `npm audit` and `npm audit --omit=dev` | November 3: 16 moderate development entries from one minimatch advisory; zero production findings; compatible remediation remains open |
 
-The full suite comprises 139 engine, 30 shared-hook, 19 website, 10 Codex, and seven
+The full suite comprises 139 engine, 30 shared-hook, 68 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1017,6 +1018,40 @@ verifies the full revision and closes the November 1 guarded-scope history's CI
 gap. New local commits still need CI; native Windows/session acceptance remains open.
 No native/model sessions or adapter latency probes were rerun for this lint-only change.
 
+## November 3 broader lint glob follow-up
+
+The [glob parity records](packages/engine/evaluation/records/2026-11-03/glob-parity-followup/README.md)
+add 49 virtual-file controls across six installed lint rules. Matches/nonmatches
+cover component and path patterns, braces, extglobs, classes, negation, hidden
+files, basename matching, comments and Unicode. Import internal-module controls
+exercise the legacy `makeRe` API; PascalCase and namespace-import checks exercise
+`noglobstar`/`matchBase` options. All controls pass with installed minimatch 3.1.5.
+
+Fresh-process v11.0.4 cache interventions fail the migration gate: raw exports
+pass 0/49 (43 callable failures and six `makeRe` access failures); a callable
+wrapper copying the namespace properties passes 42/49. That wrapper still fails
+all six internal-module cases because v11 exports neither top-level nor prototype
+`makeRe`. It also changes `import/no-namespace`: ignore pattern `?` suppresses a
+diagnostic for `pkg/😀` which legacy v3 reports. Matching BMP and ASCII controls
+remain. A callable adapter alone is therefore insufficient. This is an isolated
+API/behavior comparison, not an installed override or complete toolchain migration.
+
+The fixed candidate matches the preceding record's registry integrity and entry
+hash; all 90 recorded files across its four installed packages still match. Fresh
+registry metadata retains legacy v3 at 3.1.5 and all three latest plugin dependencies
+at `^3.1.2`. The production audit remains clean, while the full audit retains the
+same 16 moderate development entries. Dependencies and production retrieval are
+unchanged; no advisory suppression or major override was applied.
+
+Full build, workspace typechecks, website lint and 254 deterministic tests pass,
+with one opt-in model test skipped. After restoring the build-generated
+`next-env.d.ts` path change, all workspace typechecks pass again. No clean install
+was repeated. The preceding evidence verifier passes; the new verifier checks
+manifests/redaction, sources, all fixture judgments, API/behavior failures, candidate
+identity, test totals and audits. GitHub queries return no CI runs for the full
+`17cf004` and `2fde37d` revisions, so their lint changes and new local commits still
+need remote CI. No native/model sessions or adapter latency probes were rerun.
+
 ## Remaining acceptance work
 
 - Resolve the November 1 development-tool minimatch audit finding with a compatible
@@ -1024,7 +1059,11 @@ No native/model sessions or adapter latency probes were rerun for this lint-only
   development audit acceptance is open. Preserve rule execution and glob behavior
   when evaluating replacements for legacy callable-module consumers. November 2
   adds executable matching/nonmatching controls and confirms the v11 module API
-  break in three legacy plugin branches; broader glob parity is still needed.
+  break in three legacy plugin branches. November 3 adds 49 broader glob controls
+  and rejects a callable v11 adapter: `makeRe` is also removed, and a Unicode
+  ignore changes behavior. A replacement must migrate those consumers and review
+  matching changes; complete glob parity and a compatible upstream/toolchain fix
+  remain open.
 - Codex persisted interactive hook-trust acceptance after verified noninteractive
   project-file discovery from root/nested launches; Claude
   interactive workspace trust and desktop UI acceptance beyond the recorded noninteractive
