@@ -1,0 +1,13 @@
+{
+  "package.json": "c919d7aa3d7f021a2d3fd1f3d522a19d57610980771c392cc4b2da9b3f9a3483",
+  "package-lock.json": "510599e6e9ea7eb68168be8e484697631fdbe6b235881c22f1216ce5fdd5b13f",
+  "apps/website/package.json": "a6eddfde4de129873b138db082a9d6538e6a2b94f6f989f5145901643353f18b",
+  "apps/website/eslint.config.mjs": "927cc3e7a3599cc1d6386a5fa73a6db71be3bd5f0c0d0e5222366614c7d5f9e5",
+  "apps/website/lib/lint-glob-fixtures.ts": "10fe406b654886d5289ab7413f9f24387277e62c5693ee0e23c49e78706b65fd",
+  "apps/website/lib/lint-glob-parity.test.ts": "cbcc8e69003e821178d9c2877756af71868acc31aafd78bb91f9f5ff9c87ba70",
+  "apps/website/lib/lint-parser-fixtures.ts": "95f4ef2f516acaacee33b6e672cc568f79a0829fbc0db5aa3baf119829034c08",
+  "apps/website/lib/lint-parser-harness.ts": "1782a89533fbea607b91feb1090d0b482ed2c5cdcc5b8f6a66b72dbce48093f6",
+  "apps/website/lib/lint-parser-glob.test.ts": "4eadfc95d984bd77306eb62b18c75ccced6c2929589be3be887a73bf15332d00",
+  ".github/workflows/ci.yml": "b2b6b2c5a8e7868f81bcbd5ee8357b81dbee74ce3c8758ed21599db683b1904a",
+  "packages/engine/evaluation/records/2026-11-03/glob-parity-followup/probe-globs.mjs": "88c66a5dbcf06c39f208da14045a63aeac5e9d41511d9c03d37a786fbd585080"
+}

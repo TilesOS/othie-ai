@@ -1,0 +1,234 @@
+{
+  "protocol": "parser-glob-parity-v1",
+  "recorded_at": "2026-11-06T05:02:43.980Z",
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "mode": "baseline",
+  "lockfile_sha256": "510599e6e9ea7eb68168be8e484697631fdbe6b235881c22f1216ce5fdd5b13f",
+  "fixture_sha256": "95f4ef2f516acaacee33b6e672cc568f79a0829fbc0db5aa3baf119829034c08",
+  "harness_sha256": "1782a89533fbea607b91feb1090d0b482ed2c5cdcc5b8f6a66b72dbce48093f6",
+  "parser_version": "8.70.0",
+  "estree_version": "8.70.0",
+  "installed_minimatch": {
+    "version": "10.2.6",
+    "module_type": "object",
+    "named_match_type": "function"
+  },
+  "candidate": null,
+  "results": [
+    {
+      "id": "star-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "star-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "question-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "question-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "class-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "class-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "braces-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "braces-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "extglob-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "extglob-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "negation-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "negation-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "nested-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "nested-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "dot-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "dot-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "bmp-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "bmp-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "literal-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "literal-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "leading-dot",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "astral-one-question",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "astral-two-questions",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "combining-one-question",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "combining-two-questions",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "wide-star-rejected",
+      "expected": "invalid-pattern",
+      "observed": "invalid-pattern",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "globstar-rejected",
+      "expected": "invalid-pattern",
+      "observed": "invalid-pattern",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "included-conflict",
+      "expected": "included-conflict",
+      "observed": "included-conflict",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "included-without-default",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "excluded-without-default",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    }
+  ],
+  "passed": 30,
+  "total": 30,
+  "all_passed": true,
+  "limits": "Actual parser project-service controls with isolated synthetic projects. Only the parser minimatch cache entry changes. No dependency installation in the repository, override, shim, exhaustive glob proof, vulnerability exploit or Windows/native-host acceptance."
+}

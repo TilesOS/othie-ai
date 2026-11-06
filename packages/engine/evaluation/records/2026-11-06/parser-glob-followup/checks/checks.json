@@ -1,0 +1,58 @@
+[
+  {
+    "name": "audit-full",
+    "exit_code": 1
+  },
+  {
+    "name": "audit-production",
+    "exit_code": 0
+  },
+  {
+    "name": "parser-baseline",
+    "exit_code": 0
+  },
+  {
+    "name": "parser-candidate",
+    "exit_code": 1
+  },
+  {
+    "name": "plugins-baseline",
+    "exit_code": 0
+  },
+  {
+    "name": "plugins-raw",
+    "exit_code": 1
+  },
+  {
+    "name": "plugins-callable",
+    "exit_code": 1
+  },
+  {
+    "name": "build-restricted-interrupted",
+    "exit_code": 130
+  },
+  {
+    "name": "build",
+    "exit_code": 0
+  },
+  {
+    "name": "typecheck",
+    "exit_code": 0
+  },
+  {
+    "name": "lint",
+    "exit_code": 0
+  },
+  {
+    "name": "test",
+    "exit_code": 0
+  },
+  {
+    "name": "final-typecheck",
+    "exit_code": 0
+  },
+  {
+    "name": "prior-evidence",
+    "exit_code": 0
+  }
+]

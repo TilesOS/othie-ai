@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 3, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 6, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci` | November 2 clean installation passes with the existing dependency lockfile |
 | `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 254 passing tests; one opt-in real-model test skipped |
+| `npm test` | 284 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -38,6 +38,8 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 1 prior-history CI inspection | `298dbe9` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | November 2 lint compatibility | Five website tests pass, including legacy plugin glob matches/nonmatches and output ignores; isolated v11 exports cause all three probed legacy branches to throw |
 | November 3 broader lint glob comparison | 49/49 installed-plugin controls pass; raw v11 0/49; callable v11 42/49, with six missing-`makeRe` failures and one Unicode diagnostic change |
+| November 6 parser glob comparison | Installed parser 30/30; parser-only minimatch 11.0.5 28/30, reversing two astral Unicode filename admission decisions; legacy plugin controls remain 49/49 installed, 0/49 raw and 42/49 callable |
+| November 6 prior-history CI inspection | `c7ea37d` passes macOS/Windows installation, typechecks, website lint, tests and Windows startup syntax, closing the preceding lint/workflow CI gap |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
@@ -47,9 +49,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
 | Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
 | `git diff --check` | Pass |
-| `npm audit` and `npm audit --omit=dev` | November 3: 16 moderate development entries from one minimatch advisory; zero production findings; compatible remediation remains open |
+| `npm audit` and `npm audit --omit=dev` | November 6: eight moderate development entries after the advisory's affected range was narrowed; zero production findings; affected parser dependency and compatible remediation remain open |
 
-The full suite comprises 139 engine, 30 shared-hook, 68 website, 10 Codex, and seven
+The full suite comprises 139 engine, 30 shared-hook, 98 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1052,18 +1054,67 @@ identity, test totals and audits. GitHub queries return no CI runs for the full
 `17cf004` and `2fde37d` revisions, so their lint changes and new local commits still
 need remote CI. No native/model sessions or adapter latency probes were rerun.
 
+## November 6 parser glob and advisory-scope follow-up
+
+The [parser migration records](packages/engine/evaluation/records/2026-11-06/parser-glob-followup/README.md)
+track a material upstream advisory revision: GHSA-g3hv-75wg-m249 was updated
+November 4 to affect `>=7.0.0 <11.0.1`, rather than the prior `<11.0.1` range.
+The fresh full audit now reports eight moderate development entries, down from
+sixteen, while production remains clean. This is a metadata correction, not a
+dependency remediation or suppression. Legacy callable-plugin consumers retain
+minimatch 3.1.5 outside the revised range; the affected installed dependency is
+10.2.6 under `@typescript-eslint/typescript-estree` 8.70.0. Latest estree metadata
+(8.72.1) still declares `^10.2.2`.
+
+Thirty new controls exercise the actual TypeScript parser project service's
+`allowDefaultProject` matching, with isolated synthetic projects and cache cleanup.
+Accepted files must return a program with a verified `number` type; exclusions,
+overly broad globs and configured-project conflicts must return the expected
+error classification. These cover a branch ordinary website lint does not enable.
+Installed dependencies pass 30/30. A fresh-process parser-only intervention with
+minimatch 11.0.5 passes 28/30: `?.ts` starts accepting `😀.ts`, while `??.ts`
+stops accepting it. The named API works, but the change both widens and narrows
+file admission. A parser-only major override therefore fails behavior preservation.
+The other 28 controls, including BMP/combining Unicode, dotfiles, nested paths,
+braces, extglobs and negation, retain their expected judgments.
+
+Fresh 11.0.5 interventions in the three legacy plugins also retain the November 3
+results: installed 49/49, raw 0/49, callable 42/49. The callable intervention still
+has six missing-`makeRe` failures and an independent Unicode diagnostic change.
+No repository dependency, lockfile, override, shim or production retrieval change
+was applied. Candidate registry integrity and file hashes for its four installed
+public packages are recorded. These probes are isolated cache interventions, not
+an installed toolchain migration or exhaustive equivalence/exploitability proof.
+
+Full build, workspace typechecks, website lint and all 284 deterministic tests
+pass; one opt-in real-model test is skipped. The restricted Next.js build was
+interrupted after it stopped producing output; the build with local process access
+passes. Build-generated `next-env.d.ts` paths were restored, then workspace
+typechecks passed again. Engine process tests ran with local IPC access. The
+November 3 evidence verifier passes; no clean installation was repeated because
+repository dependencies are unchanged.
+
+The [run for `c7ea37d`](https://github.com/TilesOS/othie-ai/actions/runs/41584677601),
+inspected November 6, passes on macOS and Windows: clean installation, workspace
+typechecks, website lint, tests and Windows startup-script syntax. The
+[full revision/job record](packages/engine/evaluation/records/2026-11-06/parser-glob-followup/checks/ci-c7ea37d.json)
+closes the November 2–3 lint/workflow history's CI gap. New parser-control and
+evidence commits still need remote CI. Native Windows/session acceptance remains
+open. No native/model sessions, adapter latency probes, semantic-scope experiments,
+installer/signing work or model downloads were performed in this follow-up.
+
 ## Remaining acceptance work
 
-- Resolve the November 1 development-tool minimatch audit finding with a compatible
-  ESLint/plugin migration or upstream fix. Production audit has no findings;
-  development audit acceptance is open. Preserve rule execution and glob behavior
-  when evaluating replacements for legacy callable-module consumers. November 2
-  adds executable matching/nonmatching controls and confirms the v11 module API
-  break in three legacy plugin branches. November 3 adds 49 broader glob controls
-  and rejects a callable v11 adapter: `makeRe` is also removed, and a Unicode
-  ignore changes behavior. A replacement must migrate those consumers and review
-  matching changes; complete glob parity and a compatible upstream/toolchain fix
-  remain open.
+- Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
+  parser with a compatible upstream fix or reviewed migration. The November 4
+  advisory revision excludes legacy 3.1.5; November 6 audits retain eight moderate
+  development entries and zero production findings. The new parser-only 11.0.5
+  candidate passes 28/30 actual project-service controls but changes both accepted
+  and excluded astral Unicode filenames. Preserve file-admission semantics or
+  explicitly review a deliberate change before adopting a major override. A global
+  override is unnecessary for the revised finding and still fails the legacy
+  plugins' callable API, `makeRe` and Unicode controls. Compatible remediation and
+  complete glob parity remain open; no override or suppression is applied.
 - Codex persisted interactive hook-trust acceptance after verified noninteractive
   project-file discovery from root/nested launches; Claude
   interactive workspace trust and desktop UI acceptance beyond the recorded noninteractive
@@ -1077,7 +1128,9 @@ need remote CI. No native/model sessions or adapter latency probes were rerun.
   inspection verifies `9f416fe`, including the multi-file native-agent and no-op
   diagnostic history, on both macOS and Windows runners. New query-scope evaluator
   commits are now verified through `5937f7c` by the November 2 inspection above.
-  New lint-test/workflow commits still need remote CI.
+  The November 6 inspection additionally verifies the lint-test/workflow history
+  through `c7ea37d` on both runners. New parser-control/evidence commits still
+  need remote CI.
   Native Windows host/session acceptance remains open.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and

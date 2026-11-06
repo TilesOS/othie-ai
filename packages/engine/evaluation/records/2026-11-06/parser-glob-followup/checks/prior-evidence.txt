@@ -1,0 +1,1 @@
+Verified 35 files, 49 fixture expectations, raw/adapted v11 failures, candidate identity, 254 tests, audits and pending CI lookups.

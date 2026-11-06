@@ -1,0 +1,12 @@
+{
+  "name": "@typescript-eslint/typescript-estree",
+  "version": "8.70.0",
+  "path": "node_modules/@typescript-eslint/typescript-estree/dist/useProgramFromProjectService.js",
+  "sha256": "603b04b58090d455fe2f2f56c7ab643f4377f63704dfa87d995d553bad9ad258",
+  "declared_minimatch": "^10.2.2",
+  "installed_minimatch": "10.2.6",
+  "api": "named minimatch",
+  "options": {
+    "dot": true
+  }
+}
