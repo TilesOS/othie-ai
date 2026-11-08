@@ -1,0 +1,151 @@
+
+> othie-ai@0.1.0 test
+> npm run test --workspaces --if-present
+
+
+> @othie/engine@0.1.0 pretest
+> npm run build && npm run build:integrations --prefix ../..
+
+
+> @othie/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> othie-ai@0.1.0 build:integrations
+> npm run build --workspace=@othie/codex-integration --workspace=@othie/claude-code-integration
+
+
+> @othie/codex-integration@0.1.0 prebuild
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/codex-integration@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/claude-code-integration@0.1.0 prebuild
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/claude-code-integration@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/engine@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.5 <repository>/packages/engine
+
+Hook latency 1/codex/positive: passed=true, wall_ms=583
+Hook latency 1/claude-code/positive: passed=true, wall_ms=471
+Hook latency 1/codex/irrelevant: passed=true, wall_ms=359
+Hook latency 1/claude-code/irrelevant: passed=true, wall_ms=345
+Hook latency 1/codex/stalled-engine: passed=true, wall_ms=5024
+Hook latency 1/claude-code/stalled-engine: passed=true, wall_ms=5036
+Hook latency 1/codex/delayed-input-stalled-engine: passed=true, wall_ms=5037
+Hook latency 1/claude-code/delayed-input-stalled-engine: passed=true, wall_ms=5036
+Hook latency 1/codex/stalled-input: passed=true, wall_ms=5029
+Hook latency 1/claude-code/stalled-input: passed=true, wall_ms=5027
+Hook latency 1/codex/revoked: passed=true, wall_ms=273
+Hook latency 1/claude-code/revoked: passed=true, wall_ms=264
+Hook latency 1/codex/unavailable: passed=true, wall_ms=266
+Hook latency 1/claude-code/unavailable: passed=true, wall_ms=267
+
+ Test Files  30 passed | 1 skipped (31)
+      Tests  139 passed | 1 skipped (140)
+   Start at  23:35:07
+   Duration  33.69s (tests 88%, import 11%, transform 1%)
+
+
+> @othie/hooks@0.1.0 test
+> vitest run test
+
+
+ RUN  v5.0.5 <repository>/packages/hooks
+
+
+ Test Files  2 passed (2)
+      Tests  30 passed (30)
+   Start at  23:35:40
+   Duration  1.10s (tests 93%, import 6%)
+
+
+> @othie/website@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.5 <repository>/apps/website
+
+
+ Test Files  6 passed (6)
+      Tests  102 passed (102)
+   Start at  23:35:42
+   Duration  2.67s (tests 96%, import 4%, transform 1%)
+
+
+> @othie/claude-code-integration@0.1.0 pretest
+> npm run build
+
+
+> @othie/claude-code-integration@0.1.0 prebuild
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/claude-code-integration@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/claude-code-integration@0.1.0 test
+> vitest run test
+
+
+ RUN  v5.0.5 <repository>/integrations/claude-code
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  23:35:45
+   Duration  139ms (import 73%, tests 21%, transform 5%, worker 1%)
+
+
+> @othie/codex-integration@0.1.0 pretest
+> npm run build
+
+
+> @othie/codex-integration@0.1.0 prebuild
+> npm run build --workspace=@othie/hooks
+
+
+> @othie/hooks@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/codex-integration@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @othie/codex-integration@0.1.0 test
+> vitest run test
+
+
+ RUN  v5.0.5 <repository>/integrations/codex
+
+
+ Test Files  2 passed (2)
+      Tests  10 passed (10)
+   Start at  23:35:45
+   Duration  385ms (tests 83%, import 16%, transform 1%, worker 1%)
+

@@ -1,0 +1,20 @@
+{
+  "recorded_at": "2026-11-08T04:36:58.727038+00:00",
+  "code_commit": "688ba6b",
+  "exits": {
+    "initial-focused-test": 1,
+    "focused-test": 0,
+    "typecheck": 0,
+    "lint": 0,
+    "build": 0,
+    "test": 0,
+    "prior-evidence": 0,
+    "final-typecheck": 0,
+    "final-lint": 0
+  },
+  "audit_totals": {
+    "full": 8,
+    "production": 0
+  },
+  "clean_install_repeated": false
+}

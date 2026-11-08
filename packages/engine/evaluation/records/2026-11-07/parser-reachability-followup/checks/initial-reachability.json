@@ -1,0 +1,845 @@
+{
+  "protocol": "parser-minimatch-reachability-v1",
+  "recorded_at": "2026-11-08T04:33:59.661Z",
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "parser_version": "8.70.0",
+  "minimatch_version": "10.2.6",
+  "source_hashes": {
+    "package-lock.json": "510599e6e9ea7eb68168be8e484697631fdbe6b235881c22f1216ce5fdd5b13f",
+    "apps/website/eslint.config.mjs": "927cc3e7a3599cc1d6386a5fa73a6db71be3bd5f0c0d0e5222366614c7d5f9e5",
+    "apps/website/lib/lint-parser-fixtures.ts": "95f4ef2f516acaacee33b6e672cc568f79a0829fbc0db5aa3baf119829034c08",
+    "apps/website/lib/lint-parser-harness.ts": "1782a89533fbea607b91feb1090d0b482ed2c5cdcc5b8f6a66b72dbce48093f6",
+    "apps/website/lib/lint-parser-reachability-probe.mjs": "fff8c1d85f79c9db33d95f3ad0a5c3e06915d5a10f84e1a50d38531a4f7bfda8",
+    "node_modules/@typescript-eslint/typescript-estree/dist/useProgramFromProjectService.js": "603b04b58090d455fe2f2f56c7ab643f4377f63704dfa87d995d553bad9ad258",
+    "node_modules/@typescript-eslint/typescript-estree/dist/create-program/validateDefaultProjectForFilesGlob.js": "6baa702e97b8ce3a5a24c422fe0b58333fa4e91ec60b14d33b26f9a46f97c1b5",
+    "node_modules/minimatch/dist/commonjs/index.js": "d224f71f20d7c206fcc5b7e9f747324c7698345a0b2c28d717dd9cf698306783"
+  },
+  "website": [
+    {
+      "file": "lib/reachability-fixture.tsx",
+      "project": null,
+      "project_service": null,
+      "fatal_errors": 0,
+      "messages": [],
+      "trace": {
+        "matches": [],
+        "preprocess": [],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "file": "lib/reachability-fixture.js",
+      "project": null,
+      "project_service": null,
+      "fatal_errors": 0,
+      "messages": [],
+      "trace": {
+        "matches": [],
+        "preprocess": [],
+        "first_phase": [],
+        "second_phase": []
+      }
+    }
+  ],
+  "parser": [
+    {
+      "id": "star-match",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "allowed*.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "star-miss",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "allowed*.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "question-match",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "file?.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "question-miss",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "file?.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "class-match",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "file[AB].ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "class-miss",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "file[AB].ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "braces-match",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "{allowed,shared}.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 2,
+            "output_parts": 2
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "braces-miss",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "{allowed,shared}.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 2,
+            "output_parts": 2
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "extglob-match",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "@(allowed|shared).ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "extglob-miss",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "@(allowed|shared).ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "negation-match",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "!blocked.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "negation-miss",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "!blocked.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "nested-match",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "tools/*.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "nested-miss",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "tools/*.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "dot-match",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "allowed*.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "dot-miss",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "allowed*.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "bmp-match",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "?.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "bmp-miss",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "?.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "literal-match",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "exact.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "literal-miss",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "exact.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "leading-dot",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "*.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "astral-one-question",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "?.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "astral-two-questions",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "??.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "combining-one-question",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "?.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "combining-two-questions",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [
+          {
+            "pattern": "??.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "wide-star-rejected",
+      "expected": "invalid-pattern",
+      "outcome": "invalid-pattern",
+      "type": null,
+      "trace": {
+        "matches": [],
+        "preprocess": [],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "globstar-rejected",
+      "expected": "invalid-pattern",
+      "outcome": "invalid-pattern",
+      "type": null,
+      "trace": {
+        "matches": [],
+        "preprocess": [],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "included-conflict",
+      "expected": "included-conflict",
+      "outcome": "included-conflict",
+      "type": null,
+      "trace": {
+        "matches": [
+          {
+            "pattern": "src/*.ts",
+            "options": {
+              "dot": true
+            }
+          }
+        ],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "included-without-default",
+      "expected": "typed",
+      "outcome": "typed",
+      "type": "number",
+      "trace": {
+        "matches": [],
+        "preprocess": [],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "excluded-without-default",
+      "expected": "unmatched",
+      "outcome": "unmatched",
+      "type": null,
+      "trace": {
+        "matches": [],
+        "preprocess": [],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "amplification-pattern-0",
+      "expected": "invalid-pattern",
+      "outcome": "invalid-pattern",
+      "type": null,
+      "trace": {
+        "matches": [],
+        "preprocess": [],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "amplification-pattern-1",
+      "expected": "invalid-pattern",
+      "outcome": "invalid-pattern",
+      "type": null,
+      "trace": {
+        "matches": [],
+        "preprocess": [],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "id": "amplification-pattern-2",
+      "expected": "invalid-pattern",
+      "outcome": "invalid-pattern",
+      "type": null,
+      "trace": {
+        "matches": [],
+        "preprocess": [],
+        "first_phase": [],
+        "second_phase": []
+      }
+    }
+  ],
+  "controls": [
+    {
+      "requested_level": null,
+      "resulting_parts": 1,
+      "trace": {
+        "matches": [],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "requested_level": 1,
+      "resulting_parts": 1,
+      "trace": {
+        "matches": [],
+        "preprocess": [
+          {
+            "optimization_level": 1,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [],
+        "second_phase": []
+      }
+    },
+    {
+      "requested_level": 2,
+      "resulting_parts": 1,
+      "trace": {
+        "matches": [],
+        "preprocess": [
+          {
+            "optimization_level": 2,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "first_phase": [
+          {
+            "optimization_level": 2,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ],
+        "second_phase": [
+          {
+            "optimization_level": 2,
+            "input_parts": 1,
+            "output_parts": 1
+          }
+        ]
+      }
+    }
+  ],
+  "limits": "Installed CJS parser call path, current website config and fixed synthetic fixtures only. Instrumentation forwards arguments/results. Tiny level-two positive control, not a stress test. No package remediation, audit suppression, exhaustive reachability proof or native-host acceptance."
+}

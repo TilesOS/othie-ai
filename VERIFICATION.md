@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 6, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 7, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci` | November 2 clean installation passes with the existing dependency lockfile |
 | `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 284 passing tests; one opt-in real-model test skipped |
+| `npm test` | 288 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -40,6 +40,8 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 3 broader lint glob comparison | 49/49 installed-plugin controls pass; raw v11 0/49; callable v11 42/49, with six missing-`makeRe` failures and one Unicode diagnostic change |
 | November 6 parser glob comparison | Installed parser 30/30; parser-only minimatch 11.0.5 28/30, reversing two astral Unicode filename admission decisions; legacy plugin controls remain 49/49 installed, 0/49 raw and 42/49 callable |
 | November 6 prior-history CI inspection | `c7ea37d` passes macOS/Windows installation, typechecks, website lint, tests and Windows startup syntax, closing the preceding lint/workflow CI gap |
+| November 7 parser reachability | Website virtual TSX/JS lint makes no affected matcher calls; all 30 parser judgments preserved, 26 calls use level 1; three globstar patterns rejected before matching; tiny level-2 control detects both phases and expands 1 pattern to 2 |
+| November 7 prior-history CI inspection | `21f590e` passes Windows installation, typechecks, website lint, tests and startup syntax; macOS job cancelled before recorded steps, so full CI remains unaccepted |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
@@ -49,9 +51,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
 | Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
 | `git diff --check` | Pass |
-| `npm audit` and `npm audit --omit=dev` | November 6: eight moderate development entries after the advisory's affected range was narrowed; zero production findings; affected parser dependency and compatible remediation remain open |
+| `npm audit` and `npm audit --omit=dev` | November 7: eight moderate development entries; zero production findings; checked parser path does not enter the advisory's level-2 branch, but affected dependency and compatible remediation remain open |
 
-The full suite comprises 139 engine, 30 shared-hook, 98 website, 10 Codex, and seven
+The full suite comprises 139 engine, 30 shared-hook, 102 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1103,6 +1105,47 @@ evidence commits still need remote CI. Native Windows/session acceptance remains
 open. No native/model sessions, adapter latency probes, semantic-scope experiments,
 installer/signing work or model downloads were performed in this follow-up.
 
+## November 7 installed-parser reachability follow-up
+
+The [reachability records](packages/engine/evaluation/records/2026-11-07/parser-reachability-followup/README.md)
+add four regression tests and a fresh-process observation of the installed CJS
+parser dependency. The advisory's amplification requires `optimizationLevel >= 2`.
+All seven declared direct minimatch consumers were resolved against the current
+lockfile: estree alone uses affected 10.2.6; the other six use legacy 3.1.5.
+
+Virtual TSX and JS lint under the current website config has no project or
+project-service setting and makes zero affected matcher calls. All 30 existing
+project-service controls preserve their original outcomes, including typed-program
+checks. Their 26 matcher calls use exactly `{ dot: true }` and effective optimization
+level 1, without entering either level-two phase. Three synthetic globstar/parent
+patterns are rejected by estree before matching. A tiny direct level-two control
+enters both phases and expands one pattern to two, verifying instrumentation.
+The first positive-control pattern entered both phases without expanding; that
+failed test and trace are retained, and the final fixture supplies the required
+trailing components. Instrumentation forwards unchanged arguments/results and runs
+only in an isolated subprocess.
+
+These are observed guards on the checked path, not universal non-exploitability
+or package remediation. Fresh audits still report eight moderate development
+entries and zero production findings. Current v10 releases still end at 10.2.6;
+latest estree 8.72.1 still declares `^10.2.2`. The prior v11 Unicode admission
+regressions remain recorded. No dependency, override, shim or suppression changed.
+
+Full workspace build, typechecks, website lint and all 288 deterministic tests
+pass, with one opt-in real-model test skipped. After restoring build-generated
+`next-env.d.ts` paths, typechecks and lint pass again. Process tests use local IPC
+access. The November 6 evidence verifier passes; clean installation was not repeated
+because dependencies are unchanged. The new verifier checks source/publication
+integrity, traces, dependency resolution, audits, test totals and partial CI.
+
+The [run for `21f590e`](https://github.com/TilesOS/othie-ai/actions/runs/42167019665)
+passes Windows clean installation, workspace typechecks, website lint, tests and
+startup-script syntax. Its macOS job was cancelled with no recorded steps, and
+the run is cancelled overall. The [revision/job record](packages/engine/evaluation/records/2026-11-07/parser-reachability-followup/checks/ci-21f590e.json)
+therefore closes only the November 6 parser history's Windows CI gap. macOS CI
+for that history and all CI for the new reachability controls remain open.
+No native/model sessions, adapter latency or semantic-scope experiments were rerun.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
@@ -1115,6 +1158,9 @@ installer/signing work or model downloads were performed in this follow-up.
   override is unnecessary for the revised finding and still fails the legacy
   plugins' callable API, `makeRe` and Unicode controls. Compatible remediation and
   complete glob parity remain open; no override or suppression is applied.
+  November 7 traces establish level-one-only calls and prior globstar rejection
+  on the checked parser path, plus an inactive branch under current website lint;
+  these guards refine exposure assessment without clearing the package finding.
 - Codex persisted interactive hook-trust acceptance after verified noninteractive
   project-file discovery from root/nested launches; Claude
   interactive workspace trust and desktop UI acceptance beyond the recorded noninteractive
@@ -1129,8 +1175,9 @@ installer/signing work or model downloads were performed in this follow-up.
   diagnostic history, on both macOS and Windows runners. New query-scope evaluator
   commits are now verified through `5937f7c` by the November 2 inspection above.
   The November 6 inspection additionally verifies the lint-test/workflow history
-  through `c7ea37d` on both runners. New parser-control/evidence commits still
-  need remote CI.
+  through `c7ea37d` on both runners. The November 7 inspection verifies parser
+  history through `21f590e` on Windows; macOS was cancelled before recorded steps.
+  New reachability controls still need CI on both runners.
   Native Windows host/session acceptance remains open.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and

@@ -1,0 +1,13 @@
+
+> @othie/website@0.1.0 test
+> vitest run lib/lint-parser-reachability.test.ts
+
+
+ RUN  v5.0.5 <repository>/apps/website
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  23:34:53
+   Duration  2.46s (tests 99%)
+

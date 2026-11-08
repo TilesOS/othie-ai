@@ -1,0 +1,1 @@
+Verified 27 files, 30 parser controls, 49 plugin controls, candidate failures, revised audit scope, 284 tests and prior macOS/Windows CI.
