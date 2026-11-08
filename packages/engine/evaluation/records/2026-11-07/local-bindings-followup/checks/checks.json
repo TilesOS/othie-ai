@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-11-08T04:45:14.422798+00:00",
+  "code_commit": "002a8b0",
+  "exits": {
+    "focused-test": 0,
+    "scope": 1,
+    "build": 0,
+    "test": 0,
+    "typecheck": 0,
+    "lint": 0,
+    "final-typecheck": 0,
+    "final-lint": 0
+  },
+  "restricted_attempts": {
+    "build": {
+      "exit_code": 130,
+      "outcome": "interrupted stalled Next.js build"
+    },
+    "test": {
+      "exit_code": 1,
+      "failed_tests": 8,
+      "cause": "local sockets unavailable"
+    }
+  },
+  "clean_install_repeated": false,
+  "audit_refreshed": false,
+  "ci_inspected": false,
+  "prior_evidence_verifiers_before_rebuild": {
+    "parser-reachability": 0,
+    "policy-guard": 0
+  }
+}

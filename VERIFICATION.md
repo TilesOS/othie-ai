@@ -1146,6 +1146,43 @@ therefore closes only the November 6 parser history's Windows CI gap. macOS CI
 for that history and all CI for the new reachability controls remain open.
 No native/model sessions, adapter latency or semantic-scope experiments were rerun.
 
+## November 7 local binding scope follow-up
+
+The [local binding records](packages/engine/evaluation/records/2026-11-07/local-bindings-followup/README.md)
+return to the remaining semantic-scope work with an evaluation-only candidate.
+Instead of masking every call argument or requiring explicit policy words, it
+masks arguments/named variables in sentences containing local-operation cues,
+plus narrow CSS and literal-rendering phrases. No labels or policy documents
+enter the candidate. The original 27 cases and 18 guard counterexamples remain
+unchanged; 12 diagnostic cases add mixed sentence boundaries, negation, active
+quoted policy subjects and local function/quoted-variable collisions.
+
+Two fresh SQLite/Lance repeats per export mode preserve all 720 prior baseline
+rows' queries, terms, evidence, XML and judgments. All 1,140 new rows pass exact
+citation and 500-token gates with stable evidence across repeats. The candidate
+preserves original positives 30/30 and prior guard positives 18/18, recovering
+both implicit refund requests lost by the vocabulary guard. Full scores are
+54/60 positives and 38/54 no-ops per export mode. Three new positive cases lose
+refund evidence: same-sentence mixed work, numeric policy limits and negated
+sorting. Function/quoted-variable names and six preceding no-op cases still
+retrieve unwanted evidence. The candidate fails acceptance and is not adopted.
+The extension was authored alongside the hypothesis, not held out; controlled
+repeat counts do not establish statistical generalization.
+
+Full build, workspace typechecks, website lint and 291 deterministic tests pass;
+one opt-in model test is skipped. Ten focused scope tests pass. Restricted process
+tests failed eight socket-dependent cases; all pass with local IPC access. The
+restricted Next.js build stalled and was interrupted; the full build with local
+process access passes. Generated `next-env.d.ts` changes were restored, then
+typechecks and lint passed again. The prior parser/scope verifiers passed before
+rebuilding the evaluator; the new verifier independently checks all scores,
+subsets, source/compiled hashes, citations/tokens, order/repeats and paired rows.
+No dependency changes, fresh audit, clean install, remote CI inspection,
+native/model sessions or adapter latency probes were performed. New scope
+controls still need macOS/Windows CI. Next distinguish local and policy intent
+within sentences, negated operations and quoted/function identifiers while
+preserving implicit subjects, all qualifiers and both opposing requirements.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
@@ -1201,6 +1238,10 @@ No native/model sessions, adapter latency or semantic-scope experiments were rer
   The November 1 vocabulary guard additionally fails implicit policy requests and
   quoted/negated/incidental cues. Preserve the 18 counterexamples and separate
   subset scores; explicit policy keywords alone cannot establish applicability.
+  The November 7 local-binding candidate recovers those implicit requests but loses
+  three new mixed/numeric/negated policy cases and retains unwanted evidence. Keep
+  all 57 cases and separate original, guard and binding-extension scores; local
+  operation words and sentence boundaries cannot alone establish policy scope.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve

@@ -1,0 +1,945 @@
+{
+  "completed": true,
+  "results": "results.json",
+  "scores": [
+    {
+      "mode": "excerpts",
+      "strategy": "lexical",
+      "positive": {
+        "correct": 60,
+        "total": 60
+      },
+      "no_op": {
+        "correct": 4,
+        "total": 54
+      },
+      "combined": {
+        "correct": 64,
+        "total": 114
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "drop-request",
+      "positive": {
+        "correct": 58,
+        "total": 60
+      },
+      "no_op": {
+        "correct": 26,
+        "total": 54
+      },
+      "combined": {
+        "correct": 84,
+        "total": 114
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "mask-call-arguments",
+      "positive": {
+        "correct": 36,
+        "total": 60
+      },
+      "no_op": {
+        "correct": 20,
+        "total": 54
+      },
+      "combined": {
+        "correct": 56,
+        "total": 114
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "policy-guarded-arguments",
+      "positive": {
+        "correct": 48,
+        "total": 60
+      },
+      "no_op": {
+        "correct": 12,
+        "total": 54
+      },
+      "combined": {
+        "correct": 60,
+        "total": 114
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "local-bindings",
+      "positive": {
+        "correct": 54,
+        "total": 60
+      },
+      "no_op": {
+        "correct": 38,
+        "total": 54
+      },
+      "combined": {
+        "correct": 92,
+        "total": 114
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "lexical",
+      "positive": {
+        "correct": 60,
+        "total": 60
+      },
+      "no_op": {
+        "correct": 4,
+        "total": 54
+      },
+      "combined": {
+        "correct": 64,
+        "total": 114
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "drop-request",
+      "positive": {
+        "correct": 58,
+        "total": 60
+      },
+      "no_op": {
+        "correct": 26,
+        "total": 54
+      },
+      "combined": {
+        "correct": 84,
+        "total": 114
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "mask-call-arguments",
+      "positive": {
+        "correct": 36,
+        "total": 60
+      },
+      "no_op": {
+        "correct": 20,
+        "total": 54
+      },
+      "combined": {
+        "correct": 56,
+        "total": 114
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "policy-guarded-arguments",
+      "positive": {
+        "correct": 48,
+        "total": 60
+      },
+      "no_op": {
+        "correct": 12,
+        "total": 54
+      },
+      "combined": {
+        "correct": 60,
+        "total": 114
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "local-bindings",
+      "positive": {
+        "correct": 54,
+        "total": 60
+      },
+      "no_op": {
+        "correct": 38,
+        "total": 54
+      },
+      "combined": {
+        "correct": 92,
+        "total": 114
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    }
+  ],
+  "subsets": {
+    "original": [
+      {
+        "mode": "excerpts",
+        "strategy": "lexical",
+        "positive": {
+          "correct": 30,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 4,
+          "total": 24
+        },
+        "combined": {
+          "correct": 34,
+          "total": 54
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "excerpts",
+        "strategy": "drop-request",
+        "positive": {
+          "correct": 28,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 12,
+          "total": 24
+        },
+        "combined": {
+          "correct": 40,
+          "total": 54
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "excerpts",
+        "strategy": "mask-call-arguments",
+        "positive": {
+          "correct": 22,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 8,
+          "total": 24
+        },
+        "combined": {
+          "correct": 30,
+          "total": 54
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "excerpts",
+        "strategy": "policy-guarded-arguments",
+        "positive": {
+          "correct": 30,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 8,
+          "total": 24
+        },
+        "combined": {
+          "correct": 38,
+          "total": 54
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "excerpts",
+        "strategy": "local-bindings",
+        "positive": {
+          "correct": 30,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 14,
+          "total": 24
+        },
+        "combined": {
+          "correct": 44,
+          "total": 54
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "rules_only",
+        "strategy": "lexical",
+        "positive": {
+          "correct": 30,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 4,
+          "total": 24
+        },
+        "combined": {
+          "correct": 34,
+          "total": 54
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "rules_only",
+        "strategy": "drop-request",
+        "positive": {
+          "correct": 28,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 12,
+          "total": 24
+        },
+        "combined": {
+          "correct": 40,
+          "total": 54
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "rules_only",
+        "strategy": "mask-call-arguments",
+        "positive": {
+          "correct": 22,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 8,
+          "total": 24
+        },
+        "combined": {
+          "correct": 30,
+          "total": 54
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "rules_only",
+        "strategy": "policy-guarded-arguments",
+        "positive": {
+          "correct": 30,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 8,
+          "total": 24
+        },
+        "combined": {
+          "correct": 38,
+          "total": 54
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "rules_only",
+        "strategy": "local-bindings",
+        "positive": {
+          "correct": 30,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 14,
+          "total": 24
+        },
+        "combined": {
+          "correct": 44,
+          "total": 54
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      }
+    ],
+    "counterexamples": [
+      {
+        "mode": "excerpts",
+        "strategy": "lexical",
+        "positive": {
+          "correct": 30,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 0,
+          "total": 30
+        },
+        "combined": {
+          "correct": 30,
+          "total": 60
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "excerpts",
+        "strategy": "drop-request",
+        "positive": {
+          "correct": 30,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 14,
+          "total": 30
+        },
+        "combined": {
+          "correct": 44,
+          "total": 60
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "excerpts",
+        "strategy": "mask-call-arguments",
+        "positive": {
+          "correct": 14,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 12,
+          "total": 30
+        },
+        "combined": {
+          "correct": 26,
+          "total": 60
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "excerpts",
+        "strategy": "policy-guarded-arguments",
+        "positive": {
+          "correct": 18,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 4,
+          "total": 30
+        },
+        "combined": {
+          "correct": 22,
+          "total": 60
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "excerpts",
+        "strategy": "local-bindings",
+        "positive": {
+          "correct": 24,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 24,
+          "total": 30
+        },
+        "combined": {
+          "correct": 48,
+          "total": 60
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "rules_only",
+        "strategy": "lexical",
+        "positive": {
+          "correct": 30,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 0,
+          "total": 30
+        },
+        "combined": {
+          "correct": 30,
+          "total": 60
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "rules_only",
+        "strategy": "drop-request",
+        "positive": {
+          "correct": 30,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 14,
+          "total": 30
+        },
+        "combined": {
+          "correct": 44,
+          "total": 60
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "rules_only",
+        "strategy": "mask-call-arguments",
+        "positive": {
+          "correct": 14,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 12,
+          "total": 30
+        },
+        "combined": {
+          "correct": 26,
+          "total": 60
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "rules_only",
+        "strategy": "policy-guarded-arguments",
+        "positive": {
+          "correct": 18,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 4,
+          "total": 30
+        },
+        "combined": {
+          "correct": 22,
+          "total": 60
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      },
+      {
+        "mode": "rules_only",
+        "strategy": "local-bindings",
+        "positive": {
+          "correct": 24,
+          "total": 30
+        },
+        "no_op": {
+          "correct": 24,
+          "total": 30
+        },
+        "combined": {
+          "correct": 48,
+          "total": 60
+        },
+        "citations_exact": true,
+        "caps_passed": true
+      }
+    ]
+  },
+  "policy_guard": [
+    {
+      "mode": "excerpts",
+      "strategy": "lexical",
+      "positive": {
+        "correct": 18,
+        "total": 18
+      },
+      "no_op": {
+        "correct": 0,
+        "total": 18
+      },
+      "combined": {
+        "correct": 18,
+        "total": 36
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "drop-request",
+      "positive": {
+        "correct": 18,
+        "total": 18
+      },
+      "no_op": {
+        "correct": 12,
+        "total": 18
+      },
+      "combined": {
+        "correct": 30,
+        "total": 36
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "mask-call-arguments",
+      "positive": {
+        "correct": 10,
+        "total": 18
+      },
+      "no_op": {
+        "correct": 12,
+        "total": 18
+      },
+      "combined": {
+        "correct": 22,
+        "total": 36
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "policy-guarded-arguments",
+      "positive": {
+        "correct": 14,
+        "total": 18
+      },
+      "no_op": {
+        "correct": 4,
+        "total": 18
+      },
+      "combined": {
+        "correct": 18,
+        "total": 36
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "local-bindings",
+      "positive": {
+        "correct": 18,
+        "total": 18
+      },
+      "no_op": {
+        "correct": 16,
+        "total": 18
+      },
+      "combined": {
+        "correct": 34,
+        "total": 36
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "lexical",
+      "positive": {
+        "correct": 18,
+        "total": 18
+      },
+      "no_op": {
+        "correct": 0,
+        "total": 18
+      },
+      "combined": {
+        "correct": 18,
+        "total": 36
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "drop-request",
+      "positive": {
+        "correct": 18,
+        "total": 18
+      },
+      "no_op": {
+        "correct": 12,
+        "total": 18
+      },
+      "combined": {
+        "correct": 30,
+        "total": 36
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "mask-call-arguments",
+      "positive": {
+        "correct": 10,
+        "total": 18
+      },
+      "no_op": {
+        "correct": 12,
+        "total": 18
+      },
+      "combined": {
+        "correct": 22,
+        "total": 36
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "policy-guarded-arguments",
+      "positive": {
+        "correct": 14,
+        "total": 18
+      },
+      "no_op": {
+        "correct": 4,
+        "total": 18
+      },
+      "combined": {
+        "correct": 18,
+        "total": 36
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "local-bindings",
+      "positive": {
+        "correct": 18,
+        "total": 18
+      },
+      "no_op": {
+        "correct": 16,
+        "total": 18
+      },
+      "combined": {
+        "correct": 34,
+        "total": 36
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    }
+  ],
+  "local_bindings": [
+    {
+      "mode": "excerpts",
+      "strategy": "lexical",
+      "positive": {
+        "correct": 12,
+        "total": 12
+      },
+      "no_op": {
+        "correct": 0,
+        "total": 12
+      },
+      "combined": {
+        "correct": 12,
+        "total": 24
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "drop-request",
+      "positive": {
+        "correct": 12,
+        "total": 12
+      },
+      "no_op": {
+        "correct": 2,
+        "total": 12
+      },
+      "combined": {
+        "correct": 14,
+        "total": 24
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "mask-call-arguments",
+      "positive": {
+        "correct": 4,
+        "total": 12
+      },
+      "no_op": {
+        "correct": 0,
+        "total": 12
+      },
+      "combined": {
+        "correct": 4,
+        "total": 24
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "policy-guarded-arguments",
+      "positive": {
+        "correct": 4,
+        "total": 12
+      },
+      "no_op": {
+        "correct": 0,
+        "total": 12
+      },
+      "combined": {
+        "correct": 4,
+        "total": 24
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "local-bindings",
+      "positive": {
+        "correct": 6,
+        "total": 12
+      },
+      "no_op": {
+        "correct": 8,
+        "total": 12
+      },
+      "combined": {
+        "correct": 14,
+        "total": 24
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "lexical",
+      "positive": {
+        "correct": 12,
+        "total": 12
+      },
+      "no_op": {
+        "correct": 0,
+        "total": 12
+      },
+      "combined": {
+        "correct": 12,
+        "total": 24
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "drop-request",
+      "positive": {
+        "correct": 12,
+        "total": 12
+      },
+      "no_op": {
+        "correct": 2,
+        "total": 12
+      },
+      "combined": {
+        "correct": 14,
+        "total": 24
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "mask-call-arguments",
+      "positive": {
+        "correct": 4,
+        "total": 12
+      },
+      "no_op": {
+        "correct": 0,
+        "total": 12
+      },
+      "combined": {
+        "correct": 4,
+        "total": 24
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "policy-guarded-arguments",
+      "positive": {
+        "correct": 4,
+        "total": 12
+      },
+      "no_op": {
+        "correct": 0,
+        "total": 12
+      },
+      "combined": {
+        "correct": 4,
+        "total": 24
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "local-bindings",
+      "positive": {
+        "correct": 6,
+        "total": 12
+      },
+      "no_op": {
+        "correct": 8,
+        "total": 12
+      },
+      "combined": {
+        "correct": 14,
+        "total": 24
+      },
+      "citations_exact": true,
+      "caps_passed": true
+    }
+  ],
+  "previous_applicability_query_terms": [
+    {
+      "strategy": "lexical",
+      "total": 40,
+      "unchanged": 40
+    },
+    {
+      "strategy": "drop-request",
+      "total": 40,
+      "unchanged": 40
+    },
+    {
+      "strategy": "mask-call-arguments",
+      "total": 40,
+      "unchanged": 40
+    },
+    {
+      "strategy": "policy-guarded-arguments",
+      "total": 40,
+      "unchanged": 40
+    },
+    {
+      "strategy": "local-bindings",
+      "total": 40,
+      "unchanged": 40
+    }
+  ],
+  "all_correct": false,
+  "rows": 1140
+}
