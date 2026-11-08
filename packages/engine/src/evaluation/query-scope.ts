@@ -14,13 +14,17 @@ import { applicabilityQualityCases } from "./quality-cases.js";
 import { diagnosticScores } from "./quality-metrics.js";
 import { queryScopeCases, queryScopeDocuments, type QueryScopeCase } from "./query-scope-cases.js";
 import { policyGuardCases } from "./policy-guard-cases.js";
+import { localBindingCases, localBindingCounterexamples } from "./local-bindings-cases.js";
+import { localBindingTerms } from "./local-bindings.js";
 
 export const queryScopeStrategies = ["lexical", "drop-request", "mask-call-arguments"] as const;
 export const policyGuardStrategies = [...queryScopeStrategies, "policy-guarded-arguments"] as const;
-export type QueryScopeStrategy = typeof policyGuardStrategies[number];
+export const localBindingStrategies = [...policyGuardStrategies, "local-bindings"] as const;
+export type QueryScopeStrategy = typeof localBindingStrategies[number];
 
 /** Shadow interventions only. None is used by production retrieval. */
 export function queryScopeTerms(query: string, strategy: QueryScopeStrategy): string[] {
+  if (strategy === "local-bindings") return localBindingTerms(query);
   if (strategy === "policy-guarded-arguments") {
     // Hypothesis, not an intent classifier: explicit policy vocabulary protects
     // argument subjects. Incidental/quoted/negated cues and implicit requests are
@@ -62,7 +66,7 @@ export function queryScopeOptions(argv: string[]) {
   const repeats = Number(args.get("repeats") ?? "2");
   if (!out || !Number.isInteger(repeats) || repeats < 1 || repeats > 5) throw new Error("query scope requires --out and --repeats between 1 and 5");
   const corpus = args.get("corpus") ?? "original";
-  if (corpus !== "original" && corpus !== "policy-guard") throw new Error("query scope corpus must be original or policy-guard");
+  if (corpus !== "original" && corpus !== "policy-guard" && corpus !== "local-bindings") throw new Error("query scope corpus must be original, policy-guard or local-bindings");
   return { out: resolve(out), repeats, corpus };
 }
 
@@ -79,11 +83,12 @@ type ScopeResult = ReturnType<typeof scoreQueryScope> & {
 };
 
 export async function runQueryScope(options: ReturnType<typeof queryScopeOptions>) {
-  const cases = options.corpus === "policy-guard" ? policyGuardCases : queryScopeCases;
-  const strategies = options.corpus === "policy-guard" ? policyGuardStrategies : queryScopeStrategies;
+  const cases = options.corpus === "local-bindings" ? localBindingCases : options.corpus === "policy-guard" ? policyGuardCases : queryScopeCases;
+  const strategies = options.corpus === "local-bindings" ? localBindingStrategies : options.corpus === "policy-guard" ? policyGuardStrategies : queryScopeStrategies;
   await mkdir(options.out, { recursive: false, mode: 0o700 });
   const save = (name: string, data: unknown) => writeFile(join(options.out, name), JSON.stringify(data, null, 2) + "\n", { flag: "wx", mode: 0o600 });
   const artifactNames = ["query-scope.js", "query-scope-cases.js", "policy-guard-cases.js", "../retrieval/terms.js", "../storage/manifest.js", "../retrieval/hybrid.js", "../rules/selection.js", "../context/compiler.js", "../context/packing.js"];
+  if (options.corpus === "local-bindings") artifactNames.push("local-bindings.js", "local-bindings-cases.js");
   const artifacts = Object.fromEntries(await Promise.all(artifactNames.map(async (name) => [name, hash(await readFile(new URL(name, import.meta.url), "utf8"))])));
   await save("protocol.json", { protocol: "query-scope-shadow-v2", corpus: options.corpus, recorded_at: new Date().toISOString(),
     synthetic_only: true, node: process.version, platform: process.platform, repeats: options.repeats,
@@ -147,10 +152,16 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
     const originalIds = new Set(queryScopeCases.map(({ id }) => id));
     const subsets = { original: scoresFor(results.filter((item) => originalIds.has(item.id))),
       counterexamples: scoresFor(results.filter((item) => !originalIds.has(item.id))) };
+    const guardIds = new Set(policyGuardCases.filter(({ id }) => !originalIds.has(id)).map(({ id }) => id));
+    const bindingIds = new Set(localBindingCounterexamples.map(({ id }) => id));
+    const extensionSubsets = options.corpus === "local-bindings" ? {
+      policy_guard: scoresFor(results.filter((item) => guardIds.has(item.id))),
+      local_bindings: scoresFor(results.filter((item) => bindingIds.has(item.id))),
+    } : {};
     const unchanged = strategies.map((strategy) => ({ strategy, total: applicabilityQualityCases.length,
       unchanged: applicabilityQualityCases.filter((scenario) => JSON.stringify(queryScopeTerms(scenario.query, strategy)) === JSON.stringify(meaningfulTerms(scenario.query))).length }));
     await save("results.json", results);
-    const summary = { completed: true, results: "results.json", scores, subsets, previous_applicability_query_terms: unchanged,
+    const summary = { completed: true, results: "results.json", scores, subsets, ...extensionSubsets, previous_applicability_query_terms: unchanged,
       all_correct: results.every((item) => item.correct), rows: results.length };
     await save("summary.json", summary);
     return summary;
