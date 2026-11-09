@@ -47,6 +47,18 @@
       "raw_sha256": "c9f1f46880685e19e027cc34ea20d3e550a393ab0af3c96d7cd7a47b1a476e76",
       "published_sha256": "c9f1f46880685e19e027cc34ea20d3e550a393ab0af3c96d7cd7a47b1a476e76",
       "normalization": "Repository/user/temp paths replaced; ANSI removed; no judgment edits."
+    },
+    {
+      "path": "checks/discovery-before.txt",
+      "raw_sha256": "b98a75d7432de9b5b9adf9ec6ec02126c81957640ef7cdae6b39ab5af33653d8",
+      "published_sha256": "b98a75d7432de9b5b9adf9ec6ec02126c81957640ef7cdae6b39ab5af33653d8",
+      "normalization": "Relative file listing; unchanged."
+    },
+    {
+      "path": "checks/discovery-after.txt",
+      "raw_sha256": "769868e3a40ec04ba2fda6e4951e1393decfe49238fbc61a38c1a66a93c67528",
+      "published_sha256": "769868e3a40ec04ba2fda6e4951e1393decfe49238fbc61a38c1a66a93c67528",
+      "normalization": "Relative file listing; unchanged."
     }
   ]
 }

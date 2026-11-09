@@ -1216,6 +1216,8 @@ before rebuilding; the new verifier checks independent scores, all four subsets,
 complete sentences, paired rows, ordering/repeats, citations/tokens, source/compiled
 hashes, the initial iteration and partial CI. No dependency change, clean
 installation, audit refresh, native/model session or adapter latency probe was performed.
+Initial snapshots use `.ts.txt` after a discovery check caught the archived test
+being collected; the corrected listing contains only the intended 33 engine files.
 
 The [run for `4c34b0f`](https://github.com/TilesOS/othie-ai/actions/runs/42516720548)
 passes Windows installation, workspace typechecks, website lint, tests and startup

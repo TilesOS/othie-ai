@@ -22,5 +22,11 @@
   "ci_inspected": true,
   "prior_local_bindings_verifier_before_rebuild": 0,
   "local_ipc_access": true,
-  "production_changed": false
+  "production_changed": false,
+  "test_discovery": {
+    "before_snapshot_rename": 34,
+    "after_snapshot_rename": 33,
+    "snapshot_suffix": ".ts.txt",
+    "exit_code": 0
+  }
 }

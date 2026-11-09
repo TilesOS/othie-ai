@@ -69,6 +69,12 @@ retain that iteration. A boundary guard that skipped punctuation after word
 characters was also corrected before final evaluation; a direct regression
 checks a negated-policy clause followed by local sorting.
 
+The initial evidence commit used `.ts` snapshot filenames. A final discovery
+check found the archived `.test.ts` was being collected as a 34th engine test
+file. All snapshots now use `.ts.txt`; the [before](checks/discovery-before.txt)
+and [after](checks/discovery-after.txt) listings verify that only the intended
+33 engine files are collected. Snapshot bytes and their initial hashes are unchanged.
+
 All [1,776 rows](final/results.json) retain queries, terms, XML, evidence and
 complete-sentence judgments. Exact citations and 500-token gates pass. Evidence
 and judgments are stable across fresh repeats. All 1,140 rows shared with the
