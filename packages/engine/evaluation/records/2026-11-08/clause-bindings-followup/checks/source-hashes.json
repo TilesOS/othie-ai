@@ -1,0 +1,12 @@
+{
+  "packages/engine/src/evaluation/clause-bindings.ts": "2e77ba3594077ead00db602c36d732f1c5153bc3dee451397a57d59b575d914b",
+  "packages/engine/src/evaluation/clause-bindings-cases.ts": "c26ddc437a190f6dc180bd57bee82aa49e4c3fd186b4c8d6b17759e9aa596aa6",
+  "packages/engine/src/evaluation/local-bindings.ts": "d07b76995e860346e3c9ddc7d7c2f488473fe7b058f02df4e4e5960d4403609f",
+  "packages/engine/src/evaluation/local-bindings-cases.ts": "b3d3a3ea55f491c229c17c5ed51ed84060e7451703fb6550be77a4628c9ad19f",
+  "packages/engine/src/evaluation/query-scope.ts": "77b0c6514792d53f98cd416baf7c35c71b6573451a946c4a268199ced2c2861f",
+  "packages/engine/src/evaluation/query-scope-cases.ts": "a220ec4d861ed15021b4b99afc1204a61db9f453b112eff03799374a315ee0d4",
+  "packages/engine/src/evaluation/policy-guard-cases.ts": "3137c810f15470cbd467b0835c8a49df9a0c2011b26bad86dee9f60cd232bc96",
+  "packages/engine/test/clause-bindings.test.ts": "4a92756832311e7406b373c6ddb43a81516e9443c9db9e29f894ce268fcfc6c3",
+  "package.json": "c919d7aa3d7f021a2d3fd1f3d522a19d57610980771c392cc4b2da9b3f9a3483",
+  "package-lock.json": "510599e6e9ea7eb68168be8e484697631fdbe6b235881c22f1216ce5fdd5b13f"
+}

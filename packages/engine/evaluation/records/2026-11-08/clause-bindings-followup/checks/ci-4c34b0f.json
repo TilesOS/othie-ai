@@ -1,0 +1,105 @@
+{
+  "inspected_date": "2026-11-08",
+  "source": "GitHub connected tools; GET workflow run lookup and latest-attempt jobs",
+  "run": {
+    "id": 42516720548,
+    "name": "Desktop verification",
+    "head_branch": "main",
+    "head_sha": "4c34b0fff25c1e57338215c6fc88bec8c85a6094",
+    "path": ".github/workflows/ci.yml",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "run_attempt": 1,
+    "created_at": "2026-11-08T19:46:35Z",
+    "updated_at": "2026-11-08T19:50:02Z",
+    "html_url": "https://github.com/TilesOS/othie-ai/actions/runs/42516720548"
+  },
+  "jobs": [
+    {
+      "id": 128841235502,
+      "name": "desktop (windows-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 42516720548,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run npm run typecheck",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run npm run lint --workspace=@othie/website",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Run npm test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Check Windows startup script syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    },
+    {
+      "id": 128841235677,
+      "name": "desktop (macos-14)",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "run_id": 42516720548,
+      "logs_url": null,
+      "steps": null
+    }
+  ]
+}

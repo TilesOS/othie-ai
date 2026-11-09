@@ -1,0 +1,6 @@
+{
+  "packages/engine/src/evaluation/clause-bindings.ts": "1f16d90755c9c4482cd063a7a1522b394b70077629cab33367665c1d432a601b",
+  "packages/engine/src/evaluation/clause-bindings-cases.ts": "255b5f409780791ca4d22a79b89a82fe11ba20ddcbed5c88c848283d051257f0",
+  "packages/engine/src/evaluation/query-scope.ts": "77b0c6514792d53f98cd416baf7c35c71b6573451a946c4a268199ced2c2861f",
+  "packages/engine/test/clause-bindings.test.ts": "1bd0e0ce2adb560117b4cae496be5cef3b330f9031a0321e6086c8aed891befa"
+}

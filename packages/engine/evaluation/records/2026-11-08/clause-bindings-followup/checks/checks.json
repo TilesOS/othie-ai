@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-11-09T04:48:53.886094+00:00",
+  "client_date": "2026-11-08",
+  "code_commit": "66c7154",
+  "exits": {
+    "focused-test": 0,
+    "engine-build": 0,
+    "build": 0,
+    "test": 0,
+    "typecheck": 0,
+    "lint": 0,
+    "scope": 1
+  },
+  "initial_focused_test": {
+    "exit_code": 1,
+    "passed": 14,
+    "failed": 1,
+    "cause": "Trailing-company query recovered export via customer-record vocabulary; expectation corrected, original case retained and isolated subject case added."
+  },
+  "clean_install_repeated": false,
+  "audit_refreshed": false,
+  "ci_inspected": true,
+  "prior_local_bindings_verifier_before_rebuild": 0,
+  "local_ipc_access": true,
+  "production_changed": false
+}

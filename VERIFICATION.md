@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 7, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 8, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci` | November 2 clean installation passes with the existing dependency lockfile |
 | `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 288 passing tests; one opt-in real-model test skipped |
+| `npm test` | 296 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -42,6 +42,8 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 6 prior-history CI inspection | `c7ea37d` passes macOS/Windows installation, typechecks, website lint, tests and Windows startup syntax, closing the preceding lint/workflow CI gap |
 | November 7 parser reachability | Website virtual TSX/JS lint makes no affected matcher calls; all 30 parser judgments preserved, 26 calls use level 1; three globstar patterns rejected before matching; tiny level-2 control detects both phases and expands 1 pattern to 2 |
 | November 7 prior-history CI inspection | `21f590e` passes Windows installation, typechecks, website lint, tests and startup syntax; macOS job cancelled before recorded steps, so full CI remains unaccepted |
+| November 8 clause binding scope | 1,776 rows; per mode all 60/60 prior positives retained, full 78/82 positives and 50/66 no-ops; trailing qualification and negation failures reject the candidate |
+| November 8 prior-history CI inspection | `4c34b0f` passes Windows installation, typechecks, website lint, tests and startup syntax; macOS cancelled with no recorded steps; full CI remains open |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
 | Local compiler-quality evaluator, deterministic follow-up | Final: standard 42/42; extended 75/78; adversarial 123/126; boundaries 153/168 with one instruction-promotion coverage failure and two no-op failures |
@@ -53,7 +55,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `git diff --check` | Pass |
 | `npm audit` and `npm audit --omit=dev` | November 7: eight moderate development entries; zero production findings; checked parser path does not enter the advisory's level-2 branch, but affected dependency and compatible remediation remain open |
 
-The full suite comprises 139 engine, 30 shared-hook, 102 website, 10 Codex, and seven
+The full suite comprises 147 engine, 30 shared-hook, 102 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1183,6 +1185,48 @@ controls still need macOS/Windows CI. Next distinguish local and policy intent
 within sentences, negated operations and quoted/function identifiers while
 preserving implicit subjects, all qualifiers and both opposing requirements.
 
+## November 8 clause binding scope follow-up
+
+The [clause binding records](packages/engine/evaluation/records/2026-11-08/clause-bindings-followup/README.md)
+add a separate evaluation-only candidate and 17 diagnostic counterexamples while
+preserving all 57 prior cases and five prior strategies. Clause boundaries outside
+quotes/parentheses, balanced-call erasure, quoted variable handling and narrower
+numeric/negation cues recover the three preceding positive failures and the two
+function/quoted-variable no-ops. No fixture labels or source vocabulary enter the
+candidate, and production retrieval is unchanged.
+
+Two fresh SQLite/Lance repeats per export mode preserve all 1,140 preceding rows'
+queries, terms, XML, evidence and judgments. All 1,776 new rows pass exact citation
+and 500-token gates, with stable evidence across repeats. Per export mode, the
+candidate retains prior positives 60/60 and passes prior no-ops 42/54. Full scores
+are 78/82 positives and 50/66 no-ops. Two new positive cases lose isolated export
+or refund subjects under trailing qualifications or adverbial negation. Two new
+no-ops retain `request` under negated sorting or a negated policy cue. Six prior
+generic-word/layout/chart no-ops also remain. The candidate fails acceptance.
+The initial trailing-company test unexpectedly passed through independent
+customer-record vocabulary; its query is retained alongside a new isolated-subject
+failure, initial source snapshots and the failed test log. These diagnostic cases
+were developed with the hypothesis and are not held-out validation.
+
+Full build, workspace typechecks, website lint and 296 deterministic tests pass;
+one opt-in real-model test is skipped. Fifteen focused scope tests pass. Build and
+process tests used local process/IPC access; generated `next-env.d.ts` paths were
+restored before final typechecks and lint. The prior local-binding verifier passed
+before rebuilding; the new verifier checks independent scores, all four subsets,
+complete sentences, paired rows, ordering/repeats, citations/tokens, source/compiled
+hashes, the initial iteration and partial CI. No dependency change, clean
+installation, audit refresh, native/model session or adapter latency probe was performed.
+
+The [run for `4c34b0f`](https://github.com/TilesOS/othie-ai/actions/runs/42516720548)
+passes Windows installation, workspace typechecks, website lint, tests and startup
+syntax. macOS was cancelled with no recorded steps, and the run is cancelled
+overall. The [revision/job record](packages/engine/evaluation/records/2026-11-08/clause-bindings-followup/checks/ci-4c34b0f.json)
+therefore closes only Windows CI for the preceding parser/reachability/binding
+history. macOS for that history and both runners for the new controls remain open.
+No push or CI rerun was performed. Next separate negated operations from negated
+policy lookup, associate trailing qualifications with their subjects, and address
+generic prose/layout terms while preserving all 74 cases and four subset scores.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
@@ -1214,7 +1258,9 @@ preserving implicit subjects, all qualifiers and both opposing requirements.
   The November 6 inspection additionally verifies the lint-test/workflow history
   through `c7ea37d` on both runners. The November 7 inspection verifies parser
   history through `21f590e` on Windows; macOS was cancelled before recorded steps.
-  New reachability controls still need CI on both runners.
+  The November 8 inspection additionally verifies parser/reachability/local-binding
+  history through `4c34b0f` on Windows, but macOS was again cancelled without steps.
+  New clause controls still need CI on both runners; macOS history remains open.
   Native Windows host/session acceptance remains open.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
@@ -1242,6 +1288,12 @@ preserving implicit subjects, all qualifiers and both opposing requirements.
   three new mixed/numeric/negated policy cases and retains unwanted evidence. Keep
   all 57 cases and separate original, guard and binding-extension scores; local
   operation words and sentence boundaries cannot alone establish policy scope.
+  The November 8 clause-binding candidate preserves all preceding positives and
+  resolves function/quoted-variable collisions, but new trailing-qualification and
+  negation cases still fail, alongside generic-term no-ops. Keep all 74 cases and
+  separate original, guard, binding and clause-extension scores; clause boundaries
+  and shallow negation/company cues do not establish applicability. Validate any
+  further gains independently of the co-developed diagnostic corpus.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve
