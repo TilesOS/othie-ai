@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "path": "checks/focused-test.txt",
+      "raw_sha256": "0bbbf65c27c34fc02e7e1b2a20522ba7dd189df426ab1537e0a150766a587746",
+      "published_sha256": "e74fa99edb34fcf3473e91e9c1e578ef100c51960ff7b9baaacf400bdf4747bf",
+      "normalization": "Repository/user/temp paths replaced; ANSI removed; no judgment edits."
+    },
+    {
+      "path": "checks/build.txt",
+      "raw_sha256": "c3c001afe4a5297f76862cf9e163f537f90384f760149d0b212068e6107ae25a",
+      "published_sha256": "c3c001afe4a5297f76862cf9e163f537f90384f760149d0b212068e6107ae25a",
+      "normalization": "Repository/user/temp paths replaced; ANSI removed; no judgment edits."
+    },
+    {
+      "path": "checks/test.txt",
+      "raw_sha256": "93cb2e4c21c790d723c0a63f61e40a786a6434bd0973ca3c088daba7c324ee45",
+      "published_sha256": "a053dca3831c1fe2302f3ff55ccb1763de99e1c8a7983eec0f328e602a5a1a3d",
+      "normalization": "Repository/user/temp paths replaced; ANSI removed; no judgment edits."
+    },
+    {
+      "path": "checks/typecheck.txt",
+      "raw_sha256": "efb132c372624d0c664e4ee1373834550dd20e8c4c8047003819753ea99145fc",
+      "published_sha256": "efb132c372624d0c664e4ee1373834550dd20e8c4c8047003819753ea99145fc",
+      "normalization": "Repository/user/temp paths replaced; ANSI removed; no judgment edits."
+    },
+    {
+      "path": "checks/lint.txt",
+      "raw_sha256": "4df74f7a76f4c1e796acfb5fd4f4fb526c87dc22017adcb98377c1da82012c48",
+      "published_sha256": "4df74f7a76f4c1e796acfb5fd4f4fb526c87dc22017adcb98377c1da82012c48",
+      "normalization": "Repository/user/temp paths replaced; ANSI removed; no judgment edits."
+    }
+  ]
+}

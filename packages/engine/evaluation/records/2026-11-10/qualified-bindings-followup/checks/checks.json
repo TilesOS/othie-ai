@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-11-11T04:59:24.094763+00:00",
+  "client_date": "2026-11-10",
+  "fixture_commit": "bfa2f44",
+  "code_commit": "640d597",
+  "exits": {
+    "focused-test": 0,
+    "build": 0,
+    "test": 0,
+    "typecheck": 0,
+    "lint": 0,
+    "scope": 1
+  },
+  "prior_clause_verifier_before_rebuild": 0,
+  "clean_install_repeated": false,
+  "audit_refreshed": false,
+  "ci_inspected": true,
+  "ci_single_job_retry": true,
+  "local_ipc_access": true,
+  "production_changed": false,
+  "independent_scope_validation": false,
+  "notes": "Single-repeat dry run matched final failures; no subsequent implementation or fixture changes. New diagnostic cases were authored for this hypothesis and are not held out.",
+  "completed_client_date": "2026-11-11"
+}

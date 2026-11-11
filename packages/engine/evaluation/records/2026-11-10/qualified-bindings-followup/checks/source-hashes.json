@@ -1,0 +1,8 @@
+{
+  "packages/engine/src/evaluation/query-scope.ts": "0fc3c220ef9127ba8ad2c3d382fabe22cd1d2a36fc88d4633387bffaf9c82805",
+  "packages/engine/src/evaluation/qualified-bindings.ts": "cfa4119eb3f375c19d5e301093638ae5e4751677248a78630582df9dcd37b320",
+  "packages/engine/src/evaluation/qualified-bindings-cases.ts": "e6b5c5e71e1bdeeaaea5ddbce7e47d8cc311fe7a8852a61a815c77535bd40712",
+  "packages/engine/test/qualified-bindings.test.ts": "f4abd0b11dfeb46cabe4c87119d1a8fb3384d3a29481ea97ede6b0b702b0482c",
+  "packages/engine/src/evaluation/clause-bindings.ts": "2e77ba3594077ead00db602c36d732f1c5153bc3dee451397a57d59b575d914b",
+  "packages/engine/src/evaluation/clause-bindings-cases.ts": "c26ddc437a190f6dc180bd57bee82aa49e4c3fd186b4c8d6b17759e9aa596aa6"
+}
