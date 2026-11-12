@@ -1,0 +1,39 @@
+{
+  "files": [
+    {
+      "path": "checks/build-restricted-interrupted.txt",
+      "published_sha256": "fb3c80fac1c978660d7b66d1abe7e3d19cd3520f7bcc696790ad8514fef7057f",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/build.txt",
+      "published_sha256": "f2b714f516ec1e754397b1d0cdde66ff8881ae2b0a6594d6774d0ea0586b09f4",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/focused-test.txt",
+      "published_sha256": "d1530f9d7fad7a46dc69b65375cbf8e47e95ed302ab352438094ec49858fd63e",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/lint.txt",
+      "published_sha256": "4df74f7a76f4c1e796acfb5fd4f4fb526c87dc22017adcb98377c1da82012c48",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/scope.txt",
+      "published_sha256": "bd95c3779c443d7ce99146d4e95095aa0e7dc4ed8f07d02caba6f1cd96ce28b7",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/test.txt",
+      "published_sha256": "8b032bea07eab10299126e0b2bdb6b37aa79cae198d9beff76fb2c7798fe239f",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/typecheck.txt",
+      "published_sha256": "efb132c372624d0c664e4ee1373834550dd20e8c4c8047003819753ea99145fc",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    }
+  ]
+}

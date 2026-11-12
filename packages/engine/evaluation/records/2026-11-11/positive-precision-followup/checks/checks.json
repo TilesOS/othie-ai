@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-11-12T04:57:20.333385+00:00",
+  "client_date": "2026-11-11",
+  "code_commit": "df9e61770c0be040c2eb5044d41cfe1cb7c07e85",
+  "exits": {
+    "scope": 1,
+    "focused-test": 0,
+    "build": 0,
+    "test": 0,
+    "typecheck": 0,
+    "lint": 0
+  },
+  "prior_qualified_verifier_before_rebuild": 0,
+  "clean_install_repeated": false,
+  "audit_refreshed": false,
+  "ci_inspected": false,
+  "local_process_and_ipc_access": true,
+  "restricted_build_interrupted_exit": 130,
+  "production_changed": false,
+  "independent_scope_validation": false,
+  "notes": "Unchanged 90-case corpus and seven strategies. Fresh SQLite/Lance stores per repeat and export mode. Source precision is fixture source membership only."
+}

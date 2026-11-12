@@ -1,0 +1,22 @@
+{
+  "packages/engine/src/context/compiler.ts": "5d856815aaa0375c89101e83719078faa629275a5ed28c933e35856cf434e413",
+  "packages/engine/src/context/packing.ts": "1b36a715bb4c1f592935082f6703930166cd1e86977b5be58dd536359eacea0e",
+  "packages/engine/src/retrieval/hybrid.ts": "b5f44b967f00c96097caae7db90aefc90ef749fff46ee095250936009ebdd679",
+  "packages/engine/src/retrieval/terms.ts": "e83127e99ba84e0768fa6cd08a95a0a85eb2ccb3d6e2f98116dc77b24797d901",
+  "packages/engine/src/rules/selection.ts": "4c7d9a83f526a1ce4a8207cbad19e9fab0bba4cbc97d90457febfcca0195f66c",
+  "packages/engine/src/storage/manifest.ts": "cf38c2e999d8357b69214b4e2f1cf40da04ffa7f81d4953b48604b3b3df46381",
+  "packages/engine/src/evaluation/clause-bindings-cases.ts": "c26ddc437a190f6dc180bd57bee82aa49e4c3fd186b4c8d6b17759e9aa596aa6",
+  "packages/engine/src/evaluation/clause-bindings.ts": "2e77ba3594077ead00db602c36d732f1c5153bc3dee451397a57d59b575d914b",
+  "packages/engine/src/evaluation/local-bindings-cases.ts": "b3d3a3ea55f491c229c17c5ed51ed84060e7451703fb6550be77a4628c9ad19f",
+  "packages/engine/src/evaluation/local-bindings.ts": "d07b76995e860346e3c9ddc7d7c2f488473fe7b058f02df4e4e5960d4403609f",
+  "packages/engine/src/evaluation/policy-guard-cases.ts": "3137c810f15470cbd467b0835c8a49df9a0c2011b26bad86dee9f60cd232bc96",
+  "packages/engine/src/evaluation/qualified-bindings-cases.ts": "e6b5c5e71e1bdeeaaea5ddbce7e47d8cc311fe7a8852a61a815c77535bd40712",
+  "packages/engine/src/evaluation/qualified-bindings.ts": "cfa4119eb3f375c19d5e301093638ae5e4751677248a78630582df9dcd37b320",
+  "packages/engine/src/evaluation/quality-metrics.ts": "229c08695e11887bcecdda24a3097051f1273bf8809e8bc91b988798db1fc639",
+  "packages/engine/src/evaluation/query-scope-cases.ts": "a220ec4d861ed15021b4b99afc1204a61db9f453b112eff03799374a315ee0d4",
+  "packages/engine/src/evaluation/query-scope-metrics.ts": "ce9f07d5c4fd4cf842ff6866c4ae2793535bba9ab1b1397b9e856689ec213d45",
+  "packages/engine/src/evaluation/query-scope.ts": "9c3e13a1c92d43e16e6cef836437a3b199d5c63053aa602fe3e7b1040bba16b3",
+  "packages/engine/test/qualified-bindings.test.ts": "d28d331e8b218ca77b0cc6627363fd5871805eea8e659a88228828b6aa728724",
+  "packages/engine/test/query-scope-metrics.test.ts": "d44fc7a8b59a5b28365708a86ec87335f0865176e75b1b0b75909365a41d3ceb",
+  "packages/engine/test/query-scope.test.ts": "9cf2f680a3d203c7f82dc08115338a90446c0c3ff0791d82e4c99eb65c210947"
+}

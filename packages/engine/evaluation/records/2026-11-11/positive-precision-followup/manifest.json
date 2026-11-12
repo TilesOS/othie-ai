@@ -1,0 +1,84 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 6212,
+      "sha256": "3341a36bafbc6bf775c379096214a124a7062a3ac94b66b75a0aaf6c3327e1ad"
+    },
+    {
+      "path": "checks/build-restricted-interrupted.txt",
+      "bytes": 1006,
+      "sha256": "fb3c80fac1c978660d7b66d1abe7e3d19cd3520f7bcc696790ad8514fef7057f"
+    },
+    {
+      "path": "checks/build.txt",
+      "bytes": 1409,
+      "sha256": "f2b714f516ec1e754397b1d0cdde66ff8881ae2b0a6594d6774d0ea0586b09f4"
+    },
+    {
+      "path": "checks/checks.json",
+      "bytes": 729,
+      "sha256": "43695b75427db5633a43e8eb90ddaa7af002b846fe8fe1da28f68265ce1bba03"
+    },
+    {
+      "path": "checks/focused-test.txt",
+      "bytes": 179,
+      "sha256": "d1530f9d7fad7a46dc69b65375cbf8e47e95ed302ab352438094ec49858fd63e"
+    },
+    {
+      "path": "checks/lint.txt",
+      "bytes": 41,
+      "sha256": "4df74f7a76f4c1e796acfb5fd4f4fb526c87dc22017adcb98377c1da82012c48"
+    },
+    {
+      "path": "checks/scope.txt",
+      "bytes": 48597,
+      "sha256": "bd95c3779c443d7ce99146d4e95095aa0e7dc4ed8f07d02caba6f1cd96ce28b7"
+    },
+    {
+      "path": "checks/source-hashes.json",
+      "bytes": 2415,
+      "sha256": "373b509a7bed1fe8bd81caebc511265cebcd572474164f771cebdcb977e26878"
+    },
+    {
+      "path": "checks/test.txt",
+      "bytes": 3390,
+      "sha256": "8b032bea07eab10299126e0b2bdb6b37aa79cae198d9beff76fb2c7798fe239f"
+    },
+    {
+      "path": "checks/typecheck.txt",
+      "bytes": 704,
+      "sha256": "efb132c372624d0c664e4ee1373834550dd20e8c4c8047003819753ea99145fc"
+    },
+    {
+      "path": "final/protocol.json",
+      "bytes": 74341,
+      "sha256": "9dcede9f74d6b61fc89298892108103e5dc6dcfa8a77891aace17827faa5d364"
+    },
+    {
+      "path": "final/results.json",
+      "bytes": 8932573,
+      "sha256": "ba436a648525e442e5d5a46223bf0cd6de365225a4b024270aaf53cd4d11accd"
+    },
+    {
+      "path": "final/summary.json",
+      "bytes": 83101,
+      "sha256": "7f582590403ea7ca03faadffa04bdde90636ed7047f0273427d0e10ba096d576"
+    },
+    {
+      "path": "positive-source-diagnostics.json",
+      "bytes": 255205,
+      "sha256": "deb0deb90d62e12e5f8f741af47f104908aae3bc2f8cd7356cd5e3ee40f99721"
+    },
+    {
+      "path": "publication.json",
+      "bytes": 1739,
+      "sha256": "53985d50ac832730045fd2ee0ce88aa63c1490bd3d201f418aa96c61fe78e5d8"
+    },
+    {
+      "path": "verify-evidence.mjs",
+      "bytes": 18239,
+      "sha256": "41acc2962e597bd73209ce8b99ae8536436c54c9ea6db7c7575d775614d5b011"
+    }
+  ]
+}
