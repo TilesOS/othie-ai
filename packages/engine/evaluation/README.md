@@ -538,6 +538,12 @@ counterexamples lose required evidence. Neither corpus changes production retrie
 The [November 1 record](records/2026-11-01/policy-guard-followup/README.md)
 preserves a failed guarded comparison: all original positives survive, but two
 implicit refund requests lose evidence on every repeat and broader no-ops remain.
+The [November 11 precision record](records/2026-11-11/positive-precision-followup/README.md)
+reruns all 90 qualified-binding cases with seven strategies. All 2,520 historical
+retrieval rows and recall scores remain unchanged; qualified bindings pass only
+40/98 positive exact checks per export mode despite 94/98 recall. All strategies
+fail the explicit precision/recall/no-op acceptance gates. Source/task diagnostics
+identify additional-source membership without establishing generalization.
 
 ## Complete adapter-process latency
 

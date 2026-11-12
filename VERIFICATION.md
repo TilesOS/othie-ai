@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci` | November 2 clean installation passes with the existing dependency lockfile |
 | `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 301 passing tests; one opt-in real-model test skipped |
+| `npm test` | 305 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -45,6 +45,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 8 clause binding scope | 1,776 rows; per mode all 60/60 prior positives retained, full 78/82 positives and 50/66 no-ops; trailing qualification and negation failures reject the candidate |
 | November 8 prior-history CI inspection | `4c34b0f` passes Windows installation, typechecks, website lint, tests and startup syntax; macOS cancelled with no recorded steps; full CI remains open |
 | November 10 qualified binding scope | 2,520 rows; per mode all 82/82 prior positives retained, full 94/98 positives and 68/82 no-ops; new antecedent/qualification failures reject the candidate; 56/98 positive rows also contain additional sources |
+| November 11 positive-task precision gates | All 2,520 historical retrieval rows unchanged; per mode qualified bindings pass 40/98 positive exact gates, with 114/192 expected/retrieved source memberships; all seven strategies fail acceptance |
 | November 10 prior-history CI inspection/retry | `ed3dcdb` passes Windows installation, typechecks, lint, tests and startup syntax; macOS cancelled without steps in both the initial run and one requested retry; macOS remains open |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
@@ -57,7 +58,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `git diff --check` | Pass |
 | `npm audit` and `npm audit --omit=dev` | November 7: eight moderate development entries; zero production findings; checked parser path does not enter the advisory's level-2 branch, but affected dependency and compatible remediation remain open |
 
-The full suite comprises 152 engine, 30 shared-hook, 102 website, 10 Codex, and seven
+The full suite comprises 156 engine, 30 shared-hook, 102 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1280,6 +1281,54 @@ close only the preceding clause history's Windows CI gap. The cancellation cause
 is not established. macOS for that history and both runners for the new candidate
 remain open. No commits were pushed and no further retries were requested.
 
+## November 11 positive-task precision follow-up
+
+The [precision records](packages/engine/evaluation/records/2026-11-11/positive-precision-followup/README.md)
+implement the next measurement step without changing any scope strategy, corpus,
+dependency or production retrieval. Protocol `query-scope-shadow-v3` retains
+historical recall/no-op/combined scores and adds `precise_correct` per row,
+`positive_exact`, positive tasks with additional sources, and raw relevant/retrieved
+source-membership counts. Exact positives require complete expected sentences and
+zero additional source basenames, plus exact citations and the token cap. Missing
+retrieval or incomplete expected evidence cannot pass. Duplicate excerpts/rules
+from a source count once per task. Source membership does not establish passage
+relevance within an expected document.
+
+Every mode/strategy and subset now exposes separate positive recall, positive
+exact, no-op, citation and token gates; all must pass for acceptance, and empty
+subsets are unaccepted. Historical `all_correct` remains available; CLI success
+now requires `all_precise_correct`. Two fresh SQLite/Lance repeats in both export
+modes preserve all 2,520 preceding rows' queries, terms, XML, evidence, source and
+sentence diagnostics, citation/token flags and historical judgments. All five
+subsets and the fixture hash remain unchanged. Every row passes exact-citation
+and 500-token checks, with stable evidence and judgments across repeats.
+
+Per mode, qualified bindings still pass 94/98 positive recall and 68/82 no-ops,
+but only 40/98 positives pass the exact gate; 56/98 include additional sources.
+Expected source memberships are 114/192 retrieved. All seven strategies fail
+acceptance, including the original qualified subset despite its perfect recall.
+The [source/task decomposition](packages/engine/evaluation/records/2026-11-11/positive-precision-followup/positive-source-diagnostics.json)
+records every failed positive. On the first repeat, qualified bindings add
+`brand.md` on 15/49 positive tasks, `facilities.md` on nine and `renewal.md` on
+seven, with overlapping task sets. These are diagnostic attributions rather than
+established causes or permission to exclude a source globally.
+
+Full build, workspace typechecks, website lint and 305 deterministic tests pass;
+one opt-in real-model test is skipped. Sixteen focused metric/retrieval tests pass.
+The restricted build stalled and was interrupted; the full build and process
+tests pass with local process/IPC access. Generated `next-env.d.ts` paths were
+restored before typechecks and lint. The preceding qualified-binding verifier
+passed before rebuilding; the new verifier independently recomputes scores,
+gates, subsets, source diagnostics, sentences, ordering/repeats, historical row
+and score parity, citation/token checks and source/publication integrity.
+No clean install, audit refresh, remote CI inspection, native/model session or
+adapter latency probe was performed. New precision controls still need both CI
+runners; preceding macOS cancellations remain open. Independent scope validation
+remains open. Next improve generic-vocabulary precision and antecedent handling
+using the decomposed failures while preserving qualifiers, opposing requirements,
+all historical cases/scores and the new gates; validate independently before
+considering production adoption.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
@@ -1315,7 +1364,8 @@ remain open. No commits were pushed and no further retries were requested.
   history through `4c34b0f` on Windows, but macOS was again cancelled without steps.
   The November 10 inspection verifies clause history through `ed3dcdb` on Windows;
   macOS was cancelled without steps in both the initial run and one retry. New
-  qualified-binding controls still need both runners; macOS history remains open.
+  qualified-binding and November 11 precision controls still need both runners;
+  macOS history remains open.
   Native Windows host/session acceptance remains open.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
@@ -1352,9 +1402,14 @@ remain open. No commits were pushed and no further retries were requested.
   The November 10 qualification candidate recovers all four named clause failures
   and preserves every earlier positive, but generic collisions and new modifier/
   antecedent cases still reject it. Keep all 90 cases and five separate subsets.
-  Also gate unwanted evidence on positive tasks: 56/98 positive rows per mode
-  contain additional sources despite 94/98 recall. Independent scope validation
-  remains open; preserving 40 earlier lexical queries does not establish it.
+  November 11 adds the unwanted-evidence gate on positive tasks while preserving
+  all 2,520 prior rows and historical scores: qualified bindings pass only 40/98
+  positive exact checks despite 94/98 recall, with 56/98 positives containing
+  additional sources and 114/192 source memberships relevant. Use the source/task
+  decomposition to investigate generic collisions while preserving every
+  historical case, qualifier, opposing requirement and new precision gate.
+  Independent scope validation remains open; preserving 40 earlier lexical
+  queries does not establish it.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve
