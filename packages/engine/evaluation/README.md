@@ -499,6 +499,18 @@ contains original fixtures, hashes of compiled components, every query/evidence
 result, and separate positive recall/no-op scores. Every expected original sentence
 must survive, including exceptions, negations and both opposing sources. Additional
 retrieved sources are reported separately for positives; controls require no items.
+Protocol `query-scope-shadow-v3` preserves historical `correct`, `positive`, `no_op`
+and `combined` scores. It adds `precise_correct` per row and `positive_exact`
+(complete expected sentences and zero additional sources) for every score/subset.
+`positive_with_additional_sources` counts positive tasks containing unwanted sources.
+`positive_source_precision` reports relevant/retrieved source memberships on positive
+tasks, counting each source once per task. These are raw counts: no retrieval is
+0/0, and cannot pass positive recall or exactness. Source membership precision
+does not establish that every passage within an expected document is relevant.
+Per mode/strategy, `gates.accepted` requires all positive recall, positive exact,
+no-op, citation and token gates; empty subsets are not accepted. `all_correct`
+retains its historical meaning. CLI exit 0 now requires `all_precise_correct`,
+so additional sources fail acceptance even when historical recall passes.
 Invalid arguments and existing output directories are rejected.
 
 Exit 1 can represent a completed comparison with failed scope gates. A combined
@@ -519,7 +531,7 @@ scored separately from the original cases in `summary.subsets`.
 npm run eval:query-scope -- --corpus policy-guard --out /tmp/othie-policy-guard --repeats 2
 ```
 
-Protocol `query-scope-shadow-v2` records the selected corpus, original case IDs,
+The protocol records the selected corpus, original case IDs,
 strategies and extension artifact hash. The default remains the original corpus
 and three strategies. A gain on the original cases is insufficient if the added
 counterexamples lose required evidence. Neither corpus changes production retrieval.

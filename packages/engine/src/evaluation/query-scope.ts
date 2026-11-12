@@ -11,7 +11,7 @@ import { countTokens } from "../tokenizer.js";
 import type { ChunkRecord, ContextResult, RuleRecord } from "../types.js";
 import { evaluationArguments } from "./arguments.js";
 import { applicabilityQualityCases } from "./quality-cases.js";
-import { diagnosticScores } from "./quality-metrics.js";
+import { queryScopeScores } from "./query-scope-metrics.js";
 import { queryScopeCases, queryScopeDocuments, type QueryScopeCase } from "./query-scope-cases.js";
 import { policyGuardCases } from "./policy-guard-cases.js";
 import { localBindingCases, localBindingCounterexamples } from "./local-bindings-cases.js";
@@ -63,9 +63,10 @@ export function scoreQueryScope(scenario: QueryScopeCase, evidence: readonly { s
       .map(({ segment }) => segment.trim()).filter((sentence) => !quotes.some((quote) => quote.includes(sentence)))
       .map((sentence) => ({ source, sentence }));
   });
+  const additionalSources = actual.filter((source) => !scenario.sources.includes(source));
+  const correct = scenario.sources.length === 0 ? evidence.length === 0 : missingSources.length === 0 && missingSentences.length === 0;
   return { actual_sources: actual, missing_sources: missingSources, missing_sentences: missingSentences,
-    additional_sources: actual.filter((source) => !scenario.sources.includes(source)),
-    correct: scenario.sources.length === 0 ? evidence.length === 0 : missingSources.length === 0 && missingSentences.length === 0 };
+    additional_sources: additionalSources, correct, precise_correct: correct && additionalSources.length === 0 };
 }
 
 export function queryScopeOptions(argv: string[]) {
@@ -95,17 +96,22 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
   const strategies = options.corpus === "qualified-bindings" ? qualifiedBindingStrategies : options.corpus === "clause-bindings" ? clauseBindingStrategies : options.corpus === "local-bindings" ? localBindingStrategies : options.corpus === "policy-guard" ? policyGuardStrategies : queryScopeStrategies;
   await mkdir(options.out, { recursive: false, mode: 0o700 });
   const save = (name: string, data: unknown) => writeFile(join(options.out, name), JSON.stringify(data, null, 2) + "\n", { flag: "wx", mode: 0o600 });
-  const artifactNames = ["query-scope.js", "query-scope-cases.js", "policy-guard-cases.js", "../retrieval/terms.js", "../storage/manifest.js", "../retrieval/hybrid.js", "../rules/selection.js", "../context/compiler.js", "../context/packing.js"];
+  const artifactNames = ["query-scope.js", "query-scope-metrics.js", "query-scope-cases.js", "policy-guard-cases.js", "../retrieval/terms.js", "../storage/manifest.js", "../retrieval/hybrid.js", "../rules/selection.js", "../context/compiler.js", "../context/packing.js"];
   if (options.corpus === "local-bindings" || options.corpus === "clause-bindings" || options.corpus === "qualified-bindings") artifactNames.push("local-bindings.js", "local-bindings-cases.js");
   if (options.corpus === "clause-bindings" || options.corpus === "qualified-bindings") artifactNames.push("clause-bindings.js", "clause-bindings-cases.js");
   if (options.corpus === "qualified-bindings") artifactNames.push("qualified-bindings.js", "qualified-bindings-cases.js");
   const artifacts = Object.fromEntries(await Promise.all(artifactNames.map(async (name) => [name, hash(await readFile(new URL(name, import.meta.url), "utf8"))])));
-  await save("protocol.json", { protocol: "query-scope-shadow-v2", corpus: options.corpus, recorded_at: new Date().toISOString(),
+  await save("protocol.json", { protocol: "query-scope-shadow-v3", corpus: options.corpus, recorded_at: new Date().toISOString(),
     synthetic_only: true, node: process.version, platform: process.platform, repeats: options.repeats,
     strategies, documents: queryScopeDocuments, cases,
     original_case_ids: queryScopeCases.map(({ id }) => id),
     fixture_sha256: hash(JSON.stringify({ documents: queryScopeDocuments, cases })), artifacts,
-    limitations: "Evaluation-only query interventions. Providers disabled. Fresh seeded SQLite/Lance stores per repeat/export mode; not ingestion, model extraction, semantic acceptance, native-host or adapter latency. Excerpts use reference chunks; rules-only uses manually supplied whole-document authoritative rules to isolate scope from extraction/grouping. Positive recall requires every expected sentence; extra sources are reported separately. Case order reverses and strategy order rotates on fresh repeats." });
+    scoring: { historical_correct: "Complete expected sentences; no-op requires no evidence; exact citations and token cap.",
+      precise_correct: "Historical correct plus no additional source basenames.",
+      positive_exact: "Positive tasks with precise_correct / all positive tasks; empty positive retrieval fails.",
+      positive_source_precision: "Expected source memberships / all retrieved source memberships on positive tasks; each source counted once per task. Raw counts, no 0/0 ratio.",
+      acceptance: "Per mode/strategy: all positive recall, positive exact, no-op, citation and token gates must pass; empty subsets are not accepted. CLI requires every row precise_correct." },
+    limitations: "Evaluation-only query interventions. Providers disabled. Fresh seeded SQLite/Lance stores per repeat/export mode; not ingestion, model extraction, semantic acceptance, native-host or adapter latency. Excerpts use reference chunks; rules-only uses manually supplied whole-document authoritative rules to isolate scope from extraction/grouping. Positive recall requires every expected sentence. Precision measures fixture source membership, not semantic relevance within an expected document. Case order reverses and strategy order rotates on fresh repeats." });
   const root = await realpath(await mkdtemp(join(tmpdir(), "othie-query-scope-")));
   const results: ScopeResult[] = [];
   try {
@@ -149,14 +155,15 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           const citationsExact = evidence.every((item) => item.quote.trim().length > 0 && queryScopeDocuments.find((document) => document.name === basename(item.source))?.text.includes(item.quote));
           const capPassed = response.status.tokenCount === countTokens(response.text, "o200k_base") && response.status.tokenCount <= 500;
           results.push({ id: scenario.id, family: scenario.family, expected_sources: scenario.sources, repeat, mode, strategy, terms, query,
-            ...score, correct: score.correct && citationsExact && capPassed, citations_exact: citationsExact, cap_passed: capPassed,
+            ...score, correct: score.correct && citationsExact && capPassed, precise_correct: score.precise_correct && citationsExact && capPassed,
+            citations_exact: citationsExact, cap_passed: capPassed,
             component_wall_ms: Math.round((performance.now() - start) * 100) / 100, text: response.text, evidence });
         }
       } finally { await engine.stop(); }
     }
     const scoresFor = (subset: readonly ScopeResult[]) => ["excerpts", "rules_only"].flatMap((mode) => strategies.map((strategy) => {
       const rows = subset.filter((item) => item.mode === mode && item.strategy === strategy);
-      return { mode, strategy, ...diagnosticScores(rows), citations_exact: rows.every((row) => row.citations_exact), caps_passed: rows.every((row) => row.cap_passed) };
+      return { mode, strategy, ...queryScopeScores(rows) };
     }));
     const scores = scoresFor(results);
     const originalIds = new Set(queryScopeCases.map(({ id }) => id));
@@ -176,7 +183,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
       unchanged: applicabilityQualityCases.filter((scenario) => JSON.stringify(queryScopeTerms(scenario.query, strategy)) === JSON.stringify(meaningfulTerms(scenario.query))).length }));
     await save("results.json", results);
     const summary = { completed: true, results: "results.json", scores, subsets, ...extensionSubsets, ...clauseSubset, ...qualifiedSubset, previous_applicability_query_terms: unchanged,
-      all_correct: results.every((item) => item.correct), rows: results.length };
+      all_correct: results.every((item) => item.correct), all_precise_correct: results.every((item) => item.precise_correct), rows: results.length };
     await save("summary.json", summary);
     return summary;
   } catch (error) {
@@ -189,6 +196,6 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const options = queryScopeOptions(process.argv.slice(2));
   void runQueryScope(options).then((report) => {
     process.stdout.write(JSON.stringify(report) + "\n");
-    if (!report.all_correct) process.exitCode = 1;
+    if (!report.all_precise_correct) process.exitCode = 1;
   }).catch(() => { process.stderr.write("Query scope evaluation failed; inspect preserved evidence.\n"); process.exitCode = 1; });
 }

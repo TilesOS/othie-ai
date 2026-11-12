@@ -52,13 +52,18 @@ it("verifies gains and retained failures through actual retrieval in both modes"
     const compiled = fileURLToPath(new URL("../dist/src/evaluation/query-scope.js", import.meta.url));
     await expect(promisify(execFile)(process.execPath, [compiled, "--out", out, "--repeats", "1", "--corpus", "qualified-bindings"], { timeout: 30_000 })).rejects.toMatchObject({ code: 1 });
     const summary = JSON.parse(await readFile(join(out, "summary.json"), "utf8"));
+    const protocol = JSON.parse(await readFile(join(out, "protocol.json"), "utf8"));
+    expect(protocol.protocol).toBe("query-scope-shadow-v3");
     expect(summary.completed).toBe(true);
     expect(summary.all_correct).toBe(false);
+    expect(summary.all_precise_correct).toBe(false);
     expect(summary.rows).toBe(1260);
     expect(summary.scores.every((row: { citations_exact: boolean; caps_passed: boolean }) => row.citations_exact && row.caps_passed)).toBe(true);
     type Row = { id: string; mode: string; strategy: string; correct: boolean };
     const rows: Row[] = JSON.parse(await readFile(join(out, "results.json"), "utf8"));
-    type Score = { mode: string; strategy: string; positive: { correct: number; total: number }; no_op: { correct: number; total: number } };
+    type Score = { mode: string; strategy: string; positive: { correct: number; total: number }; no_op: { correct: number; total: number };
+      positive_exact: { correct: number; total: number }; positive_with_additional_sources: { count: number; total: number };
+      gates: { positive_recall: boolean; positive_exact: boolean; accepted: boolean } };
     for (const mode of ["excerpts", "rules_only"]) {
       const row = (id: string, strategy = "qualified-bindings") => rows.find((item) => item.id === id && item.mode === mode && item.strategy === strategy)!;
       for (const id of ["clause-trailing-isolated", "clause-negated-only", "clause-negated-policy-same", "clause-adverb-negation"]) {
@@ -68,8 +73,13 @@ it("verifies gains and retained failures through actual retrieval in both modes"
       for (const id of ["qualified-trailing-required", "qualified-distant-antecedent", "qualified-local-followup"]) expect(row(id).correct, id).toBe(false);
       const score = (subset: Score[]) => subset.find((item) => item.mode === mode && item.strategy === "qualified-bindings")!;
       expect(score(summary.scores).positive).toEqual({ correct: 47, total: 49 });
+      expect(score(summary.scores).positive_exact).toEqual({ correct: 20, total: 49 });
+      expect(score(summary.scores).positive_with_additional_sources).toEqual({ count: 28, total: 49 });
+      expect(score(summary.scores).gates).toMatchObject({ positive_exact: false, accepted: false });
       expect(score(summary.scores).no_op).toEqual({ correct: 34, total: 41 });
       expect(score(summary.subsets.original).positive).toEqual({ correct: 15, total: 15 });
+      // A subset with perfect recall still fails the new precision gate.
+      expect(score(summary.subsets.original).gates).toMatchObject({ positive_recall: true, positive_exact: false, accepted: false });
       expect(score(summary.policy_guard).positive).toEqual({ correct: 9, total: 9 });
       expect(score(summary.local_bindings).positive).toEqual({ correct: 6, total: 6 });
       expect(score(summary.clause_bindings).positive).toEqual({ correct: 11, total: 11 });
