@@ -20,6 +20,7 @@ import { clauseBindingCases, clauseBindingCounterexamples } from "./clause-bindi
 import { clauseBindingTerms } from "./clause-bindings.js";
 import { qualifiedBindingCases, qualifiedBindingCounterexamples } from "./qualified-bindings-cases.js";
 import { qualifiedBindingTerms } from "./qualified-bindings.js";
+import { scopeTransferCases, scopeTransferDocuments } from "./scope-transfer-cases.js";
 
 export const queryScopeStrategies = ["lexical", "drop-request", "mask-call-arguments"] as const;
 export const policyGuardStrategies = [...queryScopeStrategies, "policy-guarded-arguments"] as const;
@@ -50,13 +51,14 @@ export function queryScopeTerms(query: string, strategy: QueryScopeStrategy): st
   return strategy === "drop-request" ? terms.filter((term) => term !== "request") : terms;
 }
 
-export function scoreQueryScope(scenario: QueryScopeCase, evidence: readonly { source: string; quote: string }[]) {
+export function scoreQueryScope(scenario: QueryScopeCase, evidence: readonly { source: string; quote: string }[],
+  documents: readonly { name: string; text: string }[] = queryScopeDocuments) {
   const actual = [...new Set(evidence.map((item) => basename(item.source)))].sort();
   const missingSources = scenario.sources.filter((source) => !actual.includes(source));
   // Require every original sentence, including exceptions/negation. A filename
   // hit or an isolated number cannot stand in for complete policy evidence.
   const missingSentences = scenario.sources.flatMap((source) => {
-    const document = queryScopeDocuments.find((item) => item.name === source);
+    const document = documents.find((item) => item.name === source);
     if (!document) throw new Error("Unknown scope fixture source");
     const quotes = evidence.filter((item) => basename(item.source) === source).map((item) => item.quote);
     return [...new Intl.Segmenter("en", { granularity: "sentence" }).segment(document.text)]
@@ -75,7 +77,7 @@ export function queryScopeOptions(argv: string[]) {
   const repeats = Number(args.get("repeats") ?? "2");
   if (!out || !Number.isInteger(repeats) || repeats < 1 || repeats > 5) throw new Error("query scope requires --out and --repeats between 1 and 5");
   const corpus = args.get("corpus") ?? "original";
-  if (corpus !== "original" && corpus !== "policy-guard" && corpus !== "local-bindings" && corpus !== "clause-bindings" && corpus !== "qualified-bindings") throw new Error("query scope corpus must be original, policy-guard, local-bindings, clause-bindings or qualified-bindings");
+  if (corpus !== "original" && corpus !== "policy-guard" && corpus !== "local-bindings" && corpus !== "clause-bindings" && corpus !== "qualified-bindings" && corpus !== "scope-transfer") throw new Error("query scope corpus must be original, policy-guard, local-bindings, clause-bindings, qualified-bindings or scope-transfer");
   return { out: resolve(out), repeats, corpus };
 }
 
@@ -92,20 +94,23 @@ type ScopeResult = ReturnType<typeof scoreQueryScope> & {
 };
 
 export async function runQueryScope(options: ReturnType<typeof queryScopeOptions>) {
-  const cases = options.corpus === "qualified-bindings" ? qualifiedBindingCases : options.corpus === "clause-bindings" ? clauseBindingCases : options.corpus === "local-bindings" ? localBindingCases : options.corpus === "policy-guard" ? policyGuardCases : queryScopeCases;
-  const strategies = options.corpus === "qualified-bindings" ? qualifiedBindingStrategies : options.corpus === "clause-bindings" ? clauseBindingStrategies : options.corpus === "local-bindings" ? localBindingStrategies : options.corpus === "policy-guard" ? policyGuardStrategies : queryScopeStrategies;
+  const transfer = options.corpus === "scope-transfer";
+  const documents = transfer ? scopeTransferDocuments : queryScopeDocuments;
+  const cases = transfer ? scopeTransferCases : options.corpus === "qualified-bindings" ? qualifiedBindingCases : options.corpus === "clause-bindings" ? clauseBindingCases : options.corpus === "local-bindings" ? localBindingCases : options.corpus === "policy-guard" ? policyGuardCases : queryScopeCases;
+  const strategies = transfer ? qualifiedBindingStrategies : options.corpus === "qualified-bindings" ? qualifiedBindingStrategies : options.corpus === "clause-bindings" ? clauseBindingStrategies : options.corpus === "local-bindings" ? localBindingStrategies : options.corpus === "policy-guard" ? policyGuardStrategies : queryScopeStrategies;
   await mkdir(options.out, { recursive: false, mode: 0o700 });
   const save = (name: string, data: unknown) => writeFile(join(options.out, name), JSON.stringify(data, null, 2) + "\n", { flag: "wx", mode: 0o600 });
   const artifactNames = ["query-scope.js", "query-scope-metrics.js", "query-scope-cases.js", "policy-guard-cases.js", "../retrieval/terms.js", "../storage/manifest.js", "../retrieval/hybrid.js", "../rules/selection.js", "../context/compiler.js", "../context/packing.js"];
-  if (options.corpus === "local-bindings" || options.corpus === "clause-bindings" || options.corpus === "qualified-bindings") artifactNames.push("local-bindings.js", "local-bindings-cases.js");
-  if (options.corpus === "clause-bindings" || options.corpus === "qualified-bindings") artifactNames.push("clause-bindings.js", "clause-bindings-cases.js");
-  if (options.corpus === "qualified-bindings") artifactNames.push("qualified-bindings.js", "qualified-bindings-cases.js");
+  if (options.corpus === "local-bindings" || options.corpus === "clause-bindings" || options.corpus === "qualified-bindings" || transfer) artifactNames.push("local-bindings.js", "local-bindings-cases.js");
+  if (options.corpus === "clause-bindings" || options.corpus === "qualified-bindings" || transfer) artifactNames.push("clause-bindings.js", "clause-bindings-cases.js");
+  if (options.corpus === "qualified-bindings" || transfer) artifactNames.push("qualified-bindings.js", "qualified-bindings-cases.js");
+  if (transfer) artifactNames.push("scope-transfer-cases.js");
   const artifacts = Object.fromEntries(await Promise.all(artifactNames.map(async (name) => [name, hash(await readFile(new URL(name, import.meta.url), "utf8"))])));
   await save("protocol.json", { protocol: "query-scope-shadow-v3", corpus: options.corpus, recorded_at: new Date().toISOString(),
     synthetic_only: true, node: process.version, platform: process.platform, repeats: options.repeats,
-    strategies, documents: queryScopeDocuments, cases,
+    strategies, documents, cases,
     original_case_ids: queryScopeCases.map(({ id }) => id),
-    fixture_sha256: hash(JSON.stringify({ documents: queryScopeDocuments, cases })), artifacts,
+    fixture_sha256: hash(JSON.stringify({ documents, cases })), artifacts,
     scoring: { historical_correct: "Complete expected sentences; no-op requires no evidence; exact citations and token cap.",
       precise_correct: "Historical correct plus no additional source basenames.",
       positive_exact: "Positive tasks with precise_correct / all positive tasks; empty positive retrieval fails.",
@@ -125,7 +130,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
       const engine = new OthieEngine(config, data);
       try {
         const chunks: ChunkRecord[] = [];
-        for (const document of queryScopeDocuments) {
+        for (const document of documents) {
           const id = document.name, revision = `${id}-revision`, sourcePath = join(docs, id), contentHash = hash(document.text);
           const role = mode === "excerpts" ? "reference" : "authoritative";
           engine.store.beginReplacement({ documentId: id, revisionId: revision, path: sourcePath, profile: "company", role, authority: 80, weight: 1,
@@ -151,8 +156,8 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           const query = strategy === "lexical" ? scenario.query : terms.join(" ") || "?";
           const response = await engine.context("company", { query, max_tokens: 500, surface: "code", phase: "turn_start" });
           const evidence = evidenceFrom(response);
-          const score = scoreQueryScope(scenario, evidence);
-          const citationsExact = evidence.every((item) => item.quote.trim().length > 0 && queryScopeDocuments.find((document) => document.name === basename(item.source))?.text.includes(item.quote));
+          const score = scoreQueryScope(scenario, evidence, documents);
+          const citationsExact = evidence.every((item) => item.quote.trim().length > 0 && documents.find((document) => document.name === basename(item.source))?.text.includes(item.quote));
           const capPassed = response.status.tokenCount === countTokens(response.text, "o200k_base") && response.status.tokenCount <= 500;
           results.push({ id: scenario.id, family: scenario.family, expected_sources: scenario.sources, repeat, mode, strategy, terms, query,
             ...score, correct: score.correct && citationsExact && capPassed, precise_correct: score.precise_correct && citationsExact && capPassed,
@@ -167,7 +172,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
     }));
     const scores = scoresFor(results);
     const originalIds = new Set(queryScopeCases.map(({ id }) => id));
-    const subsets = { original: scoresFor(results.filter((item) => originalIds.has(item.id))),
+    const subsets = transfer ? { transfer: scoresFor(results) } : { original: scoresFor(results.filter((item) => originalIds.has(item.id))),
       counterexamples: scoresFor(results.filter((item) => !originalIds.has(item.id))) };
     const guardIds = new Set(policyGuardCases.filter(({ id }) => !originalIds.has(id)).map(({ id }) => id));
     const bindingIds = new Set(localBindingCounterexamples.map(({ id }) => id));

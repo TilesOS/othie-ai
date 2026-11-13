@@ -545,6 +545,26 @@ retrieval rows and recall scores remain unchanged; qualified bindings pass only
 fail the explicit precision/recall/no-op acceptance gates. Source/task diagnostics
 identify additional-source membership without establishing generalization.
 
+`--corpus scope-transfer` runs the seven unchanged strategies against a separately
+frozen set of eight synthetic documents and 30 tasks (17 positive, 13 no-op).
+The new domains cover retention, uploads, guest credentials, notifications,
+opposing deployment standards, writing and scheduling. Generic-subject positives,
+mixed tasks, literal/negated cues and local bindings test precision and recall
+beyond the cumulative diagnostic corpus. Each mode/repeat seeds only these new
+documents; `summary.subsets.transfer` reports their scores. The default corpus and
+historical strategies, cases and metrics remain unchanged.
+
+```sh
+npm run eval:query-scope -- --corpus scope-transfer --out /tmp/othie-scope-transfer --repeats 2
+```
+
+The fixtures were committed before their first candidate run. Their author knew
+the previous failures and implementations, so these are transfer diagnostics,
+not independent human validation or a blinded, statistically held-out benchmark.
+Do not tune against them and continue to describe them as unseen validation.
+Complete required sentences, qualifiers, both opposing sources, no additional
+sources, citations and token caps remain separate acceptance gates.
+
 ## Complete adapter-process latency
 
 `npm run eval:hook-latency -- --out /tmp/othie-hook-latency` launches both compiled
