@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 11, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 12, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci` | November 2 clean installation passes with the existing dependency lockfile |
 | `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 305 passing tests; one opt-in real-model test skipped |
+| `npm test` | 308 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -46,6 +46,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 8 prior-history CI inspection | `4c34b0f` passes Windows installation, typechecks, website lint, tests and startup syntax; macOS cancelled with no recorded steps; full CI remains open |
 | November 10 qualified binding scope | 2,520 rows; per mode all 82/82 prior positives retained, full 94/98 positives and 68/82 no-ops; new antecedent/qualification failures reject the candidate; 56/98 positive rows also contain additional sources |
 | November 11 positive-task precision gates | All 2,520 historical retrieval rows unchanged; per mode qualified bindings pass 40/98 positive exact gates, with 114/192 expected/retrieved source memberships; all seven strategies fail acceptance |
+| November 12 scope transfer | 840 rows on eight new documents and 30 frozen tasks; per mode qualified bindings pass 30/34 recall, 4/34 positive exact and 16/26 no-ops; all strategies fail; all 2,520 historical rows unchanged |
 | November 10 prior-history CI inspection/retry | `ed3dcdb` passes Windows installation, typechecks, lint, tests and startup syntax; macOS cancelled without steps in both the initial run and one requested retry; macOS remains open |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
@@ -58,7 +59,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `git diff --check` | Pass |
 | `npm audit` and `npm audit --omit=dev` | November 7: eight moderate development entries; zero production findings; checked parser path does not enter the advisory's level-2 branch, but affected dependency and compatible remediation remain open |
 
-The full suite comprises 156 engine, 30 shared-hook, 102 website, 10 Codex, and seven
+The full suite comprises 159 engine, 30 shared-hook, 102 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1329,6 +1330,60 @@ using the decomposed failures while preserving qualifiers, opposing requirements
 all historical cases/scores and the new gates; validate independently before
 considering production adoption.
 
+## November 12 scope transfer follow-up
+
+The [transfer records](packages/engine/evaluation/records/2026-11-12/scope-transfer-followup/README.md)
+test the seven unchanged strategies beyond the cumulative diagnostic corpus.
+Eight new synthetic documents and 30 tasks were committed in `1619601` before
+their first run; evaluator support followed in `6753196`. New domains include
+retention, uploads, guest credentials, notifications, opposing deployment standards,
+writing and scheduling. Seventeen positives include generic subjects, negative
+rules, mixed tasks and qualifications; thirteen no-ops cover local code/prose,
+quoted/incidental cues and malformed calls. The author knew the preceding
+failures and implementations: this is a frozen transfer diagnostic, not blinded
+or independently authored validation.
+
+`--corpus scope-transfer` seeds only the eight new documents and uses the same
+sentence, source, citation and 500-token gates. Two fresh SQLite/Lance repeats in
+each export mode produce 840 rows with stable evidence/judgments, reversed case
+order and rotated strategy order. Rules-only still uses manually supplied
+whole-document rules; extraction, providers, native hosts and adapter latency
+are outside this measurement. Default selection and historical cases are unchanged.
+
+Per mode, lexical retains all 34/34 positives but passes only 4/34 positive exact
+and 4/26 no-op checks. Qualified bindings pass 30/34 recall, 4/34 positive exact
+and 16/26 no-ops, with 38/72 expected/retrieved positive source memberships.
+They include extra sources on 30/34 positives and lose the trailing `as required`
+and distant antecedent upload subjects. Every strategy fails acceptance despite
+exact citations and token caps. Documents disclaiming a topic still retrieve on
+that topic; shared defaults and query scaffolding also retain unrelated sources.
+Real generic-subject positives and opposing negative rules remain scored rather
+than excluded to improve precision. No candidate was changed after observing
+the transfer results; source precision does not establish within-document relevance.
+
+A separate historical rerun preserves all 2,520 preceding rows field-for-field
+except measured component time, all summary scores/gates/subsets, and every
+prior compiled component hash except the extended evaluator entry point.
+The preceding precision verifier passed before rebuilding. The new verifier
+independently recomputes all row judgments and aggregate scores, validates
+citations/XML token counts, ordering/repeats, the frozen fixture Git blob,
+historical parity and source/publication integrity. Its initial self-denylist
+privacy-scan failure is preserved; the corrected scan passes without judgment edits.
+
+Full build, workspace typechecks, website lint and 308 deterministic tests pass;
+one opt-in real-model test is skipped. Nineteen focused tests pass. Full build
+and process tests use local process/IPC access; generated website `next-env.d.ts`
+paths were restored before typechecks and lint. No clean install, audit refresh,
+remote CI inspection, model/native-host session or standalone adapter latency
+probe ran. New transfer controls still need both CI runners; the preceding macOS
+cancellations and independent human scope validation remain open.
+
+Next distinguish affirmative policy subjects from meta-document disclaimers and
+generic query scaffolding while preserving exceptions, real negative rules,
+opposing requirements and every historical gate. Keep the transfer record fixed.
+Any strategy informed by it needs a further separately authored corpus and
+independent review before production adoption.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
@@ -1364,7 +1419,7 @@ considering production adoption.
   history through `4c34b0f` on Windows, but macOS was again cancelled without steps.
   The November 10 inspection verifies clause history through `ed3dcdb` on Windows;
   macOS was cancelled without steps in both the initial run and one retry. New
-  qualified-binding and November 11 precision controls still need both runners;
+  qualified-binding, November 11 precision and November 12 transfer controls still need both runners;
   macOS history remains open.
   Native Windows host/session acceptance remains open.
 - A larger benchmark using production-scale repositories, dependency changes and
@@ -1408,6 +1463,13 @@ considering production adoption.
   additional sources and 114/192 source memberships relevant. Use the source/task
   decomposition to investigate generic collisions while preserving every
   historical case, qualifier, opposing requirement and new precision gate.
+  November 12 freezes eight new documents and 30 transfer tasks before execution;
+  qualified bindings pass only 30/34 recall and 4/34 positive exact checks per
+  mode, with 16/26 no-ops. All seven strategies fail this transfer corpus, and
+  all 2,520 historical rows remain unchanged. Address generic scaffolding and
+  meta-document disclaimers without excluding real negative rules or generic
+  subjects. Keep both records fixed; future tuning needs further separately
+  authored cases and independent human review.
   Independent scope validation remains open; preserving 40 earlier lexical
   queries does not establish it.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
