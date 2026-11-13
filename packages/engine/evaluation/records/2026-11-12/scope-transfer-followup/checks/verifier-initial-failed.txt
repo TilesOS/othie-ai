@@ -1,0 +1,73 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  [
+    'README.md',
+    'checks/build.txt',
+    'checks/checks.json',
+    'checks/engine-build.txt',
+...
+    'checks/typecheck.txt',
++   'checks/verifier-initial-failed.txt',
+    'historical/protocol.json',
+    'historical/results.json',
+    'historical/summary.json',
+    'publication.json',
+    'transfer/protocol.json',
+
+    at file://<repo>/packages/engine/evaluation/records/2026-11-12/scope-transfer-followup/verify-evidence.mjs:25:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'README.md',
+    'checks/build.txt',
+    'checks/checks.json',
+    'checks/engine-build.txt',
+    'checks/focused-test.txt',
+    'checks/historical.txt',
+    'checks/lint.txt',
+    'checks/source-hashes.json',
+    'checks/test.txt',
+    'checks/transfer.txt',
+    'checks/typecheck.txt',
+    'checks/verifier-initial-failed.txt',
+    'historical/protocol.json',
+    'historical/results.json',
+    'historical/summary.json',
+    'publication.json',
+    'transfer/protocol.json',
+    'transfer/results.json',
+    'transfer/summary.json',
+    'verify-evidence.mjs'
+  ],
+  expected: [
+    'README.md',
+    'checks/build.txt',
+    'checks/checks.json',
+    'checks/engine-build.txt',
+    'checks/focused-test.txt',
+    'checks/historical.txt',
+    'checks/lint.txt',
+    'checks/source-hashes.json',
+    'checks/test.txt',
+    'checks/transfer.txt',
+    'checks/typecheck.txt',
+    'historical/protocol.json',
+    'historical/results.json',
+    'historical/summary.json',
+    'publication.json',
+    'transfer/protocol.json',
+    'transfer/results.json',
+    'transfer/summary.json',
+    'verify-evidence.mjs'
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

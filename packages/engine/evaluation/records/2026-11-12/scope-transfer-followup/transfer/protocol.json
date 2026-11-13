@@ -1,0 +1,329 @@
+{
+  "protocol": "query-scope-shadow-v3",
+  "corpus": "scope-transfer",
+  "recorded_at": "2026-11-13T03:57:33.211Z",
+  "synthetic_only": true,
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "repeats": 2,
+  "strategies": [
+    "lexical",
+    "drop-request",
+    "mask-call-arguments",
+    "policy-guarded-arguments",
+    "local-bindings",
+    "clause-bindings",
+    "qualified-bindings"
+  ],
+  "documents": [
+    {
+      "name": "retention.md",
+      "text": "Customer archives expire ninety days after closure. Archives under a legal hold must never be deleted until the hold is released."
+    },
+    {
+      "name": "upload.md",
+      "text": "Upload defaults permit files up to ten mebibytes. An approved operator may upload a file up to twenty mebibytes; larger files are always rejected."
+    },
+    {
+      "name": "guest.md",
+      "text": "Guest credentials expire twenty-four hours after issuance. A guest credential cannot be renewed; a new invitation is required."
+    },
+    {
+      "name": "current-deployment.md",
+      "text": "Operators may deploy customer workloads on Friday under the current release standard."
+    },
+    {
+      "name": "legacy-deployment.md",
+      "text": "Operators must not deploy customer workloads on Friday under the legacy release standard."
+    },
+    {
+      "name": "editorial.md",
+      "text": "Editorial examples use clear wording and short sentences. This writing reference does not define archive retention or upload limits."
+    },
+    {
+      "name": "calendar.md",
+      "text": "Equipment reservations run through the office calendar. This scheduling reference does not define customer permissions or guest credentials."
+    },
+    {
+      "name": "notifications.md",
+      "text": "Notification defaults disable promotional messages. Transactional messages remain enabled unless the account is suspended."
+    }
+  ],
+  "cases": [
+    {
+      "id": "transfer-retention-prose",
+      "family": "new-domain",
+      "query": "Summarize company archive retention requirements, including legal holds.",
+      "sources": [
+        "retention.md"
+      ]
+    },
+    {
+      "id": "transfer-upload-code",
+      "family": "code-subject",
+      "query": "Use company policy to implement solve(upload).",
+      "sources": [
+        "upload.md"
+      ]
+    },
+    {
+      "id": "transfer-guest-code-name",
+      "family": "code-subject",
+      "query": "Implement guest(credential) expiration and renewal according to company documents.",
+      "sources": [
+        "guest.md"
+      ]
+    },
+    {
+      "id": "transfer-notification-prose",
+      "family": "new-domain",
+      "query": "Implement notification defaults with every exception.",
+      "sources": [
+        "notifications.md"
+      ]
+    },
+    {
+      "id": "transfer-deployment-opposition",
+      "family": "opposing-policy",
+      "query": "Implement Friday deployment for customer workloads; preserve both current and legacy release standards.",
+      "sources": [
+        "current-deployment.md",
+        "legacy-deployment.md"
+      ]
+    },
+    {
+      "id": "transfer-deployment-code",
+      "family": "opposing-policy",
+      "query": "Use company policy to implement solve(deploy). Preserve opposing requirements.",
+      "sources": [
+        "current-deployment.md",
+        "legacy-deployment.md"
+      ]
+    },
+    {
+      "id": "transfer-mixed-local",
+      "family": "mixed-task",
+      "query": "Sort solve(request), then implement company guest credential requirements.",
+      "sources": [
+        "guest.md"
+      ]
+    },
+    {
+      "id": "transfer-trailing",
+      "family": "trailing-qualification",
+      "query": "Sort solve(upload), as required by company documents.",
+      "sources": [
+        "upload.md"
+      ]
+    },
+    {
+      "id": "transfer-distant",
+      "family": "replacement-intent",
+      "query": "Do not sort solve(upload). Keep the existing API. Implement size limits according to company documents.",
+      "sources": [
+        "upload.md"
+      ]
+    },
+    {
+      "id": "transfer-negated-lookup",
+      "family": "negated-lookup",
+      "query": "Do not consult company policy; implement solve(guest) with expiration and renewal requirements.",
+      "sources": [
+        "guest.md"
+      ]
+    },
+    {
+      "id": "transfer-negative-rule",
+      "family": "negative-policy",
+      "query": "Implement the company rule that guest credentials cannot be renewed, including their expiration.",
+      "sources": [
+        "guest.md"
+      ]
+    },
+    {
+      "id": "transfer-generic-defaults",
+      "family": "generic-subject",
+      "query": "Summarize all company defaults.",
+      "sources": [
+        "upload.md",
+        "notifications.md"
+      ]
+    },
+    {
+      "id": "transfer-writing-use",
+      "family": "generic-subject",
+      "query": "What wording and sentences do editorial examples use?",
+      "sources": [
+        "editorial.md"
+      ]
+    },
+    {
+      "id": "transfer-calendar-through",
+      "family": "generic-subject",
+      "query": "Explain the equipment reservation calendar reference.",
+      "sources": [
+        "calendar.md"
+      ]
+    },
+    {
+      "id": "transfer-quoted-active",
+      "family": "quoted-subject",
+      "query": "Implement company requirements for `upload` with all exceptions.",
+      "sources": [
+        "upload.md"
+      ]
+    },
+    {
+      "id": "transfer-local-negation-policy",
+      "family": "replacement-intent",
+      "query": "Never just sort solve(guest); implement expiration and renewal according to company documents.",
+      "sources": [
+        "guest.md"
+      ]
+    },
+    {
+      "id": "transfer-two-domains",
+      "family": "multiple-policy",
+      "query": "Implement company upload and notification defaults, including exceptions.",
+      "sources": [
+        "upload.md",
+        "notifications.md"
+      ]
+    },
+    {
+      "id": "transfer-local-argument",
+      "family": "local-control",
+      "query": "Sort numeric arrays through solve(guest). Preserve ascending order.",
+      "sources": []
+    },
+    {
+      "id": "transfer-local-function",
+      "family": "local-control",
+      "query": "Deduplicate upload(values); preserve numeric ordering.",
+      "sources": []
+    },
+    {
+      "id": "transfer-local-css",
+      "family": "local-control",
+      "query": "Set the CSS width of the guest panel to 640 pixels.",
+      "sources": []
+    },
+    {
+      "id": "transfer-local-chart",
+      "family": "prose-control",
+      "query": "Plot archive retention observations from a local CSV; do not consult company policy.",
+      "sources": []
+    },
+    {
+      "id": "transfer-incidental-policy",
+      "family": "incidental-cue",
+      "query": "The test file is named policy. Sort solve(upload) numerically.",
+      "sources": []
+    },
+    {
+      "id": "transfer-literal",
+      "family": "quoted-control",
+      "query": "Render the literal string 'company upload defaults' in a heading.",
+      "sources": []
+    },
+    {
+      "id": "transfer-without-lookup",
+      "family": "negated-lookup",
+      "query": "Without consulting company documents, sort solve(guest).",
+      "sources": []
+    },
+    {
+      "id": "transfer-local-replacement",
+      "family": "replacement-intent",
+      "query": "Do not sort solve(guest); implement a numeric comparator according to company documents.",
+      "sources": []
+    },
+    {
+      "id": "transfer-unrelated-followup",
+      "family": "trailing-association",
+      "query": "Sort solve(upload). Follow company documents for indentation.",
+      "sources": []
+    },
+    {
+      "id": "transfer-malformed-local",
+      "family": "malformed-control",
+      "query": "Sort numeric arrays using solve(guest",
+      "sources": []
+    },
+    {
+      "id": "transfer-plain-numbers",
+      "family": "clean-control",
+      "query": "Sort unique finite numbers in ascending numeric order.",
+      "sources": []
+    },
+    {
+      "id": "transfer-variable",
+      "family": "local-control",
+      "query": "Deduplicate numeric values in the variable named notifications.",
+      "sources": []
+    },
+    {
+      "id": "transfer-negated-local",
+      "family": "negated-local",
+      "query": "Never deduplicate guest(values); preserve the input.",
+      "sources": []
+    }
+  ],
+  "original_case_ids": [
+    "native-support-service",
+    "native-refund-service",
+    "native-array-service-control",
+    "backtick-array",
+    "multiple-arguments",
+    "window-argument",
+    "access-argument",
+    "request-variable",
+    "support-variable",
+    "request-css",
+    "window-css",
+    "support-chart",
+    "numeric-array",
+    "duration-control",
+    "refund-prose",
+    "request-subject",
+    "support-prose",
+    "telemetry-prose",
+    "telemetry-code-argument",
+    "refund-code-argument",
+    "access-code-argument",
+    "telemetry-code-name",
+    "refund-code-name",
+    "quoted-policy-subject",
+    "export-opposition",
+    "export-code-argument",
+    "late-policy-subject"
+  ],
+  "fixture_sha256": "b75e3cd14868c0ef9cec37ceede352a5f153676b384ec687d89d9b3c2a7f952f",
+  "artifacts": {
+    "query-scope.js": "d12f5fedc38f526e7cc896b49f4f7db713e3e81f95ad108e8016e68bf2eaa442",
+    "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+    "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+    "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+    "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+    "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+    "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+    "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+    "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+    "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+    "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+    "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+    "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+    "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+    "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+    "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+    "scope-transfer-cases.js": "20a4df467098b8f4e1dc41a880951e6a3e98b15fd4273c2f54254bb30d959618"
+  },
+  "scoring": {
+    "historical_correct": "Complete expected sentences; no-op requires no evidence; exact citations and token cap.",
+    "precise_correct": "Historical correct plus no additional source basenames.",
+    "positive_exact": "Positive tasks with precise_correct / all positive tasks; empty positive retrieval fails.",
+    "positive_source_precision": "Expected source memberships / all retrieved source memberships on positive tasks; each source counted once per task. Raw counts, no 0/0 ratio.",
+    "acceptance": "Per mode/strategy: all positive recall, positive exact, no-op, citation and token gates must pass; empty subsets are not accepted. CLI requires every row precise_correct."
+  },
+  "limitations": "Evaluation-only query interventions. Providers disabled. Fresh seeded SQLite/Lance stores per repeat/export mode; not ingestion, model extraction, semantic acceptance, native-host or adapter latency. Excerpts use reference chunks; rules-only uses manually supplied whole-document authoritative rules to isolate scope from extraction/grouping. Positive recall requires every expected sentence. Precision measures fixture source membership, not semantic relevance within an expected document. Case order reverses and strategy order rotates on fresh repeats."
+}

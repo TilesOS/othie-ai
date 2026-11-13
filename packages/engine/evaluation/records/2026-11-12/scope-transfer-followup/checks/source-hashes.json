@@ -1,0 +1,6 @@
+{
+  "packages/engine/src/evaluation/query-scope.ts": "91da2f5883976efca5039ad16c99ba6b93926244622dae62034e34125a2bfc7f",
+  "packages/engine/src/evaluation/scope-transfer-cases.ts": "9420549a3ea69786e6492e2aedf21a4fc8f6efd30a7dd2bae787a252dd80e0ad",
+  "packages/engine/test/scope-transfer.test.ts": "2b8be281e0c4d74ae6d82671dd4f1e3988a4fa040204783144ad6dddf07c878b",
+  "packages/engine/evaluation/README.md": "b7f1b97fcc6117825d32274c4da3cf682b7009980256b2d739d3e862e29794c8"
+}

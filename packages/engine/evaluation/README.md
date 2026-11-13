@@ -564,6 +564,10 @@ not independent human validation or a blinded, statistically held-out benchmark.
 Do not tune against them and continue to describe them as unseen validation.
 Complete required sentences, qualifiers, both opposing sources, no additional
 sources, citations and token caps remain separate acceptance gates.
+The [November 12 transfer record](records/2026-11-12/scope-transfer-followup/README.md)
+preserves 840 new rows and verifies all 2,520 historical rows unchanged. Every
+strategy fails transfer acceptance; qualified bindings score 30/34 recall,
+4/34 positive exact and 16/26 no-ops per mode across two repeats.
 
 ## Complete adapter-process latency
 

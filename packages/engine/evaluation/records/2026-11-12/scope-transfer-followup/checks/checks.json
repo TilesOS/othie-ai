@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-11-13T04:01:15.889269+00:00",
+  "client_date": "2026-11-12",
+  "fixture_commit": "16196013ce45aebb5045bb79fc3a7dc5a155a2c2",
+  "code_commit": "6753196b791fa49d46dad2a9b55fcc5634da83ff",
+  "exits": {
+    "transfer": 1,
+    "historical": 1,
+    "engine-build": 0,
+    "focused-test": 0,
+    "build": 0,
+    "test": 0,
+    "typecheck": 0,
+    "lint": 0
+  },
+  "prior_precision_verifier_before_rebuild": 0,
+  "local_process_and_ipc_access": true,
+  "production_changed": false,
+  "strategies_changed": false,
+  "clean_install_repeated": false,
+  "audit_refreshed": false,
+  "ci_inspected": false,
+  "independent_human_validation": false,
+  "notes": "Fixtures committed before first run. Author knew previous corpus and implementation. Transfer diagnostics, not blinded or independently authored validation. Historical row parity excludes measured component time only.",
+  "verifier_initial_failure_exit": 1,
+  "verifier_initial_failure_note": "Privacy scan initially scanned its own JavaScript denylist. Limited content scan to published JSON, text and Markdown, matching prior verifiers. No result judgments changed."
+}

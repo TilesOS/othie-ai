@@ -1,0 +1,49 @@
+{
+  "files": [
+    {
+      "path": "checks/build.txt",
+      "published_sha256": "cbc5c4e2af1f407dc724d7d9e345bd5acb92508a1056d66fd98fba413f5497cf",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/engine-build.txt",
+      "published_sha256": "4d198232057f947b0f27ea68264181f6025842432257a15a5517481e6259d144",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/focused-test.txt",
+      "published_sha256": "79607dfaf56425bb0748cf70042862a49ec27f5a3c6f6be0ace7dc7039f8acbd",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/historical.txt",
+      "published_sha256": "bd95c3779c443d7ce99146d4e95095aa0e7dc4ed8f07d02caba6f1cd96ce28b7",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/lint.txt",
+      "published_sha256": "4df74f7a76f4c1e796acfb5fd4f4fb526c87dc22017adcb98377c1da82012c48",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/test.txt",
+      "published_sha256": "e78154752138ba5495f7ef2462edcd65e3abbd251006f4bc748db4bbd41fcbac",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/transfer.txt",
+      "published_sha256": "4bbd1f0db3eb8888b037d11e64bcacd23fce2c680c83abb3af606ca02f0821d8",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/typecheck.txt",
+      "published_sha256": "efb132c372624d0c664e4ee1373834550dd20e8c4c8047003819753ea99145fc",
+      "normalization": "Repository/user/temp paths replaced before publication; no judgment edits."
+    },
+    {
+      "path": "checks/verifier-initial-failed.txt",
+      "published_sha256": "70101efbdf8fefee350fb752ef7904896f1b999bf655c5eb21b60b85c2aafd36",
+      "normalization": "Repository paths replaced before publication; no judgment edits."
+    }
+  ]
+}
