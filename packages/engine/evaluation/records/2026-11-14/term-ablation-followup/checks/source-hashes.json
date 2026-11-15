@@ -1,0 +1,6 @@
+{
+  "packages/engine/src/evaluation/query-scope.ts": "056c882900d47f61b05d16d093805f2f848f268ef4fc820169bc6b4e793d48e3",
+  "packages/engine/src/evaluation/scope-term-diagnostics.ts": "d26d1f696173fa0b1946ea1b6a2d02b82574ffe3533c842775d2edc8c919bf1c",
+  "packages/engine/test/scope-term-diagnostics.test.ts": "332bee40215c19267a349dfb8faef9996d3b814b439f874e2583489b4cffc5f5",
+  "package-lock.json": "510599e6e9ea7eb68168be8e484697631fdbe6b235881c22f1216ce5fdd5b13f"
+}

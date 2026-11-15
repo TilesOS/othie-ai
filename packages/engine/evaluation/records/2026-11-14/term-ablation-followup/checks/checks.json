@@ -1,0 +1,31 @@
+{
+  "client_start_date": "2026-11-14",
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "prior_commit": "c2df29f",
+  "code_commit": "a78568ae311740fe2d4996a1446da109c2887ea0",
+  "prior_transfer_verifier_before_changes": true,
+  "prior_verifier_observation": "Verified 20 files, 840 transfer rows, 2,520 unchanged historical rows, independent evidence/score recomputation and 308 deterministic tests.",
+  "local_process_and_ipc_access": true,
+  "exits": {
+    "transfer": 1,
+    "historical": 1,
+    "build": 0,
+    "test": 0,
+    "typecheck": 0,
+    "lint": 0,
+    "focused-test": 0
+  },
+  "production_changed": false,
+  "strategies_changed": false,
+  "fixtures_changed": false,
+  "clean_install_repeated": false,
+  "audit_refreshed": false,
+  "ci_inspected": false,
+  "independent_human_validation": false,
+  "build_generated_reference_restored": true,
+  "deterministic_tests_passed": 314,
+  "opt_in_model_tests_skipped": 1,
+  "baseline_rows_unchanged": 3360,
+  "retrieval_probes": 1296
+}

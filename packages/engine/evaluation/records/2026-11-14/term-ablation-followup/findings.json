@@ -1,0 +1,4860 @@
+{
+  "transfer": [
+    {
+      "mode": "excerpts",
+      "sample": "First repeat only; all repeated probes are separately checked for stability.",
+      "baseline": {
+        "positive_recall": {
+          "correct": 15,
+          "total": 17
+        },
+        "positive_exact": {
+          "correct": 2,
+          "total": 17
+        },
+        "no_op": {
+          "correct": 8,
+          "total": 13
+        }
+      },
+      "single_term_additional_sources": [
+        {
+          "term": "archive",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-local-chart",
+            "transfer-retention-prose"
+          ]
+        },
+        {
+          "term": "credentials",
+          "source": "calendar.md",
+          "task_ids": [
+            "transfer-negative-rule"
+          ]
+        },
+        {
+          "term": "customer",
+          "source": "calendar.md",
+          "task_ids": [
+            "transfer-deployment-opposition"
+          ]
+        },
+        {
+          "term": "customer",
+          "source": "retention.md",
+          "task_ids": [
+            "transfer-deployment-opposition"
+          ]
+        },
+        {
+          "term": "defaults",
+          "source": "upload.md",
+          "task_ids": [
+            "transfer-notification-prose"
+          ]
+        },
+        {
+          "term": "file",
+          "source": "upload.md",
+          "task_ids": [
+            "transfer-incidental-policy"
+          ]
+        },
+        {
+          "term": "guest",
+          "source": "calendar.md",
+          "task_ids": [
+            "transfer-guest-code-name",
+            "transfer-local-negation-policy",
+            "transfer-local-replacement",
+            "transfer-malformed-local",
+            "transfer-mixed-local",
+            "transfer-negated-lookup",
+            "transfer-negative-rule"
+          ]
+        },
+        {
+          "term": "guest",
+          "source": "guest.md",
+          "task_ids": [
+            "transfer-local-replacement",
+            "transfer-malformed-local"
+          ]
+        },
+        {
+          "term": "limits",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-distant"
+          ]
+        },
+        {
+          "term": "never",
+          "source": "retention.md",
+          "task_ids": [
+            "transfer-local-negation-policy"
+          ]
+        },
+        {
+          "term": "reference",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-calendar-through"
+          ]
+        },
+        {
+          "term": "required",
+          "source": "guest.md",
+          "task_ids": [
+            "transfer-trailing"
+          ]
+        },
+        {
+          "term": "retention",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-local-chart",
+            "transfer-retention-prose"
+          ]
+        },
+        {
+          "term": "through",
+          "source": "calendar.md",
+          "task_ids": [
+            "transfer-local-argument"
+          ]
+        },
+        {
+          "term": "upload",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-quoted-active",
+            "transfer-two-domains",
+            "transfer-upload-code"
+          ]
+        },
+        {
+          "term": "use",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-deployment-code",
+            "transfer-upload-code"
+          ]
+        }
+      ],
+      "uniform_term_removals": [
+        {
+          "term": "archive",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "calendar",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "cannot",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "credential",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "credentials",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "current",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "customer",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 3,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-deployment-opposition",
+              "removed_sources": [
+                "calendar.md",
+                "retention.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "defaults",
+          "metrics": {
+            "positive_recall": {
+              "correct": 14,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-notification-prose",
+              "removed_sources": [
+                "upload.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-generic-defaults",
+              "removed_sources": [
+                "notifications.md",
+                "upload.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            }
+          ]
+        },
+        {
+          "term": "deploy",
+          "metrics": {
+            "positive_recall": {
+              "correct": 14,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-deployment-code",
+              "removed_sources": [
+                "current-deployment.md",
+                "legacy-deployment.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "editorial",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "equipment",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "examples",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "file",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 9,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-incidental-policy",
+              "removed_sources": [
+                "upload.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "friday",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "guest",
+          "metrics": {
+            "positive_recall": {
+              "correct": 13,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 4,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 10,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-guest-code-name",
+              "removed_sources": [
+                "calendar.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-mixed-local",
+              "removed_sources": [
+                "calendar.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-negated-lookup",
+              "removed_sources": [
+                "calendar.md",
+                "guest.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-local-negation-policy",
+              "removed_sources": [
+                "calendar.md",
+                "guest.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-local-replacement",
+              "removed_sources": [
+                "calendar.md",
+                "guest.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-malformed-local",
+              "removed_sources": [
+                "calendar.md",
+                "guest.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "legacy",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "legal",
+          "metrics": {
+            "positive_recall": {
+              "correct": 14,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-retention-prose",
+              "removed_sources": [
+                "retention.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "limits",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-distant",
+              "removed_sources": [
+                "editorial.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "never",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-local-negation-policy",
+              "removed_sources": [
+                "retention.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "notification",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "reference",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 3,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-calendar-through",
+              "removed_sources": [
+                "editorial.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "release",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "renewed",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "required",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-trailing",
+              "removed_sources": [
+                "guest.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "retention",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "sentences",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "through",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 9,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-local-argument",
+              "removed_sources": [
+                "calendar.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "upload",
+          "metrics": {
+            "positive_recall": {
+              "correct": 13,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 3,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-upload-code",
+              "removed_sources": [
+                "upload.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-quoted-active",
+              "removed_sources": [
+                "editorial.md",
+                "upload.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-two-domains",
+              "removed_sources": [
+                "editorial.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "use",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 3,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-deployment-code",
+              "removed_sources": [
+                "editorial.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "wording",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "workloads",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        }
+      ]
+    },
+    {
+      "mode": "rules_only",
+      "sample": "First repeat only; all repeated probes are separately checked for stability.",
+      "baseline": {
+        "positive_recall": {
+          "correct": 15,
+          "total": 17
+        },
+        "positive_exact": {
+          "correct": 2,
+          "total": 17
+        },
+        "no_op": {
+          "correct": 8,
+          "total": 13
+        }
+      },
+      "single_term_additional_sources": [
+        {
+          "term": "archive",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-local-chart",
+            "transfer-retention-prose"
+          ]
+        },
+        {
+          "term": "credentials",
+          "source": "calendar.md",
+          "task_ids": [
+            "transfer-negative-rule"
+          ]
+        },
+        {
+          "term": "customer",
+          "source": "calendar.md",
+          "task_ids": [
+            "transfer-deployment-opposition"
+          ]
+        },
+        {
+          "term": "customer",
+          "source": "retention.md",
+          "task_ids": [
+            "transfer-deployment-opposition"
+          ]
+        },
+        {
+          "term": "defaults",
+          "source": "upload.md",
+          "task_ids": [
+            "transfer-notification-prose"
+          ]
+        },
+        {
+          "term": "file",
+          "source": "upload.md",
+          "task_ids": [
+            "transfer-incidental-policy"
+          ]
+        },
+        {
+          "term": "guest",
+          "source": "calendar.md",
+          "task_ids": [
+            "transfer-guest-code-name",
+            "transfer-local-negation-policy",
+            "transfer-local-replacement",
+            "transfer-malformed-local",
+            "transfer-mixed-local",
+            "transfer-negated-lookup",
+            "transfer-negative-rule"
+          ]
+        },
+        {
+          "term": "guest",
+          "source": "guest.md",
+          "task_ids": [
+            "transfer-local-replacement",
+            "transfer-malformed-local"
+          ]
+        },
+        {
+          "term": "limits",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-distant"
+          ]
+        },
+        {
+          "term": "never",
+          "source": "retention.md",
+          "task_ids": [
+            "transfer-local-negation-policy"
+          ]
+        },
+        {
+          "term": "reference",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-calendar-through"
+          ]
+        },
+        {
+          "term": "required",
+          "source": "guest.md",
+          "task_ids": [
+            "transfer-trailing"
+          ]
+        },
+        {
+          "term": "retention",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-local-chart",
+            "transfer-retention-prose"
+          ]
+        },
+        {
+          "term": "through",
+          "source": "calendar.md",
+          "task_ids": [
+            "transfer-local-argument"
+          ]
+        },
+        {
+          "term": "upload",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-quoted-active",
+            "transfer-two-domains",
+            "transfer-upload-code"
+          ]
+        },
+        {
+          "term": "use",
+          "source": "editorial.md",
+          "task_ids": [
+            "transfer-deployment-code",
+            "transfer-upload-code"
+          ]
+        }
+      ],
+      "uniform_term_removals": [
+        {
+          "term": "archive",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "calendar",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "cannot",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "credential",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "credentials",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "current",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "customer",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 3,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-deployment-opposition",
+              "removed_sources": [
+                "calendar.md",
+                "retention.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "defaults",
+          "metrics": {
+            "positive_recall": {
+              "correct": 14,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-notification-prose",
+              "removed_sources": [
+                "upload.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-generic-defaults",
+              "removed_sources": [
+                "notifications.md",
+                "upload.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            }
+          ]
+        },
+        {
+          "term": "deploy",
+          "metrics": {
+            "positive_recall": {
+              "correct": 14,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-deployment-code",
+              "removed_sources": [
+                "current-deployment.md",
+                "legacy-deployment.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "editorial",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "equipment",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "examples",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "file",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 9,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-incidental-policy",
+              "removed_sources": [
+                "upload.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "friday",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "guest",
+          "metrics": {
+            "positive_recall": {
+              "correct": 13,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 4,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 10,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-guest-code-name",
+              "removed_sources": [
+                "calendar.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-mixed-local",
+              "removed_sources": [
+                "calendar.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-negated-lookup",
+              "removed_sources": [
+                "calendar.md",
+                "guest.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-local-negation-policy",
+              "removed_sources": [
+                "calendar.md",
+                "guest.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-local-replacement",
+              "removed_sources": [
+                "calendar.md",
+                "guest.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-malformed-local",
+              "removed_sources": [
+                "calendar.md",
+                "guest.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "legacy",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "legal",
+          "metrics": {
+            "positive_recall": {
+              "correct": 14,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-retention-prose",
+              "removed_sources": [
+                "retention.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "limits",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-distant",
+              "removed_sources": [
+                "editorial.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "never",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-local-negation-policy",
+              "removed_sources": [
+                "retention.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "notification",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "reference",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 3,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-calendar-through",
+              "removed_sources": [
+                "editorial.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "release",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "renewed",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "required",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-trailing",
+              "removed_sources": [
+                "guest.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "retention",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "sentences",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "through",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 9,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-local-argument",
+              "removed_sources": [
+                "calendar.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "upload",
+          "metrics": {
+            "positive_recall": {
+              "correct": 13,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 3,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-upload-code",
+              "removed_sources": [
+                "upload.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-quoted-active",
+              "removed_sources": [
+                "editorial.md",
+                "upload.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "transfer-two-domains",
+              "removed_sources": [
+                "editorial.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "use",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 3,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "transfer-deployment-code",
+              "removed_sources": [
+                "editorial.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "wording",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "workloads",
+          "metrics": {
+            "positive_recall": {
+              "correct": 15,
+              "total": 17
+            },
+            "positive_exact": {
+              "correct": 2,
+              "total": 17
+            },
+            "no_op": {
+              "correct": 8,
+              "total": 13
+            }
+          },
+          "changed_tasks": []
+        }
+      ]
+    }
+  ],
+  "historical": [
+    {
+      "mode": "excerpts",
+      "sample": "First repeat only; all repeated probes are separately checked for stability.",
+      "baseline": {
+        "positive_recall": {
+          "correct": 47,
+          "total": 49
+        },
+        "positive_exact": {
+          "correct": 20,
+          "total": 49
+        },
+        "no_op": {
+          "correct": 34,
+          "total": 41
+        }
+      },
+      "single_term_additional_sources": [
+        {
+          "term": "behavior",
+          "source": "facilities.md",
+          "task_ids": [
+            "implicit-access"
+          ]
+        },
+        {
+          "term": "csv",
+          "source": "current-export.md",
+          "task_ids": [
+            "support-chart"
+          ]
+        },
+        {
+          "term": "csv",
+          "source": "legacy-export.md",
+          "task_ids": [
+            "support-chart"
+          ]
+        },
+        {
+          "term": "customer",
+          "source": "current-export.md",
+          "task_ids": [
+            "clause-prose-sort",
+            "native-refund-service"
+          ]
+        },
+        {
+          "term": "customer",
+          "source": "facilities.md",
+          "task_ids": [
+            "clause-company-sort",
+            "clause-prose-sort",
+            "clause-trailing-company",
+            "export-opposition",
+            "implicit-export",
+            "implicit-export-no-cue",
+            "native-refund-service",
+            "policy-sort-export"
+          ]
+        },
+        {
+          "term": "customer",
+          "source": "legacy-export.md",
+          "task_ids": [
+            "clause-prose-sort",
+            "native-refund-service"
+          ]
+        },
+        {
+          "term": "defaults",
+          "source": "renewal.md",
+          "task_ids": [
+            "clause-active-quoted",
+            "implicit-telemetry",
+            "mixed-policy-and-array",
+            "quoted-active-access",
+            "quoted-policy-subject",
+            "telemetry-prose"
+          ]
+        },
+        {
+          "term": "defaults",
+          "source": "telemetry.md",
+          "task_ids": [
+            "clause-active-quoted",
+            "quoted-active-access"
+          ]
+        },
+        {
+          "term": "never",
+          "source": "renewal.md",
+          "task_ids": [
+            "qualified-adverb-never"
+          ]
+        },
+        {
+          "term": "request",
+          "source": "refunds.md",
+          "task_ids": [
+            "qualified-local-followup"
+          ]
+        },
+        {
+          "term": "required",
+          "source": "expenses.md",
+          "task_ids": [
+            "qualified-trailing-required"
+          ]
+        },
+        {
+          "term": "response",
+          "source": "support.md",
+          "task_ids": [
+            "support-chart"
+          ]
+        },
+        {
+          "term": "set",
+          "source": "brand.md",
+          "task_ids": [
+            "requirements-css",
+            "window-css"
+          ]
+        },
+        {
+          "term": "standard",
+          "source": "refunds.md",
+          "task_ids": [
+            "native-support-service"
+          ]
+        },
+        {
+          "term": "support",
+          "source": "brand.md",
+          "task_ids": [
+            "native-support-service",
+            "support-chart",
+            "support-prose"
+          ]
+        },
+        {
+          "term": "support",
+          "source": "support.md",
+          "task_ids": [
+            "support-chart"
+          ]
+        },
+        {
+          "term": "targets",
+          "source": "brand.md",
+          "task_ids": [
+            "support-prose"
+          ]
+        },
+        {
+          "term": "telemetry",
+          "source": "brand.md",
+          "task_ids": [
+            "guarded-multiline",
+            "guarded-multiple-arguments",
+            "implicit-telemetry",
+            "late-policy-subject",
+            "mixed-policy-and-array",
+            "quoted-policy-subject",
+            "telemetry-code-argument",
+            "telemetry-code-name",
+            "telemetry-prose"
+          ]
+        },
+        {
+          "term": "through",
+          "source": "facilities.md",
+          "task_ids": [
+            "access-argument",
+            "multiple-arguments",
+            "window-argument"
+          ]
+        },
+        {
+          "term": "use",
+          "source": "brand.md",
+          "task_ids": [
+            "access-code-argument",
+            "export-code-argument",
+            "guarded-multiple-arguments",
+            "refund-code-argument",
+            "refund-code-name",
+            "telemetry-code-argument",
+            "telemetry-code-name"
+          ]
+        }
+      ],
+      "uniform_term_removals": [
+        {
+          "term": "access",
+          "metrics": {
+            "positive_recall": {
+              "correct": 44,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 18,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "access-code-argument",
+              "removed_sources": [
+                "access.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-quoted-variable-mixed",
+              "removed_sources": [
+                "access.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-trailing-according",
+              "removed_sources": [
+                "access.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            }
+          ]
+        },
+        {
+          "term": "acme",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "annual",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "behavior",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 21,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "implicit-access",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "consent",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "csv",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "support-chart",
+              "removed_sources": [
+                "current-export.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "customer",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 28,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "native-refund-service",
+              "removed_sources": [
+                "current-export.md",
+                "facilities.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "export-opposition",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "implicit-export",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "implicit-export-no-cue",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "policy-sort-export",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-company-sort",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-prose-sort",
+              "removed_sources": [
+                "current-export.md",
+                "facilities.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-trailing-company",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "defaults",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 22,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "telemetry-prose",
+              "removed_sources": [
+                "renewal.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "quoted-policy-subject",
+              "removed_sources": [
+                "renewal.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "implicit-telemetry",
+              "removed_sources": [
+                "renewal.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "mixed-policy-and-array",
+              "removed_sources": [
+                "renewal.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "quoted-active-access",
+              "removed_sources": [
+                "renewal.md",
+                "telemetry.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-active-quoted",
+              "removed_sources": [
+                "renewal.md",
+                "telemetry.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "eligible",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "enterprise",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "expiration",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "export",
+          "metrics": {
+            "positive_recall": {
+              "correct": 43,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 17,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "export-code-argument",
+              "removed_sources": [
+                "current-export.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-trailing-isolated",
+              "removed_sources": [
+                "current-export.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-trailing-under",
+              "removed_sources": [
+                "current-export.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-mixed-trailing",
+              "removed_sources": [
+                "current-export.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            }
+          ]
+        },
+        {
+          "term": "extension",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "first",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "migration",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "monthly",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "never",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 21,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "qualified-adverb-never",
+              "removed_sources": [
+                "renewal.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "plan",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "project",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "purchases",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "records",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "refund",
+          "metrics": {
+            "positive_recall": {
+              "correct": 31,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 7,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "refund-code-argument",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "implicit-refund",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "policy-without-magic-word",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "mixed-separated-refund",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "mixed-same-sentence-refund",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "policy-numeric-refund",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "negated-local-refund",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "clause-nested-mixed",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "clause-conjoined-mixed",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "clause-reversed-mixed",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "clause-adverb-negation",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "clause-active-quoted",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-apostrophe",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-adverb-never",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "qualified-implicit-replacement",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-negated-lookup-positive",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            }
+          ]
+        },
+        {
+          "term": "request",
+          "metrics": {
+            "positive_recall": {
+              "correct": 46,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 19,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 35,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "request-subject",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-local-followup",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "requests",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "required",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "qualified-trailing-required",
+              "removed_sources": [
+                "expenses.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "response",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "set",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 36,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "window-css",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "requirements-css",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "standard",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "native-support-service",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "support",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "native-support-service",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "support-chart",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "targets",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "telemetry",
+          "metrics": {
+            "positive_recall": {
+              "correct": 45,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 21,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "telemetry-prose",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "telemetry-code-argument",
+              "removed_sources": [
+                "telemetry.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "quoted-policy-subject",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "late-policy-subject",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "implicit-telemetry",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "guarded-multiline",
+              "removed_sources": [
+                "brand.md",
+                "telemetry.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "mixed-policy-and-array",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "through",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 37,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "multiple-arguments",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "window-argument",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "access-argument",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "tickets",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "use",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 24,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "refund-code-argument",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "access-code-argument",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "refund-code-name",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "export-code-argument",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "weekends",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "window",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        }
+      ]
+    },
+    {
+      "mode": "rules_only",
+      "sample": "First repeat only; all repeated probes are separately checked for stability.",
+      "baseline": {
+        "positive_recall": {
+          "correct": 47,
+          "total": 49
+        },
+        "positive_exact": {
+          "correct": 20,
+          "total": 49
+        },
+        "no_op": {
+          "correct": 34,
+          "total": 41
+        }
+      },
+      "single_term_additional_sources": [
+        {
+          "term": "behavior",
+          "source": "facilities.md",
+          "task_ids": [
+            "implicit-access"
+          ]
+        },
+        {
+          "term": "csv",
+          "source": "current-export.md",
+          "task_ids": [
+            "support-chart"
+          ]
+        },
+        {
+          "term": "csv",
+          "source": "legacy-export.md",
+          "task_ids": [
+            "support-chart"
+          ]
+        },
+        {
+          "term": "customer",
+          "source": "current-export.md",
+          "task_ids": [
+            "clause-prose-sort",
+            "native-refund-service"
+          ]
+        },
+        {
+          "term": "customer",
+          "source": "facilities.md",
+          "task_ids": [
+            "clause-company-sort",
+            "clause-prose-sort",
+            "clause-trailing-company",
+            "export-opposition",
+            "implicit-export",
+            "implicit-export-no-cue",
+            "native-refund-service",
+            "policy-sort-export"
+          ]
+        },
+        {
+          "term": "customer",
+          "source": "legacy-export.md",
+          "task_ids": [
+            "clause-prose-sort",
+            "native-refund-service"
+          ]
+        },
+        {
+          "term": "defaults",
+          "source": "renewal.md",
+          "task_ids": [
+            "clause-active-quoted",
+            "implicit-telemetry",
+            "mixed-policy-and-array",
+            "quoted-active-access",
+            "quoted-policy-subject",
+            "telemetry-prose"
+          ]
+        },
+        {
+          "term": "defaults",
+          "source": "telemetry.md",
+          "task_ids": [
+            "clause-active-quoted",
+            "quoted-active-access"
+          ]
+        },
+        {
+          "term": "never",
+          "source": "renewal.md",
+          "task_ids": [
+            "qualified-adverb-never"
+          ]
+        },
+        {
+          "term": "request",
+          "source": "refunds.md",
+          "task_ids": [
+            "qualified-local-followup"
+          ]
+        },
+        {
+          "term": "required",
+          "source": "expenses.md",
+          "task_ids": [
+            "qualified-trailing-required"
+          ]
+        },
+        {
+          "term": "response",
+          "source": "support.md",
+          "task_ids": [
+            "support-chart"
+          ]
+        },
+        {
+          "term": "set",
+          "source": "brand.md",
+          "task_ids": [
+            "requirements-css",
+            "window-css"
+          ]
+        },
+        {
+          "term": "standard",
+          "source": "refunds.md",
+          "task_ids": [
+            "native-support-service"
+          ]
+        },
+        {
+          "term": "support",
+          "source": "brand.md",
+          "task_ids": [
+            "native-support-service",
+            "support-chart",
+            "support-prose"
+          ]
+        },
+        {
+          "term": "support",
+          "source": "support.md",
+          "task_ids": [
+            "support-chart"
+          ]
+        },
+        {
+          "term": "targets",
+          "source": "brand.md",
+          "task_ids": [
+            "support-prose"
+          ]
+        },
+        {
+          "term": "telemetry",
+          "source": "brand.md",
+          "task_ids": [
+            "guarded-multiline",
+            "guarded-multiple-arguments",
+            "implicit-telemetry",
+            "late-policy-subject",
+            "mixed-policy-and-array",
+            "quoted-policy-subject",
+            "telemetry-code-argument",
+            "telemetry-code-name",
+            "telemetry-prose"
+          ]
+        },
+        {
+          "term": "through",
+          "source": "facilities.md",
+          "task_ids": [
+            "access-argument",
+            "multiple-arguments",
+            "window-argument"
+          ]
+        },
+        {
+          "term": "use",
+          "source": "brand.md",
+          "task_ids": [
+            "access-code-argument",
+            "export-code-argument",
+            "guarded-multiple-arguments",
+            "refund-code-argument",
+            "refund-code-name",
+            "telemetry-code-argument",
+            "telemetry-code-name"
+          ]
+        }
+      ],
+      "uniform_term_removals": [
+        {
+          "term": "access",
+          "metrics": {
+            "positive_recall": {
+              "correct": 44,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 18,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "access-code-argument",
+              "removed_sources": [
+                "access.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-quoted-variable-mixed",
+              "removed_sources": [
+                "access.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-trailing-according",
+              "removed_sources": [
+                "access.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            }
+          ]
+        },
+        {
+          "term": "acme",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "annual",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "behavior",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 21,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "implicit-access",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "consent",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "csv",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "support-chart",
+              "removed_sources": [
+                "current-export.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "customer",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 28,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "native-refund-service",
+              "removed_sources": [
+                "current-export.md",
+                "facilities.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "export-opposition",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "implicit-export",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "implicit-export-no-cue",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "policy-sort-export",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-company-sort",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-prose-sort",
+              "removed_sources": [
+                "current-export.md",
+                "facilities.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-trailing-company",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "defaults",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 22,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "telemetry-prose",
+              "removed_sources": [
+                "renewal.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "quoted-policy-subject",
+              "removed_sources": [
+                "renewal.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "implicit-telemetry",
+              "removed_sources": [
+                "renewal.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "mixed-policy-and-array",
+              "removed_sources": [
+                "renewal.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "quoted-active-access",
+              "removed_sources": [
+                "renewal.md",
+                "telemetry.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-active-quoted",
+              "removed_sources": [
+                "renewal.md",
+                "telemetry.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "eligible",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "enterprise",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "expiration",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "export",
+          "metrics": {
+            "positive_recall": {
+              "correct": 43,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 17,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "export-code-argument",
+              "removed_sources": [
+                "current-export.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-trailing-isolated",
+              "removed_sources": [
+                "current-export.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-trailing-under",
+              "removed_sources": [
+                "current-export.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-mixed-trailing",
+              "removed_sources": [
+                "current-export.md",
+                "legacy-export.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            }
+          ]
+        },
+        {
+          "term": "extension",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "first",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "migration",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "monthly",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "never",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 21,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "qualified-adverb-never",
+              "removed_sources": [
+                "renewal.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "plan",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "project",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "purchases",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "records",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "refund",
+          "metrics": {
+            "positive_recall": {
+              "correct": 31,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 7,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "refund-code-argument",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "implicit-refund",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "policy-without-magic-word",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "mixed-separated-refund",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "mixed-same-sentence-refund",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "policy-numeric-refund",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "negated-local-refund",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "clause-nested-mixed",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "clause-conjoined-mixed",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "clause-reversed-mixed",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "clause-adverb-negation",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "clause-active-quoted",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "clause-apostrophe",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-adverb-never",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "qualified-implicit-replacement",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-negated-lookup-positive",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            }
+          ]
+        },
+        {
+          "term": "request",
+          "metrics": {
+            "positive_recall": {
+              "correct": 46,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 19,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 35,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "request-subject",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": true
+            },
+            {
+              "id": "qualified-local-followup",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "requests",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "required",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "qualified-trailing-required",
+              "removed_sources": [
+                "expenses.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "response",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "set",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 36,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "window-css",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "requirements-css",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "standard",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "native-support-service",
+              "removed_sources": [
+                "refunds.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "support",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "native-support-service",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "support-chart",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "targets",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "telemetry",
+          "metrics": {
+            "positive_recall": {
+              "correct": 45,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 21,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "telemetry-prose",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "telemetry-code-argument",
+              "removed_sources": [
+                "telemetry.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "quoted-policy-subject",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "late-policy-subject",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "implicit-telemetry",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "guarded-multiline",
+              "removed_sources": [
+                "brand.md",
+                "telemetry.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": true,
+              "exact_gained": false,
+              "exact_lost": false
+            },
+            {
+              "id": "mixed-policy-and-array",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": false,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "through",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 37,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "multiple-arguments",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "window-argument",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "access-argument",
+              "removed_sources": [
+                "facilities.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "tickets",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "use",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 24,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": [
+            {
+              "id": "refund-code-argument",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "access-code-argument",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "refund-code-name",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            },
+            {
+              "id": "export-code-argument",
+              "removed_sources": [
+                "brand.md"
+              ],
+              "added_sources": [],
+              "positive_recall_lost": false,
+              "exact_gained": true,
+              "exact_lost": false
+            }
+          ]
+        },
+        {
+          "term": "weekends",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        },
+        {
+          "term": "window",
+          "metrics": {
+            "positive_recall": {
+              "correct": 47,
+              "total": 49
+            },
+            "positive_exact": {
+              "correct": 20,
+              "total": 49
+            },
+            "no_op": {
+              "correct": 34,
+              "total": 41
+            }
+          },
+          "changed_tasks": []
+        }
+      ]
+    }
+  ]
+}
