@@ -21,6 +21,7 @@ import { clauseBindingTerms } from "./clause-bindings.js";
 import { qualifiedBindingCases, qualifiedBindingCounterexamples } from "./qualified-bindings-cases.js";
 import { qualifiedBindingTerms } from "./qualified-bindings.js";
 import { scopeTransferCases, scopeTransferDocuments } from "./scope-transfer-cases.js";
+import { scopeTermInterventions, scopeTermMatches } from "./scope-term-diagnostics.js";
 
 export const queryScopeStrategies = ["lexical", "drop-request", "mask-call-arguments"] as const;
 export const policyGuardStrategies = [...queryScopeStrategies, "policy-guarded-arguments"] as const;
@@ -72,13 +73,16 @@ export function scoreQueryScope(scenario: QueryScopeCase, evidence: readonly { s
 }
 
 export function queryScopeOptions(argv: string[]) {
-  const args = evaluationArguments(argv, ["out", "repeats", "corpus"], "query scope");
+  const args = evaluationArguments(argv, ["out", "repeats", "corpus", "diagnostics"], "query scope");
   const out = args.get("out");
   const repeats = Number(args.get("repeats") ?? "2");
   if (!out || !Number.isInteger(repeats) || repeats < 1 || repeats > 5) throw new Error("query scope requires --out and --repeats between 1 and 5");
   const corpus = args.get("corpus") ?? "original";
   if (corpus !== "original" && corpus !== "policy-guard" && corpus !== "local-bindings" && corpus !== "clause-bindings" && corpus !== "qualified-bindings" && corpus !== "scope-transfer") throw new Error("query scope corpus must be original, policy-guard, local-bindings, clause-bindings, qualified-bindings or scope-transfer");
-  return { out: resolve(out), repeats, corpus };
+  const diagnostics = args.get("diagnostics");
+  if (diagnostics !== undefined && diagnostics !== "term-ablation") throw new Error("query scope diagnostics must be term-ablation");
+  if (diagnostics && corpus !== "qualified-bindings" && corpus !== "scope-transfer") throw new Error("term-ablation requires qualified-bindings or scope-transfer corpus");
+  return { out: resolve(out), repeats, corpus, diagnostics };
 }
 
 const hash = (value: string) => createHash("sha256").update(value).digest("hex");
@@ -91,6 +95,13 @@ type ScopeResult = ReturnType<typeof scoreQueryScope> & {
   mode: "excerpts" | "rules_only"; strategy: QueryScopeStrategy; terms: string[]; query: string;
   citations_exact: boolean; cap_passed: boolean; component_wall_ms: number; text: string;
   evidence: ReturnType<typeof evidenceFrom>;
+};
+type TermDiagnostic = {
+  id: string; mode: ScopeResult["mode"]; repeat: number; strategy: "qualified-bindings";
+  matches: ReturnType<typeof scopeTermMatches>;
+  interventions: Array<ReturnType<typeof scopeTermInterventions>[number] & {
+    result: ScopeResult; removed_sources: string[]; added_sources: string[];
+  }>;
 };
 
 export async function runQueryScope(options: ReturnType<typeof queryScopeOptions>) {
@@ -105,10 +116,14 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
   if (options.corpus === "clause-bindings" || options.corpus === "qualified-bindings" || transfer) artifactNames.push("clause-bindings.js", "clause-bindings-cases.js");
   if (options.corpus === "qualified-bindings" || transfer) artifactNames.push("qualified-bindings.js", "qualified-bindings-cases.js");
   if (transfer) artifactNames.push("scope-transfer-cases.js");
+  if (options.diagnostics) artifactNames.push("scope-term-diagnostics.js");
   const artifacts = Object.fromEntries(await Promise.all(artifactNames.map(async (name) => [name, hash(await readFile(new URL(name, import.meta.url), "utf8"))])));
   await save("protocol.json", { protocol: "query-scope-shadow-v3", corpus: options.corpus, recorded_at: new Date().toISOString(),
     synthetic_only: true, node: process.version, platform: process.platform, repeats: options.repeats,
     strategies, documents, cases,
+    ...(options.diagnostics ? { diagnostics: { protocol: "scope-term-ablation-v1", strategy: "qualified-bindings",
+      output: "term-diagnostics.json", intervention: "Each document-matching query term alone and with that term removed; all original terms retained otherwise. Exact word matching; no expected labels enter probe generation.",
+      limitations: "Descriptive sentence overlaps and fixed-store retrieval interventions, not assertion classification or an applicability strategy. Disclaimers and negative rules remain verbatim. Ranking/packing can affect source changes. Shared engine cache; component times are not comparable latency measurements. Baseline scores and CLI acceptance are unchanged." } } : {}),
     original_case_ids: queryScopeCases.map(({ id }) => id),
     fixture_sha256: hash(JSON.stringify({ documents, cases })), artifacts,
     scoring: { historical_correct: "Complete expected sentences; no-op requires no evidence; exact citations and token cap.",
@@ -119,6 +134,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
     limitations: "Evaluation-only query interventions. Providers disabled. Fresh seeded SQLite/Lance stores per repeat/export mode; not ingestion, model extraction, semantic acceptance, native-host or adapter latency. Excerpts use reference chunks; rules-only uses manually supplied whole-document authoritative rules to isolate scope from extraction/grouping. Positive recall requires every expected sentence. Precision measures fixture source membership, not semantic relevance within an expected document. Case order reverses and strategy order rotates on fresh repeats." });
   const root = await realpath(await mkdtemp(join(tmpdir(), "othie-query-scope-")));
   const results: ScopeResult[] = [];
+  const termDiagnostics: TermDiagnostic[] = [];
   try {
     for (let repeat = 0; repeat < options.repeats; repeat++) for (const mode of ["excerpts", "rules_only"] as const) {
       const data = join(root, `${repeat}-${mode}`), docs = join(data, "docs");
@@ -147,6 +163,17 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           }
         }
         await engine.lance.addText(chunks);
+        const evaluate = async (scenario: QueryScopeCase, strategy: QueryScopeStrategy, terms: string[], query: string, start = performance.now()): Promise<ScopeResult> => {
+          const response = await engine.context("company", { query, max_tokens: 500, surface: "code", phase: "turn_start" });
+          const evidence = evidenceFrom(response);
+          const score = scoreQueryScope(scenario, evidence, documents);
+          const citationsExact = evidence.every((item) => item.quote.trim().length > 0 && documents.find((document) => document.name === basename(item.source))?.text.includes(item.quote));
+          const capPassed = response.status.tokenCount === countTokens(response.text, "o200k_base") && response.status.tokenCount <= 500;
+          return { id: scenario.id, family: scenario.family, expected_sources: scenario.sources, repeat, mode, strategy, terms, query,
+            ...score, correct: score.correct && citationsExact && capPassed, precise_correct: score.precise_correct && citationsExact && capPassed,
+            citations_exact: citationsExact, cap_passed: capPassed,
+            component_wall_ms: Math.round((performance.now() - start) * 100) / 100, text: response.text, evidence };
+        };
         const orderedCases = repeat % 2 ? [...cases].reverse() : cases;
         for (const scenario of orderedCases) for (let offset = 0; offset < strategies.length; offset++) {
           const strategy = strategies[(offset + repeat) % strategies.length]!;
@@ -154,15 +181,20 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           const terms = queryScopeTerms(scenario.query, strategy);
           // An all-removed query still exercises the compiler's empty-term path.
           const query = strategy === "lexical" ? scenario.query : terms.join(" ") || "?";
-          const response = await engine.context("company", { query, max_tokens: 500, surface: "code", phase: "turn_start" });
-          const evidence = evidenceFrom(response);
-          const score = scoreQueryScope(scenario, evidence, documents);
-          const citationsExact = evidence.every((item) => item.quote.trim().length > 0 && documents.find((document) => document.name === basename(item.source))?.text.includes(item.quote));
-          const capPassed = response.status.tokenCount === countTokens(response.text, "o200k_base") && response.status.tokenCount <= 500;
-          results.push({ id: scenario.id, family: scenario.family, expected_sources: scenario.sources, repeat, mode, strategy, terms, query,
-            ...score, correct: score.correct && citationsExact && capPassed, precise_correct: score.precise_correct && citationsExact && capPassed,
-            citations_exact: citationsExact, cap_passed: capPassed,
-            component_wall_ms: Math.round((performance.now() - start) * 100) / 100, text: response.text, evidence });
+          results.push(await evaluate(scenario, strategy, terms, query, start));
+        }
+        // Run after all baseline rows so probes cannot warm their compiler cache.
+        if (options.diagnostics) for (const scenario of orderedCases) {
+          const baseline = results.find((row) => row.id === scenario.id && row.repeat === repeat && row.mode === mode && row.strategy === "qualified-bindings")!;
+          const interventions: TermDiagnostic["interventions"] = [];
+          for (const probe of scopeTermInterventions(baseline.terms, documents)) {
+            const result = await evaluate(scenario, "qualified-bindings", probe.terms, probe.terms.join(" ") || "?");
+            interventions.push({ ...probe, result,
+              removed_sources: baseline.actual_sources.filter((source) => !result.actual_sources.includes(source)),
+              added_sources: result.actual_sources.filter((source) => !baseline.actual_sources.includes(source)) });
+          }
+          termDiagnostics.push({ id: scenario.id, mode, repeat, strategy: "qualified-bindings",
+            matches: scopeTermMatches(baseline.terms, documents), interventions });
         }
       } finally { await engine.stop(); }
     }
@@ -190,6 +222,8 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
     const summary = { completed: true, results: "results.json", scores, subsets, ...extensionSubsets, ...clauseSubset, ...qualifiedSubset, previous_applicability_query_terms: unchanged,
       all_correct: results.every((item) => item.correct), all_precise_correct: results.every((item) => item.precise_correct), rows: results.length };
     await save("summary.json", summary);
+    if (options.diagnostics) await save("term-diagnostics.json", { protocol: "scope-term-ablation-v1", cases: termDiagnostics,
+      probe_count: termDiagnostics.reduce((total, row) => total + row.interventions.length, 0) });
     return summary;
   } catch (error) {
     await save("failure.json", { completed: false, stage: "seed-or-evaluate" });
