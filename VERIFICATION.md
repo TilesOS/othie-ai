@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 12, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 14–15, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci` | November 2 clean installation passes with the existing dependency lockfile |
 | `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 308 passing tests; one opt-in real-model test skipped |
+| `npm test` | 314 passing tests; one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -47,6 +47,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 10 qualified binding scope | 2,520 rows; per mode all 82/82 prior positives retained, full 94/98 positives and 68/82 no-ops; new antecedent/qualification failures reject the candidate; 56/98 positive rows also contain additional sources |
 | November 11 positive-task precision gates | All 2,520 historical retrieval rows unchanged; per mode qualified bindings pass 40/98 positive exact gates, with 114/192 expected/retrieved source memberships; all seven strategies fail acceptance |
 | November 12 scope transfer | 840 rows on eight new documents and 30 frozen tasks; per mode qualified bindings pass 30/34 recall, 4/34 positive exact and 16/26 no-ops; all strategies fail; all 2,520 historical rows unchanged |
+| November 14 scope term ablations | 1,296 fixed-store probes and verbatim sentence traces; all 3,360 baseline rows and scores unchanged; removing `defaults`, `upload`, `guest` or `telemetry` exposes recall losses alongside selected precision gains |
 | November 10 prior-history CI inspection/retry | `ed3dcdb` passes Windows installation, typechecks, lint, tests and startup syntax; macOS cancelled without steps in both the initial run and one requested retry; macOS remains open |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
@@ -59,7 +60,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `git diff --check` | Pass |
 | `npm audit` and `npm audit --omit=dev` | November 7: eight moderate development entries; zero production findings; checked parser path does not enter the advisory's level-2 branch, but affected dependency and compatible remediation remain open |
 
-The full suite comprises 159 engine, 30 shared-hook, 102 website, 10 Codex, and seven
+The full suite comprises 165 engine, 30 shared-hook, 102 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1384,6 +1385,61 @@ opposing requirements and every historical gate. Keep the transfer record fixed.
 Any strategy informed by it needs a further separately authored corpus and
 independent review before production adoption.
 
+## November 14 scope term ablation follow-up
+
+The [term ablation records](packages/engine/evaluation/records/2026-11-14/term-ablation-followup/README.md)
+trace exact query-term overlaps to original source sentences and probe each
+document-matching qualified-binding term alone and with that term removed.
+`--diagnostics term-ablation` is opt-in for the historical qualified-binding and
+transfer corpora. Probe generation uses no expected source labels. Baseline
+queries run before any probes in each fresh store; no existing strategy, fixture,
+dependency or production retrieval is changed. The trace preserves disclaimers,
+prohibitions, exceptions and opposing sources rather than treating negation as
+an exclusion rule.
+
+Two fresh repeats per corpus/export mode produce 1,296 retrieval probes and 480
+case traces. All 3,360 baseline rows except component time and every summary
+score/subset/gate match the preceding frozen transfer/historical records. All
+preceding compiled component hashes except the extended evaluator entry point
+are unchanged. Every probe passes exact citations and the 500-token cap, with
+stable evidence and judgments across repeats. All seven baseline strategies
+still fail acceptance; these probes do not constitute a new applicability strategy.
+
+Single-term `upload` and `guest` queries retrieve both their genuine policies and
+documents disclaiming those subjects. `use` and `through` independently retrieve
+writing and scheduling references. The [derived findings](packages/engine/evaluation/records/2026-11-14/term-ablation-followup/findings.json)
+report every uniform single-term removal, using only the first repeat per mode
+to avoid inflating task counts. Removing `defaults` makes the notification task
+exact but loses the real generic-defaults request. Removing `upload` improves
+selected precision while losing two required upload tasks; removing `guest` and
+historical `telemetry` likewise loses two required positives each. `use`,
+`through` and `customer` improve selected known cases without observed recall
+loss in these corpora, but leave many failures and have no independent validation.
+No stopwords are changed. Single-term deployment probes retain both permission
+and prohibition; guest probes retain the complete credential prohibition and
+expiration. A sentence overlap does not establish assertion scope or semantic
+applicability, and source changes can also reflect ranking/packing.
+
+Full workspace build, typechecks, website lint and 314 deterministic tests pass;
+one opt-in real-model test is skipped. Twenty focused diagnostic/scope/metric
+tests pass. Build and process tests use local process/IPC access; the generated
+website reference was restored before typechecks and lint. The prior transfer
+verifier passed before rebuilding. The new verifier independently recomputes
+sentence traces, probe plans, full evidence judgments, source differences,
+scores, repeat stability, frozen baseline parity and source/publication integrity.
+No clean installation, audit refresh, remote CI inspection, native/model session
+or standalone adapter latency probe ran. Existing CI and independent review gaps
+remain open. Shared compiler caches make probe component times unsuitable for
+latency comparisons.
+
+Next develop a separate evaluation-only assertion/subject candidate from these
+traces: distinguish meta-document disclaimers from genuine negative rules and
+handle query scaffolding in context, while preserving affirmative document
+subjects, real generic requests, exceptions, opposing requirements, both fixed
+corpora and all historical gates. Keep antecedent failures visible. Any informed
+candidate still needs further separately authored cases and independent review
+before production adoption.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
@@ -1419,7 +1475,8 @@ independent review before production adoption.
   history through `4c34b0f` on Windows, but macOS was again cancelled without steps.
   The November 10 inspection verifies clause history through `ed3dcdb` on Windows;
   macOS was cancelled without steps in both the initial run and one retry. New
-  qualified-binding, November 11 precision and November 12 transfer controls still need both runners;
+  qualified-binding, November 11 precision, November 12 transfer and November 14
+  term diagnostic controls still need both runners;
   macOS history remains open.
   Native Windows host/session acceptance remains open.
 - A larger benchmark using production-scale repositories, dependency changes and
@@ -1470,6 +1527,14 @@ independent review before production adoption.
   meta-document disclaimers without excluding real negative rules or generic
   subjects. Keep both records fixed; future tuning needs further separately
   authored cases and independent human review.
+  November 14 adds 1,296 retrieval probes and sentence-level overlap traces while
+  preserving all 3,360 baseline rows and scores. They isolate generic query-word
+  and meta-document disclaimer paths without changing a strategy. Uniform
+  removal of subject/default terms trades recall for selected precision gains;
+  scaffold-only removals improve known cases but still fail overall acceptance.
+  Next test a separate assertion/subject candidate that distinguishes document
+  scope disclaimers from actual prohibitions and handles scaffolding in context,
+  preserving both frozen corpora, full sentences, opposition and every prior gate.
   Independent scope validation remains open; preserving 40 earlier lexical
   queries does not establish it.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
