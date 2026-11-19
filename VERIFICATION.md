@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 14–15, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 18, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -9,10 +9,10 @@ synthetic documents and provider fixtures; it requires no model training or down
 
 | Check | Result |
 | --- | --- |
-| `npm ci` | November 2 clean installation passes with the existing dependency lockfile |
-| `npm run build` | All workspaces pass; Next.js 16.4.3 exports the website routes |
+| `npm ci --no-audit` | November 18 clean installation passes with the updated lockfile |
+| `npm run build` | All workspaces pass and Next.js 16.4.6 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 314 passing tests; one opt-in real-model test skipped |
+| `npm test` | 318 passing tests and one opt-in real-model test skipped |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -48,6 +48,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 11 positive-task precision gates | All 2,520 historical retrieval rows unchanged; per mode qualified bindings pass 40/98 positive exact gates, with 114/192 expected/retrieved source memberships; all seven strategies fail acceptance |
 | November 12 scope transfer | 840 rows on eight new documents and 30 frozen tasks; per mode qualified bindings pass 30/34 recall, 4/34 positive exact and 16/26 no-ops; all strategies fail; all 2,520 historical rows unchanged |
 | November 14 scope term ablations | 1,296 fixed-store probes and verbatim sentence traces; all 3,360 baseline rows and scores unchanged; removing `defaults`, `upload`, `guest` or `telemetry` exposes recall losses alongside selected precision gains |
+| November 18 assertion and subject candidates | 960 candidate rows and 3,360 unchanged baseline rows. Per mode, the combined candidate passes 88/98 historical and 28/34 transfer positive exact checks. Both candidates fail acceptance. |
+| November 18 prior-history CI inspection | `4db79b5` passes Windows installation, typecheck, lint, tests and startup script syntax. GitHub identifies the retired macOS runner. The replacement workflow awaits remote execution. |
+| November 18 upstream parser comparison | TypeScript ESLint 8.73.0 with minimatch 11.0.9 passes 28/30 project-service controls. Both astral filename decisions still reverse. |
 | November 10 prior-history CI inspection/retry | `ed3dcdb` passes Windows installation, typechecks, lint, tests and startup syntax; macOS cancelled without steps in both the initial run and one requested retry; macOS remains open |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
@@ -58,9 +61,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
 | Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
 | `git diff --check` | Pass |
-| `npm audit` and `npm audit --omit=dev` | November 7: eight moderate development entries; zero production findings; checked parser path does not enter the advisory's level-2 branch, but affected dependency and compatible remediation remain open |
+| `npm audit` and `npm audit --omit=dev` | November 18 after the Next.js patch, seven moderate development entries and zero production findings. Parser remediation still needs compatible file admission. |
 
-The full suite comprises 165 engine, 30 shared-hook, 102 website, 10 Codex, and seven
+The full suite comprises 169 engine, 30 shared-hook, 102 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1440,18 +1443,63 @@ corpora and all historical gates. Keep antecedent failures visible. Any informed
 candidate still needs further separately authored cases and independent review
 before production adoption.
 
+## November 18 assertion and subject follow-up
+
+The [assertion and subject records](packages/engine/evaluation/records/2026-11-18/assertion-subject-followup/README.md)
+compare two opt-in evaluation arms after the seven frozen baselines.
+Assertion-only admits retrieved sources on overlap outside recognized document
+scope disclaimers. Assertion-subject adds contextual query changes for explicit
+policy wrappers, call connectors, subject-specific defaults, and immediate
+trailing company qualifications. Both pass original evidence into the shared
+packer with the existing cap and complete-sentence, citation, recall and
+precision gates. Across two fresh repeats and both export modes, 960 candidate
+rows have stable evidence, exact citations and valid caps. All 3,360 baseline
+rows match except component time, and all baseline summaries and gates match.
+A clean-install rerun confirms the same results. Production retrieval and the
+two frozen corpora retain their existing implementations and data.
+
+Per mode, assertion-only improves historical positive exact from 40/98 to 60/98
+and transfer from 4/34 to 20/34. Assertion-subject reaches 88/98 and 28/34,
+with recall of 96/98 and 32/34 and no-op scores of 78/82 and 20/26.
+Both candidates preserve the passing qualified-binding judgments in these
+fixtures. Assertion-subject recovers the immediate trailing qualification in
+both corpora and retains the bare defaults request, negative rules and
+opposing requirements. It still misses the distant refund and upload
+antecedents, retains incidental and local evidence, and changes one of the 40
+older applicability query term traces. Both candidates fail acceptance.
+The next scope work needs to distinguish a real distant policy antecedent
+from an unrelated local operation and reduce shared-subject collisions. Keep
+the unsuccessful rows and add separately authored cases and independent
+judgment before evaluating production adoption.
+
+Clean install, all workspace builds and typechecks, website lint and 318
+deterministic tests passed. One opt-in real-model test was skipped. The
+initial audit reported one production package entry covering two Next.js
+advisories. Updating Next.js and its ESLint config to 16.4.6 cleared that
+entry. The follow-up production audit reports zero findings and the full
+audit reports seven moderate development entries. TypeScript ESLint 8.73.0
+now consumes minimatch 11, but the isolated 11.0.9 parser comparison still
+reverses both astral filename controls. The current parser stays pinned
+pending a compatible migration or explicit review of that behavior.
+
+The [latest pushed run for `4db79b5`](https://github.com/TilesOS/othie-ai/actions/runs/43680097308)
+passes Windows verification through the term diagnostics. Its macOS job
+annotation identifies an unsupported `macos-14` configuration. GitHub
+retired the runner on November 2. The workflow now pins `macos-15` and the
+updated YAML matrix passes local validation. Verify the new macOS and
+Windows matrix on GitHub once this revision is published. Native host,
+model-consumption, and hook-latency acceptance remain open.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
   parser with a compatible upstream fix or reviewed migration. The November 4
-  advisory revision excludes legacy 3.1.5; November 6 audits retain eight moderate
-  development entries and zero production findings. The new parser-only 11.0.5
-  candidate passes 28/30 actual project-service controls but changes both accepted
-  and excluded astral Unicode filenames. Preserve file-admission semantics or
-  explicitly review a deliberate change before adopting a major override. A global
-  override is unnecessary for the revised finding and still fails the legacy
-  plugins' callable API, `makeRe` and Unicode controls. Compatible remediation and
-  complete glob parity remain open; no override or suppression is applied.
+  advisory revision excludes legacy 3.1.5. The latest upstream parser 8.73.0
+  consumes minimatch 11.0.9 in the November 18 comparison and passes 28/30
+  project-service controls. The same two astral filename admission decisions
+  still reverse. Preserve file-admission behavior or explicitly review the
+  change before adopting it. The full audit retains seven moderate development
+  entries after the Next.js patch. The production audit reports zero findings.
   November 7 traces establish level-one-only calls and prior globstar rejection
   on the checked parser path, plus an inactive branch under current website lint;
   these guards refine exposure assessment without clearing the package finding.
@@ -1464,21 +1512,12 @@ before production adoption.
   October 23 with complete cited adapter delivery and provider-boundary context. Role
   comparisons narrow the failure to developer-message handling in the installed
   provider/model combination; provider conversion versus model internals remains unresolved.
-- Windows native-host and logon-startup acceptance beyond automated CI. The October 29
-  inspection verifies `9f416fe`, including the multi-file native-agent and no-op
-  diagnostic history, on both macOS and Windows runners. New query-scope evaluator
-  commits are now verified through `5937f7c` by the November 2 inspection above.
-  The November 6 inspection additionally verifies the lint-test/workflow history
-  through `c7ea37d` on both runners. The November 7 inspection verifies parser
-  history through `21f590e` on Windows; macOS was cancelled before recorded steps.
-  The November 8 inspection additionally verifies parser/reachability/local-binding
-  history through `4c34b0f` on Windows, but macOS was again cancelled without steps.
-  The November 10 inspection verifies clause history through `ed3dcdb` on Windows;
-  macOS was cancelled without steps in both the initial run and one retry. New
-  qualified-binding, November 11 precision, November 12 transfer and November 14
-  term diagnostic controls still need both runners;
-  macOS history remains open.
-  Native Windows host/session acceptance remains open.
+- Run the updated GitHub Actions matrix and complete native Windows host and
+  logon-startup acceptance. Remote verification passes both runners through
+  `c7ea37d` and Windows through `4db79b5`. The November 18 inspection identifies
+  the retired macOS runner and the workflow now pins `macos-15`. The new
+  assertion evaluation and Next.js patch have local gate evidence and still
+  need both remote jobs. Native Windows host/session acceptance remains open.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
   two-repeat miniature multi-file corpus are recorded, but support no general
@@ -1532,11 +1571,12 @@ before production adoption.
   and meta-document disclaimer paths without changing a strategy. Uniform
   removal of subject/default terms trades recall for selected precision gains;
   scaffold-only removals improve known cases but still fail overall acceptance.
-  Next test a separate assertion/subject candidate that distinguishes document
-  scope disclaimers from actual prohibitions and handles scaffolding in context,
-  preserving both frozen corpora, full sentences, opposition and every prior gate.
-  Independent scope validation remains open; preserving 40 earlier lexical
-  queries does not establish it.
+  November 18 compares assertion-only admission and contextual subject changes.
+  The combined candidate improves exact evidence and no-op scores on both
+  corpora and recovers immediate trailing qualifications. Distant antecedents,
+  shared-subject collisions and local false positives still reject it. Preserve
+  every earlier gate and the two frozen corpora while resolving those failures
+  and checking independently authored cases.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve
