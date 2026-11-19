@@ -1,0 +1,14 @@
+[
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/TilesOS/othie-ai/blob/4db79b52e886d63e33ebbcedf213a8e749e803c9/.github",
+    "start_line": 1,
+    "start_column": null,
+    "end_line": 1,
+    "end_column": null,
+    "annotation_level": "failure",
+    "title": "",
+    "message": "The configuration 'macos-14-arm64-us-default' is not supported",
+    "raw_details": ""
+  }
+]

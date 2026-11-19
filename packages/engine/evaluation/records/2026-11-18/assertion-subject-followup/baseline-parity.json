@@ -1,0 +1,14 @@
+{
+  "historical": {
+    "rows": 2520,
+    "stable_rows_sha256": "4c6d2edc6d543f6583cdd2f4e5d6b6f76806eec47c1772b82bd89ebffdfb556e",
+    "summary_sha256": "b0b2195a6d67256625e59ff1afbaca136b131b8620c8a63a32e6bfa70f5a0b00",
+    "exit": 1
+  },
+  "transfer": {
+    "rows": 840,
+    "stable_rows_sha256": "3c35ea2ad746eeb72c5d786c374d3996f6bbb33b9dced19169dbeac636693aa6",
+    "summary_sha256": "480f5c58804c146da8e49c4092d32fe476a00fb015189896bfbb0264e9eeb52d",
+    "exit": 1
+  }
+}

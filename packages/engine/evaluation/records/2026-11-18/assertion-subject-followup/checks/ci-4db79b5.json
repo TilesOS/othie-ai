@@ -1,0 +1,118 @@
+{
+  "attempt": 1,
+  "conclusion": "cancelled",
+  "event": "push",
+  "headSha": "4db79b52e886d63e33ebbcedf213a8e749e803c9",
+  "jobs": [
+    {
+      "completedAt": "2026-11-15T05:16:59Z",
+      "conclusion": "success",
+      "databaseId": 132708643612,
+      "name": "desktop (windows-latest)",
+      "startedAt": "2026-11-15T05:12:55Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-15T05:12:58Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-15T05:12:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-15T05:13:07Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "startedAt": "2026-11-15T05:12:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-15T05:13:23Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v4",
+          "number": 3,
+          "startedAt": "2026-11-15T05:13:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-15T05:14:55Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-11-15T05:13:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-15T05:14:59Z",
+          "conclusion": "success",
+          "name": "Run npm run typecheck",
+          "number": 5,
+          "startedAt": "2026-11-15T05:14:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-15T05:15:12Z",
+          "conclusion": "success",
+          "name": "Run npm run lint --workspace=@othie/website",
+          "number": 6,
+          "startedAt": "2026-11-15T05:14:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-15T05:16:54Z",
+          "conclusion": "success",
+          "name": "Run npm test",
+          "number": 7,
+          "startedAt": "2026-11-15T05:15:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-15T05:16:54Z",
+          "conclusion": "success",
+          "name": "Check Windows startup script syntax",
+          "number": 8,
+          "startedAt": "2026-11-15T05:16:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-15T05:16:55Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v4",
+          "number": 15,
+          "startedAt": "2026-11-15T05:16:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-15T05:16:57Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 16,
+          "startedAt": "2026-11-15T05:16:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-15T05:16:57Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-11-15T05:16:57Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/TilesOS/othie-ai/actions/runs/43680097308/job/132708643612"
+    },
+    {
+      "completedAt": "2026-11-15T05:12:52Z",
+      "conclusion": "cancelled",
+      "databaseId": 132708643790,
+      "name": "desktop (macos-14)",
+      "startedAt": "2026-11-15T05:12:51Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/TilesOS/othie-ai/actions/runs/43680097308/job/132708643790"
+    }
+  ],
+  "url": "https://github.com/TilesOS/othie-ai/actions/runs/43680097308"
+}
