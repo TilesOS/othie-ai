@@ -23,6 +23,8 @@ it("scores complete transfer evidence against its own documents", () => {
 it("requires explicit transfer selection and retains the original default", () => {
   expect(queryScopeOptions(["--out", "x", "--corpus", "scope-transfer"]).corpus).toBe("scope-transfer");
   expect(queryScopeOptions(["--out", "x"]).corpus).toBe("original");
+  expect(queryScopeOptions(["--out", "x"]).candidate).toBeUndefined();
+  expect(() => queryScopeOptions(["--out", "x", "--candidate", "assertion-subject"])).toThrow("assertion-subject requires");
 });
 
 it("runs all frozen strategies against transfer stores in both export modes", async () => {
@@ -30,10 +32,11 @@ it("runs all frozen strategies against transfer stores in both export modes", as
   try {
     const out = join(root, "evidence");
     const compiled = fileURLToPath(new URL("../dist/src/evaluation/query-scope.js", import.meta.url));
-    await expect(promisify(execFile)(process.execPath, [compiled, "--out", out, "--repeats", "1", "--corpus", "scope-transfer"], { timeout: 30_000 })).rejects.toMatchObject({ code: 1 });
+    await expect(promisify(execFile)(process.execPath, [compiled, "--out", out, "--repeats", "1", "--corpus", "scope-transfer", "--candidate", "assertion-subject"], { timeout: 30_000 })).rejects.toMatchObject({ code: 1 });
     const protocol = JSON.parse(await readFile(join(out, "protocol.json"), "utf8"));
     const summary = JSON.parse(await readFile(join(out, "summary.json"), "utf8"));
     const rows = JSON.parse(await readFile(join(out, "results.json"), "utf8"));
+    const candidates = JSON.parse(await readFile(join(out, "assertion-candidates.json"), "utf8"));
     expect(protocol.documents).toEqual(scopeTransferDocuments);
     expect(protocol.cases).toEqual(scopeTransferCases);
     expect(protocol.strategies).toEqual(qualifiedBindingStrategies);
@@ -42,6 +45,8 @@ it("runs all frozen strategies against transfer stores in both export modes", as
     expect(summary.rows).toBe(420);
     expect(summary.subsets).toEqual({ transfer: summary.scores });
     expect(summary.all_precise_correct).toBe(false);
+    expect(candidates.rows).toHaveLength(120);
+    expect(candidates.subsets).toEqual({ transfer: candidates.scores });
     for (const mode of ["excerpts", "rules_only"]) {
       const row = (id: string, strategy: string) => rows.find((item: { id: string; strategy: string; mode: string }) => item.id === id && item.strategy === strategy && item.mode === mode);
       expect(row("transfer-deployment-opposition", "lexical").correct).toBe(true);
@@ -49,6 +54,16 @@ it("runs all frozen strategies against transfer stores in both export modes", as
       expect(row("transfer-upload-code", "mask-call-arguments").correct).toBe(false);
       expect(row("transfer-upload-code", "qualified-bindings").correct).toBe(true);
       expect(row("transfer-plain-numbers", "qualified-bindings").precise_correct).toBe(true);
+      const candidate = (id: string, strategy: string) => candidates.rows.find((item: { id: string; strategy: string; mode: string }) =>
+        item.id === id && item.strategy === strategy && item.mode === mode);
+      expect(candidate("transfer-trailing", "assertion-only").correct).toBe(false);
+      expect(candidate("transfer-trailing", "assertion-subject").actual_sources).toContain("upload.md");
+      expect(candidate("transfer-negative-rule", "assertion-subject").actual_sources).toEqual(["guest.md"]);
+      expect(candidate("transfer-deployment-opposition", "assertion-subject").actual_sources).toEqual(
+        expect.arrayContaining(["current-deployment.md", "legacy-deployment.md"]));
+      const calendar = candidate("transfer-calendar-through", "assertion-subject");
+      expect(calendar.prepack_sources).toEqual(["calendar.md"]);
+      expect(calendar.evidence.some(({ quote }: { quote: string }) => quote.includes("does not define customer permissions"))).toBe(true);
     }
     expect(rows.every((row: { actual_sources: string[]; citations_exact: boolean; cap_passed: boolean }) =>
       row.citations_exact && row.cap_passed && row.actual_sources.every((source) => scopeTransferDocuments.some((document) => document.name === source)))).toBe(true);

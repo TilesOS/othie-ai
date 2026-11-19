@@ -4,9 +4,12 @@ import { tmpdir } from "node:os";
 import { basename, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { configSchema } from "../config.js";
+import { packContext } from "../context/packing.js";
 import { OthieEngine } from "../engine/service.js";
+import { hybridRetrieve } from "../retrieval/hybrid.js";
 import { meaningfulTerms } from "../retrieval/terms.js";
 import { EXTRACTION_PROMPT_VERSION } from "../rules/extractor.js";
+import { selectRules } from "../rules/selection.js";
 import { countTokens } from "../tokenizer.js";
 import type { ChunkRecord, ContextResult, RuleRecord } from "../types.js";
 import { evaluationArguments } from "./arguments.js";
@@ -22,6 +25,7 @@ import { qualifiedBindingCases, qualifiedBindingCounterexamples } from "./qualif
 import { qualifiedBindingTerms } from "./qualified-bindings.js";
 import { scopeTransferCases, scopeTransferDocuments } from "./scope-transfer-cases.js";
 import { scopeTermInterventions, scopeTermMatches } from "./scope-term-diagnostics.js";
+import { assertionSubjectTerms, scopeAssertions } from "./assertion-subject.js";
 
 export const queryScopeStrategies = ["lexical", "drop-request", "mask-call-arguments"] as const;
 export const policyGuardStrategies = [...queryScopeStrategies, "policy-guarded-arguments"] as const;
@@ -29,6 +33,8 @@ export const localBindingStrategies = [...policyGuardStrategies, "local-bindings
 export const clauseBindingStrategies = [...localBindingStrategies, "clause-bindings"] as const;
 export const qualifiedBindingStrategies = [...clauseBindingStrategies, "qualified-bindings"] as const;
 export type QueryScopeStrategy = typeof qualifiedBindingStrategies[number];
+const assertionStrategies = ["assertion-only", "assertion-subject"] as const;
+type AssertionStrategy = typeof assertionStrategies[number];
 
 /** Shadow interventions only. None is used by production retrieval. */
 export function queryScopeTerms(query: string, strategy: QueryScopeStrategy): string[] {
@@ -73,7 +79,7 @@ export function scoreQueryScope(scenario: QueryScopeCase, evidence: readonly { s
 }
 
 export function queryScopeOptions(argv: string[]) {
-  const args = evaluationArguments(argv, ["out", "repeats", "corpus", "diagnostics"], "query scope");
+  const args = evaluationArguments(argv, ["out", "repeats", "corpus", "diagnostics", "candidate"], "query scope");
   const out = args.get("out");
   const repeats = Number(args.get("repeats") ?? "2");
   if (!out || !Number.isInteger(repeats) || repeats < 1 || repeats > 5) throw new Error("query scope requires --out and --repeats between 1 and 5");
@@ -82,7 +88,10 @@ export function queryScopeOptions(argv: string[]) {
   const diagnostics = args.get("diagnostics");
   if (diagnostics !== undefined && diagnostics !== "term-ablation") throw new Error("query scope diagnostics must be term-ablation");
   if (diagnostics && corpus !== "qualified-bindings" && corpus !== "scope-transfer") throw new Error("term-ablation requires qualified-bindings or scope-transfer corpus");
-  return { out: resolve(out), repeats, corpus, diagnostics };
+  const candidate = args.get("candidate");
+  if (candidate !== undefined && candidate !== "assertion-subject") throw new Error("query scope candidate must be assertion-subject");
+  if (candidate && corpus !== "qualified-bindings" && corpus !== "scope-transfer") throw new Error("assertion-subject requires qualified-bindings or scope-transfer corpus");
+  return { out: resolve(out), repeats, corpus, diagnostics, candidate };
 }
 
 const hash = (value: string) => createHash("sha256").update(value).digest("hex");
@@ -90,11 +99,15 @@ const evidenceFrom = (result: ContextResult) => [
   ...result.brief.applicable_rules.map((rule) => ({ source: rule.citation.source, quote: rule.citation.quote ?? "" })),
   ...result.brief.permitted_excerpts.map((excerpt) => ({ source: excerpt.citation.source, quote: excerpt.text })),
 ];
-type ScopeResult = ReturnType<typeof scoreQueryScope> & {
+type ScopeResult<Strategy = QueryScopeStrategy> = ReturnType<typeof scoreQueryScope> & {
   id: string; family: string; expected_sources: readonly string[]; repeat: number;
-  mode: "excerpts" | "rules_only"; strategy: QueryScopeStrategy; terms: string[]; query: string;
+  mode: "excerpts" | "rules_only"; strategy: Strategy; terms: string[]; query: string;
   citations_exact: boolean; cap_passed: boolean; component_wall_ms: number; text: string;
   evidence: ReturnType<typeof evidenceFrom>;
+};
+type AssertionResult = ScopeResult<AssertionStrategy> & {
+  assertions: ReturnType<typeof scopeAssertions>;
+  prepack_sources: string[];
 };
 type TermDiagnostic = {
   id: string; mode: ScopeResult["mode"]; repeat: number; strategy: "qualified-bindings";
@@ -116,11 +129,15 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
   if (options.corpus === "clause-bindings" || options.corpus === "qualified-bindings" || transfer) artifactNames.push("clause-bindings.js", "clause-bindings-cases.js");
   if (options.corpus === "qualified-bindings" || transfer) artifactNames.push("qualified-bindings.js", "qualified-bindings-cases.js");
   if (transfer) artifactNames.push("scope-transfer-cases.js");
-  if (options.diagnostics) artifactNames.push("scope-term-diagnostics.js");
+  if (options.diagnostics || options.candidate) artifactNames.push("scope-term-diagnostics.js");
+  if (options.candidate) artifactNames.push("assertion-subject.js");
   const artifacts = Object.fromEntries(await Promise.all(artifactNames.map(async (name) => [name, hash(await readFile(new URL(name, import.meta.url), "utf8"))])));
   await save("protocol.json", { protocol: "query-scope-shadow-v3", corpus: options.corpus, recorded_at: new Date().toISOString(),
     synthetic_only: true, node: process.version, platform: process.platform, repeats: options.repeats,
     strategies, documents, cases,
+    ...(options.candidate ? { candidate: { protocol: "scope-assertion-subject-v1", strategies: assertionStrategies,
+      output: "assertion-candidates.json", intervention: "After baselines, admit only sources with term overlap outside recognized scope disclaimers before packing original evidence. Assertion-only uses qualified-binding terms; assertion-subject also rewrites explicit scaffold and qualification constructions.",
+      limitations: "Source admission on seeded whole-document fixtures; exact lexical overlap and a narrow disclaimer pattern do not establish applicability. Rule ordering uses the unchanged selector before filtering. Candidate component times do not measure native-hook latency." } } : {}),
     ...(options.diagnostics ? { diagnostics: { protocol: "scope-term-ablation-v1", strategy: "qualified-bindings",
       output: "term-diagnostics.json", intervention: "Each document-matching query term alone and with that term removed; all original terms retained otherwise. Exact word matching; no expected labels enter probe generation.",
       limitations: "Descriptive sentence overlaps and fixed-store retrieval interventions, not assertion classification or an applicability strategy. Disclaimers and negative rules remain verbatim. Ranking/packing can affect source changes. Shared engine cache; component times are not comparable latency measurements. Baseline scores and CLI acceptance are unchanged." } } : {}),
@@ -135,6 +152,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
   const root = await realpath(await mkdtemp(join(tmpdir(), "othie-query-scope-")));
   const results: ScopeResult[] = [];
   const termDiagnostics: TermDiagnostic[] = [];
+  const assertionResults: AssertionResult[] = [];
   try {
     for (let repeat = 0; repeat < options.repeats; repeat++) for (const mode of ["excerpts", "rules_only"] as const) {
       const data = join(root, `${repeat}-${mode}`), docs = join(data, "docs");
@@ -163,8 +181,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           }
         }
         await engine.lance.addText(chunks);
-        const evaluate = async (scenario: QueryScopeCase, strategy: QueryScopeStrategy, terms: string[], query: string, start = performance.now()): Promise<ScopeResult> => {
-          const response = await engine.context("company", { query, max_tokens: 500, surface: "code", phase: "turn_start" });
+        const scoreResponse = <Strategy>(scenario: QueryScopeCase, strategy: Strategy, terms: string[], query: string, start: number, response: ContextResult): ScopeResult<Strategy> => {
           const evidence = evidenceFrom(response);
           const score = scoreQueryScope(scenario, evidence, documents);
           const citationsExact = evidence.every((item) => item.quote.trim().length > 0 && documents.find((document) => document.name === basename(item.source))?.text.includes(item.quote));
@@ -174,6 +191,8 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
             citations_exact: citationsExact, cap_passed: capPassed,
             component_wall_ms: Math.round((performance.now() - start) * 100) / 100, text: response.text, evidence };
         };
+        const evaluate = async (scenario: QueryScopeCase, strategy: QueryScopeStrategy, terms: string[], query: string, start = performance.now()) =>
+          scoreResponse(scenario, strategy, terms, query, start, await engine.context("company", { query, max_tokens: 500, surface: "code", phase: "turn_start" }));
         const orderedCases = repeat % 2 ? [...cases].reverse() : cases;
         for (const scenario of orderedCases) for (let offset = 0; offset < strategies.length; offset++) {
           const strategy = strategies[(offset + repeat) % strategies.length]!;
@@ -183,7 +202,25 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           const query = strategy === "lexical" ? scenario.query : terms.join(" ") || "?";
           results.push(await evaluate(scenario, strategy, terms, query, start));
         }
-        // Run after all baseline rows so probes cannot warm their compiler cache.
+        if (options.candidate) for (const scenario of orderedCases) for (let offset = 0; offset < assertionStrategies.length; offset++) {
+          const strategy = assertionStrategies[(offset + repeat) % assertionStrategies.length]!;
+          const start = performance.now();
+          const terms = strategy === "assertion-only" ? qualifiedBindingTerms(scenario.query) : assertionSubjectTerms(scenario.query);
+          const query = terms.join(" ") || "?";
+          const assertions = scopeAssertions(terms, documents);
+          const admitted = new Set(assertions.filter((source) => source.asserted_terms.length).map((source) => source.source));
+          const profile = config.profiles.company!;
+          const retrieval = await hybridRetrieve({ query, profileName: "company", profile, config, store: engine.store, lance: engine.lance, providers: engine.providers });
+          const rules = selectRules(engine.store.listRules("company"), query, [])
+            .filter((rule) => admitted.has(rule.documentId));
+          const excerpts = mode === "excerpts" ? retrieval.hits.map((hit) => hit.chunk).filter((chunk) => admitted.has(chunk.documentId)) : [];
+          const prepackSources = [...new Set([...rules, ...excerpts].map((item) => item.documentId))].sort();
+          const response = packContext("company", profile, { query, max_tokens: 500, surface: "code", phase: "turn_start" },
+            { rules, excerpts, keywordAvailable: retrieval.keywordAvailable, vectorAvailable: retrieval.vectorAvailable },
+            !retrieval.vectorAvailable, engine.store.getRevisionCounters());
+          assertionResults.push({ ...scoreResponse(scenario, strategy, terms, query, start, response), assertions, prepack_sources: prepackSources });
+        }
+        // Run after all baseline rows so supplementary work cannot warm their compiler cache.
         if (options.diagnostics) for (const scenario of orderedCases) {
           const baseline = results.find((row) => row.id === scenario.id && row.repeat === repeat && row.mode === mode && row.strategy === "qualified-bindings")!;
           const interventions: TermDiagnostic["interventions"] = [];
@@ -198,24 +235,25 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
         }
       } finally { await engine.stop(); }
     }
-    const scoresFor = (subset: readonly ScopeResult[]) => ["excerpts", "rules_only"].flatMap((mode) => strategies.map((strategy) => {
+    const scoresFor = <Strategy extends string>(subset: readonly ScopeResult<Strategy>[], selected: readonly Strategy[]) => ["excerpts", "rules_only"].flatMap((mode) => selected.map((strategy) => {
       const rows = subset.filter((item) => item.mode === mode && item.strategy === strategy);
       return { mode, strategy, ...queryScopeScores(rows) };
     }));
-    const scores = scoresFor(results);
+    const baselineScores = (subset: readonly ScopeResult[]) => scoresFor(subset, strategies);
+    const scores = baselineScores(results);
     const originalIds = new Set(queryScopeCases.map(({ id }) => id));
-    const subsets = transfer ? { transfer: scoresFor(results) } : { original: scoresFor(results.filter((item) => originalIds.has(item.id))),
-      counterexamples: scoresFor(results.filter((item) => !originalIds.has(item.id))) };
+    const subsets = transfer ? { transfer: scores } : { original: baselineScores(results.filter((item) => originalIds.has(item.id))),
+      counterexamples: baselineScores(results.filter((item) => !originalIds.has(item.id))) };
     const guardIds = new Set(policyGuardCases.filter(({ id }) => !originalIds.has(id)).map(({ id }) => id));
     const bindingIds = new Set(localBindingCounterexamples.map(({ id }) => id));
     const extensionSubsets = options.corpus === "local-bindings" || options.corpus === "clause-bindings" || options.corpus === "qualified-bindings" ? {
-      policy_guard: scoresFor(results.filter((item) => guardIds.has(item.id))),
-      local_bindings: scoresFor(results.filter((item) => bindingIds.has(item.id))),
+      policy_guard: baselineScores(results.filter((item) => guardIds.has(item.id))),
+      local_bindings: baselineScores(results.filter((item) => bindingIds.has(item.id))),
     } : {};
     const clauseIds = new Set(clauseBindingCounterexamples.map(({ id }) => id));
-    const clauseSubset = options.corpus === "clause-bindings" || options.corpus === "qualified-bindings" ? { clause_bindings: scoresFor(results.filter((item) => clauseIds.has(item.id))) } : {};
+    const clauseSubset = options.corpus === "clause-bindings" || options.corpus === "qualified-bindings" ? { clause_bindings: baselineScores(results.filter((item) => clauseIds.has(item.id))) } : {};
     const qualifiedIds = new Set(qualifiedBindingCounterexamples.map(({ id }) => id));
-    const qualifiedSubset = options.corpus === "qualified-bindings" ? { qualified_bindings: scoresFor(results.filter((item) => qualifiedIds.has(item.id))) } : {};
+    const qualifiedSubset = options.corpus === "qualified-bindings" ? { qualified_bindings: baselineScores(results.filter((item) => qualifiedIds.has(item.id))) } : {};
     const unchanged = strategies.map((strategy) => ({ strategy, total: applicabilityQualityCases.length,
       unchanged: applicabilityQualityCases.filter((scenario) => JSON.stringify(queryScopeTerms(scenario.query, strategy)) === JSON.stringify(meaningfulTerms(scenario.query))).length }));
     await save("results.json", results);
@@ -224,6 +262,20 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
     await save("summary.json", summary);
     if (options.diagnostics) await save("term-diagnostics.json", { protocol: "scope-term-ablation-v1", cases: termDiagnostics,
       probe_count: termDiagnostics.reduce((total, row) => total + row.interventions.length, 0) });
+    if (options.candidate) {
+      const groups = transfer ? { transfer: new Set(cases.map(({ id }) => id)) } : {
+        original: originalIds, policy_guard: guardIds, local_bindings: bindingIds,
+        clause_bindings: clauseIds, qualified_bindings: qualifiedIds,
+      };
+      await save("assertion-candidates.json", { protocol: "scope-assertion-subject-v1", rows: assertionResults,
+        scores: scoresFor(assertionResults, assertionStrategies),
+        subsets: Object.fromEntries(Object.entries(groups).map(([name, ids]) => [name,
+          scoresFor(assertionResults.filter((row) => ids.has(row.id)), assertionStrategies)])),
+        previous_applicability_query_terms: assertionStrategies.map((strategy) => ({ strategy, total: applicabilityQualityCases.length,
+          unchanged: applicabilityQualityCases.filter((scenario) => JSON.stringify(strategy === "assertion-only"
+            ? qualifiedBindingTerms(scenario.query) : assertionSubjectTerms(scenario.query)) === JSON.stringify(meaningfulTerms(scenario.query))).length })),
+      });
+    }
     return summary;
   } catch (error) {
     await save("failure.json", { completed: false, stage: "seed-or-evaluate" });
