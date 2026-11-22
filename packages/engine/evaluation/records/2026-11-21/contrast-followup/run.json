@@ -1,0 +1,1288 @@
+{
+  "fixture_revision": "11422b7f8315467312de49da64572daf5ee2c1d3",
+  "source_revision": "8e3368074d6cafba7d000b0194648b65196d951e",
+  "fixture_blob": "23b0a8b9530f2406a778b5ae465726d9c5e45176",
+  "protocol": {
+    "protocol": "query-scope-shadow-v3",
+    "corpus": "scope-contrast",
+    "recorded_at": "2026-11-22T02:18:15.522Z",
+    "synthetic_only": true,
+    "node": "v24.18.0",
+    "platform": "darwin",
+    "repeats": 2,
+    "strategies": [
+      "lexical",
+      "drop-request",
+      "mask-call-arguments",
+      "policy-guarded-arguments",
+      "local-bindings",
+      "clause-bindings",
+      "qualified-bindings"
+    ],
+    "documents": [
+      {
+        "name": "archive-badges.md",
+        "text": "Archive badges must be deactivated at expiration. A conservator may extend a badge for one day if an inventory review is still in progress."
+      },
+      {
+        "name": "visitor-badges.md",
+        "text": "Visitor badges must be deactivated at expiration. Security may reactivate a visitor badge only after a new identity check."
+      },
+      {
+        "name": "specimen-labels.md",
+        "text": "Specimen labels require a barcode before shipment. During an outage, a handwritten specimen label may be used if the manifest has a barcode."
+      },
+      {
+        "name": "parcel-labels.md",
+        "text": "Parcel labels require a barcode before shipment. Unreadable labels must be replaced before the parcel leaves the dock."
+      },
+      {
+        "name": "current-rinse.md",
+        "text": "The current standard requires staff to rinse sample trays before inspection. Staff must discard each damaged tray."
+      },
+      {
+        "name": "legacy-rinse.md",
+        "text": "The legacy standard prohibits rinsing sample trays before inspection. Staff must set aside each damaged tray for review."
+      },
+      {
+        "name": "outage-log.md",
+        "text": "The duty officer must log every outage before notifying the dock. This guide does not set specimen labeling or badge expiration requirements."
+      },
+      {
+        "name": "report-layout.md",
+        "text": "The weekly report lists archive badges, visitor badges, specimen labels, parcel labels and sample trays in separate columns."
+      }
+    ],
+    "cases": [
+      {
+        "id": "replacement-intent-1",
+        "family": "replacement-intent",
+        "query": "Do not sort read(specimen). Preserve the public interface. Implement its shipment exception according to company documents.",
+        "sources": [
+          "specimen-labels.md"
+        ]
+      },
+      {
+        "id": "replacement-intent-2",
+        "family": "replacement-intent",
+        "query": "Do not sort read(specimen). Preserve the public interface. Implement a stable numeric comparator according to company documents.",
+        "sources": []
+      },
+      {
+        "id": "antecedent-choice-1",
+        "family": "antecedent-choice",
+        "query": "Do not sort read(specimen) or read(parcel). Keep the existing API. Apply the second call's shipment rule under company policy.",
+        "sources": [
+          "parcel-labels.md"
+        ]
+      },
+      {
+        "id": "antecedent-choice-2",
+        "family": "antecedent-choice",
+        "query": "Do not sort read(specimen) or read(parcel). Keep the existing API. Ask which call to update before applying the shipment rule under company policy.",
+        "sources": []
+      },
+      {
+        "id": "call-syntax-1",
+        "family": "call-syntax",
+        "query": "Deduplicate specimen rows in read(labels)",
+        "sources": []
+      },
+      {
+        "id": "call-syntax-2",
+        "family": "call-syntax",
+        "query": "Deduplicate specimen rows in read(labels,",
+        "sources": []
+      },
+      {
+        "id": "authority-1",
+        "family": "authority",
+        "query": "Implement barcode validation for specimen labels using company specimen labeling policy.",
+        "sources": [
+          "specimen-labels.md"
+        ]
+      },
+      {
+        "id": "authority-2",
+        "family": "authority",
+        "query": "Implement barcode validation for specimen labels using only the local fixture.",
+        "sources": []
+      },
+      {
+        "id": "shared-subject-1",
+        "family": "shared-subject",
+        "query": "Explain deactivation at expiration for archive badges.",
+        "sources": [
+          "archive-badges.md"
+        ]
+      },
+      {
+        "id": "shared-subject-2",
+        "family": "shared-subject",
+        "query": "Explain deactivation at expiration for archive and visitor badges.",
+        "sources": [
+          "archive-badges.md",
+          "visitor-badges.md"
+        ]
+      },
+      {
+        "id": "second-clause-1",
+        "family": "second-clause",
+        "query": "Implement shipment validation using company specimen label policy. Also apply the barcode requirements for parcel labels.",
+        "sources": [
+          "parcel-labels.md",
+          "specimen-labels.md"
+        ]
+      },
+      {
+        "id": "second-clause-2",
+        "family": "second-clause",
+        "query": "Implement shipment validation using company specimen label policy. The local test file also mentions parcel labels.",
+        "sources": [
+          "specimen-labels.md"
+        ]
+      },
+      {
+        "id": "opposing-standards-1",
+        "family": "opposing-standards",
+        "query": "Compare the requirements for rinsing sample trays before inspection in both company standards.",
+        "sources": [
+          "current-rinse.md",
+          "legacy-rinse.md"
+        ]
+      },
+      {
+        "id": "opposing-standards-2",
+        "family": "opposing-standards",
+        "query": "Compare the requirements for rinsing sample trays before inspection in only the two hard-coded test fixtures.",
+        "sources": []
+      },
+      {
+        "id": "negated-lookup-1",
+        "family": "negated-lookup",
+        "query": "Validate expiration for archive badges using company archive badge policy.",
+        "sources": [
+          "archive-badges.md"
+        ]
+      },
+      {
+        "id": "negated-lookup-2",
+        "family": "negated-lookup",
+        "query": "Validate expiration for archive badges without using company archive badge policy.",
+        "sources": []
+      },
+      {
+        "id": "quoted-reference-1",
+        "family": "quoted-reference",
+        "query": "Implement outage logging using company outage policy.",
+        "sources": [
+          "outage-log.md"
+        ]
+      },
+      {
+        "id": "quoted-reference-2",
+        "family": "quoted-reference",
+        "query": "Print the following literal text in the dialog: Implement outage logging using company outage policy.",
+        "sources": []
+      }
+    ],
+    "candidate": {
+      "protocol": "scope-assertion-subject-v1",
+      "strategies": [
+        "assertion-only",
+        "assertion-subject"
+      ],
+      "output": "assertion-candidates.json",
+      "intervention": "After baselines, admit only sources with term overlap outside recognized scope disclaimers before packing original evidence. Assertion-only uses qualified-binding terms; assertion-subject also rewrites explicit scaffold and qualification constructions.",
+      "limitations": "Source admission on seeded whole-document fixtures; exact lexical overlap and a narrow disclaimer pattern do not establish applicability. Rule ordering uses the unchanged selector before filtering. Candidate component times do not measure native-hook latency."
+    },
+    "reference_candidate": {
+      "protocol": "scope-reference-v1",
+      "strategies": [
+        "reference-only",
+        "reference-focus"
+      ],
+      "output": "reference-candidates.json",
+      "intervention": "Compare bounded local-call antecedent and local-clause rewriting, with and without additional explicit scope and one-term overlap admission rules. Keep original evidence for admitted sources.",
+      "limitations": "Narrow query syntax and exact term overlap on seeded documents. A corroborating overlap may hide an independently requested source. Reference resolution and independent applicability remain unestablished."
+    },
+    "original_case_ids": [
+      "native-support-service",
+      "native-refund-service",
+      "native-array-service-control",
+      "backtick-array",
+      "multiple-arguments",
+      "window-argument",
+      "access-argument",
+      "request-variable",
+      "support-variable",
+      "request-css",
+      "window-css",
+      "support-chart",
+      "numeric-array",
+      "duration-control",
+      "refund-prose",
+      "request-subject",
+      "support-prose",
+      "telemetry-prose",
+      "telemetry-code-argument",
+      "refund-code-argument",
+      "access-code-argument",
+      "telemetry-code-name",
+      "refund-code-name",
+      "quoted-policy-subject",
+      "export-opposition",
+      "export-code-argument",
+      "late-policy-subject"
+    ],
+    "fixture_sha256": "d8df8117f2755b42f0d9515b590168e9e18c1630196ec79fd47651cf20da4d76",
+    "artifacts": {
+      "query-scope.js": "072c5467adc1fd64c26a5cc2a1abefa0c04e6a51f77e9ddfc5bb5f9002528a58",
+      "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+      "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+      "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+      "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+      "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+      "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+      "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+      "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+      "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+      "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+      "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+      "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+      "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+      "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+      "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+      "scope-contrast-cases.js": "e5ba433afb02cb64f37ec6208b2f540f60bd5b076ebf9fbc7e58bc624fbbe759",
+      "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+      "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+      "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+    },
+    "scoring": {
+      "historical_correct": "Complete expected sentences; no-op requires no evidence; exact citations and token cap.",
+      "precise_correct": "Historical correct plus no additional source basenames.",
+      "positive_exact": "Positive tasks with precise_correct / all positive tasks; empty positive retrieval fails.",
+      "positive_source_precision": "Expected source memberships / all retrieved source memberships on positive tasks; each source counted once per task. Raw counts, no 0/0 ratio.",
+      "acceptance": "Per mode/strategy: all positive recall, positive exact, no-op, citation and token gates must pass; empty subsets are not accepted. CLI requires every row precise_correct."
+    },
+    "limitations": "Evaluation-only query interventions. Providers disabled. Fresh seeded SQLite/Lance stores per repeat/export mode; not ingestion, model extraction, semantic acceptance, native-host or adapter latency. Excerpts use reference chunks; rules-only uses manually supplied whole-document authoritative rules to isolate scope from extraction/grouping. Positive recall requires every expected sentence. Precision measures fixture source membership, not semantic relevance within an expected document. Case order reverses and strategy order rotates on fresh repeats."
+  },
+  "evidence_sha256": "a8f5025610020d9f0fd9ed42812255613a4d01fcf212484bf41321b3ed0342ce",
+  "pair_scores": [
+    {
+      "mode": "excerpts",
+      "strategy": "lexical",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "drop-request",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "mask-call-arguments",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "policy-guarded-arguments",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "local-bindings",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "clause-bindings",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "qualified-bindings",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "assertion-only",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "assertion-subject",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "reference-only",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "excerpts",
+      "strategy": "reference-focus",
+      "passing_pairs": [
+        "replacement-intent"
+      ],
+      "total_pairs": 9
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "lexical",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "drop-request",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "mask-call-arguments",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "policy-guarded-arguments",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "local-bindings",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "clause-bindings",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "qualified-bindings",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "assertion-only",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "assertion-subject",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "reference-only",
+      "passing_pairs": [],
+      "total_pairs": 9
+    },
+    {
+      "mode": "rules_only",
+      "strategy": "reference-focus",
+      "passing_pairs": [
+        "replacement-intent"
+      ],
+      "total_pairs": 9
+    }
+  ],
+  "reports": {
+    "results.json": {
+      "stable_rows_sha256": "675305a8aaef7b55fbe801852d3efdc08e5366219983e7ec0fe966f11343084b",
+      "summary_sha256": "f1c3ba29b0512b8f5d4f1ffcc84fa387dbe353aea70af9dcaa2e70d952c1eb63",
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "lexical",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 0,
+            "total": 16
+          },
+          "combined": {
+            "correct": 20,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 80
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "drop-request",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 0,
+            "total": 16
+          },
+          "combined": {
+            "correct": 20,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 80
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "mask-call-arguments",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 72
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "policy-guarded-arguments",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 76
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "local-bindings",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 72
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "clause-bindings",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 0,
+            "total": 16
+          },
+          "combined": {
+            "correct": 20,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 80
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "qualified-bindings",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 72
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "lexical",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 0,
+            "total": 16
+          },
+          "combined": {
+            "correct": 20,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 80
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "drop-request",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 0,
+            "total": 16
+          },
+          "combined": {
+            "correct": 20,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 80
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "mask-call-arguments",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 72
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "policy-guarded-arguments",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 76
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "local-bindings",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 72
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "clause-bindings",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 0,
+            "total": 16
+          },
+          "combined": {
+            "correct": 20,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 80
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "qualified-bindings",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 72
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        }
+      ]
+    },
+    "assertion-candidates.json": {
+      "stable_rows_sha256": "3487239e011aa2dc2dc702ee4bfe4d5c6a46977ad092a6d7e93bba5229626711",
+      "summary_sha256": "b3ca67c7addf4b0290c784dc559a58d2f8624617c1c800822337263e18619e9e",
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "assertion-only",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 60
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "assertion-subject",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 60
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "assertion-only",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 60
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "assertion-subject",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 60
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        }
+      ]
+    },
+    "reference-candidates.json": {
+      "stable_rows_sha256": "7243318d9d42828ed062072794da4d5c707df007764e0cea3d14c78a873d96d1",
+      "summary_sha256": "f3a45bab6f254f712bb61b73e789c35653de413a0a64ca76d8ef39b007296c18",
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "reference-only",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 62
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 2,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 18,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 50
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "reference-only",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 62
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 2,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 18,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 50
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        }
+      ]
+    }
+  },
+  "prior_corpora": {
+    "historical": {
+      "baseline_rows": 2520,
+      "baseline_sha256": "4c6d2edc6d543f6583cdd2f4e5d6b6f76806eec47c1772b82bd89ebffdfb556e",
+      "summary_sha256": "b0b2195a6d67256625e59ff1afbaca136b131b8620c8a63a32e6bfa70f5a0b00",
+      "assertion_sha256": "7315951187b3a8797fc43f248c659edbe3c3c67e603f79206baec0aaebb61c97",
+      "reference_sha256": "2efbc97961e9f4de3384388f2fecde92bacf88766aa51d71ec5ec01b95c9c9ac"
+    },
+    "transfer": {
+      "baseline_rows": 840,
+      "baseline_sha256": "3c35ea2ad746eeb72c5d786c374d3996f6bbb33b9dced19169dbeac636693aa6",
+      "summary_sha256": "480f5c58804c146da8e49c4092d32fe476a00fb015189896bfbb0264e9eeb52d",
+      "assertion_sha256": "8a700ec9c6d3c4dadd045bcc7c6776f212bac1d2281c4ef4dd479cfed369eccb",
+      "reference_sha256": "99fca9e1a1c44d0ce53d333b68e7cf44913af6d3550d6e221d5fdf9fa50a3e16"
+    },
+    "reference": {
+      "baseline_rows": 560,
+      "baseline_sha256": "32c32e4cf06b440cf1a56fcd684bdf333f1494c9c474a75a0d8e5d253525cec0",
+      "summary_sha256": "f91d4afa6ff7cc5a87986ee838010c3d8b62aee3e98a3723ede6fa24e1918233",
+      "assertion_sha256": "ccc66c43a949dff5312ae4549cd1a0f5aae53d25d362557686b0db5645a61cf4",
+      "reference_sha256": "50203b7e27902929b4d1495b34acfe08cd8a82b1c01160ddac5b9ca5f5af49da"
+    }
+  }
+}
