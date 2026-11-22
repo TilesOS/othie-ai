@@ -14,7 +14,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm run typecheck` | All workspaces pass |
 | `npm test` | November 21 workspace run passes 321 deterministic tests and skips one opt-in real-model test |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
-| Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
+| November 21 compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 257–285 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
 | October 18 native Claude settings discovery | 20/24 checks pass; shared root settings fail all four nested-launch delivery checks and remain recorded |
 | October 18 serial adapter latency | Fresh-engine 14/14 at 2,000/3,000 ms budgets; actual-default normal paths 8/8 at 315–442 ms |
@@ -53,6 +53,8 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 18 upstream parser comparison | TypeScript ESLint 8.73.0 with minimatch 11.0.9 passes 28/30 project-service controls. Both astral filename decisions still reverse. |
 | November 21 published desktop CI | `45ae572` passes install, typecheck, lint and tests on macOS 15 and Windows. Windows startup script syntax passes. |
 | November 21 policy reference evaluation | 1,120 new candidate rows and unchanged prior rows. The focused arm passes 94/98 historical, 34/34 transfer, and 14/24 new-corpus positive exact checks per export mode. The new corpus rejects both variants. |
+| November 21 matched policy scope evaluation | 792 contrast rows and 6,160 stable prior rows. The focused arm passes 20/20 recall, 2/20 positive exact and 2/16 no-ops per mode. It passes both prompts in 1/9 pairs. All strategies fail acceptance. |
+| November 21 parser canary comparison | Installed parser passes 30/30. TypeScript ESLint 8.73.1-alpha.11 with minimatch 11.0.9 passes 28/30, reversing both astral filename decisions. |
 | November 10 prior-history CI inspection/retry | `ed3dcdb` passes Windows installation, typechecks, lint, tests and startup syntax; macOS cancelled without steps in both the initial run and one requested retry; macOS remains open |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
@@ -1525,15 +1527,44 @@ CI. The refreshed audits retain seven moderate development entries and zero
 production findings. Native Windows logon startup, interactive host trust,
 local-model consumption and native latency remain separate acceptance work.
 
+## November 21 matched policy scope follow-up
+
+The [matched scope records](packages/engine/evaluation/records/2026-11-21/contrast-followup/README.md)
+compare all eleven existing strategies on eight synthetic documents and nine
+two-prompt contrasts. Each pair changes one span. Eight change the expected
+sources, including selected versus unresolved antecedents, company versus
+fixture authority, or a second policy request versus a local mention. Both
+versions of the ninth pair ask for local deduplication with valid or malformed
+call syntax. The fixtures and judgments were frozen before measurement by the
+same author. Independent review remains open.
+
+Across 792 rows, all citations are exact and all token caps pass. The prior
+3,920 baseline rows, 1,120 assertion rows and 1,120 reference rows match
+the preceding commitments except component time, and all scores and gates
+match. Per mode, `reference-focus` passes 20/20 positive recall, 2/20 positive
+exact and 2/16 no-ops. It passes both members of the replacement intent pair
+and fails the other eight pairs. The valid and malformed calls reduce to the
+same query terms and both retrieve evidence. All focused output source sets
+match their pre-packing sets, which locates the extra evidence in source
+admission. The comparison runs through the offline evaluator.
+
+Full build, typechecks, website lint and 321 deterministic tests pass with one
+opt-in real-model test skipped. The compiled adapter check passes 24/24 at the
+default 2,000 ms deadline, with 257–285 ms parent wall time. The isolated parser
+canary still reverses the two astral filename decisions. The fresh audits report
+seven moderate development entries and zero production findings. GitHub Actions
+still reports `45ae572` as the latest run on `main`. Native desktop acceptance
+and CI for the November 21 evaluator changes remain open.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
   parser with a compatible upstream fix or reviewed migration. The November 4
-  advisory revision excludes legacy 3.1.5. The latest upstream parser 8.73.0
-  consumes minimatch 11.0.9 in the November 18 comparison and passes 28/30
-  project-service controls. The same two astral filename admission decisions
-  still reverse. Preserve file-admission behavior or explicitly review the
-  change before adopting it. The full audit retains seven moderate development
+  advisory revision excludes legacy 3.1.5. The November 18 upstream stable parser
+  8.73.0 and November 21 canary 8.73.1-alpha.11 both pass 28/30 controls with
+  minimatch 11.0.9. The same two astral filename admission decisions reverse.
+  Preserve file-admission behavior or explicitly review the change before
+  adopting it. The full audit retains seven moderate development
   entries after the Next.js patch. The production audit reports zero findings.
   November 7 traces establish level-one-only calls and prior globstar rejection
   on the checked parser path, plus an inactive branch under current website lint;
@@ -1547,9 +1578,10 @@ local-model consumption and native latency remain separate acceptance work.
   October 23 with complete cited adapter delivery and provider-boundary context. Role
   comparisons narrow the failure to developer-message handling in the installed
   provider/model combination; provider conversion versus model internals remains unresolved.
-- Verify published CI for the November 21 policy-reference evaluation. Both
-  runners pass through `45ae572`, including the `macos-15` replacement and
-  the Next.js patch. Complete native Windows host and logon-startup acceptance.
+- Verify published CI for the November 21 policy-reference and matched scope
+  evaluations. Both runners pass through `45ae572`, including the `macos-15`
+  replacement and the Next.js patch. Exact-commit queries for `70b9d07` and
+  `950dd43` returned no runs. Complete native Windows host and logon-startup acceptance.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
   two-repeat miniature multi-file corpus are recorded, but support no general
@@ -1610,12 +1642,14 @@ local-model consumption and native latency remain separate acceptance work.
   every earlier gate and the two frozen corpora while resolving those failures
   and checking independently authored cases.
   November 21 recovers the measured distant antecedents and suppresses selected
-  shared-term collisions. The reference corpus shows remaining errors on shared
-  terms, ambiguous references and malformed calls. Next isolate those failures
-  with matched policy and local requests that differ only in reference and subject
-  scope, retaining all three frozen corpora and the prior positive exact and
-  no-op gates. Independently authored cases and judgment are required before
-  production adoption.
+  shared-term collisions. Nine matched pairs show the remaining failures arise
+  before packing. The focused strategy produces identical evidence sets on six
+  of the eight pairs that require different evidence. Evaluate active policy
+  requests at the clause level, including requests that introduce a second
+  policy, quotes and local mentions, and references that need clarification.
+  Preserve the four frozen corpora, explicit no-op and positive exact gates,
+  genuine negative rules and opposing standards. Independently authored cases
+  and judgment are required before production adoption.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve
