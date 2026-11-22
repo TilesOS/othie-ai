@@ -28,6 +28,7 @@ import { scopeTermInterventions, scopeTermMatches } from "./scope-term-diagnosti
 import { assertionSubjectTerms, scopeAssertions } from "./assertion-subject.js";
 import { referenceAdmission, referenceTerms } from "./scope-reference.js";
 import { scopeReferenceCases, scopeReferenceDocuments } from "./scope-reference-cases.js";
+import { scopeContrastCases, scopeContrastDocuments } from "./scope-contrast-cases.js";
 
 export const queryScopeStrategies = ["lexical", "drop-request", "mask-call-arguments"] as const;
 export const policyGuardStrategies = [...queryScopeStrategies, "policy-guarded-arguments"] as const;
@@ -88,13 +89,13 @@ export function queryScopeOptions(argv: string[]) {
   const repeats = Number(args.get("repeats") ?? "2");
   if (!out || !Number.isInteger(repeats) || repeats < 1 || repeats > 5) throw new Error("query scope requires --out and --repeats between 1 and 5");
   const corpus = args.get("corpus") ?? "original";
-  if (corpus !== "original" && corpus !== "policy-guard" && corpus !== "local-bindings" && corpus !== "clause-bindings" && corpus !== "qualified-bindings" && corpus !== "scope-transfer" && corpus !== "scope-reference") throw new Error("query scope corpus must be original, policy-guard, local-bindings, clause-bindings, qualified-bindings, scope-transfer or scope-reference");
+  if (corpus !== "original" && corpus !== "policy-guard" && corpus !== "local-bindings" && corpus !== "clause-bindings" && corpus !== "qualified-bindings" && corpus !== "scope-transfer" && corpus !== "scope-reference" && corpus !== "scope-contrast") throw new Error("query scope corpus must be original, policy-guard, local-bindings, clause-bindings, qualified-bindings, scope-transfer, scope-reference or scope-contrast");
   const diagnostics = args.get("diagnostics");
   if (diagnostics !== undefined && diagnostics !== "term-ablation") throw new Error("query scope diagnostics must be term-ablation");
   if (diagnostics && corpus !== "qualified-bindings" && corpus !== "scope-transfer") throw new Error("term-ablation requires qualified-bindings or scope-transfer corpus");
   const candidate = args.get("candidate");
   if (candidate !== undefined && candidate !== "assertion-subject" && candidate !== "scope-reference") throw new Error("query scope candidate must be assertion-subject or scope-reference");
-  if (candidate && corpus !== "qualified-bindings" && corpus !== "scope-transfer" && corpus !== "scope-reference") throw new Error(`${candidate} requires qualified-bindings, scope-transfer or scope-reference corpus`);
+  if (candidate && corpus !== "qualified-bindings" && corpus !== "scope-transfer" && corpus !== "scope-reference" && corpus !== "scope-contrast") throw new Error(`${candidate} requires qualified-bindings, scope-transfer, scope-reference or scope-contrast corpus`);
   return { out: resolve(out), repeats, corpus, diagnostics, candidate };
 }
 
@@ -125,12 +126,17 @@ type TermDiagnostic = {
 };
 
 export async function runQueryScope(options: ReturnType<typeof queryScopeOptions>) {
-  const transfer = options.corpus === "scope-transfer";
-  const reference = options.corpus === "scope-reference";
-  const extended = transfer || reference || options.corpus === "qualified-bindings";
+  const standalone = {
+    "scope-transfer": { name: "transfer", documents: scopeTransferDocuments, cases: scopeTransferCases },
+    "scope-reference": { name: "reference", documents: scopeReferenceDocuments, cases: scopeReferenceCases },
+    "scope-contrast": { name: "contrast", documents: scopeContrastDocuments, cases: scopeContrastCases },
+  };
+  const fixture = options.corpus === "scope-transfer" || options.corpus === "scope-reference" || options.corpus === "scope-contrast"
+    ? standalone[options.corpus] : undefined;
+  const extended = Boolean(fixture) || options.corpus === "qualified-bindings";
   const compareReferences = options.candidate === "scope-reference";
-  const documents = reference ? scopeReferenceDocuments : transfer ? scopeTransferDocuments : queryScopeDocuments;
-  const cases = reference ? scopeReferenceCases : transfer ? scopeTransferCases : options.corpus === "qualified-bindings" ? qualifiedBindingCases : options.corpus === "clause-bindings" ? clauseBindingCases : options.corpus === "local-bindings" ? localBindingCases : options.corpus === "policy-guard" ? policyGuardCases : queryScopeCases;
+  const documents = fixture?.documents ?? queryScopeDocuments;
+  const cases = fixture?.cases ?? (options.corpus === "qualified-bindings" ? qualifiedBindingCases : options.corpus === "clause-bindings" ? clauseBindingCases : options.corpus === "local-bindings" ? localBindingCases : options.corpus === "policy-guard" ? policyGuardCases : queryScopeCases);
   const strategies = extended ? qualifiedBindingStrategies : options.corpus === "clause-bindings" ? clauseBindingStrategies : options.corpus === "local-bindings" ? localBindingStrategies : options.corpus === "policy-guard" ? policyGuardStrategies : queryScopeStrategies;
   await mkdir(options.out, { recursive: false, mode: 0o700 });
   const save = (name: string, data: unknown) => writeFile(join(options.out, name), JSON.stringify(data, null, 2) + "\n", { flag: "wx", mode: 0o600 });
@@ -138,8 +144,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
   if (options.corpus === "local-bindings" || options.corpus === "clause-bindings" || extended) artifactNames.push("local-bindings.js", "local-bindings-cases.js");
   if (options.corpus === "clause-bindings" || extended) artifactNames.push("clause-bindings.js", "clause-bindings-cases.js");
   if (extended) artifactNames.push("qualified-bindings.js", "qualified-bindings-cases.js");
-  if (transfer) artifactNames.push("scope-transfer-cases.js");
-  if (reference) artifactNames.push("scope-reference-cases.js");
+  if (fixture) artifactNames.push(`${options.corpus}-cases.js`);
   if (compareReferences) artifactNames.push("scope-reference.js");
   if (options.diagnostics || options.candidate) artifactNames.push("scope-term-diagnostics.js");
   if (options.candidate) artifactNames.push("assertion-subject.js");
@@ -269,7 +274,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
     const baselineScores = (subset: readonly ScopeResult[]) => scoresFor(subset, strategies);
     const scores = baselineScores(results);
     const originalIds = new Set(queryScopeCases.map(({ id }) => id));
-    const subsets = reference ? { reference: scores } : transfer ? { transfer: scores } : { original: baselineScores(results.filter((item) => originalIds.has(item.id))),
+    const subsets = fixture ? { [fixture.name]: scores } : { original: baselineScores(results.filter((item) => originalIds.has(item.id))),
       counterexamples: baselineScores(results.filter((item) => !originalIds.has(item.id))) };
     const guardIds = new Set(policyGuardCases.filter(({ id }) => !originalIds.has(id)).map(({ id }) => id));
     const bindingIds = new Set(localBindingCounterexamples.map(({ id }) => id));
@@ -290,7 +295,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
     if (options.diagnostics) await save("term-diagnostics.json", { protocol: "scope-term-ablation-v1", cases: termDiagnostics,
       probe_count: termDiagnostics.reduce((total, row) => total + row.interventions.length, 0) });
     if (options.candidate) {
-      const groups = reference ? { reference: new Set(cases.map(({ id }) => id)) } : transfer ? { transfer: new Set(cases.map(({ id }) => id)) } : {
+      const groups = fixture ? { [fixture.name]: new Set(cases.map(({ id }) => id)) } : {
         original: originalIds, policy_guard: guardIds, local_bindings: bindingIds,
         clause_bindings: clauseIds, qualified_bindings: qualifiedIds,
       };

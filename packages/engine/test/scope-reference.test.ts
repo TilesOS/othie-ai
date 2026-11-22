@@ -22,4 +22,5 @@ it("restricts one explicit scope while preserving opposing sources with the same
 it("requires an eligible corpus for the opt-in reference comparison", () => {
   expect(() => queryScopeOptions(["--out", "x", "--candidate", "scope-reference"])).toThrow("scope-reference requires");
   expect(queryScopeOptions(["--out", "x", "--corpus", "scope-reference", "--candidate", "scope-reference"]).candidate).toBe("scope-reference");
+  expect(queryScopeOptions(["--out", "x", "--corpus", "scope-contrast", "--candidate", "scope-reference"]).corpus).toBe("scope-contrast");
 });
