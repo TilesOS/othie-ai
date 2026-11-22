@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 18, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 21, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci --no-audit` | November 18 clean installation passes with the updated lockfile |
 | `npm run build` | All workspaces pass and Next.js 16.4.6 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | 318 passing tests and one opt-in real-model test skipped |
+| `npm test` | November 21 workspace run passes 321 deterministic tests and skips one opt-in real-model test |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | Compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 578–662 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -51,6 +51,8 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 18 assertion and subject candidates | 960 candidate rows and 3,360 unchanged baseline rows. Per mode, the combined candidate passes 88/98 historical and 28/34 transfer positive exact checks. Both candidates fail acceptance. |
 | November 18 prior-history CI inspection | `4db79b5` passes Windows installation, typecheck, lint, tests and startup script syntax. GitHub identifies the retired macOS runner. The replacement workflow awaits remote execution. |
 | November 18 upstream parser comparison | TypeScript ESLint 8.73.0 with minimatch 11.0.9 passes 28/30 project-service controls. Both astral filename decisions still reverse. |
+| November 21 published desktop CI | `45ae572` passes install, typecheck, lint and tests on macOS 15 and Windows. Windows startup script syntax passes. |
+| November 21 policy reference evaluation | 1,120 new candidate rows and unchanged prior rows. The focused arm passes 94/98 historical, 34/34 transfer, and 14/24 new-corpus positive exact checks per export mode. The new corpus rejects both variants. |
 | November 10 prior-history CI inspection/retry | `ed3dcdb` passes Windows installation, typechecks, lint, tests and startup syntax; macOS cancelled without steps in both the initial run and one requested retry; macOS remains open |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
@@ -61,9 +63,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
 | Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
 | `git diff --check` | Pass |
-| `npm audit` and `npm audit --omit=dev` | November 18 after the Next.js patch, seven moderate development entries and zero production findings. Parser remediation still needs compatible file admission. |
+| `npm audit` and `npm audit --omit=dev` | November 21 refresh reports seven moderate development entries and zero production findings. Parser remediation still needs compatible file admission. |
 
-The full suite comprises 169 engine, 30 shared-hook, 102 website, 10 Codex, and seven
+The full suite comprises 172 engine, 30 shared-hook, 102 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1490,6 +1492,39 @@ updated YAML matrix passes local validation. Verify the new macOS and
 Windows matrix on GitHub once this revision is published. Native host,
 model-consumption, and hook-latency acceptance remain open.
 
+## November 21 policy reference follow-up
+
+The [policy reference record](packages/engine/evaluation/records/2026-11-21/reference-followup/README.md)
+adds two evaluation-only variants and a frozen corpus of eight synthetic documents
+and 20 tasks. `reference-only` carries a single call argument through a bounded
+sequence of replacement instructions and filters selected local clauses.
+`reference-focus` additionally uses an explicitly named policy and suppresses a
+one-term overlap when another source matches that term and more query terms.
+Neither uses expected source labels for retrieval. Both preserve the original
+sentences of each admitted source under the same 500-token cap.
+
+Across two repeats and both export modes, 1,120 candidate rows have stable evidence
+and exact citations. All 3,360 historical/transfer baseline rows and 960 prior
+assertion rows match except component time, and prior summaries match. Both variants
+recover the distant refund and upload subjects and preserve all previously passing
+recall and exact judgments. Per mode, `reference-focus` passes historical positive
+recall 98/98, exact 94/98, and no-op 82/82. It passes all transfer gates, with
+34/34 positive exact and 26/26 no-ops. On the new corpus it has full recall
+(24/24), positive exact 14/24, and no-op 12/16. Shared terms still pull in
+unrequested policies, and the ambiguous call and malformed local call fail the
+no-op gate. Keep both variants in the evaluator. The new corpus was frozen
+before implementation by the same author, so independent review remains open.
+
+The [published run for `45ae572`](https://github.com/TilesOS/othie-ai/actions/runs/44446520279)
+passes `npm ci`, all typechecks, website lint and tests on both macOS 15 and Windows.
+Windows startup script syntax also passes. This closes the runner-replacement gap
+and verifies the preceding assertion, Next.js and workflow commits. November 21
+workspace builds, typechecks, lint and 321 deterministic tests pass locally, with
+one opt-in real-model test skipped. The reference comparison still needs published
+CI. The refreshed audits retain seven moderate development entries and zero
+production findings. Native Windows logon startup, interactive host trust,
+local-model consumption and native latency remain separate acceptance work.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
@@ -1512,12 +1547,9 @@ model-consumption, and hook-latency acceptance remain open.
   October 23 with complete cited adapter delivery and provider-boundary context. Role
   comparisons narrow the failure to developer-message handling in the installed
   provider/model combination; provider conversion versus model internals remains unresolved.
-- Run the updated GitHub Actions matrix and complete native Windows host and
-  logon-startup acceptance. Remote verification passes both runners through
-  `c7ea37d` and Windows through `4db79b5`. The November 18 inspection identifies
-  the retired macOS runner and the workflow now pins `macos-15`. The new
-  assertion evaluation and Next.js patch have local gate evidence and still
-  need both remote jobs. Native Windows host/session acceptance remains open.
+- Verify published CI for the November 21 policy-reference evaluation. Both
+  runners pass through `45ae572`, including the `macos-15` replacement and
+  the Next.js patch. Complete native Windows host and logon-startup acceptance.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
   two-repeat miniature multi-file corpus are recorded, but support no general
@@ -1577,6 +1609,13 @@ model-consumption, and hook-latency acceptance remain open.
   shared-subject collisions and local false positives still reject it. Preserve
   every earlier gate and the two frozen corpora while resolving those failures
   and checking independently authored cases.
+  November 21 recovers the measured distant antecedents and suppresses selected
+  shared-term collisions. The reference corpus shows remaining errors on shared
+  terms, ambiguous references and malformed calls. Next isolate those failures
+  with matched policy and local requests that differ only in reference and subject
+  scope, retaining all three frozen corpora and the prior positive exact and
+  no-op gates. Independently authored cases and judgment are required before
+  production adoption.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve
