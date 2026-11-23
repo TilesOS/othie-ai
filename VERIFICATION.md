@@ -1558,6 +1558,33 @@ passes clean install, typechecks, website lint, and tests on macOS 15 and
 Windows, including the November 21 reference and matched scope changes.
 Windows startup script syntax also passes. Native desktop acceptance remains open.
 
+## November 22 clause request follow-up
+
+The [clause request records](packages/engine/evaluation/records/2026-11-22/request-followup/README.md)
+compare source admission per detected request and an additional strict-subset
+term filter. Eight new documents and 18 prompts were frozen before the
+implementation. Both strategies keep admitted evidence verbatim and use the
+shared packer. All 1,408 candidate rows pass citation and token checks. All
+4,424 baseline, 1,264 assertion, and 1,264 reference rows on the four preceding
+corpora match their archives except component time. Their summaries match.
+
+Per mode, `request-specific` improves the matched pairs from 1/9 to 6/9 and
+no-ops from 2/16 to 14/16 against `reference-focus`. On the new corpus it
+retains recall of 26/26, improves exact positives from 4/26 to 16/26, and
+improves no-ops from 0/10 to 10/10. Both candidates lose the historical
+implicit refund replacement. The strict-subset filter also loses the current
+rinse standard and the vendor certificate source on earlier controls. All
+candidate pre-packing and exported source sets agree. Both arms fail overall
+acceptance. Production retrieval continues to use its existing path.
+
+Local workspace build, typechecks, website lint and 324 deterministic tests
+pass. One opt-in real-model test is skipped. Both compiled adapters pass all
+24 conditions at the 2,000 ms default, with 259–280 ms parent wall time. The
+refresh reports seven moderate development audit entries, zero production
+findings, and the same parser release tags. Published CI passes through
+`c2c2b0b` on macOS 15 and Windows. CI for the new scope evaluator and native
+acceptance remain open.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
@@ -1647,9 +1674,14 @@ Windows startup script syntax also passes. Native desktop acceptance remains ope
   of the eight pairs that require different evidence. Evaluate active policy
   requests at the clause level, including requests that introduce a second
   policy, quotes and local mentions, and references that need clarification.
-  Preserve the four frozen corpora, explicit no-op and positive exact gates,
-  genuine negative rules and opposing standards. Independently authored cases
-  and judgment are required before production adoption.
+  November 22 shows that separating clause requests improves no-ops and resolves
+  selected antecedents but misses an implicit replacement. Its term-subset
+  filter can remove a required source from a compound request or suppress one
+  side of a conflict. Next evaluate subject-to-request binding for coordinated
+  and implicit requests and distinguish a statement of policy from an index
+  mention. Preserve all five frozen corpora, explicit no-op and positive exact
+  gates, genuine negative rules, and opposing standards. Independently authored
+  cases and judgment are required before production adoption.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve
