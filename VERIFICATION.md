@@ -1552,9 +1552,11 @@ Full build, typechecks, website lint and 321 deterministic tests pass with one
 opt-in real-model test skipped. The compiled adapter check passes 24/24 at the
 default 2,000 ms deadline, with 257–285 ms parent wall time. The isolated parser
 canary still reverses the two astral filename decisions. The fresh audits report
-seven moderate development entries and zero production findings. GitHub Actions
-still reports `45ae572` as the latest run on `main`. Native desktop acceptance
-and CI for the November 21 evaluator changes remain open.
+seven moderate development entries and zero production findings. The
+[published run for `c2c2b0b`](https://github.com/TilesOS/othie-ai/actions/runs/44975994626)
+passes clean install, typechecks, website lint, and tests on macOS 15 and
+Windows, including the November 21 reference and matched scope changes.
+Windows startup script syntax also passes. Native desktop acceptance remains open.
 
 ## Remaining acceptance work
 
@@ -1578,10 +1580,8 @@ and CI for the November 21 evaluator changes remain open.
   October 23 with complete cited adapter delivery and provider-boundary context. Role
   comparisons narrow the failure to developer-message handling in the installed
   provider/model combination; provider conversion versus model internals remains unresolved.
-- Verify published CI for the November 21 policy-reference and matched scope
-  evaluations. Both runners pass through `45ae572`, including the `macos-15`
-  replacement and the Next.js patch. Exact-commit queries for `70b9d07` and
-  `950dd43` returned no runs. Complete native Windows host and logon-startup acceptance.
+- Complete native Windows host and logon-startup acceptance. The published
+  desktop matrix passes through `c2c2b0b`, including both November 21 evaluator changes.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
   two-repeat miniature multi-file corpus are recorded, but support no general
