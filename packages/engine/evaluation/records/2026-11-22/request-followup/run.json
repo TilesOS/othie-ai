@@ -1,0 +1,3071 @@
+{
+  "fixture_revision": "a0c7930b01c3034efde8ba5f39a56c14d67d8b3b",
+  "source_revision": "f65ce08fdc6b1bdb4b3636d1978db6342f0b2291",
+  "corpora": {
+    "qualified-bindings": {
+      "fixture_sha256": "6c40036709f097cdc9564b1e99cb2dab0de27b96aa77669e0885505a027df638",
+      "artifacts": {
+        "query-scope.js": "375a67868c5ab649931a58244a2bb0627fb88ff2cc22a499b2601ccae3688621",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "3c9daa91fa4941988232fefd890538a326c401ce9b79b1c965d6ad18beea3400",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "parity_rows": {
+        "baseline": 2520,
+        "assertion": 720,
+        "reference": 720
+      },
+      "candidate_rows": 720,
+      "report_sha256": "80c47217eb161a68bf5253dbf8e80810421c69be18bc13a2351cddaccfa2dd6d",
+      "previous_applicability_query_terms": {
+        "total": 40,
+        "unchanged": 39
+      },
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 98,
+            "total": 98
+          },
+          "no_op": {
+            "correct": 82,
+            "total": 82
+          },
+          "combined": {
+            "correct": 180,
+            "total": 180
+          },
+          "positive_exact": {
+            "correct": 94,
+            "total": 98
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 98
+          },
+          "positive_source_precision": {
+            "relevant": 120,
+            "retrieved": 128
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-union",
+          "positive": {
+            "correct": 96,
+            "total": 98
+          },
+          "no_op": {
+            "correct": 82,
+            "total": 82
+          },
+          "combined": {
+            "correct": 178,
+            "total": 180
+          },
+          "positive_exact": {
+            "correct": 92,
+            "total": 98
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 98
+          },
+          "positive_source_precision": {
+            "relevant": 118,
+            "retrieved": 126
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-specific",
+          "positive": {
+            "correct": 96,
+            "total": 98
+          },
+          "no_op": {
+            "correct": 82,
+            "total": 82
+          },
+          "combined": {
+            "correct": 178,
+            "total": 180
+          },
+          "positive_exact": {
+            "correct": 92,
+            "total": 98
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 98
+          },
+          "positive_source_precision": {
+            "relevant": 118,
+            "retrieved": 126
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 98,
+            "total": 98
+          },
+          "no_op": {
+            "correct": 82,
+            "total": 82
+          },
+          "combined": {
+            "correct": 180,
+            "total": 180
+          },
+          "positive_exact": {
+            "correct": 94,
+            "total": 98
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 98
+          },
+          "positive_source_precision": {
+            "relevant": 120,
+            "retrieved": 128
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-union",
+          "positive": {
+            "correct": 96,
+            "total": 98
+          },
+          "no_op": {
+            "correct": 82,
+            "total": 82
+          },
+          "combined": {
+            "correct": 178,
+            "total": 180
+          },
+          "positive_exact": {
+            "correct": 92,
+            "total": 98
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 98
+          },
+          "positive_source_precision": {
+            "relevant": 118,
+            "retrieved": 126
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-specific",
+          "positive": {
+            "correct": 96,
+            "total": 98
+          },
+          "no_op": {
+            "correct": 82,
+            "total": 82
+          },
+          "combined": {
+            "correct": 178,
+            "total": 180
+          },
+          "positive_exact": {
+            "correct": 92,
+            "total": 98
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 98
+          },
+          "positive_source_precision": {
+            "relevant": 118,
+            "retrieved": 126
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        }
+      ],
+      "changes": [
+        {
+          "strategy": "request-union",
+          "cases": [
+            {
+              "id": "native-refund-service",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-export.md",
+                  "legacy-export.md",
+                  "refunds.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-export.md",
+                  "legacy-export.md",
+                  "refunds.md"
+                ]
+              }
+            },
+            {
+              "id": "clause-prose-sort",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-export.md",
+                  "legacy-export.md",
+                  "refunds.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-export.md",
+                  "legacy-export.md",
+                  "refunds.md"
+                ]
+              }
+            },
+            {
+              "id": "qualified-implicit-replacement",
+              "before": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "refunds.md"
+                ]
+              },
+              "after": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": []
+              }
+            }
+          ]
+        },
+        {
+          "strategy": "request-specific",
+          "cases": [
+            {
+              "id": "native-refund-service",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-export.md",
+                  "legacy-export.md",
+                  "refunds.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-export.md",
+                  "legacy-export.md",
+                  "refunds.md"
+                ]
+              }
+            },
+            {
+              "id": "clause-prose-sort",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-export.md",
+                  "legacy-export.md",
+                  "refunds.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-export.md",
+                  "legacy-export.md",
+                  "refunds.md"
+                ]
+              }
+            },
+            {
+              "id": "qualified-implicit-replacement",
+              "before": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "refunds.md"
+                ]
+              },
+              "after": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "scope-transfer": {
+      "fixture_sha256": "b75e3cd14868c0ef9cec37ceede352a5f153676b384ec687d89d9b3c2a7f952f",
+      "artifacts": {
+        "query-scope.js": "375a67868c5ab649931a58244a2bb0627fb88ff2cc22a499b2601ccae3688621",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-transfer-cases.js": "20a4df467098b8f4e1dc41a880951e6a3e98b15fd4273c2f54254bb30d959618",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "3c9daa91fa4941988232fefd890538a326c401ce9b79b1c965d6ad18beea3400",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "parity_rows": {
+        "baseline": 840,
+        "assertion": 240,
+        "reference": 240
+      },
+      "candidate_rows": 240,
+      "report_sha256": "1ca4bc076aa9b8973767312b16e6723a60210958933d6430eb3660027c2837ba",
+      "previous_applicability_query_terms": {
+        "total": 40,
+        "unchanged": 39
+      },
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 34,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 26,
+            "total": 26
+          },
+          "combined": {
+            "correct": 60,
+            "total": 60
+          },
+          "positive_exact": {
+            "correct": 34,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-union",
+          "positive": {
+            "correct": 34,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 26,
+            "total": 26
+          },
+          "combined": {
+            "correct": 60,
+            "total": 60
+          },
+          "positive_exact": {
+            "correct": 34,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-specific",
+          "positive": {
+            "correct": 34,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 26,
+            "total": 26
+          },
+          "combined": {
+            "correct": 60,
+            "total": 60
+          },
+          "positive_exact": {
+            "correct": 34,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 34,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 26,
+            "total": 26
+          },
+          "combined": {
+            "correct": 60,
+            "total": 60
+          },
+          "positive_exact": {
+            "correct": 34,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-union",
+          "positive": {
+            "correct": 34,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 26,
+            "total": 26
+          },
+          "combined": {
+            "correct": 60,
+            "total": 60
+          },
+          "positive_exact": {
+            "correct": 34,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-specific",
+          "positive": {
+            "correct": 34,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 26,
+            "total": 26
+          },
+          "combined": {
+            "correct": 60,
+            "total": 60
+          },
+          "positive_exact": {
+            "correct": 34,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        }
+      ],
+      "changes": [
+        {
+          "strategy": "request-union",
+          "cases": []
+        },
+        {
+          "strategy": "request-specific",
+          "cases": []
+        }
+      ]
+    },
+    "scope-reference": {
+      "fixture_sha256": "c5b52aafb4db9ecb27daadd08ad2cb58d467beab3e6b41b17ee274248e7e4aef",
+      "artifacts": {
+        "query-scope.js": "375a67868c5ab649931a58244a2bb0627fb88ff2cc22a499b2601ccae3688621",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-reference-cases.js": "4bc342112744a06e8fa33a223b51e723bda90e1e0eb9f18060bec12f77baa0b5",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "3c9daa91fa4941988232fefd890538a326c401ce9b79b1c965d6ad18beea3400",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "parity_rows": {
+        "baseline": 560,
+        "assertion": 160,
+        "reference": 160
+      },
+      "candidate_rows": 160,
+      "report_sha256": "372af5c930a9c77c02be643161c28368b276c9e5e18e66b3a25b03c5aa3ece17",
+      "previous_applicability_query_terms": {
+        "total": 40,
+        "unchanged": 39
+      },
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 24,
+            "total": 24
+          },
+          "no_op": {
+            "correct": 12,
+            "total": 16
+          },
+          "combined": {
+            "correct": 36,
+            "total": 40
+          },
+          "positive_exact": {
+            "correct": 14,
+            "total": 24
+          },
+          "positive_with_additional_sources": {
+            "count": 10,
+            "total": 24
+          },
+          "positive_source_precision": {
+            "relevant": 36,
+            "retrieved": 50
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-union",
+          "positive": {
+            "correct": 24,
+            "total": 24
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 40,
+            "total": 40
+          },
+          "positive_exact": {
+            "correct": 16,
+            "total": 24
+          },
+          "positive_with_additional_sources": {
+            "count": 8,
+            "total": 24
+          },
+          "positive_source_precision": {
+            "relevant": 36,
+            "retrieved": 46
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-specific",
+          "positive": {
+            "correct": 22,
+            "total": 24
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 38,
+            "total": 40
+          },
+          "positive_exact": {
+            "correct": 20,
+            "total": 24
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 24
+          },
+          "positive_source_precision": {
+            "relevant": 34,
+            "retrieved": 40
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 24,
+            "total": 24
+          },
+          "no_op": {
+            "correct": 12,
+            "total": 16
+          },
+          "combined": {
+            "correct": 36,
+            "total": 40
+          },
+          "positive_exact": {
+            "correct": 14,
+            "total": 24
+          },
+          "positive_with_additional_sources": {
+            "count": 10,
+            "total": 24
+          },
+          "positive_source_precision": {
+            "relevant": 36,
+            "retrieved": 50
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-union",
+          "positive": {
+            "correct": 24,
+            "total": 24
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 40,
+            "total": 40
+          },
+          "positive_exact": {
+            "correct": 16,
+            "total": 24
+          },
+          "positive_with_additional_sources": {
+            "count": 8,
+            "total": 24
+          },
+          "positive_source_precision": {
+            "relevant": 36,
+            "retrieved": 46
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-specific",
+          "positive": {
+            "correct": 22,
+            "total": 24
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 38,
+            "total": 40
+          },
+          "positive_exact": {
+            "correct": 20,
+            "total": 24
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 24
+          },
+          "positive_source_precision": {
+            "relevant": 34,
+            "retrieved": 40
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        }
+      ],
+      "changes": [
+        {
+          "strategy": "request-union",
+          "cases": [
+            {
+              "id": "ref-loan-distant",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "legacy-disposal.md",
+                  "loan-policy.md",
+                  "primary-disposal.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "loan-policy.md"
+                ]
+              }
+            },
+            {
+              "id": "ref-opposition",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "inventory-reports.md",
+                  "legacy-disposal.md",
+                  "primary-disposal.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "inventory-reports.md",
+                  "legacy-disposal.md",
+                  "primary-disposal.md"
+                ]
+              }
+            },
+            {
+              "id": "ref-subset-source",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "grant-policy.md",
+                  "lab-calibration.md",
+                  "primary-disposal.md",
+                  "vendor-certificates.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "grant-policy.md",
+                  "lab-calibration.md",
+                  "primary-disposal.md",
+                  "vendor-certificates.md"
+                ]
+              }
+            },
+            {
+              "id": "ref-negative-rule",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "lab-calibration.md",
+                  "vendor-certificates.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "lab-calibration.md",
+                  "vendor-certificates.md"
+                ]
+              }
+            },
+            {
+              "id": "ref-reference-ambiguous",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "grant-policy.md",
+                  "incident-desk.md",
+                  "lab-calibration.md",
+                  "legacy-disposal.md",
+                  "vendor-certificates.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "ref-disclaimer",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "incident-desk.md",
+                  "lab-calibration.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "incident-desk.md",
+                  "lab-calibration.md"
+                ]
+              }
+            },
+            {
+              "id": "ref-malformed",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "loan-policy.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            }
+          ]
+        },
+        {
+          "strategy": "request-specific",
+          "cases": [
+            {
+              "id": "ref-loan-distant",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "legacy-disposal.md",
+                  "loan-policy.md",
+                  "primary-disposal.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "loan-policy.md"
+                ]
+              }
+            },
+            {
+              "id": "ref-opposition",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "inventory-reports.md",
+                  "legacy-disposal.md",
+                  "primary-disposal.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "legacy-disposal.md",
+                  "primary-disposal.md"
+                ]
+              }
+            },
+            {
+              "id": "ref-subset-source",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "grant-policy.md",
+                  "lab-calibration.md",
+                  "primary-disposal.md",
+                  "vendor-certificates.md"
+                ]
+              },
+              "after": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "grant-policy.md",
+                  "lab-calibration.md",
+                  "primary-disposal.md"
+                ]
+              }
+            },
+            {
+              "id": "ref-negative-rule",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "lab-calibration.md",
+                  "vendor-certificates.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "vendor-certificates.md"
+                ]
+              }
+            },
+            {
+              "id": "ref-reference-ambiguous",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "grant-policy.md",
+                  "incident-desk.md",
+                  "lab-calibration.md",
+                  "legacy-disposal.md",
+                  "vendor-certificates.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "ref-disclaimer",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "incident-desk.md",
+                  "lab-calibration.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "incident-desk.md",
+                  "lab-calibration.md"
+                ]
+              }
+            },
+            {
+              "id": "ref-malformed",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "loan-policy.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "scope-contrast": {
+      "fixture_sha256": "d8df8117f2755b42f0d9515b590168e9e18c1630196ec79fd47651cf20da4d76",
+      "artifacts": {
+        "query-scope.js": "375a67868c5ab649931a58244a2bb0627fb88ff2cc22a499b2601ccae3688621",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-contrast-cases.js": "e5ba433afb02cb64f37ec6208b2f540f60bd5b076ebf9fbc7e58bc624fbbe759",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "3c9daa91fa4941988232fefd890538a326c401ce9b79b1c965d6ad18beea3400",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "parity_rows": {
+        "baseline": 504,
+        "assertion": 144,
+        "reference": 144
+      },
+      "candidate_rows": 144,
+      "report_sha256": "943ffe4c6b7eacb37a63e3b63799a1dd8c1406e0f41c144f34cce26107ce46d4",
+      "previous_applicability_query_terms": {
+        "total": 40,
+        "unchanged": 39
+      },
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 2,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 18,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 50
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-union",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 14,
+            "total": 16
+          },
+          "combined": {
+            "correct": 34,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 50
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-specific",
+          "positive": {
+            "correct": 18,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 14,
+            "total": 16
+          },
+          "combined": {
+            "correct": 32,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 14,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 24,
+            "retrieved": 28
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 16
+          },
+          "combined": {
+            "correct": 22,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 2,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 18,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 50
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-union",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 14,
+            "total": 16
+          },
+          "combined": {
+            "correct": 34,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 0,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 20,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 50
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-specific",
+          "positive": {
+            "correct": 18,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 14,
+            "total": 16
+          },
+          "combined": {
+            "correct": 32,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 14,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 24,
+            "retrieved": 28
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        }
+      ],
+      "pair_scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "reference-focus",
+          "passing_pairs": [
+            "replacement-intent"
+          ]
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-union",
+          "passing_pairs": [
+            "call-syntax"
+          ]
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-specific",
+          "passing_pairs": [
+            "replacement-intent",
+            "antecedent-choice",
+            "call-syntax",
+            "authority",
+            "second-clause",
+            "negated-lookup"
+          ]
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "reference-focus",
+          "passing_pairs": [
+            "replacement-intent"
+          ]
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-union",
+          "passing_pairs": [
+            "call-syntax"
+          ]
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-specific",
+          "passing_pairs": [
+            "replacement-intent",
+            "antecedent-choice",
+            "call-syntax",
+            "authority",
+            "second-clause",
+            "negated-lookup"
+          ]
+        }
+      ],
+      "changes": [
+        {
+          "strategy": "request-union",
+          "cases": [
+            {
+              "id": "replacement-intent-1",
+              "before": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              }
+            },
+            {
+              "id": "antecedent-choice-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "report-layout.md"
+                ]
+              }
+            },
+            {
+              "id": "antecedent-choice-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "call-syntax-1",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "call-syntax-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "authority-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              }
+            },
+            {
+              "id": "authority-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "shared-subject-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              }
+            },
+            {
+              "id": "shared-subject-2",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              }
+            },
+            {
+              "id": "second-clause-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              }
+            },
+            {
+              "id": "second-clause-2",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              }
+            },
+            {
+              "id": "opposing-standards-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-rinse.md",
+                  "legacy-rinse.md",
+                  "report-layout.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-rinse.md",
+                  "legacy-rinse.md",
+                  "report-layout.md"
+                ]
+              }
+            },
+            {
+              "id": "opposing-standards-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-rinse.md",
+                  "legacy-rinse.md",
+                  "report-layout.md"
+                ]
+              },
+              "after": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-rinse.md",
+                  "legacy-rinse.md",
+                  "report-layout.md"
+                ]
+              }
+            },
+            {
+              "id": "negated-lookup-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              }
+            },
+            {
+              "id": "negated-lookup-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "quoted-reference-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "outage-log.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "outage-log.md",
+                  "specimen-labels.md"
+                ]
+              }
+            },
+            {
+              "id": "quoted-reference-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "outage-log.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            }
+          ]
+        },
+        {
+          "strategy": "request-specific",
+          "cases": [
+            {
+              "id": "antecedent-choice-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "parcel-labels.md"
+                ]
+              }
+            },
+            {
+              "id": "antecedent-choice-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "call-syntax-1",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "call-syntax-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "authority-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "specimen-labels.md"
+                ]
+              }
+            },
+            {
+              "id": "authority-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "shared-subject-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "archive-badges.md"
+                ]
+              }
+            },
+            {
+              "id": "shared-subject-2",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              }
+            },
+            {
+              "id": "second-clause-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "specimen-labels.md"
+                ]
+              }
+            },
+            {
+              "id": "second-clause-2",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "parcel-labels.md",
+                  "report-layout.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "specimen-labels.md"
+                ]
+              }
+            },
+            {
+              "id": "opposing-standards-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-rinse.md",
+                  "legacy-rinse.md",
+                  "report-layout.md"
+                ]
+              },
+              "after": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "legacy-rinse.md"
+                ]
+              }
+            },
+            {
+              "id": "opposing-standards-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "current-rinse.md",
+                  "legacy-rinse.md",
+                  "report-layout.md"
+                ]
+              },
+              "after": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "legacy-rinse.md"
+                ]
+              }
+            },
+            {
+              "id": "negated-lookup-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "archive-badges.md"
+                ]
+              }
+            },
+            {
+              "id": "negated-lookup-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "archive-badges.md",
+                  "report-layout.md",
+                  "visitor-badges.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "quoted-reference-1",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "outage-log.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "outage-log.md",
+                  "specimen-labels.md"
+                ]
+              }
+            },
+            {
+              "id": "quoted-reference-2",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "outage-log.md",
+                  "specimen-labels.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "scope-request": {
+      "fixture_sha256": "0a2548409e940d19324f5b54d8449eb73f7ef5e5f688fd0042c53e1601dd2dcf",
+      "artifacts": {
+        "query-scope.js": "375a67868c5ab649931a58244a2bb0627fb88ff2cc22a499b2601ccae3688621",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-request-cases.js": "ab6b08c12f8d936cc0fd4742c0638bd5499452349b5fb83a35375dd08dd60caf",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "3c9daa91fa4941988232fefd890538a326c401ce9b79b1c965d6ad18beea3400",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "parity_rows": null,
+      "candidate_rows": 144,
+      "report_sha256": "d117353861a7486cfaa7e4f6db1753bbb678438846a248ef149d10c712f2da7c",
+      "previous_applicability_query_terms": {
+        "total": 40,
+        "unchanged": 39
+      },
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 26,
+            "total": 26
+          },
+          "no_op": {
+            "correct": 0,
+            "total": 10
+          },
+          "combined": {
+            "correct": 26,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 4,
+            "total": 26
+          },
+          "positive_with_additional_sources": {
+            "count": 22,
+            "total": 26
+          },
+          "positive_source_precision": {
+            "relevant": 32,
+            "retrieved": 80
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-union",
+          "positive": {
+            "correct": 26,
+            "total": 26
+          },
+          "no_op": {
+            "correct": 10,
+            "total": 10
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 2,
+            "total": 26
+          },
+          "positive_with_additional_sources": {
+            "count": 24,
+            "total": 26
+          },
+          "positive_source_precision": {
+            "relevant": 32,
+            "retrieved": 72
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-specific",
+          "positive": {
+            "correct": 26,
+            "total": 26
+          },
+          "no_op": {
+            "correct": 10,
+            "total": 10
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 16,
+            "total": 26
+          },
+          "positive_with_additional_sources": {
+            "count": 10,
+            "total": 26
+          },
+          "positive_source_precision": {
+            "relevant": 32,
+            "retrieved": 48
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "reference-focus",
+          "positive": {
+            "correct": 26,
+            "total": 26
+          },
+          "no_op": {
+            "correct": 0,
+            "total": 10
+          },
+          "combined": {
+            "correct": 26,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 4,
+            "total": 26
+          },
+          "positive_with_additional_sources": {
+            "count": 22,
+            "total": 26
+          },
+          "positive_source_precision": {
+            "relevant": 32,
+            "retrieved": 80
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-union",
+          "positive": {
+            "correct": 26,
+            "total": 26
+          },
+          "no_op": {
+            "correct": 10,
+            "total": 10
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 2,
+            "total": 26
+          },
+          "positive_with_additional_sources": {
+            "count": 24,
+            "total": 26
+          },
+          "positive_source_precision": {
+            "relevant": 32,
+            "retrieved": 72
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-specific",
+          "positive": {
+            "correct": 26,
+            "total": 26
+          },
+          "no_op": {
+            "correct": 10,
+            "total": 10
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 16,
+            "total": 26
+          },
+          "positive_with_additional_sources": {
+            "count": 10,
+            "total": 26
+          },
+          "positive_source_precision": {
+            "relevant": 32,
+            "retrieved": 48
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        }
+      ],
+      "changes": [
+        {
+          "strategy": "request-union",
+          "cases": [
+            {
+              "id": "request-second-policy",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "fleet-charging.md",
+                  "forklift-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "fleet-charging.md",
+                  "forklift-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              }
+            },
+            {
+              "id": "request-second-mention",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "fleet-charging.md",
+                  "forklift-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "fleet-charging.md",
+                  "forklift-charging.md",
+                  "index-layout.md"
+                ]
+              }
+            },
+            {
+              "id": "request-second-semicolon",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "fleet-charging.md",
+                  "forklift-charging.md",
+                  "index-layout.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "fleet-charging.md",
+                  "forklift-charging.md",
+                  "index-layout.md"
+                ]
+              }
+            },
+            {
+              "id": "request-first-local",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "fleet-charging.md",
+                  "forklift-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              }
+            },
+            {
+              "id": "request-source-denied",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "fleet-charging.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "request-prohibition",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "cold-room.md",
+                  "index-layout.md",
+                  "loading-bay.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "cold-room.md",
+                  "index-layout.md",
+                  "loading-bay.md"
+                ]
+              }
+            },
+            {
+              "id": "request-both-standards",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "cold-room.md",
+                  "index-layout.md",
+                  "loading-bay.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "cold-room.md",
+                  "index-layout.md",
+                  "loading-bay.md"
+                ]
+              }
+            },
+            {
+              "id": "request-quoted-label",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "index-layout.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "request-quoted-rule",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "index-layout.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "index-layout.md"
+                ]
+              }
+            },
+            {
+              "id": "request-unquoted-literal",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "forklift-charging.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "request-literal-and-rule",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "forklift-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "forklift-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              }
+            },
+            {
+              "id": "request-ordinal",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              }
+            },
+            {
+              "id": "request-switch",
+              "before": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "audit-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "index-layout.md"
+                ]
+              }
+            },
+            {
+              "id": "request-deferred",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "request-deferred-and-rule",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "cold-room.md",
+                  "index-layout.md",
+                  "loading-bay.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "cold-room.md",
+                  "index-layout.md",
+                  "loading-bay.md"
+                ]
+              }
+            },
+            {
+              "id": "request-code-subject",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "forklift-charging.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "request-disclaimer-boundary",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "dispatch-log.md",
+                  "fleet-charging.md",
+                  "forklift-charging.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "dispatch-log.md",
+                  "fleet-charging.md",
+                  "forklift-charging.md"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "strategy": "request-specific",
+          "cases": [
+            {
+              "id": "request-second-policy",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "fleet-charging.md",
+                  "forklift-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "fleet-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              }
+            },
+            {
+              "id": "request-second-mention",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "fleet-charging.md",
+                  "forklift-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "fleet-charging.md"
+                ]
+              }
+            },
+            {
+              "id": "request-second-semicolon",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "fleet-charging.md",
+                  "forklift-charging.md",
+                  "index-layout.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "fleet-charging.md",
+                  "index-layout.md"
+                ]
+              }
+            },
+            {
+              "id": "request-first-local",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "fleet-charging.md",
+                  "forklift-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              }
+            },
+            {
+              "id": "request-source-denied",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "fleet-charging.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "request-prohibition",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "cold-room.md",
+                  "index-layout.md",
+                  "loading-bay.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "cold-room.md"
+                ]
+              }
+            },
+            {
+              "id": "request-both-standards",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "cold-room.md",
+                  "index-layout.md",
+                  "loading-bay.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "cold-room.md",
+                  "loading-bay.md"
+                ]
+              }
+            },
+            {
+              "id": "request-quoted-label",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "index-layout.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "request-quoted-rule",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "index-layout.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "audit-retention.md"
+                ]
+              }
+            },
+            {
+              "id": "request-unquoted-literal",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "forklift-charging.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "request-literal-and-rule",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "forklift-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "forklift-charging.md",
+                  "index-layout.md",
+                  "media-retention.md"
+                ]
+              }
+            },
+            {
+              "id": "request-ordinal",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "media-retention.md"
+                ]
+              }
+            },
+            {
+              "id": "request-deferred",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "request-deferred-and-rule",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "audit-retention.md",
+                  "cold-room.md",
+                  "index-layout.md",
+                  "loading-bay.md",
+                  "media-retention.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": [
+                  "cold-room.md"
+                ]
+              }
+            },
+            {
+              "id": "request-code-subject",
+              "before": {
+                "correct": false,
+                "precise_correct": false,
+                "actual_sources": [
+                  "forklift-charging.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": true,
+                "actual_sources": []
+              }
+            },
+            {
+              "id": "request-disclaimer-boundary",
+              "before": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "dispatch-log.md",
+                  "fleet-charging.md",
+                  "forklift-charging.md"
+                ]
+              },
+              "after": {
+                "correct": true,
+                "precise_correct": false,
+                "actual_sources": [
+                  "dispatch-log.md",
+                  "fleet-charging.md",
+                  "forklift-charging.md"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "evidence_sha256": "994e8eac5e4e3bef11a52710b3d9443feb5236124820ff8a44a0bbe648b8eeff"
+}
