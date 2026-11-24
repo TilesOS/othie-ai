@@ -1,0 +1,118 @@
+{
+  "attempt": 2,
+  "head_sha": "d591b154ff9a71f43ba26b87136a4baafc6bf042",
+  "conclusion": "success",
+  "url": "https://github.com/TilesOS/othie-ai/actions/runs/45232814879",
+  "initial_macos_attempt": {
+    "job_id": 137896588665,
+    "conclusion": "cancelled",
+    "steps": 0,
+    "annotation": "The job was not acquired by Runner of type hosted even after multiple attempts"
+  },
+  "jobs": [
+    {
+      "id": 138214857768,
+      "runner": "desktop (macos-15)",
+      "url": "https://github.com/TilesOS/othie-ai/actions/runs/45232814879/job/138214857768",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run typecheck",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run lint --workspace=@othie/website",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm test",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check Windows startup script syntax",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 138214859538,
+      "runner": "desktop (windows-latest)",
+      "url": "https://github.com/TilesOS/othie-ai/actions/runs/45232814879/job/138214859538",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run typecheck",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run lint --workspace=@othie/website",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm test",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check Windows startup script syntax",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}
