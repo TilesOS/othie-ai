@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 21, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 23, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci --no-audit` | November 18 clean installation passes with the updated lockfile |
 | `npm run build` | All workspaces pass and Next.js 16.4.6 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | November 21 workspace run passes 321 deterministic tests and skips one opt-in real-model test |
+| `npm test` | November 23 workspace run passes 327 deterministic tests and skips one opt-in real-model test |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | November 21 compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 257–285 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -55,6 +55,10 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 21 policy reference evaluation | 1,120 new candidate rows and unchanged prior rows. The focused arm passes 94/98 historical, 34/34 transfer, and 14/24 new-corpus positive exact checks per export mode. The new corpus rejects both variants. |
 | November 21 matched policy scope evaluation | 792 contrast rows and 6,160 stable prior rows. The focused arm passes 20/20 recall, 2/20 positive exact and 2/16 no-ops per mode. It passes both prompts in 1/9 pairs. All strategies fail acceptance. |
 | November 21 parser canary comparison | Installed parser passes 30/30. TypeScript ESLint 8.73.1-alpha.11 with minimatch 11.0.9 passes 28/30, reversing both astral filename decisions. |
+| November 23 request subject evaluation | 776 candidate rows and unchanged prior corpus results. Full recall in all six corpora and 8/9 matched pairs pass per export mode. Extra evidence and one new-corpus no-op reject acceptance. |
+| November 23 published desktop CI | `d591b15` passes macOS 15 and Windows after a targeted retry of the macOS job. Windows startup-script syntax passes. |
+| November 23 parser comparison | Installed parser passes 30/30. Stable 8.74.0 and canary 8.74.1-alpha.0 each pass 28/30 with minimatch 11.0.9. Both reverse the same astral filename decisions. |
+| November 23 compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass. Parent process wall time is 261–283 ms on the synthetic lexical workload. |
 | November 10 prior-history CI inspection/retry | `ed3dcdb` passes Windows installation, typechecks, lint, tests and startup syntax; macOS cancelled without steps in both the initial run and one requested retry; macOS remains open |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
@@ -65,9 +69,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
 | Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
 | `git diff --check` | Pass |
-| `npm audit` and `npm audit --omit=dev` | November 21 refresh reports seven moderate development entries and zero production findings. Parser remediation still needs compatible file admission. |
+| `npm audit` and `npm audit --omit=dev` | November 23 refresh reports seven moderate development entries and zero production findings. Parser remediation still needs compatible file admission. |
 
-The full suite comprises 172 engine, 30 shared-hook, 102 website, 10 Codex, and seven
+The full suite comprises 178 engine, 30 shared-hook, 102 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1585,13 +1589,43 @@ findings, and the same parser release tags. Published CI passes through
 `c2c2b0b` on macOS 15 and Windows. CI for the new scope evaluator and native
 acceptance remain open.
 
+## November 23 request subject follow-up
+
+The [request subject records](packages/engine/evaluation/records/2026-11-23/subject-followup/README.md)
+compare an evaluation-only candidate for coordinated subjects, implicit call
+replacements, and descriptive index mentions. The new eight-document, 18-prompt
+corpus was frozen before implementation. All 776 candidate rows pass citation
+and token checks. All 4,928 baseline rows and 1,408 rows each for assertion,
+reference and clause-request arms match the five preceding corpora except
+component time. Their summaries match.
+
+Per mode, `request-subject` recovers full recall across all six corpora and
+passes all 98 historical exact positives. The matched contrasts improve from
+6/9 to 8/9 passing pairs. The new corpus passes all 28 positive recall checks,
+24/28 positive exact checks and 6/8 no-ops. Competing standards remain an
+exact-source failure when a request selects one standard or one policy position.
+The candidate regresses on two cold-room prohibition prompts from the preceding
+corpus and retrieves incidental evidence on the descriptive-index control.
+All candidate source sets match pre-packing and exported evidence. The
+candidate fails overall acceptance and remains isolated in the evaluator.
+
+Local build, typechecks, website lint, and 327 deterministic tests pass. One
+opt-in real-model test is skipped. The compiled adapters pass all 24 conditions
+at the default 2,000 ms deadline, with 261–283 ms parent wall time. The
+[published `d591b15` matrix](https://github.com/TilesOS/othie-ai/actions/runs/45232814879/attempts/2)
+passes install, typecheck, lint and tests on macOS and Windows. Windows
+startup-script syntax passes. The macOS job passed on its targeted retry after
+a hosted runner capacity cancellation. The fresh audit and parser results
+retain the existing dependency decision. Remote CI for this evaluator and
+native acceptance remain open.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
   parser with a compatible upstream fix or reviewed migration. The November 4
-  advisory revision excludes legacy 3.1.5. The November 18 upstream stable parser
-  8.73.0 and November 21 canary 8.73.1-alpha.11 both pass 28/30 controls with
-  minimatch 11.0.9. The same two astral filename admission decisions reverse.
+  advisory revision excludes legacy 3.1.5. The November 23 stable parser
+  8.74.0 and canary 8.74.1-alpha.0 both pass 28/30 controls with minimatch
+  11.0.9. The same two astral filename admission decisions reverse.
   Preserve file-admission behavior or explicitly review the change before
   adopting it. The full audit retains seven moderate development
   entries after the Next.js patch. The production audit reports zero findings.
@@ -1608,7 +1642,7 @@ acceptance remain open.
   comparisons narrow the failure to developer-message handling in the installed
   provider/model combination; provider conversion versus model internals remains unresolved.
 - Complete native Windows host and logon-startup acceptance. The published
-  desktop matrix passes through `c2c2b0b`, including both November 21 evaluator changes.
+  desktop matrix passes through `d591b15`, including the November 22 clause evaluator.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
   two-repeat miniature multi-file corpus are recorded, but support no general
@@ -1682,6 +1716,13 @@ acceptance remain open.
   mention. Preserve all five frozen corpora, explicit no-op and positive exact
   gates, genuine negative rules, and opposing standards. Independently authored
   cases and judgment are required before production adoption.
+  November 23 adds a sixth frozen corpus and recovers the measured implicit
+  replacement and compound-request recall gaps. The next scope comparison
+  should distinguish the subject of a policy statement from its trigger or
+  exception and test selection of one standard or one policy position within
+  a shared subject. Preserve evidence for requests that explicitly compare
+  opposing standards. Include the index-use no-op wording in independent
+  review and keep all six corpora and prior failure records fixed.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve
