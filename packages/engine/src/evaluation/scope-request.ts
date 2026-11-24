@@ -20,10 +20,17 @@ const replacement = /^(?:apply|implement|enforce)\b.+\b(?:under|following|accord
 const localDescriptor = /\b(?:comparator|indentation|formatting|alphabetical\s+ordering|index\s+arithmetic)\b/iu;
 const ordinalCall = /\b(first|second|third|last)\s+call['’]s\b/iu;
 const ordinals = ["first", "second", "third"];
+const implicitReplacement = /^(?:apply|implement|enforce)\s+(?:the\s+)?(?:[\p{L}-]+\s+)?(?:eligibility|exceptions?)\b/iu;
+const quotedOutput = /^(?:print|render|display|show|put|write)\s+(?:["'`“‘]|the\s+(?:label|message|string)\b)/iu;
+const localFixtureCount = /\bonly\s+(?:the\s+)?(?:two|three|\d+)\s+(?:hard-coded|local|test)\b/iu;
+
+// Keep offsets stable so separators inside quoted data do not split requests.
+export function maskQuotedRequestText(text: string) {
+  return text.replace(quotedSpan, (span) => span.replace(/\S/g, "x"));
+}
 
 function requestClauses(query: string) {
-  // Keep offsets stable so separators inside quoted data do not split requests.
-  const masked = query.replace(quotedSpan, (span) => span.replace(/\S/g, "x"));
+  const masked = maskQuotedRequestText(query);
   return [...sentenceSegmenter.segment(masked)].flatMap(({ segment, index }) => {
     const clauses: string[] = [];
     let start = 0;
@@ -39,38 +46,46 @@ function requestClauses(query: string) {
 type Decision = "request" | "local" | "denied" | "literal" | "mention" | "deferred" | "unresolved";
 type Document = { name: string; text: string };
 
-/** Compare independent clause admission with a lexical specificity filter.
- * The latter removes only strict subsets of another source's clause overlap.
- * Equal overlaps can still express conflicting requirements.
- */
-export function requestAdmission(query: string, documents: readonly Document[], specific: boolean) {
+export function requestIntents(query: string, bindImplicit = false) {
   let antecedents: string[] = [];
-  const clauses = requestClauses(query).map((text) => {
+  return requestClauses(query).map((text) => {
     const calls = [...text.matchAll(call)].map((match) => match[1]!);
     const record = (decision: Decision, terms: string[] = [], required: string[] = []) => ({ text, decision, terms, required });
     if (interfacePreservation.test(text)) return record("local");
     const previousCalls = antecedents;
     antecedents = [];
     if (defer.test(text)) return record("deferred");
-    if (literalOutput.test(text)) return record("literal");
+    if (literalOutput.test(text) || (bindImplicit && quotedOutput.test(text))) return record("literal");
     if (mentions.test(text)) return record("mention");
     if (sourceDenial.test(text)) return record("denied");
-    if (localOnly.test(text)) return record("local");
+    if (localOnly.test(text) || (bindImplicit && localFixtureCount.test(text))) return record("local");
     if (switchCall.test(text) || (localOperation.test(text) && !policyCue.test(text))) {
       if (switchCall.test(text) || negatedOperation.test(text)) antecedents = calls;
       return record("local");
     }
-    const trace = referenceAdmission(text, documents, true);
-    if (!replacement.test(text)) return record("request", trace.terms, trace.focus_terms);
+    const trace = referenceAdmission(text, [], true);
+    const implicit = bindImplicit && previousCalls.length > 0 && implicitReplacement.test(text);
+    if (!replacement.test(text) && !implicit) {
+      if (bindImplicit && previousCalls.length && localDescriptor.test(text)) return record("local");
+      return record("request", trace.terms, trace.focus_terms);
+    }
     const ordinal = ordinalCall.exec(text)?.[1]?.toLowerCase();
     const pronoun = /\bits\b/iu.test(text);
     const index = ordinal === "last" ? previousCalls.length - 1 : ordinals.indexOf(ordinal ?? "");
     const selected = ordinal ? previousCalls[index] : previousCalls.length === 1 ? previousCalls[0] : undefined;
     if (localDescriptor.test(text)) return record("local");
-    if ((ordinal || pronoun) && !selected) return record("unresolved");
+    if ((ordinal || pronoun || implicit) && !selected) return record("unresolved");
     const required = selected ? meaningfulTerms(selected) : [];
     return record("request", [...new Set([...required, ...trace.terms])], required.length ? required : trace.focus_terms);
-  }).map((clause) => {
+  });
+}
+
+/** Compare independent clause admission with a lexical specificity filter.
+ * The latter removes only strict subsets of another source's clause overlap.
+ * Equal overlaps can still express conflicting requirements.
+ */
+export function requestAdmission(query: string, documents: readonly Document[], specific: boolean) {
+  const clauses = requestIntents(query).map((clause) => {
     if (!clause.terms.length) return { ...clause, admitted: [] };
     const matches = scopeAssertions(clause.terms, documents).filter(({ asserted_terms }) => asserted_terms.length);
     const focused = matches.filter(({ asserted_terms }) => clause.required.some((term) => asserted_terms.includes(term)));

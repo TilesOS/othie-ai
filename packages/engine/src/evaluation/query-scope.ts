@@ -31,6 +31,8 @@ import { scopeReferenceCases, scopeReferenceDocuments } from "./scope-reference-
 import { scopeContrastCases, scopeContrastDocuments } from "./scope-contrast-cases.js";
 import { scopeRequestCases, scopeRequestDocuments } from "./scope-request-cases.js";
 import { requestAdmission } from "./scope-request.js";
+import { scopeSubjectCases, scopeSubjectDocuments } from "./scope-subject-cases.js";
+import { subjectAdmission } from "./scope-subject.js";
 
 export const queryScopeStrategies = ["lexical", "drop-request", "mask-call-arguments"] as const;
 export const policyGuardStrategies = [...queryScopeStrategies, "policy-guarded-arguments"] as const;
@@ -44,13 +46,16 @@ const referenceStrategies = ["reference-only", "reference-focus"] as const;
 type ReferenceStrategy = typeof referenceStrategies[number];
 const requestStrategies = ["request-union", "request-specific"] as const;
 type RequestStrategy = typeof requestStrategies[number];
+const subjectStrategy = "request-subject";
 const standalone = {
   "scope-transfer": { name: "transfer", documents: scopeTransferDocuments, cases: scopeTransferCases },
   "scope-reference": { name: "reference", documents: scopeReferenceDocuments, cases: scopeReferenceCases },
   "scope-contrast": { name: "contrast", documents: scopeContrastDocuments, cases: scopeContrastCases },
   "scope-request": { name: "request", documents: scopeRequestDocuments, cases: scopeRequestCases },
+  "scope-subject": { name: "subject", documents: scopeSubjectDocuments, cases: scopeSubjectCases },
 };
 const extendedCorpora = ["qualified-bindings", ...Object.keys(standalone)];
+const candidates = ["assertion-subject", "scope-reference", "scope-request", "scope-subject"];
 
 /** Shadow interventions only. None is used by production retrieval. */
 export function queryScopeTerms(query: string, strategy: QueryScopeStrategy): string[] {
@@ -105,7 +110,7 @@ export function queryScopeOptions(argv: string[]) {
   if (diagnostics !== undefined && diagnostics !== "term-ablation") throw new Error("query scope diagnostics must be term-ablation");
   if (diagnostics && corpus !== "qualified-bindings" && corpus !== "scope-transfer") throw new Error("term-ablation requires qualified-bindings or scope-transfer corpus");
   const candidate = args.get("candidate");
-  if (candidate !== undefined && candidate !== "assertion-subject" && candidate !== "scope-reference" && candidate !== "scope-request") throw new Error("query scope candidate must be assertion-subject, scope-reference or scope-request");
+  if (candidate !== undefined && !candidates.includes(candidate)) throw new Error(`query scope candidate must be one of: ${candidates.join(", ")}`);
   if (candidate && !extendedCorpora.includes(corpus)) throw new Error(`${candidate} requires one of these corpora: ${extendedCorpora.join(", ")}`);
   return { out: resolve(out), repeats, corpus, diagnostics, candidate };
 }
@@ -129,6 +134,7 @@ type ReferenceResult = AdmissionResult<ReferenceStrategy> & {
   carried: string[]; replacement: string | null; focus_terms: string[]; admitted: string[];
 };
 type RequestResult = AdmissionResult<RequestStrategy> & Pick<ReturnType<typeof requestAdmission>, "clauses" | "admitted">;
+type SubjectResult = AdmissionResult<typeof subjectStrategy> & Pick<ReturnType<typeof subjectAdmission>, "clauses" | "admitted">;
 type TermDiagnostic = {
   id: string; mode: ScopeResult["mode"]; repeat: number; strategy: "qualified-bindings";
   matches: ReturnType<typeof scopeTermMatches>;
@@ -140,7 +146,8 @@ type TermDiagnostic = {
 export async function runQueryScope(options: ReturnType<typeof queryScopeOptions>) {
   const fixture = Object.hasOwn(standalone, options.corpus) ? standalone[options.corpus as keyof typeof standalone] : undefined;
   const extended = Boolean(fixture) || options.corpus === "qualified-bindings";
-  const compareRequests = options.candidate === "scope-request";
+  const compareSubjects = options.candidate === "scope-subject";
+  const compareRequests = options.candidate === "scope-request" || compareSubjects;
   const compareReferences = options.candidate === "scope-reference" || compareRequests;
   const documents = fixture?.documents ?? queryScopeDocuments;
   const cases = fixture?.cases ?? (options.corpus === "qualified-bindings" ? qualifiedBindingCases : options.corpus === "clause-bindings" ? clauseBindingCases : options.corpus === "local-bindings" ? localBindingCases : options.corpus === "policy-guard" ? policyGuardCases : queryScopeCases);
@@ -154,6 +161,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
   if (fixture) artifactNames.push(`${options.corpus}-cases.js`);
   if (compareReferences) artifactNames.push("scope-reference.js");
   if (compareRequests) artifactNames.push("scope-request.js");
+  if (compareSubjects) artifactNames.push("scope-subject.js");
   if (options.diagnostics || options.candidate) artifactNames.push("scope-term-diagnostics.js");
   if (options.candidate) artifactNames.push("assertion-subject.js");
   const artifacts = Object.fromEntries(await Promise.all(artifactNames.map(async (name) => [name, hash(await readFile(new URL(name, import.meta.url), "utf8"))])));
@@ -169,6 +177,9 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
     ...(compareRequests ? { request_candidate: { protocol: "scope-request-v1", strategies: requestStrategies,
       output: "request-candidates.json", intervention: "Admit sources independently within each detected request, then pack their union. Compare with removing strict subsets of another source's term overlap inside the same clause.",
       limitations: "Heuristic segmentation, local and authority cues, bounded call references, and lexical source matching. Candidate scores use independent recall, exact evidence, and no-op gates. CLI exit remains based on the frozen baselines." } } : {}),
+    ...(compareSubjects ? { subject_candidate: { protocol: "scope-subject-v1", strategy: subjectStrategy,
+      output: "subject-candidates.json", intervention: "Resolve bounded implicit replacements, exclude descriptive index sentences from admission, and align coordinated subjects to asserted text independently.",
+      limitations: "Ordered word overlap and narrow scope and coordination patterns. Sentence matches do not establish entailment. Evidence packing and baseline exit status are unchanged." } } : {}),
     ...(options.diagnostics ? { diagnostics: { protocol: "scope-term-ablation-v1", strategy: "qualified-bindings",
       output: "term-diagnostics.json", intervention: "Each document-matching query term alone and with that term removed; all original terms retained otherwise. Exact word matching; no expected labels enter probe generation.",
       limitations: "Descriptive sentence overlaps and fixed-store retrieval interventions, not assertion classification or an applicability strategy. Disclaimers and negative rules remain verbatim. Ranking/packing can affect source changes. Shared engine cache; component times are not comparable latency measurements. Baseline scores and CLI acceptance are unchanged." } } : {}),
@@ -186,6 +197,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
   const assertionResults: AdmissionResult<AssertionStrategy>[] = [];
   const referenceResults: ReferenceResult[] = [];
   const requestResults: RequestResult[] = [];
+  const subjectResults: SubjectResult[] = [];
   try {
     for (let repeat = 0; repeat < options.repeats; repeat++) for (const mode of ["excerpts", "rules_only"] as const) {
       const data = join(root, `${repeat}-${mode}`), docs = join(data, "docs");
@@ -235,7 +247,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           const query = strategy === "lexical" ? scenario.query : terms.join(" ") || "?";
           results.push(await evaluate(scenario, strategy, terms, query, start));
         }
-        const evaluateAdmission = async <Strategy>(scenario: QueryScopeCase, strategy: Strategy, start: number, terms: string[], assertions: ReturnType<typeof scopeAssertions>, admittedSources: string[]): Promise<AdmissionResult<Strategy>> => {
+        const evaluateAdmission = async <Strategy extends string>(scenario: QueryScopeCase, strategy: Strategy, start: number, terms: string[], assertions: ReturnType<typeof scopeAssertions>, admittedSources: string[]): Promise<AdmissionResult<Strategy>> => {
           const query = terms.join(" ") || "?";
           const admitted = new Set(admittedSources);
           const profile = config.profiles.company!;
@@ -270,6 +282,12 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           const { clauses, terms, assertions, admitted } = requestAdmission(scenario.query, documents, strategy === "request-specific");
           const result = await evaluateAdmission(scenario, strategy, start, terms, assertions, admitted);
           requestResults.push({ ...result, clauses, admitted });
+        }
+        if (compareSubjects) for (const scenario of orderedCases) {
+          const start = performance.now();
+          const { clauses, terms, assertions, admitted } = subjectAdmission(scenario.query, documents);
+          const result = await evaluateAdmission(scenario, subjectStrategy, start, terms, assertions, admitted);
+          subjectResults.push({ ...result, clauses, admitted });
         }
         // Run after all baseline rows so supplementary work cannot warm their compiler cache.
         if (options.diagnostics) for (const scenario of orderedCases) {
@@ -339,6 +357,14 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           scoresFor(requestResults.filter((row) => ids.has(row.id)), requestStrategies)])),
         previous_applicability_query_terms: { total: applicabilityQualityCases.length,
           unchanged: applicabilityQualityCases.filter((scenario) => JSON.stringify(requestAdmission(scenario.query, [], false).terms)
+            === JSON.stringify(meaningfulTerms(scenario.query))).length },
+      });
+      if (compareSubjects) await save("subject-candidates.json", { protocol: "scope-subject-v1", rows: subjectResults,
+        scores: scoresFor(subjectResults, [subjectStrategy]),
+        subsets: Object.fromEntries(Object.entries(groups).map(([name, ids]) => [name,
+          scoresFor(subjectResults.filter((row) => ids.has(row.id)), [subjectStrategy])])),
+        previous_applicability_query_terms: { total: applicabilityQualityCases.length,
+          unchanged: applicabilityQualityCases.filter((scenario) => JSON.stringify(subjectAdmission(scenario.query, []).terms)
             === JSON.stringify(meaningfulTerms(scenario.query))).length },
       });
     }
