@@ -1,5 +1,6 @@
 import { meaningfulTerms } from "../retrieval/terms.js";
 import { isScopeDisclaimer, scopeAssertions } from "./assertion-subject.js";
+import { positionOverlap, positionRequest, positionSentence } from "./scope-position.js";
 import { maskQuotedRequestText, requestIntents } from "./scope-request.js";
 import { scopeTermMatches } from "./scope-term-diagnostics.js";
 
@@ -35,7 +36,7 @@ function coordinateSubjects(text: string) {
   return subjects;
 }
 
-type SentenceMatch = { source: string; terms: string[]; words: string[] };
+type SentenceMatch = { source: string; terms: string[]; words: string[]; text: string };
 
 function matchSubject(text: string, sentences: readonly SentenceMatch[], retainComparison: boolean) {
   const words = phraseTokens(text);
@@ -62,10 +63,37 @@ function matchSubject(text: string, sentences: readonly SentenceMatch[], retainC
   return { text, anchors: [...new Set(anchors)], admitted: selected.map(([source]) => source) };
 }
 
+function matchPosition(text: string, request: ReturnType<typeof positionRequest>, coordinated: boolean,
+  sentences: readonly SentenceMatch[], comparison: boolean) {
+  const words = phraseTokens(positionSentence(text).main);
+  const assertions = sentences.map((sentence) => {
+    const assertion = positionSentence(sentence.text);
+    return { ...assertion, source: sentence.source, overlap: positionOverlap(words, phraseTokens(assertion.main)) };
+  });
+  const baseline = matchSubject(text, sentences, comparison);
+  const positions = coordinated && request.positions.length < 2 ? positionRequest(text).positions : request.positions;
+  const named = assertions.filter(({ standards }) => standards.some((name) => request.standards.includes(name)));
+  const positioned = assertions.filter(({ position, overlap }) => position && positions.includes(position) && overlap >= 2);
+  if (request.standards.length && named.length) {
+    const topical = named.filter(({ overlap }) => overlap >= 2);
+    return { ...baseline, admitted: [...new Set((topical.length ? topical : named).map(({ source }) => source))], selection: "named-standard" };
+  }
+  if (!comparison && positioned.length) {
+    return { ...baseline, admitted: [...new Set(positioned.map(({ source }) => source))], selection: "position" };
+  }
+  const primary = new Set(assertions.filter(({ overlap }) => overlap > 0).map(({ source }) => source));
+  const conditionOnly = new Set(assertions.filter(({ condition, source }) => condition && !primary.has(source)).map(({ source }) => source));
+  const retained = baseline.admitted.filter((source) => !conditionOnly.has(source));
+  if (retained.some((source) => primary.has(source)) && retained.length < baseline.admitted.length) {
+    return { ...baseline, admitted: retained, selection: "primary-assertion" };
+  }
+  return { ...baseline, selection: "subject" };
+}
+
 /** Evaluation-only admission using clause subjects and sentence alignment.
  * Original evidence is packed by the same downstream evaluator as prior arms.
  */
-export function subjectAdmission(query: string, documents: readonly Document[]) {
+export function subjectAdmission(query: string, documents: readonly Document[], positionAware = false) {
   const clauses = requestIntents(query, true).map((clause) => {
     const matches = scopeTermMatches(clause.terms, documents);
     const descriptiveMatches: { source: string; text: string }[] = [];
@@ -75,16 +103,20 @@ export function subjectAdmission(query: string, documents: readonly Document[]) 
         descriptiveMatches.push({ source, text });
         return [];
       }
-      return [{ source, terms, words: phraseTokens(text) }];
+      return [{ source, terms, words: phraseTokens(text), text }];
     }));
     const required = new Set(phraseTokens(clause.required.join(" ")));
     const focused = new Set(sentences.filter(({ words }) => words.some((word) => required.has(word))).map(({ source }) => source));
     const eligible = focused.size ? sentences.filter(({ source }) => focused.has(source)) : sentences;
-    const subjects = clause.decision === "request"
-      ? coordinateSubjects(clause.text).map((text) => matchSubject(text, eligible, compareBoth.test(clause.text))) : [];
+    const position = positionAware ? positionRequest(clause.text) : undefined;
+    const comparison = compareBoth.test(clause.text) || Boolean(position?.compare_all);
+    const parts = clause.decision === "request" && !position?.descriptive_request ? coordinateSubjects(clause.text) : [];
+    const subjects = parts.map((text) => position
+      ? matchPosition(text, position, parts.length > 1, eligible, comparison)
+      : matchSubject(text, eligible, comparison));
     const bound = subjects.flatMap(({ admitted }) => admitted);
-    const admitted = [...new Set(bound.length ? bound : eligible.map(({ source }) => source))];
-    return { ...clause, subjects, descriptive_matches: descriptiveMatches, admitted };
+    const admitted = position?.descriptive_request ? [] : [...new Set(bound.length ? bound : eligible.map(({ source }) => source))];
+    return { ...clause, subjects, descriptive_matches: descriptiveMatches, admitted, ...(position ? { position_request: position } : {}) };
   });
   const terms = [...new Set(clauses.flatMap((clause) => clause.terms))];
   return { clauses, terms, assertions: scopeAssertions(terms, documents), admitted: [...new Set(clauses.flatMap((clause) => clause.admitted))] };
