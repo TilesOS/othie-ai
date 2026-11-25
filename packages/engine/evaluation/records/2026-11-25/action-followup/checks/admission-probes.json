@@ -1,0 +1,95 @@
+{
+  "protocol": "scope-action-admission-probes-v1",
+  "limitations": "Five post-measurement, same-author source-admission probes. No retrieval, packing, or independent judgment.",
+  "documents": [
+    {
+      "name": "maintenance.md",
+      "text": "Technicians must inspect the intake filters and replace worn seals after calibration."
+    },
+    {
+      "name": "seal-storage.md",
+      "text": "Staff must label spare seals before storing them."
+    },
+    {
+      "name": "gate-drill.md",
+      "text": "During a fire drill, gatekeepers must close the loading gate after the announcement."
+    },
+    {
+      "name": "gate-arrival.md",
+      "text": "Gatekeepers must close the loading gate after a forklift enters."
+    },
+    {
+      "name": "award-log.md",
+      "text": "Coordinators must record award nominations in the shared register."
+    },
+    {
+      "name": "award-display.md",
+      "text": "Coordinators may display award nominations after approval."
+    }
+  ],
+  "rows": [
+    {
+      "id": "first-predicate",
+      "query": "Explain the requirement to inspect the intake filters.",
+      "expected_sources": [
+        "maintenance.md"
+      ],
+      "position_sources": [
+        "maintenance.md"
+      ],
+      "action_sources": [
+        "maintenance.md"
+      ]
+    },
+    {
+      "id": "second-predicate",
+      "query": "Explain the requirement to replace worn seals.",
+      "expected_sources": [
+        "maintenance.md"
+      ],
+      "position_sources": [
+        "maintenance.md"
+      ],
+      "action_sources": []
+    },
+    {
+      "id": "distinct-condition",
+      "query": "Explain the requirement to close the loading gate during a fire drill.",
+      "expected_sources": [
+        "gate-drill.md"
+      ],
+      "position_sources": [
+        "gate-arrival.md",
+        "gate-drill.md"
+      ],
+      "action_sources": [
+        "gate-arrival.md",
+        "gate-drill.md"
+      ]
+    },
+    {
+      "id": "same-action",
+      "query": "Explain the requirement to record award nominations.",
+      "expected_sources": [
+        "award-log.md"
+      ],
+      "position_sources": [
+        "award-log.md"
+      ],
+      "action_sources": [
+        "award-log.md"
+      ]
+    },
+    {
+      "id": "synonymous-action",
+      "query": "Explain the requirement to document award nominations.",
+      "expected_sources": [
+        "award-log.md"
+      ],
+      "position_sources": [
+        "award-log.md"
+      ],
+      "action_sources": []
+    }
+  ]
+}
