@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 24, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 25, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci --no-audit` | November 18 clean installation passes with the updated lockfile |
 | `npm run build` | All workspaces pass and Next.js 16.4.6 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | November 24 workspace run passes 330 deterministic tests and skips one opt-in real-model test |
+| `npm test` | November 25 workspace run passes 333 deterministic tests and skips one opt-in real-model test |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | November 21 compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 257–285 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -62,6 +62,10 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 24 policy position evaluation | 848 candidate rows and parity across the six earlier corpora. All nine matched pairs pass. The new corpus passes 32/34 recall and exact checks and 2/2 no-ops per mode. A recall failure and an older extra-source regression reject acceptance. |
 | November 24 published desktop CI | `4d492d8` passes install, typecheck, lint and tests on macOS 15 and Windows. Windows startup-script syntax passes. |
 | November 24 compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass. Parent process wall time is 257–287 ms on the synthetic lexical workload. |
+| November 25 policy action evaluation | 920/920 frozen rows and all nine matched pairs pass. Five later admission probes expose two recall regressions and one condition precision gap. |
+| November 25 published desktop CI | `45b678c` passes install, typecheck, lint and tests on macOS 15 and Windows. Windows startup-script syntax passes. |
+| November 25 parser canary comparison | 8.74.1-alpha.2 with minimatch 11.0.9 passes 28/30, with the same two astral filename reversals. |
+| November 25 compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass. Parent process wall time is 281–298 ms on the synthetic lexical workload. |
 | November 10 prior-history CI inspection/retry | `ed3dcdb` passes Windows installation, typechecks, lint, tests and startup syntax; macOS cancelled without steps in both the initial run and one requested retry; macOS remains open |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
@@ -72,9 +76,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
 | Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
 | `git diff --check` | Pass |
-| `npm audit` and `npm audit --omit=dev` | November 24 refresh reports seven moderate development entries and zero production findings. Parser remediation still needs compatible file admission. |
+| `npm audit` and `npm audit --omit=dev` | November 25 refresh reports seven moderate development entries and zero production findings. Parser remediation still needs compatible file admission. |
 
-The full suite comprises 181 engine, 30 shared-hook, 102 website, 10 Codex, and seven
+The full suite comprises 184 engine, 30 shared-hook, 102 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1648,9 +1652,39 @@ the 2,000 ms default, with 257–287 ms parent wall time. The
 [published `4d492d8` matrix](https://github.com/TilesOS/othie-ai/actions/runs/45329579475)
 passes install, typecheck, lint, and tests on macOS 15 and Windows, including
 Windows startup-script syntax. That run covers the November 23 subject work.
-Published CI for the policy position changes remains open. The audit refresh
-again reports seven moderate development entries and zero production findings.
-Registry tags for the parser and minimatch match the November 23 comparison.
+The November 25 follow-up records published CI for the policy position changes.
+The November 24 audit refresh reports seven moderate development entries and
+zero production findings. Registry tags for the parser and minimatch match the
+November 23 comparison.
+
+## November 25 policy action follow-up
+
+The [policy action records](packages/engine/evaluation/records/2026-11-25/action-followup/README.md)
+compare action and object alignment within one governing assertion. Eight
+synthetic documents and 18 prompts were frozen before implementation. All
+920 candidate rows across eight corpora pass complete recall, exact sources,
+no-ops, citation and token checks. The seven preceding corpora reproduce their
+5,936 baseline rows, 1,696 rows each for the assertion, reference and clause-request
+arms, and 848 rows each for the subject and position arms except component time.
+
+Per mode, `request-action` recovers lens-cleaning evidence for the compound
+humidity alarm prompt and removes the forklift source from the dispatch-log
+request. All nine matched pairs pass. The new corpus improves from 16/28 to
+28/28 exact positives and from 2/8 to 8/8 no-ops. Five later admission probes
+expose recall regressions for a second governing verb and for a synonymous
+action. Two sources that govern the same action under different conditions
+still compete when the request selects one condition. The arm remains isolated
+in the evaluator. The same author prepared the fixtures, candidate and probes.
+
+Build, typechecks, website lint and 333 deterministic tests pass locally. One
+opt-in real-model test is skipped. The compiled adapter baseline passes 24/24
+at the default 2,000 ms with 281–298 ms parent wall time. The
+[published `45b678c` matrix](https://github.com/TilesOS/othie-ai/actions/runs/45553871436)
+passes install, typecheck, lint and tests on macOS 15 and Windows, including
+Windows startup-script syntax. It covers the November 24 position evaluator.
+Published CI for the action evaluator remains open. The newer parser canary
+8.74.1-alpha.2 reproduces both astral filename reversals with minimatch 11.0.9.
+The audit reports seven moderate development entries and zero production findings.
 
 ## Remaining acceptance work
 
@@ -1658,7 +1692,8 @@ Registry tags for the parser and minimatch match the November 23 comparison.
   parser with a compatible upstream fix or reviewed migration. The November 4
   advisory revision excludes legacy 3.1.5. The November 23 stable parser
   8.74.0 and canary 8.74.1-alpha.0 both pass 28/30 controls with minimatch
-  11.0.9. The same two astral filename admission decisions reverse.
+  11.0.9. The November 25 canary 8.74.1-alpha.2 reproduces the same two
+  reversed astral filename admission decisions.
   Preserve file-admission behavior or explicitly review the change before
   adopting it. The full audit retains seven moderate development
   entries after the Next.js patch. The production audit reports zero findings.
@@ -1675,7 +1710,7 @@ Registry tags for the parser and minimatch match the November 23 comparison.
   comparisons narrow the failure to developer-message handling in the installed
   provider/model combination; provider conversion versus model internals remains unresolved.
 - Complete native Windows host and logon-startup acceptance. The published
-  desktop matrix passes through `4d492d8`, including the November 23 subject evaluator.
+  desktop matrix passes through `45b678c`, including the November 24 position evaluator.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
   two-repeat miniature multi-file corpus are recorded, but support no general
@@ -1764,6 +1799,15 @@ Registry tags for the parser and minimatch match the November 23 comparison.
   seven corpora, including explicit conditional requests, genuine negative
   rules, and named and unnamed comparisons of opposing standards. Independent
   judgments and native latency remain prerequisites for production adoption.
+  November 25 aligns each recognized action and object and passes all gates
+  on the eight frozen corpora. The follow-up probes show that one governing
+  phrase can contain multiple relevant actions, that near-equivalent verbs
+  can lose applicable evidence, and that matching an action and object alone
+  does not select the governing condition. Preserve the five probes. Extend
+  the next comparison to coordinated predicates, paraphrased actions, and
+  same-action rules with different triggers while retaining the exact-source,
+  recall and no-op gates. Use independently authored cases and judgments to
+  assess transfer, and measure native latency before production adoption.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve
