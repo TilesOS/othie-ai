@@ -1,0 +1,1857 @@
+{
+  "fixture_revision": "0c69a80",
+  "source_revision": "af1df88",
+  "corpora": {
+    "qualified-bindings": {
+      "fixture_sha256": "6c40036709f097cdc9564b1e99cb2dab0de27b96aa77669e0885505a027df638",
+      "artifacts": {
+        "query-scope.js": "97b6263e5a146785038a62c1d7a4e8d3dc3ec58722e6d7fba5dc73fa38f6b1ae",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "18ccd02bc0c174172c2a6e578004ab5b14e7b8c648fb886df7be594eb6b38e6a",
+        "scope-subject.js": "4a26ce28dddd9e12e95b48d5d91988212d1089c2e2dfbf95b3b96aa37379710a",
+        "scope-position.js": "d07e49ae28222ee827320262d810cb9f6fa7f8afa85430c32f6a2edb47f5b105",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "prior_report_hashes": {
+        "results.json": "4c6d2edc6d543f6583cdd2f4e5d6b6f76806eec47c1772b82bd89ebffdfb556e",
+        "summary.json": "b0b2195a6d67256625e59ff1afbaca136b131b8620c8a63a32e6bfa70f5a0b00",
+        "assertion-candidates.json": "7315951187b3a8797fc43f248c659edbe3c3c67e603f79206baec0aaebb61c97",
+        "reference-candidates.json": "2efbc97961e9f4de3384388f2fecde92bacf88766aa51d71ec5ec01b95c9c9ac",
+        "request-candidates.json": "80c47217eb161a68bf5253dbf8e80810421c69be18bc13a2351cddaccfa2dd6d",
+        "subject-candidates.json": "76c1079816525653192627bb83d8c1fd175e2b6066cebc57422a3bb2b299f676"
+      },
+      "prior_rows": {
+        "baseline": 2520,
+        "assertion": 720,
+        "reference": 720,
+        "request": 720,
+        "subject": 360
+      },
+      "candidate_rows": 360,
+      "report_sha256": "729f17c9e6b4d5386ffa537318777996b9c11b08674534cf6c4765c3583c1c14",
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 98,
+            "total": 98
+          },
+          "no_op": {
+            "correct": 82,
+            "total": 82
+          },
+          "combined": {
+            "correct": 180,
+            "total": 180
+          },
+          "positive_exact": {
+            "correct": 98,
+            "total": 98
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 98
+          },
+          "positive_source_precision": {
+            "relevant": 120,
+            "retrieved": 120
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 98,
+            "total": 98
+          },
+          "no_op": {
+            "correct": 82,
+            "total": 82
+          },
+          "combined": {
+            "correct": 180,
+            "total": 180
+          },
+          "positive_exact": {
+            "correct": 98,
+            "total": 98
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 98
+          },
+          "positive_source_precision": {
+            "relevant": 120,
+            "retrieved": 120
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 98,
+            "total": 98
+          },
+          "no_op": {
+            "correct": 82,
+            "total": 82
+          },
+          "combined": {
+            "correct": 180,
+            "total": 180
+          },
+          "positive_exact": {
+            "correct": 98,
+            "total": 98
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 98
+          },
+          "positive_source_precision": {
+            "relevant": 120,
+            "retrieved": 120
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 98,
+            "total": 98
+          },
+          "no_op": {
+            "correct": 82,
+            "total": 82
+          },
+          "combined": {
+            "correct": 180,
+            "total": 180
+          },
+          "positive_exact": {
+            "correct": 98,
+            "total": 98
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 98
+          },
+          "positive_source_precision": {
+            "relevant": 120,
+            "retrieved": 120
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        }
+      ],
+      "changes": []
+    },
+    "scope-transfer": {
+      "fixture_sha256": "b75e3cd14868c0ef9cec37ceede352a5f153676b384ec687d89d9b3c2a7f952f",
+      "artifacts": {
+        "query-scope.js": "97b6263e5a146785038a62c1d7a4e8d3dc3ec58722e6d7fba5dc73fa38f6b1ae",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-transfer-cases.js": "20a4df467098b8f4e1dc41a880951e6a3e98b15fd4273c2f54254bb30d959618",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "18ccd02bc0c174172c2a6e578004ab5b14e7b8c648fb886df7be594eb6b38e6a",
+        "scope-subject.js": "4a26ce28dddd9e12e95b48d5d91988212d1089c2e2dfbf95b3b96aa37379710a",
+        "scope-position.js": "d07e49ae28222ee827320262d810cb9f6fa7f8afa85430c32f6a2edb47f5b105",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "prior_report_hashes": {
+        "results.json": "3c35ea2ad746eeb72c5d786c374d3996f6bbb33b9dced19169dbeac636693aa6",
+        "summary.json": "480f5c58804c146da8e49c4092d32fe476a00fb015189896bfbb0264e9eeb52d",
+        "assertion-candidates.json": "8a700ec9c6d3c4dadd045bcc7c6776f212bac1d2281c4ef4dd479cfed369eccb",
+        "reference-candidates.json": "99fca9e1a1c44d0ce53d333b68e7cf44913af6d3550d6e221d5fdf9fa50a3e16",
+        "request-candidates.json": "1ca4bc076aa9b8973767312b16e6723a60210958933d6430eb3660027c2837ba",
+        "subject-candidates.json": "fbed0b9f3b99f109c73922342c9665d5698e7d6f88fc1be588908fc36012e2c4"
+      },
+      "prior_rows": {
+        "baseline": 840,
+        "assertion": 240,
+        "reference": 240,
+        "request": 240,
+        "subject": 120
+      },
+      "candidate_rows": 120,
+      "report_sha256": "9dfc06538468d7a118034eb9f34b0abc97c4682fc3ac67cf11d9ef2415be7c52",
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 34,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 26,
+            "total": 26
+          },
+          "combined": {
+            "correct": 60,
+            "total": 60
+          },
+          "positive_exact": {
+            "correct": 34,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 34,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 26,
+            "total": 26
+          },
+          "combined": {
+            "correct": 60,
+            "total": 60
+          },
+          "positive_exact": {
+            "correct": 34,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 34,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 26,
+            "total": 26
+          },
+          "combined": {
+            "correct": 60,
+            "total": 60
+          },
+          "positive_exact": {
+            "correct": 34,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 34,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 26,
+            "total": 26
+          },
+          "combined": {
+            "correct": 60,
+            "total": 60
+          },
+          "positive_exact": {
+            "correct": 34,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        }
+      ],
+      "changes": []
+    },
+    "scope-reference": {
+      "fixture_sha256": "c5b52aafb4db9ecb27daadd08ad2cb58d467beab3e6b41b17ee274248e7e4aef",
+      "artifacts": {
+        "query-scope.js": "97b6263e5a146785038a62c1d7a4e8d3dc3ec58722e6d7fba5dc73fa38f6b1ae",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-reference-cases.js": "4bc342112744a06e8fa33a223b51e723bda90e1e0eb9f18060bec12f77baa0b5",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "18ccd02bc0c174172c2a6e578004ab5b14e7b8c648fb886df7be594eb6b38e6a",
+        "scope-subject.js": "4a26ce28dddd9e12e95b48d5d91988212d1089c2e2dfbf95b3b96aa37379710a",
+        "scope-position.js": "d07e49ae28222ee827320262d810cb9f6fa7f8afa85430c32f6a2edb47f5b105",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "prior_report_hashes": {
+        "results.json": "32c32e4cf06b440cf1a56fcd684bdf333f1494c9c474a75a0d8e5d253525cec0",
+        "summary.json": "f91d4afa6ff7cc5a87986ee838010c3d8b62aee3e98a3723ede6fa24e1918233",
+        "assertion-candidates.json": "ccc66c43a949dff5312ae4549cd1a0f5aae53d25d362557686b0db5645a61cf4",
+        "reference-candidates.json": "50203b7e27902929b4d1495b34acfe08cd8a82b1c01160ddac5b9ca5f5af49da",
+        "request-candidates.json": "372af5c930a9c77c02be643161c28368b276c9e5e18e66b3a25b03c5aa3ece17",
+        "subject-candidates.json": "b4dd913c1eed808827d33bf1884e45c8c134c3044310dbd3d302b055243bba1e"
+      },
+      "prior_rows": {
+        "baseline": 560,
+        "assertion": 160,
+        "reference": 160,
+        "request": 160,
+        "subject": 80
+      },
+      "candidate_rows": 80,
+      "report_sha256": "5881ffe464ca07f421f3923b7858e9a8a0a4023b0da5e403825b3aca8d207735",
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 24,
+            "total": 24
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 40,
+            "total": 40
+          },
+          "positive_exact": {
+            "correct": 22,
+            "total": 24
+          },
+          "positive_with_additional_sources": {
+            "count": 2,
+            "total": 24
+          },
+          "positive_source_precision": {
+            "relevant": 36,
+            "retrieved": 38
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 24,
+            "total": 24
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 40,
+            "total": 40
+          },
+          "positive_exact": {
+            "correct": 24,
+            "total": 24
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 24
+          },
+          "positive_source_precision": {
+            "relevant": 36,
+            "retrieved": 36
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 24,
+            "total": 24
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 40,
+            "total": 40
+          },
+          "positive_exact": {
+            "correct": 22,
+            "total": 24
+          },
+          "positive_with_additional_sources": {
+            "count": 2,
+            "total": 24
+          },
+          "positive_source_precision": {
+            "relevant": 36,
+            "retrieved": 38
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 24,
+            "total": 24
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 40,
+            "total": 40
+          },
+          "positive_exact": {
+            "correct": 24,
+            "total": 24
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 24
+          },
+          "positive_source_precision": {
+            "relevant": 36,
+            "retrieved": 36
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        }
+      ],
+      "changes": [
+        {
+          "id": "ref-disclaimer",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "incident-desk.md",
+              "lab-calibration.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "incident-desk.md"
+            ]
+          }
+        }
+      ]
+    },
+    "scope-contrast": {
+      "fixture_sha256": "d8df8117f2755b42f0d9515b590168e9e18c1630196ec79fd47651cf20da4d76",
+      "artifacts": {
+        "query-scope.js": "97b6263e5a146785038a62c1d7a4e8d3dc3ec58722e6d7fba5dc73fa38f6b1ae",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-contrast-cases.js": "e5ba433afb02cb64f37ec6208b2f540f60bd5b076ebf9fbc7e58bc624fbbe759",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "18ccd02bc0c174172c2a6e578004ab5b14e7b8c648fb886df7be594eb6b38e6a",
+        "scope-subject.js": "4a26ce28dddd9e12e95b48d5d91988212d1089c2e2dfbf95b3b96aa37379710a",
+        "scope-position.js": "d07e49ae28222ee827320262d810cb9f6fa7f8afa85430c32f6a2edb47f5b105",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "prior_report_hashes": {
+        "results.json": "675305a8aaef7b55fbe801852d3efdc08e5366219983e7ec0fe966f11343084b",
+        "summary.json": "f1c3ba29b0512b8f5d4f1ffcc84fa387dbe353aea70af9dcaa2e70d952c1eb63",
+        "assertion-candidates.json": "8990a1eab530e79a0a09ad8c0eca0dd19174d5cea6d134460371970bc8421098",
+        "reference-candidates.json": "68442f4e5ff61f7c43c7d0a3e938f70701ad4ac8c5830ae95d88c59623758ede",
+        "request-candidates.json": "943ffe4c6b7eacb37a63e3b63799a1dd8c1406e0f41c144f34cce26107ce46d4",
+        "subject-candidates.json": "be4d9d553d34cca7998daff6d22f49015267a3ae608b2095041de2a55ef89ef0"
+      },
+      "prior_rows": {
+        "baseline": 504,
+        "assertion": 144,
+        "reference": 144,
+        "request": 144,
+        "subject": 72
+      },
+      "candidate_rows": 72,
+      "report_sha256": "47b33a20c3fed8f4f075defd14a8f1209da2e30fdb92bcdb59b02592a2685bc9",
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 18,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 2,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 28
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 20,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 26
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 18,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 2,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 28
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 20,
+            "total": 20
+          },
+          "no_op": {
+            "correct": 16,
+            "total": 16
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 20,
+            "total": 20
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 20
+          },
+          "positive_source_precision": {
+            "relevant": 26,
+            "retrieved": 26
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        }
+      ],
+      "pair_scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "request-subject",
+          "passing_pairs": [
+            "replacement-intent",
+            "antecedent-choice",
+            "call-syntax",
+            "authority",
+            "shared-subject",
+            "second-clause",
+            "opposing-standards",
+            "negated-lookup"
+          ]
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-position",
+          "passing_pairs": [
+            "replacement-intent",
+            "antecedent-choice",
+            "call-syntax",
+            "authority",
+            "shared-subject",
+            "second-clause",
+            "opposing-standards",
+            "negated-lookup",
+            "quoted-reference"
+          ]
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-subject",
+          "passing_pairs": [
+            "replacement-intent",
+            "antecedent-choice",
+            "call-syntax",
+            "authority",
+            "shared-subject",
+            "second-clause",
+            "opposing-standards",
+            "negated-lookup"
+          ]
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-position",
+          "passing_pairs": [
+            "replacement-intent",
+            "antecedent-choice",
+            "call-syntax",
+            "authority",
+            "shared-subject",
+            "second-clause",
+            "opposing-standards",
+            "negated-lookup",
+            "quoted-reference"
+          ]
+        }
+      ],
+      "changes": [
+        {
+          "id": "quoted-reference-1",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "outage-log.md",
+              "specimen-labels.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "outage-log.md"
+            ]
+          }
+        }
+      ]
+    },
+    "scope-request": {
+      "fixture_sha256": "0a2548409e940d19324f5b54d8449eb73f7ef5e5f688fd0042c53e1601dd2dcf",
+      "artifacts": {
+        "query-scope.js": "97b6263e5a146785038a62c1d7a4e8d3dc3ec58722e6d7fba5dc73fa38f6b1ae",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-request-cases.js": "ab6b08c12f8d936cc0fd4742c0638bd5499452349b5fb83a35375dd08dd60caf",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "18ccd02bc0c174172c2a6e578004ab5b14e7b8c648fb886df7be594eb6b38e6a",
+        "scope-subject.js": "4a26ce28dddd9e12e95b48d5d91988212d1089c2e2dfbf95b3b96aa37379710a",
+        "scope-position.js": "d07e49ae28222ee827320262d810cb9f6fa7f8afa85430c32f6a2edb47f5b105",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "prior_report_hashes": {
+        "results.json": "bfa1123b2d36b9c710607a284d03f329b98ed5a3595da5b856b8d4c99a0ceda6",
+        "summary.json": "2d9fed4f9265f79afd1acc614cccc0409934cebd3503daf399dce3fbee84aa5e",
+        "assertion-candidates.json": "c0edcfe2fa35a41bb97aabd5e6a34271f285fea81f7f47fee2a2de7f7388df10",
+        "reference-candidates.json": "0609c1f7e96a56780b2476681fb665d0662c750455785ed94a316a1db44a99f1",
+        "request-candidates.json": "d117353861a7486cfaa7e4f6db1753bbb678438846a248ef149d10c712f2da7c",
+        "subject-candidates.json": "95b676fde7ba51f63c55437f4d08075075090312061e5809be69a9acd51f9f13"
+      },
+      "prior_rows": {
+        "baseline": 504,
+        "assertion": 144,
+        "reference": 144,
+        "request": 144,
+        "subject": 72
+      },
+      "candidate_rows": 72,
+      "report_sha256": "2975ec70732c3efa9eaa96f25cc8bd9d092c6d457583bd2811b4ab3b76a34db1",
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 26,
+            "total": 26
+          },
+          "no_op": {
+            "correct": 10,
+            "total": 10
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 22,
+            "total": 26
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 26
+          },
+          "positive_source_precision": {
+            "relevant": 32,
+            "retrieved": 36
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 26,
+            "total": 26
+          },
+          "no_op": {
+            "correct": 10,
+            "total": 10
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 24,
+            "total": 26
+          },
+          "positive_with_additional_sources": {
+            "count": 2,
+            "total": 26
+          },
+          "positive_source_precision": {
+            "relevant": 32,
+            "retrieved": 34
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 26,
+            "total": 26
+          },
+          "no_op": {
+            "correct": 10,
+            "total": 10
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 22,
+            "total": 26
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 26
+          },
+          "positive_source_precision": {
+            "relevant": 32,
+            "retrieved": 36
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 26,
+            "total": 26
+          },
+          "no_op": {
+            "correct": 10,
+            "total": 10
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 24,
+            "total": 26
+          },
+          "positive_with_additional_sources": {
+            "count": 2,
+            "total": 26
+          },
+          "positive_source_precision": {
+            "relevant": 32,
+            "retrieved": 34
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        }
+      ],
+      "changes": [
+        {
+          "id": "request-prohibition",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "cold-room.md",
+              "loading-bay.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "cold-room.md"
+            ]
+          }
+        },
+        {
+          "id": "request-deferred-and-rule",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "cold-room.md",
+              "loading-bay.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "cold-room.md"
+            ]
+          }
+        },
+        {
+          "id": "request-disclaimer-boundary",
+          "before": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "dispatch-log.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "dispatch-log.md",
+              "forklift-charging.md"
+            ]
+          }
+        }
+      ]
+    },
+    "scope-subject": {
+      "fixture_sha256": "e2e429b65b3c77f5e1e9f96ae95715829cdb8f8c55fea7f926f5de37a5cb66bd",
+      "artifacts": {
+        "query-scope.js": "97b6263e5a146785038a62c1d7a4e8d3dc3ec58722e6d7fba5dc73fa38f6b1ae",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-subject-cases.js": "f16b53e530f684ad63b7baaf10e6337120f151c4d6e485eec2813365571d0170",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "18ccd02bc0c174172c2a6e578004ab5b14e7b8c648fb886df7be594eb6b38e6a",
+        "scope-subject.js": "4a26ce28dddd9e12e95b48d5d91988212d1089c2e2dfbf95b3b96aa37379710a",
+        "scope-position.js": "d07e49ae28222ee827320262d810cb9f6fa7f8afa85430c32f6a2edb47f5b105",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "prior_report_hashes": {
+        "results.json": "8cf54739be3a404eded786ffa1a154be9a0369e5d60bd34fb2adf8dab840f0c0",
+        "summary.json": "197b659668e8652b5e73f58cdf8654d8e216b8441264f2275c616758d9c9e091",
+        "assertion-candidates.json": "2bc7130b36e46f400287ab23f947191c95d49b066a87e36b822db4af7c955d5e",
+        "reference-candidates.json": "1571485e2fc9baf1294925096a742907080a34935ca9a58062524d863194e6a4",
+        "request-candidates.json": "226a0ea12a4f1db2cfc2d6ac3d617ac3c99debfbcea4ed0b13c824f6078a28e2",
+        "subject-candidates.json": "b6de13090d522ad6d57b51fe9e7805f7afb5020a01f2518f8448126c271243ad"
+      },
+      "prior_rows": {
+        "baseline": 504,
+        "assertion": 144,
+        "reference": 144,
+        "request": 144,
+        "subject": 72
+      },
+      "candidate_rows": 72,
+      "report_sha256": "a633cdaa48e2bc1da8466ac31689d4b9c9a77c94742edb66ec78ec8f9224f17a",
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 28,
+            "total": 28
+          },
+          "no_op": {
+            "correct": 6,
+            "total": 8
+          },
+          "combined": {
+            "correct": 34,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 24,
+            "total": 28
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 28
+          },
+          "positive_source_precision": {
+            "relevant": 38,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 28,
+            "total": 28
+          },
+          "no_op": {
+            "correct": 8,
+            "total": 8
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 28,
+            "total": 28
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 28
+          },
+          "positive_source_precision": {
+            "relevant": 38,
+            "retrieved": 38
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 28,
+            "total": 28
+          },
+          "no_op": {
+            "correct": 6,
+            "total": 8
+          },
+          "combined": {
+            "correct": 34,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 24,
+            "total": 28
+          },
+          "positive_with_additional_sources": {
+            "count": 4,
+            "total": 28
+          },
+          "positive_source_precision": {
+            "relevant": 38,
+            "retrieved": 42
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 28,
+            "total": 28
+          },
+          "no_op": {
+            "correct": 8,
+            "total": 8
+          },
+          "combined": {
+            "correct": 36,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 28,
+            "total": 28
+          },
+          "positive_with_additional_sources": {
+            "count": 0,
+            "total": 28
+          },
+          "positive_source_precision": {
+            "relevant": 38,
+            "retrieved": 38
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": true,
+            "positive_exact": true,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": true
+          }
+        }
+      ],
+      "changes": [
+        {
+          "id": "subject-one-standard",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "current-film.md",
+              "legacy-film.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "current-film.md"
+            ]
+          }
+        },
+        {
+          "id": "subject-prohibition",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "current-film.md",
+              "legacy-film.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "legacy-film.md"
+            ]
+          }
+        },
+        {
+          "id": "subject-index-only",
+          "before": {
+            "correct": false,
+            "precise_correct": false,
+            "actual_sources": [
+              "pump.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": []
+          }
+        }
+      ]
+    },
+    "scope-position": {
+      "fixture_sha256": "28fc7f8b07192e7dee7ecb2ca4a5cb7c2cb11fb7fd1d1c3a06458ae817d5cfdd",
+      "artifacts": {
+        "query-scope.js": "97b6263e5a146785038a62c1d7a4e8d3dc3ec58722e6d7fba5dc73fa38f6b1ae",
+        "query-scope-metrics.js": "cb63a46a0eed4b93e715f40abe7a14d425b513d32cab278cbddab7c0cdfe6539",
+        "query-scope-cases.js": "ad347a7c7994eed1b28e0585a8af425e81881b6129da977b0773dd2b0cc9f90f",
+        "policy-guard-cases.js": "79e12612ee55f2c62d91e5e474024a888da258daa27f648b32316329fc7d1638",
+        "../retrieval/terms.js": "a8fbeea4a9d76a6d8a12f9618938247b1214df9daa4897fec01256580196feb6",
+        "../storage/manifest.js": "00bc5a8724acf5d59946c9bab51f86a485103bc4e8b63f6010f27e8a5b2aa45a",
+        "../retrieval/hybrid.js": "e8b870c4afb7a8eb93183c5eb0d90e0219adc3a01e96d5f5ede10a288547c0bf",
+        "../rules/selection.js": "5f0ba5353320c025dd18ef56722bf8f5daaa051363c9428bfd0089c19c66011f",
+        "../context/compiler.js": "c00941a01fb5367315300b674e4d0ed1646a8bb08e62b7cba69f5bc96a10c095",
+        "../context/packing.js": "b51c5f4ea71722936864f8c18d1c23759f176f884dbda7cca50255b0f82302ee",
+        "local-bindings.js": "e24ba74b9c23a264b9d2bef202f03991aca2b0dd06532e96ca89f3a17d5c0dc0",
+        "local-bindings-cases.js": "94fc94329dce5833e89876c7d6223439fd89733d533673f230d9851634d11d85",
+        "clause-bindings.js": "a208334ef57458b0aa4ce0fb7699c0ff2be70e839f6b34e947ab2bd5601c209c",
+        "clause-bindings-cases.js": "49ca66c3074c670afb7657405081d862c791e5713d82c1db7b2a623530a72d75",
+        "qualified-bindings.js": "f2645e29bee9c4fba532cad02f15299ec040bbada581e9b416f05ff2fa4f6c4d",
+        "qualified-bindings-cases.js": "a0e6033b174fe1e62aed954584475c8ae297d6ac76fb0a4501c3d31a105de3a2",
+        "scope-position-cases.js": "d0ca41f558a60cd506f106f345908d6850a0c172ae0eb7fc9318c40d54065bd3",
+        "scope-reference.js": "74724f917f2653e4b3a03b5ad5b8449ea99338adec8631420673fb72362d6f6a",
+        "scope-request.js": "18ccd02bc0c174172c2a6e578004ab5b14e7b8c648fb886df7be594eb6b38e6a",
+        "scope-subject.js": "4a26ce28dddd9e12e95b48d5d91988212d1089c2e2dfbf95b3b96aa37379710a",
+        "scope-position.js": "d07e49ae28222ee827320262d810cb9f6fa7f8afa85430c32f6a2edb47f5b105",
+        "scope-term-diagnostics.js": "546e5c09d8f88df4db6fd4a43017bfcd30e1c81184aad06c5b27ffbbd47f1b8f",
+        "assertion-subject.js": "8c64bf16a14497e89cedf99224ec7ded3e53578e0593f43e398d3c68ff9b5d6c"
+      },
+      "prior_report_hashes": {
+        "results.json": "d5dda503b39fc899032483cf01f8025c5b4fb2085d3a12f85cd8bcdc1b3ecf76",
+        "summary.json": "7db7906b85cfd288732c40ca6c3b4b5b77b8a7435200392549e4835ac1d5ca75",
+        "assertion-candidates.json": "a6557eb9908a503026aaf5fd86d387e60e978041036588e41c53e92fc699b020",
+        "reference-candidates.json": "5ccd7b6ed56c5941839a5bcc20d1f50cd12ff1c5e537d280b36fa16f0a43a9ef",
+        "request-candidates.json": "e8930c417ce406d769ffee7f8510d6e5390668b7549c09c5dd7af273c41e1e33",
+        "subject-candidates.json": "6f358c7605d0391769f973afe09dfe679ac5041a234bc08aebed532d425aec8e"
+      },
+      "prior_rows": {
+        "baseline": 504,
+        "assertion": 144,
+        "reference": 144,
+        "request": 144,
+        "subject": 72
+      },
+      "candidate_rows": 72,
+      "report_sha256": "c84d96004c870f5f04061317116a99b08c10efb8a4b60820db48fcf138a46e3a",
+      "scores": [
+        {
+          "mode": "excerpts",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 32,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 0,
+            "total": 2
+          },
+          "combined": {
+            "correct": 32,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 10,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 24,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 84
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "excerpts",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 32,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 2
+          },
+          "combined": {
+            "correct": 34,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 32,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 2,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 44
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-subject",
+          "positive": {
+            "correct": 32,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 0,
+            "total": 2
+          },
+          "combined": {
+            "correct": 32,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 10,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 24,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 84
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": false,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        },
+        {
+          "mode": "rules_only",
+          "strategy": "request-position",
+          "positive": {
+            "correct": 32,
+            "total": 34
+          },
+          "no_op": {
+            "correct": 2,
+            "total": 2
+          },
+          "combined": {
+            "correct": 34,
+            "total": 36
+          },
+          "positive_exact": {
+            "correct": 32,
+            "total": 34
+          },
+          "positive_with_additional_sources": {
+            "count": 2,
+            "total": 34
+          },
+          "positive_source_precision": {
+            "relevant": 42,
+            "retrieved": 44
+          },
+          "citations_exact": true,
+          "caps_passed": true,
+          "gates": {
+            "positive_recall": false,
+            "positive_exact": false,
+            "no_op": true,
+            "citations_exact": true,
+            "token_caps": true,
+            "accepted": false
+          }
+        }
+      ],
+      "changes": [
+        {
+          "id": "position-trigger-only",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "humidity-log.md",
+              "humidity-vents.md",
+              "lens-cleaning.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "humidity-log.md"
+            ]
+          }
+        },
+        {
+          "id": "position-fronted-condition",
+          "before": {
+            "correct": false,
+            "precise_correct": false,
+            "actual_sources": [
+              "lens-cleaning.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "humidity-vents.md"
+            ]
+          }
+        },
+        {
+          "id": "position-condition-and-subject",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "humidity-log.md",
+              "humidity-vents.md",
+              "lens-case.md",
+              "lens-cleaning.md"
+            ]
+          },
+          "after": {
+            "correct": false,
+            "precise_correct": false,
+            "actual_sources": [
+              "humidity-log.md",
+              "lens-case.md"
+            ]
+          }
+        },
+        {
+          "id": "position-current",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "current-crates.md",
+              "legacy-crates.md",
+              "pilot-crates.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "current-crates.md"
+            ]
+          }
+        },
+        {
+          "id": "position-legacy",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "current-crates.md",
+              "legacy-crates.md",
+              "pilot-crates.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "legacy-crates.md"
+            ]
+          }
+        },
+        {
+          "id": "position-pilot",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "current-crates.md",
+              "legacy-crates.md",
+              "pilot-crates.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "pilot-crates.md"
+            ]
+          }
+        },
+        {
+          "id": "position-named-comparison",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "current-crates.md",
+              "legacy-crates.md",
+              "pilot-crates.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "current-crates.md",
+              "legacy-crates.md"
+            ]
+          }
+        },
+        {
+          "id": "position-obligation",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "current-crates.md",
+              "legacy-crates.md",
+              "pilot-crates.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "current-crates.md"
+            ]
+          }
+        },
+        {
+          "id": "position-prohibition",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "current-crates.md",
+              "legacy-crates.md",
+              "pilot-crates.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "legacy-crates.md"
+            ]
+          }
+        },
+        {
+          "id": "position-permission",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "current-crates.md",
+              "legacy-crates.md",
+              "pilot-crates.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "pilot-crates.md"
+            ]
+          }
+        },
+        {
+          "id": "position-opposed-comparison",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "current-crates.md",
+              "legacy-crates.md",
+              "pilot-crates.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "current-crates.md",
+              "legacy-crates.md"
+            ]
+          }
+        },
+        {
+          "id": "position-unbound-selector",
+          "before": {
+            "correct": true,
+            "precise_correct": false,
+            "actual_sources": [
+              "current-crates.md",
+              "legacy-crates.md",
+              "pilot-crates.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": [
+              "current-crates.md"
+            ]
+          }
+        },
+        {
+          "id": "position-index-entry",
+          "before": {
+            "correct": false,
+            "precise_correct": false,
+            "actual_sources": [
+              "lens-case.md"
+            ]
+          },
+          "after": {
+            "correct": true,
+            "precise_correct": true,
+            "actual_sources": []
+          }
+        }
+      ]
+    }
+  },
+  "evidence_sha256": "4f3f901e56520c3614bdcc06f27c0035df5cc36f24c7fe33f200a8ad8a8f3ab2"
+}
