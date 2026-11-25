@@ -33,6 +33,7 @@ import { scopeRequestCases, scopeRequestDocuments } from "./scope-request-cases.
 import { requestAdmission } from "./scope-request.js";
 import { scopeSubjectCases, scopeSubjectDocuments } from "./scope-subject-cases.js";
 import { scopePositionCases, scopePositionDocuments } from "./scope-position-cases.js";
+import { scopeActionCases, scopeActionDocuments } from "./scope-action-cases.js";
 import { subjectAdmission } from "./scope-subject.js";
 
 export const queryScopeStrategies = ["lexical", "drop-request", "mask-call-arguments"] as const;
@@ -49,6 +50,7 @@ const requestStrategies = ["request-union", "request-specific"] as const;
 type RequestStrategy = typeof requestStrategies[number];
 const subjectStrategy = "request-subject";
 const positionStrategy = "request-position";
+const actionStrategy = "request-action";
 const standalone = {
   "scope-transfer": { name: "transfer", documents: scopeTransferDocuments, cases: scopeTransferCases },
   "scope-reference": { name: "reference", documents: scopeReferenceDocuments, cases: scopeReferenceCases },
@@ -56,9 +58,10 @@ const standalone = {
   "scope-request": { name: "request", documents: scopeRequestDocuments, cases: scopeRequestCases },
   "scope-subject": { name: "subject", documents: scopeSubjectDocuments, cases: scopeSubjectCases },
   "scope-position": { name: "position", documents: scopePositionDocuments, cases: scopePositionCases },
+  "scope-action": { name: "action", documents: scopeActionDocuments, cases: scopeActionCases },
 };
 const extendedCorpora = ["qualified-bindings", ...Object.keys(standalone)];
-const candidates = ["assertion-subject", "scope-reference", "scope-request", "scope-subject", "scope-position"];
+const candidates = ["assertion-subject", "scope-reference", "scope-request", "scope-subject", "scope-position", "scope-action"];
 
 /** Shadow interventions only. None is used by production retrieval. */
 export function queryScopeTerms(query: string, strategy: QueryScopeStrategy): string[] {
@@ -149,7 +152,8 @@ type TermDiagnostic = {
 export async function runQueryScope(options: ReturnType<typeof queryScopeOptions>) {
   const fixture = Object.hasOwn(standalone, options.corpus) ? standalone[options.corpus as keyof typeof standalone] : undefined;
   const extended = Boolean(fixture) || options.corpus === "qualified-bindings";
-  const comparePositions = options.candidate === "scope-position";
+  const compareActions = options.candidate === "scope-action";
+  const comparePositions = options.candidate === "scope-position" || compareActions;
   const compareSubjects = options.candidate === "scope-subject" || comparePositions;
   const compareRequests = options.candidate === "scope-request" || compareSubjects;
   const compareReferences = options.candidate === "scope-reference" || compareRequests;
@@ -167,6 +171,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
   if (compareRequests) artifactNames.push("scope-request.js");
   if (compareSubjects) artifactNames.push("scope-subject.js");
   if (compareSubjects) artifactNames.push("scope-position.js");
+  if (compareActions) artifactNames.push("scope-action.js");
   if (options.diagnostics || options.candidate) artifactNames.push("scope-term-diagnostics.js");
   if (options.candidate) artifactNames.push("assertion-subject.js");
   const artifacts = Object.fromEntries(await Promise.all(artifactNames.map(async (name) => [name, hash(await readFile(new URL(name, import.meta.url), "utf8"))])));
@@ -188,6 +193,9 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
     ...(comparePositions ? { position_candidate: { protocol: "scope-position-v1", strategy: positionStrategy,
       output: "position-candidates.json", intervention: "Compare named standards, requested obligations, prohibitions and permissions, primary assertions and conditional mentions, and descriptive directory requests.",
       limitations: "Recognized English constructions and lexical overlap. The evaluator scores original source evidence through the shared packer." } } : {}),
+    ...(compareActions ? { action_candidate: { protocol: "scope-action-v1", strategy: actionStrategy,
+      output: "action-candidates.json", intervention: "Bind each recognized request action and object to the same policy assertion before selecting original source evidence.",
+      limitations: "Bounded English request and assertion forms, lexical inflection, and narrow within-source references. Results measure fixture source admission." } } : {}),
     ...(options.diagnostics ? { diagnostics: { protocol: "scope-term-ablation-v1", strategy: "qualified-bindings",
       output: "term-diagnostics.json", intervention: "Each document-matching query term alone and with that term removed; all original terms retained otherwise. Exact word matching; no expected labels enter probe generation.",
       limitations: "Descriptive sentence overlaps and fixed-store retrieval interventions, not assertion classification or an applicability strategy. Disclaimers and negative rules remain verbatim. Ranking/packing can affect source changes. Shared engine cache; component times are not comparable latency measurements. Baseline scores and CLI acceptance are unchanged." } } : {}),
@@ -207,6 +215,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
   const requestResults: RequestResult[] = [];
   const subjectResults: SubjectResult<typeof subjectStrategy>[] = [];
   const positionResults: SubjectResult<typeof positionStrategy>[] = [];
+  const actionResults: SubjectResult<typeof actionStrategy>[] = [];
   try {
     for (let repeat = 0; repeat < options.repeats; repeat++) for (const mode of ["excerpts", "rules_only"] as const) {
       const data = join(root, `${repeat}-${mode}`), docs = join(data, "docs");
@@ -304,6 +313,12 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           const result = await evaluateAdmission(scenario, positionStrategy, start, terms, assertions, admitted);
           positionResults.push({ ...result, clauses, admitted });
         }
+        if (compareActions) for (const scenario of orderedCases) {
+          const start = performance.now();
+          const { clauses, terms, assertions, admitted } = subjectAdmission(scenario.query, documents, "action");
+          const result = await evaluateAdmission(scenario, actionStrategy, start, terms, assertions, admitted);
+          actionResults.push({ ...result, clauses, admitted });
+        }
         // Run after all baseline rows so supplementary work cannot warm their compiler cache.
         if (options.diagnostics) for (const scenario of orderedCases) {
           const baseline = results.find((row) => row.id === scenario.id && row.repeat === repeat && row.mode === mode && row.strategy === "qualified-bindings")!;
@@ -386,6 +401,11 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
         scores: scoresFor(positionResults, [positionStrategy]),
         subsets: Object.fromEntries(Object.entries(groups).map(([name, ids]) => [name,
           scoresFor(positionResults.filter((row) => ids.has(row.id)), [positionStrategy])])),
+      });
+      if (compareActions) await save("action-candidates.json", { protocol: "scope-action-v1", rows: actionResults,
+        scores: scoresFor(actionResults, [actionStrategy]),
+        subsets: Object.fromEntries(Object.entries(groups).map(([name, ids]) => [name,
+          scoresFor(actionResults.filter((row) => ids.has(row.id)), [actionStrategy])])),
       });
     }
     return summary;
