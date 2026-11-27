@@ -7,9 +7,18 @@ const subjectCue = /^(?:explain|apply|enforce|implement)\s+/iu;
 const ruleVerb = /\b(must\s+not|shall\s+not|may\s+not|must|shall|may|requires?|prohibits?|forbids?|bans?|permits?|allows?)\s+/iu;
 const objectEnd = /\s+(?:before|after|if|unless|during|when|at|with|by|using|according\s+to)\s+|[,;.!?]/iu;
 const gerund = /ing$/u;
+const conditionMarker = /\b(only\s+after|provided\s+that|before|after|if|unless|during|when)\s+/giu;
+const leadingTrigger = new RegExp("^" + conditionMarker.source + "[^,]+,\\s*", "iu");
+const coordinationVerbs = new Set([
+  "archive", "check", "clean", "close", "collect", "confirm", "copy", "discard", "display", "document",
+  "inspect", "label", "lock", "log", "notify", "open", "print", "record", "release", "remove", "replace",
+  "report", "retain", "review", "seal", "send", "stamp", "store", "submit", "unlock", "verify", "wash",
+]);
+const verbAliases = [["document", "log", "record"], ["check", "verify"]];
 
 type Action = { verb: string; object: string[] };
 type Sentence = { source: string; text: string };
+type Trigger = { marker: string; terms: string[] };
 
 function objectWords(text: string) {
   return meaningfulTerms(text).map((word) => word.replace(/ies$/u, "y").replace(/(ss|ch|sh|x|ns)es$/u, "$1").replace(/(?<![su])s$/u, ""));
@@ -50,18 +59,49 @@ function requestedActions(text: string) {
   if (requests.every(({ verb, object }) => verb && object.length)) return { requests, fallback: "position" as const };
 }
 
-function assertedAction({ text, source }: Sentence) {
-  const assertion = positionSentence(text);
+function governedActions(argument: string): Action[] {
+  const [first, ...rest] = argument.split(/\s+and\s+/iu);
+  const phrases = [first!];
+  // Keep a conjunct in the object phrase unless it starts with a recognized verb.
+  for (const part of rest) {
+    if (actionForms(actionParts(part).verb).some((form) => coordinationVerbs.has(form))) phrases.push(part);
+    else phrases[phrases.length - 1] += " and " + part;
+  }
+  const actions = phrases.map(actionParts);
+  const shared = actions.at(-1)!.object;
+  return actions.map(({ verb, object }) => ({ verb, object: object.length ? object : shared }));
+}
+
+function triggers(text: string): Trigger[] {
+  const markers = [...text.matchAll(conditionMarker)];
+  return markers.flatMap((match, index) => {
+    const textEnd = markers[index + 1]?.index;
+    const phrase = text.slice(match.index + match[0].length, textEnd).split(/[,;.!?]/u, 1)[0]!;
+    const terms = phrase.toLowerCase().match(/[\p{L}\p{N}]+/gu)?.filter((word) => !/^(?:a|an|the)$/u.test(word)) ?? [];
+    return terms.length ? [{ marker: match[1]!.toLowerCase().replace(/\s+/gu, " "), terms }] : [];
+  });
+}
+
+function sameTrigger(left: Trigger, right: Trigger) {
+  return left.marker === right.marker && left.terms.length === right.terms.length
+    && left.terms.every((term, index) => term === right.terms[index]);
+}
+
+function assertedAction({ text, source }: Sentence, predicates: boolean) {
+  const assertion = positionSentence(predicates ? text.replace(leadingTrigger, "") : text);
   const marker = ruleVerb.exec(assertion.main);
-  if (!marker || !assertion.position) return [];
+  const { position, standards } = assertion;
+  if (!marker || !position) return [];
   const predicate = assertion.main.slice(marker.index + marker[0].length).split(objectEnd, 1)[0]!.trim();
   const nominalVerb = /^(?:requires?|prohibits?|forbids?|bans?|permits?|allows?)\s/iu.test(marker[0]);
   const complement = nominalVerb ? /^.+?\s+to\s+(.+)$/iu.exec(predicate)?.[1] : undefined;
   const passive = /^be\s+(\p{L}+)(?:\s|$)/iu.exec(predicate);
   const argument = passive ? assertion.main.slice(0, marker.index).trim() : complement ?? predicate;
-  const action = passive ? { verb: passive[1]!.toLowerCase(), object: objectWords(argument) } : actionParts(argument);
-  return [{ ...action, source, text, position: assertion.position, standards: assertion.standards,
-    definite: /^the\s/iu.test(argument), nominalObject: nominalVerb && !complement && !gerund.test(action.verb) ? objectWords(predicate) : [] }];
+  const actions = passive ? [{ verb: passive[1]!.toLowerCase(), object: objectWords(argument) }]
+    : predicates ? governedActions(argument) : [actionParts(argument)];
+  return actions.map((action) => ({ ...action, source, text, position, standards,
+    triggers: predicates ? triggers(text) : [],
+    definite: /^the\s/iu.test(argument), nominalObject: nominalVerb && !complement && !gerund.test(action.verb) ? objectWords(predicate) : [] }));
 }
 
 function includesPhrase(words: readonly string[], phrase: readonly string[]) {
@@ -71,34 +111,48 @@ function includesPhrase(words: readonly string[], phrase: readonly string[]) {
 /** Evaluation-only admission for requests whose action and object can be parsed.
  * Match within a single predicate and keep the original whole-source evidence.
  */
-export function actionAdmission(text: string, sentences: readonly Sentence[]) {
+export function actionAdmission(text: string, sentences: readonly Sentence[], predicates = false) {
   const request = positionRequest(text);
-  const main = positionSentence(maskQuotedRequestText(text)).main;
+  const unquoted = maskQuotedRequestText(text);
+  const main = positionSentence(predicates ? unquoted.replace(leadingTrigger, "") : unquoted).main;
   const parsed = requestedActions(main);
   if (!parsed) return undefined;
 
-  const assertions = sentences.flatMap(assertedAction);
+  const requestedTriggers = predicates ? triggers(unquoted) : [];
+  const assertions = sentences.flatMap((sentence) => assertedAction(sentence, predicates));
   const eligible = assertions.filter(({ position, standards }) =>
     (!request.positions.length || request.positions.includes(position)) &&
     (!request.standards.length || standards.some((standard) => request.standards.includes(standard))));
   const bindings = parsed.requests.map(({ verb, object }) => {
     const forms = actionForms(verb);
     const actionMatches = ({ verb: asserted }: Action) => actionForms(asserted).some((form) => forms.includes(form));
-    const matches = eligible.filter((assertion) => {
+    const aliases = predicates ? verbAliases.find((group) => group.some((form) => forms.includes(form))) : undefined;
+    const aliasMatches = ({ verb: asserted }: Action) => actionForms(asserted).some((form) => aliases?.includes(form));
+    const bind = (matchesVerb: (action: Action) => boolean) => eligible.filter((assertion) => {
       if (forms.includes("use") && object.every((word, index) => assertion.nominalObject[index] === word)) return true;
-      if (!actionMatches(assertion)) return false;
+      if (!matchesVerb(assertion)) return false;
       if (includesPhrase(assertion.object, object)) return true;
       // A definite short object can refer back to a full object in an earlier
       // assertion of the same action in that source.
       if (!assertion.definite || assertion.object.length !== 1) return false;
       const antecedent = assertions.slice(0, assertions.indexOf(assertion)).reverse().find((earlier) =>
-        earlier.source === assertion.source && actionMatches(earlier) && earlier.object.length > 1 && earlier.object.at(-1) === assertion.object[0]);
+        earlier.source === assertion.source && matchesVerb(earlier) && earlier.object.length > 1 && earlier.object.at(-1) === assertion.object[0]);
       return Boolean(antecedent && includesPhrase(antecedent.object, object));
     });
-    const objectMatches = parsed.fallback === "object" && !matches.length
+    const matches = bind(actionMatches);
+    const paraphraseMatches = aliases && !matches.length ? bind(aliasMatches) : [];
+    const objectMatches = parsed.fallback === "object" && !matches.length && !paraphraseMatches.length
       ? eligible.filter((assertion) => includesPhrase(assertion.object, object)) : [];
-    return { verb, object, matched_by: objectMatches.length ? "object" : "action-and-object",
-      assertions: [...matches, ...objectMatches].map(({ source, text }) => ({ source, text })) };
+    const bound = [...matches, ...paraphraseMatches, ...objectMatches];
+    const triggered = requestedTriggers.length ? bound.filter((assertion) => requestedTriggers.every((requested) =>
+      assertion.triggers.some((trigger) => sameTrigger(trigger, requested)))) : [];
+    const competing = new Set(bound.map(({ source }) => source)).size > 1;
+    // A lone candidate remains visible when its trigger wording cannot be confirmed.
+    const selected = triggered.length || (requestedTriggers.length && competing) ? triggered : bound;
+    return { verb, object, matched_by: objectMatches.length ? "object" : paraphraseMatches.length ? "verb-alias-and-object" : "action-and-object",
+      assertions: selected.map(({ source, text }) => ({ source, text })),
+      ...(requestedTriggers.length ? { requested_triggers: requestedTriggers,
+        trigger_selection: triggered.length ? "matched" : competing ? "unmatched-competing" : "unconfirmed" } : {}) };
   });
   if (parsed.fallback === "position" && bindings.some((binding) => !binding.assertions.length)) return undefined;
   return { bindings, admitted: [...new Set(bindings.flatMap((binding) => binding.assertions.map(({ source }) => source)))] };

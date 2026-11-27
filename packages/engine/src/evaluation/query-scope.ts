@@ -34,6 +34,7 @@ import { requestAdmission } from "./scope-request.js";
 import { scopeSubjectCases, scopeSubjectDocuments } from "./scope-subject-cases.js";
 import { scopePositionCases, scopePositionDocuments } from "./scope-position-cases.js";
 import { scopeActionCases, scopeActionDocuments } from "./scope-action-cases.js";
+import { scopePredicateCases, scopePredicateDocuments } from "./scope-predicate-cases.js";
 import { subjectAdmission } from "./scope-subject.js";
 
 export const queryScopeStrategies = ["lexical", "drop-request", "mask-call-arguments"] as const;
@@ -51,6 +52,7 @@ type RequestStrategy = typeof requestStrategies[number];
 const subjectStrategy = "request-subject";
 const positionStrategy = "request-position";
 const actionStrategy = "request-action";
+const predicateStrategy = "request-predicate";
 const standalone = {
   "scope-transfer": { name: "transfer", documents: scopeTransferDocuments, cases: scopeTransferCases },
   "scope-reference": { name: "reference", documents: scopeReferenceDocuments, cases: scopeReferenceCases },
@@ -59,9 +61,10 @@ const standalone = {
   "scope-subject": { name: "subject", documents: scopeSubjectDocuments, cases: scopeSubjectCases },
   "scope-position": { name: "position", documents: scopePositionDocuments, cases: scopePositionCases },
   "scope-action": { name: "action", documents: scopeActionDocuments, cases: scopeActionCases },
+  "scope-predicate": { name: "predicate", documents: scopePredicateDocuments, cases: scopePredicateCases },
 };
 const extendedCorpora = ["qualified-bindings", ...Object.keys(standalone)];
-const candidates = ["assertion-subject", "scope-reference", "scope-request", "scope-subject", "scope-position", "scope-action"];
+const candidates = ["assertion-subject", "scope-reference", "scope-request", "scope-subject", "scope-position", "scope-action", "scope-predicate"];
 
 /** Shadow interventions only. None is used by production retrieval. */
 export function queryScopeTerms(query: string, strategy: QueryScopeStrategy): string[] {
@@ -152,7 +155,8 @@ type TermDiagnostic = {
 export async function runQueryScope(options: ReturnType<typeof queryScopeOptions>) {
   const fixture = Object.hasOwn(standalone, options.corpus) ? standalone[options.corpus as keyof typeof standalone] : undefined;
   const extended = Boolean(fixture) || options.corpus === "qualified-bindings";
-  const compareActions = options.candidate === "scope-action";
+  const comparePredicates = options.candidate === "scope-predicate";
+  const compareActions = options.candidate === "scope-action" || comparePredicates;
   const comparePositions = options.candidate === "scope-position" || compareActions;
   const compareSubjects = options.candidate === "scope-subject" || comparePositions;
   const compareRequests = options.candidate === "scope-request" || compareSubjects;
@@ -196,6 +200,9 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
     ...(compareActions ? { action_candidate: { protocol: "scope-action-v1", strategy: actionStrategy,
       output: "action-candidates.json", intervention: "Bind each recognized request action and object to the same policy assertion before selecting original source evidence.",
       limitations: "Bounded English request and assertion forms, lexical inflection, and narrow within-source references. Results measure fixture source admission." } } : {}),
+    ...(comparePredicates ? { predicate_candidate: { protocol: "scope-predicate-v1", strategy: predicateStrategy,
+      output: "predicate-candidates.json", intervention: "Split recognized coordinated source predicates, try bounded verb aliases when direct binding fails, and use explicit trigger overlap to distinguish competing rules.",
+      limitations: "Limited English coordination and verb vocabulary, literal trigger phrases, and whole-source evidence. The evaluator measures fixture admission and packing." } } : {}),
     ...(options.diagnostics ? { diagnostics: { protocol: "scope-term-ablation-v1", strategy: "qualified-bindings",
       output: "term-diagnostics.json", intervention: "Each document-matching query term alone and with that term removed; all original terms retained otherwise. Exact word matching; no expected labels enter probe generation.",
       limitations: "Descriptive sentence overlaps and fixed-store retrieval interventions, not assertion classification or an applicability strategy. Disclaimers and negative rules remain verbatim. Ranking/packing can affect source changes. Shared engine cache; component times are not comparable latency measurements. Baseline scores and CLI acceptance are unchanged." } } : {}),
@@ -216,6 +223,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
   const subjectResults: SubjectResult<typeof subjectStrategy>[] = [];
   const positionResults: SubjectResult<typeof positionStrategy>[] = [];
   const actionResults: SubjectResult<typeof actionStrategy>[] = [];
+  const predicateResults: SubjectResult<typeof predicateStrategy>[] = [];
   try {
     for (let repeat = 0; repeat < options.repeats; repeat++) for (const mode of ["excerpts", "rules_only"] as const) {
       const data = join(root, `${repeat}-${mode}`), docs = join(data, "docs");
@@ -319,6 +327,12 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           const result = await evaluateAdmission(scenario, actionStrategy, start, terms, assertions, admitted);
           actionResults.push({ ...result, clauses, admitted });
         }
+        if (comparePredicates) for (const scenario of orderedCases) {
+          const start = performance.now();
+          const { clauses, terms, assertions, admitted } = subjectAdmission(scenario.query, documents, "predicate");
+          const result = await evaluateAdmission(scenario, predicateStrategy, start, terms, assertions, admitted);
+          predicateResults.push({ ...result, clauses, admitted });
+        }
         // Run after all baseline rows so supplementary work cannot warm their compiler cache.
         if (options.diagnostics) for (const scenario of orderedCases) {
           const baseline = results.find((row) => row.id === scenario.id && row.repeat === repeat && row.mode === mode && row.strategy === "qualified-bindings")!;
@@ -406,6 +420,11 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
         scores: scoresFor(actionResults, [actionStrategy]),
         subsets: Object.fromEntries(Object.entries(groups).map(([name, ids]) => [name,
           scoresFor(actionResults.filter((row) => ids.has(row.id)), [actionStrategy])])),
+      });
+      if (comparePredicates) await save("predicate-candidates.json", { protocol: "scope-predicate-v1", rows: predicateResults,
+        scores: scoresFor(predicateResults, [predicateStrategy]),
+        subsets: Object.fromEntries(Object.entries(groups).map(([name, ids]) => [name,
+          scoresFor(predicateResults.filter((row) => ids.has(row.id)), [predicateStrategy])])),
       });
     }
     return summary;

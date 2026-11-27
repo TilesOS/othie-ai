@@ -94,7 +94,7 @@ function matchPosition(text: string, request: ReturnType<typeof positionRequest>
 /** Evaluation-only admission using clause subjects and sentence alignment.
  * Original evidence is packed by the same downstream evaluator as prior arms.
  */
-export function subjectAdmission(query: string, documents: readonly Document[], positionAware: boolean | "action" = false) {
+export function subjectAdmission(query: string, documents: readonly Document[], positionAware: boolean | "action" | "predicate" = false) {
   const clauses = requestIntents(query, true).map((clause) => {
     const matches = scopeTermMatches(clause.terms, documents);
     const descriptiveMatches: { source: string; text: string }[] = [];
@@ -116,7 +116,8 @@ export function subjectAdmission(query: string, documents: readonly Document[], 
       ? matchPosition(text, position, parts.length > 1, eligible, comparison)
       : matchSubject(text, eligible, comparison));
     const bound = subjects.flatMap(({ admitted }) => admitted);
-    const action = positionAware === "action" && parts.length && !comparison ? actionAdmission(clause.text, eligible) : undefined;
+    const bindsActions = positionAware === "action" || positionAware === "predicate";
+    const action = bindsActions && parts.length && !comparison ? actionAdmission(clause.text, eligible, positionAware === "predicate") : undefined;
     const admitted = action?.admitted ?? (position?.descriptive_request ? [] : [...new Set(bound.length ? bound : eligible.map(({ source }) => source))]);
     return { ...clause, subjects, descriptive_matches: descriptiveMatches, admitted, ...(position ? { position_request: position } : {}),
       ...(action ? { action_bindings: action.bindings } : {}) };
