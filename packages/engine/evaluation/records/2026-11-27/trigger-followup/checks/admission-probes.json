@@ -1,0 +1,56 @@
+{
+  "protocol": "scope-trigger-admission-probes-v1",
+  "limitations": "Same-author probes written after the implementation. Score source admission without packing.",
+  "documents": [
+    { "name": "shims.md", "text": "Metal shims must be deburred, rinsed, and dried after cutting." },
+    { "name": "air-filters.md", "text": "Air filters must be inspected and hung after drying." },
+    { "name": "wheel-guards.md", "text": "Operators must brush the mold and buff wheel guards before storage." },
+    { "name": "panel-seals.md", "text": "Inspectors must check panel seals during the final check." },
+    { "name": "meter-sheet.md", "text": "Technicians must document meter readings after calibration." },
+    { "name": "meter-log.md", "text": "Technicians must record meter readings after calibration and before leaving." },
+    { "name": "archive-crates.md", "text": "Staff must seal archive crates before transit." },
+    { "name": "cargo-labels.md", "text": "Staff must stamp cargo labels after transit." }
+  ],
+  "rows": [
+    {
+      "id": "passive-series",
+      "query": "Explain the requirement to dry metal shims after cutting.",
+      "expected_sources": ["shims.md"]
+    },
+    {
+      "id": "irregular-passive",
+      "query": "Explain the requirement to hang air filters after drying.",
+      "expected_sources": ["air-filters.md"]
+    },
+    {
+      "id": "bare-coordinated-object",
+      "query": "Explain the requirement to buff wheel guards before storage.",
+      "expected_sources": ["wheel-guards.md"]
+    },
+    {
+      "id": "unlisted-event-paraphrase",
+      "query": "Explain the requirement to check panel seals during the final inspection.",
+      "expected_sources": ["panel-seals.md"]
+    },
+    {
+      "id": "literal-and-alias-same-trigger",
+      "query": "Explain the requirement to document meter readings after calibration.",
+      "expected_sources": ["meter-log.md", "meter-sheet.md"]
+    },
+    {
+      "id": "alias-additional-trigger",
+      "query": "Explain the requirement to document meter readings before leaving.",
+      "expected_sources": ["meter-log.md"]
+    },
+    {
+      "id": "different-trigger-per-action",
+      "query": "Explain the requirements to seal archive crates before transit and stamp cargo labels after transit.",
+      "expected_sources": ["archive-crates.md", "cargo-labels.md"]
+    },
+    {
+      "id": "explicit-unrelated-time",
+      "query": "Explain the requirement to seal archive crates during transit.",
+      "expected_sources": []
+    }
+  ]
+}
