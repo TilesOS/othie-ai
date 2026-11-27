@@ -1,6 +1,6 @@
 import { meaningfulTerms } from "../retrieval/terms.js";
 import { isScopeDisclaimer, scopeAssertions } from "./assertion-subject.js";
-import { actionAdmission } from "./scope-action.js";
+import { actionAdmission, type ActionScope } from "./scope-action.js";
 import { positionOverlap, positionRequest, positionSentence } from "./scope-position.js";
 import { maskQuotedRequestText, requestIntents } from "./scope-request.js";
 import { scopeTermMatches } from "./scope-term-diagnostics.js";
@@ -94,7 +94,7 @@ function matchPosition(text: string, request: ReturnType<typeof positionRequest>
 /** Evaluation-only admission using clause subjects and sentence alignment.
  * Original evidence is packed by the same downstream evaluator as prior arms.
  */
-export function subjectAdmission(query: string, documents: readonly Document[], positionAware: boolean | "action" | "predicate" = false) {
+export function subjectAdmission(query: string, documents: readonly Document[], positionAware: boolean | ActionScope = false) {
   const clauses = requestIntents(query, true).map((clause) => {
     const matches = scopeTermMatches(clause.terms, documents);
     const descriptiveMatches: { source: string; text: string }[] = [];
@@ -116,8 +116,8 @@ export function subjectAdmission(query: string, documents: readonly Document[], 
       ? matchPosition(text, position, parts.length > 1, eligible, comparison)
       : matchSubject(text, eligible, comparison));
     const bound = subjects.flatMap(({ admitted }) => admitted);
-    const bindsActions = positionAware === "action" || positionAware === "predicate";
-    const action = bindsActions && parts.length && !comparison ? actionAdmission(clause.text, eligible, positionAware === "predicate") : undefined;
+    const action = typeof positionAware === "string" && parts.length && !comparison
+      ? actionAdmission(clause.text, eligible, positionAware) : undefined;
     const admitted = action?.admitted ?? (position?.descriptive_request ? [] : [...new Set(bound.length ? bound : eligible.map(({ source }) => source))]);
     return { ...clause, subjects, descriptive_matches: descriptiveMatches, admitted, ...(position ? { position_request: position } : {}),
       ...(action ? { action_bindings: action.bindings } : {}) };

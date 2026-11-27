@@ -15,10 +15,13 @@ const coordinationVerbs = new Set([
   "report", "retain", "review", "seal", "send", "stamp", "store", "submit", "unlock", "verify", "wash",
 ]);
 const verbAliases = [["document", "log", "record"], ["check", "verify"]];
+const explicitObject = /^(?:the|a|an|each|every|both|these|those)\s+/iu;
+const introducedVerb = /^(?:then|to)\s+/iu;
 
 type Action = { verb: string; object: string[] };
 type Sentence = { source: string; text: string };
 type Trigger = { marker: string; terms: string[] };
+export type ActionScope = "action" | "predicate" | "trigger";
 
 function objectWords(text: string) {
   return meaningfulTerms(text).map((word) => word.replace(/ies$/u, "y").replace(/(ss|ch|sh|x|ns)es$/u, "$1").replace(/(?<![su])s$/u, ""));
@@ -59,12 +62,17 @@ function requestedActions(text: string) {
   if (requests.every(({ verb, object }) => verb && object.length)) return { requests, fallback: "position" as const };
 }
 
-function governedActions(argument: string): Action[] {
+function governedActions(argument: string, expanded: boolean): Action[] {
   const [first, ...rest] = argument.split(/\s+and\s+/iu);
   const phrases = [first!];
-  // Keep a conjunct in the object phrase unless it starts with a recognized verb.
   for (const part of rest) {
-    if (actionForms(actionParts(part).verb).some((form) => coordinationVerbs.has(form))) phrases.push(part);
+    const phrase = expanded ? part.replace(introducedVerb, "") : part;
+    const { verb } = actionParts(phrase);
+    // An explicit object after a word, or "and then"/"and to", can
+    // signal another predicate even when the word is outside the verb list.
+    const explicitAction = expanded && verb && !explicitObject.test(phrase)
+      && (phrase !== part || explicitObject.test(phrase.slice(verb.length).trimStart()));
+    if (explicitAction || actionForms(verb).some((form) => coordinationVerbs.has(form))) phrases.push(phrase);
     else phrases[phrases.length - 1] += " and " + part;
   }
   const actions = phrases.map(actionParts);
@@ -87,7 +95,43 @@ function sameTrigger(left: Trigger, right: Trigger) {
     && left.terms.every((term, index) => term === right.terms[index]);
 }
 
-function assertedAction({ text, source }: Sentence, predicates: boolean) {
+function triggerEvent(terms: readonly string[]) {
+  const event = terms.join(" ");
+  return /^(?:cleaning|cleanup|clean up)$/u.test(event) ? "cleaning" : event;
+}
+
+function sameTriggerEvent(left: readonly string[], right: readonly string[]) {
+  if (triggerEvent(left) === triggerEvent(right)) return true;
+  const passive = (terms: readonly string[]) => /^(?:is|are)$/u.test(terms.at(-2) ?? "")
+    && /ed$/u.test(terms.at(-1) ?? "");
+  // Compare a simple present event with the corresponding passive state
+  // phrase, keeping the subject and all preceding words fixed.
+  const [state, event] = passive(left) ? [left, right] : [right, left];
+  if (!passive(state) || state.length < 3 || state.length !== event.length + 1) return false;
+  const present = event.at(-1)!;
+  if (!present.endsWith("s") || !state.slice(0, -2).every((word, index) => word === event[index])) return false;
+  return actionForms(state.at(-1)!).some((form) => `${form}s` === present || `${form}es` === present);
+}
+
+function triggerStatus(requested: readonly Trigger[], asserted: readonly Trigger[]) {
+  const positiveCondition = /^(?:if|when)$/u;
+  const confirmed = requested.every(({ marker, terms }) => asserted.some((trigger) =>
+    (trigger.marker === marker || (positiveCondition.test(marker) && positiveCondition.test(trigger.marker)))
+    && sameTriggerEvent(trigger.terms, terms)));
+  if (confirmed) return "matched";
+  const contradicted = requested.some(({ marker, terms }) => asserted.some((trigger) => {
+    const timing = /^(?:before|after|during|only after)$/u;
+    const oppositeConnectors = (positiveCondition.test(marker) && trigger.marker === "unless") ||
+      (marker === "unless" && positiveCondition.test(trigger.marker));
+    const differentTime = timing.test(marker) && timing.test(trigger.marker) && marker !== trigger.marker
+      && !(marker.endsWith("after") && trigger.marker.endsWith("after"));
+    return (oppositeConnectors || differentTime) && sameTriggerEvent(trigger.terms, terms);
+  }));
+  return contradicted ? "contradicted" : "unconfirmed";
+}
+
+function assertedAction({ text, source }: Sentence, scope: ActionScope) {
+  const predicates = scope !== "action";
   const assertion = positionSentence(predicates ? text.replace(leadingTrigger, "") : text);
   const marker = ruleVerb.exec(assertion.main);
   const { position, standards } = assertion;
@@ -97,8 +141,10 @@ function assertedAction({ text, source }: Sentence, predicates: boolean) {
   const complement = nominalVerb ? /^.+?\s+to\s+(.+)$/iu.exec(predicate)?.[1] : undefined;
   const passive = /^be\s+(\p{L}+)(?:\s|$)/iu.exec(predicate);
   const argument = passive ? assertion.main.slice(0, marker.index).trim() : complement ?? predicate;
-  const actions = passive ? [{ verb: passive[1]!.toLowerCase(), object: objectWords(argument) }]
-    : predicates ? governedActions(argument) : [actionParts(argument)];
+  const passiveVerbs = passive && scope === "trigger"
+    ? [...predicate.matchAll(/\s+and\s+(?:be\s+)?(\p{L}+(?:ed|en))\b/giu)].map((match) => match[1]!) : [];
+  const actions = passive ? [passive[1]!, ...passiveVerbs].map((verb) => ({ verb: verb.toLowerCase(), object: objectWords(argument) }))
+    : predicates ? governedActions(argument, scope === "trigger") : [actionParts(argument)];
   return actions.map((action) => ({ ...action, source, text, position, standards,
     triggers: predicates ? triggers(text) : [],
     definite: /^the\s/iu.test(argument), nominalObject: nominalVerb && !complement && !gerund.test(action.verb) ? objectWords(predicate) : [] }));
@@ -111,7 +157,8 @@ function includesPhrase(words: readonly string[], phrase: readonly string[]) {
 /** Evaluation-only admission for requests whose action and object can be parsed.
  * Match within a single predicate and keep the original whole-source evidence.
  */
-export function actionAdmission(text: string, sentences: readonly Sentence[], predicates = false) {
+export function actionAdmission(text: string, sentences: readonly Sentence[], scope: ActionScope) {
+  const predicates = scope !== "action";
   const request = positionRequest(text);
   const unquoted = maskQuotedRequestText(text);
   const main = positionSentence(predicates ? unquoted.replace(leadingTrigger, "") : unquoted).main;
@@ -119,7 +166,7 @@ export function actionAdmission(text: string, sentences: readonly Sentence[], pr
   if (!parsed) return undefined;
 
   const requestedTriggers = predicates ? triggers(unquoted) : [];
-  const assertions = sentences.flatMap((sentence) => assertedAction(sentence, predicates));
+  const assertions = sentences.flatMap((sentence) => assertedAction(sentence, scope));
   const eligible = assertions.filter(({ position, standards }) =>
     (!request.positions.length || request.positions.includes(position)) &&
     (!request.standards.length || standards.some((standard) => request.standards.includes(standard))));
@@ -140,10 +187,20 @@ export function actionAdmission(text: string, sentences: readonly Sentence[], pr
       return Boolean(antecedent && includesPhrase(antecedent.object, object));
     });
     const matches = bind(actionMatches);
-    const paraphraseMatches = aliases && !matches.length ? bind(aliasMatches) : [];
+    const paraphraseMatches = aliases && (scope === "trigger" || !matches.length) ? bind(aliasMatches) : [];
     const objectMatches = parsed.fallback === "object" && !matches.length && !paraphraseMatches.length
       ? eligible.filter((assertion) => includesPhrase(assertion.object, object)) : [];
-    const bound = [...matches, ...paraphraseMatches, ...objectMatches];
+    const bound = [...new Set([...matches, ...paraphraseMatches, ...objectMatches])];
+    const matchKind = (assertion: typeof bound[number]) => matches.includes(assertion) ? "action-and-object"
+      : paraphraseMatches.includes(assertion) ? "verb-alias-and-object" : "object";
+    if (scope === "trigger") {
+      const candidates = bound.map((assertion) => ({ source: assertion.source, text: assertion.text,
+        status: triggerStatus(requestedTriggers, assertion.triggers), triggers: assertion.triggers, matched_by: matchKind(assertion) }));
+      const selected = candidates.filter(({ status }) => status === "matched");
+      return { verb, object, matched_by: [...new Set(selected.map(({ matched_by }) => matched_by))],
+        assertions: selected.map(({ source, text }) => ({ source, text })),
+        ...(requestedTriggers.length ? { requested_triggers: requestedTriggers, trigger_candidates: candidates } : {}) };
+    }
     const triggered = requestedTriggers.length ? bound.filter((assertion) => requestedTriggers.every((requested) =>
       assertion.triggers.some((trigger) => sameTrigger(trigger, requested)))) : [];
     const competing = new Set(bound.map(({ source }) => source)).size > 1;
@@ -154,6 +211,7 @@ export function actionAdmission(text: string, sentences: readonly Sentence[], pr
       ...(requestedTriggers.length ? { requested_triggers: requestedTriggers,
         trigger_selection: triggered.length ? "matched" : competing ? "unmatched-competing" : "unconfirmed" } : {}) };
   });
-  if (parsed.fallback === "position" && bindings.some((binding) => !binding.assertions.length)) return undefined;
+  if (parsed.fallback === "position" && !(scope === "trigger" && requestedTriggers.length)
+    && bindings.some((binding) => !binding.assertions.length)) return undefined;
   return { bindings, admitted: [...new Set(bindings.flatMap((binding) => binding.assertions.map(({ source }) => source)))] };
 }

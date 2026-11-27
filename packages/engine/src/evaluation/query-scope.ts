@@ -35,6 +35,7 @@ import { scopeSubjectCases, scopeSubjectDocuments } from "./scope-subject-cases.
 import { scopePositionCases, scopePositionDocuments } from "./scope-position-cases.js";
 import { scopeActionCases, scopeActionDocuments } from "./scope-action-cases.js";
 import { scopePredicateCases, scopePredicateDocuments } from "./scope-predicate-cases.js";
+import { scopeTriggerCases, scopeTriggerDocuments } from "./scope-trigger-cases.js";
 import { subjectAdmission } from "./scope-subject.js";
 
 export const queryScopeStrategies = ["lexical", "drop-request", "mask-call-arguments"] as const;
@@ -53,6 +54,7 @@ const subjectStrategy = "request-subject";
 const positionStrategy = "request-position";
 const actionStrategy = "request-action";
 const predicateStrategy = "request-predicate";
+const triggerStrategy = "request-trigger";
 const standalone = {
   "scope-transfer": { name: "transfer", documents: scopeTransferDocuments, cases: scopeTransferCases },
   "scope-reference": { name: "reference", documents: scopeReferenceDocuments, cases: scopeReferenceCases },
@@ -62,9 +64,10 @@ const standalone = {
   "scope-position": { name: "position", documents: scopePositionDocuments, cases: scopePositionCases },
   "scope-action": { name: "action", documents: scopeActionDocuments, cases: scopeActionCases },
   "scope-predicate": { name: "predicate", documents: scopePredicateDocuments, cases: scopePredicateCases },
+  "scope-trigger": { name: "trigger", documents: scopeTriggerDocuments, cases: scopeTriggerCases },
 };
 const extendedCorpora = ["qualified-bindings", ...Object.keys(standalone)];
-const candidates = ["assertion-subject", "scope-reference", "scope-request", "scope-subject", "scope-position", "scope-action", "scope-predicate"];
+const candidates = ["assertion-subject", "scope-reference", "scope-request", "scope-subject", "scope-position", "scope-action", "scope-predicate", "scope-trigger"];
 
 /** Shadow interventions only. None is used by production retrieval. */
 export function queryScopeTerms(query: string, strategy: QueryScopeStrategy): string[] {
@@ -155,7 +158,8 @@ type TermDiagnostic = {
 export async function runQueryScope(options: ReturnType<typeof queryScopeOptions>) {
   const fixture = Object.hasOwn(standalone, options.corpus) ? standalone[options.corpus as keyof typeof standalone] : undefined;
   const extended = Boolean(fixture) || options.corpus === "qualified-bindings";
-  const comparePredicates = options.candidate === "scope-predicate";
+  const compareTriggers = options.candidate === "scope-trigger";
+  const comparePredicates = options.candidate === "scope-predicate" || compareTriggers;
   const compareActions = options.candidate === "scope-action" || comparePredicates;
   const comparePositions = options.candidate === "scope-position" || compareActions;
   const compareSubjects = options.candidate === "scope-subject" || comparePositions;
@@ -203,6 +207,9 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
     ...(comparePredicates ? { predicate_candidate: { protocol: "scope-predicate-v1", strategy: predicateStrategy,
       output: "predicate-candidates.json", intervention: "Split recognized coordinated source predicates, try bounded verb aliases when direct binding fails, and use explicit trigger overlap to distinguish competing rules.",
       limitations: "Limited English coordination and verb vocabulary, literal trigger phrases, and whole-source evidence. The evaluator measures fixture admission and packing." } } : {}),
+    ...(compareTriggers ? { trigger_candidate: { protocol: "scope-trigger-v1", strategy: triggerStrategy,
+      output: "trigger-candidates.json", intervention: "Recognize additional active and passive coordination, consider verb aliases alongside literal matches, and require evidence for every recognized trigger.",
+      limitations: "Bounded English syntax and lexical trigger equivalence. An unresolved paraphrase can suppress applicable evidence. Explicit policy comparisons retain the prior admission path." } } : {}),
     ...(options.diagnostics ? { diagnostics: { protocol: "scope-term-ablation-v1", strategy: "qualified-bindings",
       output: "term-diagnostics.json", intervention: "Each document-matching query term alone and with that term removed; all original terms retained otherwise. Exact word matching; no expected labels enter probe generation.",
       limitations: "Descriptive sentence overlaps and fixed-store retrieval interventions, not assertion classification or an applicability strategy. Disclaimers and negative rules remain verbatim. Ranking/packing can affect source changes. Shared engine cache; component times are not comparable latency measurements. Baseline scores and CLI acceptance are unchanged." } } : {}),
@@ -224,6 +231,7 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
   const positionResults: SubjectResult<typeof positionStrategy>[] = [];
   const actionResults: SubjectResult<typeof actionStrategy>[] = [];
   const predicateResults: SubjectResult<typeof predicateStrategy>[] = [];
+  const triggerResults: SubjectResult<typeof triggerStrategy>[] = [];
   try {
     for (let repeat = 0; repeat < options.repeats; repeat++) for (const mode of ["excerpts", "rules_only"] as const) {
       const data = join(root, `${repeat}-${mode}`), docs = join(data, "docs");
@@ -333,6 +341,12 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
           const result = await evaluateAdmission(scenario, predicateStrategy, start, terms, assertions, admitted);
           predicateResults.push({ ...result, clauses, admitted });
         }
+        if (compareTriggers) for (const scenario of orderedCases) {
+          const start = performance.now();
+          const { clauses, terms, assertions, admitted } = subjectAdmission(scenario.query, documents, "trigger");
+          const result = await evaluateAdmission(scenario, triggerStrategy, start, terms, assertions, admitted);
+          triggerResults.push({ ...result, clauses, admitted });
+        }
         // Run after all baseline rows so supplementary work cannot warm their compiler cache.
         if (options.diagnostics) for (const scenario of orderedCases) {
           const baseline = results.find((row) => row.id === scenario.id && row.repeat === repeat && row.mode === mode && row.strategy === "qualified-bindings")!;
@@ -425,6 +439,11 @@ export async function runQueryScope(options: ReturnType<typeof queryScopeOptions
         scores: scoresFor(predicateResults, [predicateStrategy]),
         subsets: Object.fromEntries(Object.entries(groups).map(([name, ids]) => [name,
           scoresFor(predicateResults.filter((row) => ids.has(row.id)), [predicateStrategy])])),
+      });
+      if (compareTriggers) await save("trigger-candidates.json", { protocol: "scope-trigger-v1", rows: triggerResults,
+        scores: scoresFor(triggerResults, [triggerStrategy]),
+        subsets: Object.fromEntries(Object.entries(groups).map(([name, ids]) => [name,
+          scoresFor(triggerResults.filter((row) => ids.has(row.id)), [triggerStrategy])])),
       });
     }
     return summary;
