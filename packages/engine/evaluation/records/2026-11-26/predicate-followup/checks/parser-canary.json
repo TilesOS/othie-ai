@@ -1,0 +1,220 @@
+{
+  "parser": "8.74.1-alpha.7",
+  "estree": "8.74.1-alpha.7",
+  "minimatch": "11.0.9",
+  "typescript": "6.0.3",
+  "passed": 28,
+  "total": 30,
+  "rows": [
+    {
+      "id": "star-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "star-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "question-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "question-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "class-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "class-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "braces-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "braces-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "extglob-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "extglob-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "negation-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "negation-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "nested-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "nested-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "dot-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "dot-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "bmp-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "bmp-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "literal-match",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "literal-miss",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "leading-dot",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "astral-one-question",
+      "expected": "unmatched",
+      "observed": "typed",
+      "type": "number",
+      "passed": false
+    },
+    {
+      "id": "astral-two-questions",
+      "expected": "typed",
+      "observed": "unmatched",
+      "type": null,
+      "passed": false
+    },
+    {
+      "id": "combining-one-question",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "combining-two-questions",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "wide-star-rejected",
+      "expected": "invalid-pattern",
+      "observed": "invalid-pattern",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "globstar-rejected",
+      "expected": "invalid-pattern",
+      "observed": "invalid-pattern",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "included-conflict",
+      "expected": "included-conflict",
+      "observed": "included-conflict",
+      "type": null,
+      "passed": true
+    },
+    {
+      "id": "included-without-default",
+      "expected": "typed",
+      "observed": "typed",
+      "type": "number",
+      "passed": true
+    },
+    {
+      "id": "excluded-without-default",
+      "expected": "unmatched",
+      "observed": "unmatched",
+      "type": null,
+      "passed": true
+    }
+  ]
+}

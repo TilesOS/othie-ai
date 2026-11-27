@@ -1,0 +1,50 @@
+{
+  "protocol": "scope-predicate-admission-probes-v1",
+  "limitations": "Same-author checks of source admission after the frozen replay. No packing or independent judgment.",
+  "documents": [
+    { "name": "fittings.md", "text": "Engineers must dry and polish the brass fittings." },
+    { "name": "totes.md", "text": "Sample totes must be washed and dried before loading." },
+    { "name": "blue-cabinet.md", "text": "Attendants must lock the blue cabinet during maintenance." },
+    { "name": "white-cabinet-cleaning.md", "text": "Attendants must lock the white cabinet during cleaning." },
+    { "name": "white-cabinet-shift.md", "text": "Attendants must lock the white cabinet after the shift ends." },
+    { "name": "daily-results.md", "text": "Inspectors must document sampling results during the daily review." },
+    { "name": "night-results.md", "text": "Inspectors must record sampling results after the night shift." }
+  ],
+  "rows": [
+    {
+      "id": "unlisted-coordinated-verb",
+      "query": "Explain the requirement to polish the brass fittings.",
+      "expected_sources": ["fittings.md"]
+    },
+    {
+      "id": "coordinated-passive",
+      "query": "Explain the requirement to dry sample totes before loading.",
+      "expected_sources": ["totes.md"]
+    },
+    {
+      "id": "single-source-matching-trigger",
+      "query": "Explain the requirement to lock the blue cabinet during maintenance.",
+      "expected_sources": ["blue-cabinet.md"]
+    },
+    {
+      "id": "single-source-conflicting-trigger",
+      "query": "Explain the requirement to lock the blue cabinet after maintenance.",
+      "expected_sources": []
+    },
+    {
+      "id": "paraphrased-trigger",
+      "query": "Explain the requirement to lock the white cabinet during cleanup.",
+      "expected_sources": ["white-cabinet-cleaning.md"]
+    },
+    {
+      "id": "literal-verb-conflicting-trigger",
+      "query": "Explain the requirement to document sampling results after the night shift.",
+      "expected_sources": ["night-results.md"]
+    },
+    {
+      "id": "literal-verb-matching-trigger",
+      "query": "Explain the requirement to document sampling results during the daily review.",
+      "expected_sources": ["daily-results.md"]
+    }
+  ]
+}
