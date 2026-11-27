@@ -1,0 +1,46 @@
+import type { QueryScopeCase } from "./query-scope-cases.js";
+
+// The first seven documents and prompts preserve the November 26 probes.
+export const scopeTriggerDocuments = [
+  { name: "fittings.md", text: "Engineers must dry and polish the brass fittings." },
+  { name: "totes.md", text: "Sample totes must be washed and dried before loading." },
+  { name: "blue-cabinet.md", text: "Attendants must lock the blue cabinet during maintenance." },
+  { name: "white-cabinet-cleaning.md", text: "Attendants must lock the white cabinet during cleaning." },
+  { name: "white-cabinet-shift.md", text: "Attendants must lock the white cabinet after the shift ends." },
+  { name: "daily-results.md", text: "Inspectors must document sampling results during the daily review." },
+  { name: "night-results.md", text: "Inspectors must record sampling results after the night shift." },
+  { name: "valves.md", text: "Operators must test the intake valve and lubricate the outlet stem." },
+  { name: "valve-storage.md", text: "Operators must label the handles and outlet stems before storage." },
+  { name: "counterweights.md", text: "Counterweights must be measured and weighed after delivery." },
+  { name: "tray-current.md", text: "Under the current tray standard, staff must seal specimen trays after cooling." },
+  { name: "tray-pilot.md", text: "Under the pilot tray standard, staff must not seal specimen trays after cooling." },
+  { name: "tray-handling.md", text: "Staff must seal specimen trays during transit." },
+  { name: "batch-alarm.md", text: "If the alarm sounds, operators must log the batch number before dispatch." },
+  { name: "batch-clear.md", text: "Unless the alarm sounds, operators must record the batch number after dispatch." },
+  { name: "receipts.md", text: "Volunteers must record donation receipts." },
+] as const;
+
+export const scopeTriggerCases: readonly QueryScopeCase[] = [
+  { id: "unlisted-coordinated-verb", family: "prior-probes", query: "Explain the requirement to polish the brass fittings.", sources: ["fittings.md"] },
+  { id: "coordinated-passive", family: "prior-probes", query: "Explain the requirement to dry sample totes before loading.", sources: ["totes.md"] },
+  { id: "single-source-matching-trigger", family: "prior-probes", query: "Explain the requirement to lock the blue cabinet during maintenance.", sources: ["blue-cabinet.md"] },
+  { id: "single-source-conflicting-trigger", family: "prior-probes", query: "Explain the requirement to lock the blue cabinet after maintenance.", sources: [] },
+  { id: "paraphrased-trigger", family: "prior-probes", query: "Explain the requirement to lock the white cabinet during cleanup.", sources: ["white-cabinet-cleaning.md"] },
+  { id: "literal-verb-conflicting-trigger", family: "prior-probes", query: "Explain the requirement to document sampling results after the night shift.", sources: ["night-results.md"] },
+  { id: "literal-verb-matching-trigger", family: "prior-probes", query: "Explain the requirement to document sampling results during the daily review.", sources: ["daily-results.md"] },
+  { id: "distinct-active-objects", family: "coordination", query: "Explain the requirement to lubricate the outlet stem.", sources: ["valves.md"] },
+  { id: "active-object-crossing", family: "coordination", query: "Explain the requirement to lubricate the intake valve.", sources: [] },
+  { id: "coordinated-objects", family: "coordination", query: "Explain the requirement to label the outlet stems before storage.", sources: ["valve-storage.md"] },
+  { id: "passive-shared-object", family: "coordination", query: "Explain the requirement to weigh counterweights after delivery.", sources: ["counterweights.md"] },
+  { id: "passive-unrelated-object", family: "coordination", query: "Explain the requirement to weigh sample totes.", sources: [] },
+  { id: "passive-conflicting-time", family: "coordination", query: "Explain the requirement to weigh counterweights before delivery.", sources: [] },
+  { id: "unqualified-action", family: "trigger", query: "Explain the requirement to lock the white cabinet.", sources: ["white-cabinet-cleaning.md", "white-cabinet-shift.md"] },
+  { id: "unsupported-paraphrase", family: "trigger", query: "Explain the requirement to lock the blue cabinet during an audit.", sources: [] },
+  { id: "no-asserted-trigger", family: "trigger", query: "Explain the requirement to record donation receipts after the ceremony.", sources: [] },
+  { id: "before-same-event", family: "trigger", query: "If the alarm sounds, explain the requirement to document the batch number before dispatch.", sources: ["batch-alarm.md"] },
+  { id: "opposing-connector", family: "trigger", query: "Unless the alarm sounds, explain the requirement to document the batch number before dispatch.", sources: [] },
+  { id: "after-opposite-connector", family: "trigger", query: "Unless the alarm sounds, explain the requirement to document the batch number after dispatch.", sources: ["batch-clear.md"] },
+  { id: "obligation-selects-trigger", family: "position", query: "Explain the requirement to seal specimen trays after cooling.", sources: ["tray-current.md"] },
+  { id: "prohibition-selects-trigger", family: "position", query: "Explain the prohibition on sealing specimen trays after cooling.", sources: ["tray-pilot.md"] },
+  { id: "named-opposing-standards", family: "position", query: "Compare the current and pilot tray standards for sealing specimen trays after cooling.", sources: ["tray-current.md", "tray-pilot.md"] },
+] as const;
