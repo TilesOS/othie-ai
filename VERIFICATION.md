@@ -1,6 +1,6 @@
 # Othie verification
 
-Updated November 26, 2026 on macOS with Node.js 24.18.0. The preceding October 14
+Updated November 27, 2026 on macOS with Node.js 24.18.0. The preceding October 14
 combined verification ran on Linux with Node.js 24.19.0. Earlier model and native-host
 observations below were also recorded on macOS with Node.js 24.18.0. The deterministic suite uses
 synthetic documents and provider fixtures; it requires no model training or downloads.
@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci --no-audit` | November 18 clean installation passes with the updated lockfile |
 | `npm run build` | All workspaces pass and Next.js 16.4.6 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | November 26 workspace run passes 336 deterministic tests and skips one opt-in real-model test |
+| `npm test` | November 27 workspace run passes 339 deterministic tests and skips one opt-in real-model test |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | November 21 compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 257–285 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -70,6 +70,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 26 published desktop CI | `1e414d6` passes install, typecheck, lint and tests on macOS 15 and Windows after a targeted macOS retry. Windows startup-script syntax passes. |
 | November 26 parser canary comparison | 8.74.1-alpha.7 with minimatch 11.0.9 passes 28/30 and reproduces both astral filename reversals. |
 | November 26 compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass. Parent process wall time is 266–290 ms on the synthetic lexical workload. |
+| November 27 policy trigger evaluation | 1,084/1,096 exact-evidence gates and all nine matched pairs pass. Three historical positives lose recall. Two of eight later admission probes pass. |
+| November 27 published desktop CI | `c04bb42` passes install, typecheck, lint, and tests on macOS 15 and Windows. Windows startup-script syntax passes. |
+| November 27 compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass. Parent process wall time is 261–285 ms on the synthetic lexical workload. |
 | November 10 prior-history CI inspection/retry | `ed3dcdb` passes Windows installation, typechecks, lint, tests and startup syntax; macOS cancelled without steps in both the initial run and one requested retry; macOS remains open |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
@@ -80,9 +83,9 @@ synthetic documents and provider fixtures; it requires no model training or down
 | Fixed recorded-input applicability replay, three repeats | 96/96 valid decisions; eight queries vary; pre-packing diagnostics 23/32, 22/32, 21/32; 77/96 calls miss the hook deadline |
 | Recorded-input replay with actual 2,000 ms generation deadline | 7/32 valid responses; 25 failed attempts return without decisions around the deadline; pre-packing diagnostics 4/32; fails acceptance |
 | `git diff --check` | Pass |
-| `npm audit` and `npm audit --omit=dev` | November 26 refresh reports seven moderate development entries and zero production findings. Parser remediation still needs compatible file admission. |
+| `npm audit` and `npm audit --omit=dev` | November 27 refresh reports seven moderate development entries and zero production findings. Parser remediation still needs compatible file admission. |
 
-The full suite comprises 187 engine, 30 shared-hook, 102 website, 10 Codex, and seven
+The full suite comprises 190 engine, 30 shared-hook, 102 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1714,10 +1717,36 @@ one opt-in real-model test skipped. The compiled adapters pass 24/24 at the
 [published `1e414d6` matrix](https://github.com/TilesOS/othie-ai/actions/runs/45655702095/attempts/2)
 passes clean install, typecheck, lint, and tests on macOS 15 and Windows, including
 Windows startup-script syntax. macOS passed on its targeted retry after the
-first job was cancelled before any steps ran. Published CI for the predicate
-arm remains open. The new parser canary 8.74.1-alpha.7 repeats both astral
-filename reversals. The audit counts remain seven moderate development entries
-and zero production findings.
+first job was cancelled before any steps ran. The November 27 follow-up records
+published CI for the predicate arm. The new parser canary 8.74.1-alpha.7 repeats
+both astral filename reversals. The audit counts remain seven moderate
+development entries and zero production findings.
+
+## November 27 policy trigger follow-up
+
+The [policy trigger records](packages/engine/evaluation/records/2026-11-27/trigger-followup/README.md)
+compare additional active and passive coordination and bind literal and equivalent
+action verbs to requested triggers. The new corpus freezes 16 synthetic documents
+and 22 prompts, including all seven November 26 probes. Per mode, the trigger arm
+improves complete recall and exact positive evidence from 18/30 to 30/30 and
+no-ops from 8/14 to 14/14. All nine matched pairs pass. Citations and token caps
+pass across all ten corpora, and report digests match across all nine prior corpora.
+
+The trigger arm loses three historical positives on elliptical or more specific
+conditions, leaving 1,084/1,096 exact-evidence passes overall. Two of eight
+later admission probes pass. The failures cover passive verb series, irregular
+participles, unlisted active verbs with bare objects, event paraphrases, and
+conditions distributed across coordinated actions. All changes are restricted
+to the evaluator. The same author prepared the fixtures, candidate and probes.
+
+Local build, typechecks, website lint, and 339 deterministic tests pass. One
+opt-in real-model test is skipped. Compiled adapter delivery passes all 24
+conditions at the 2,000 ms default with 261–285 ms parent wall time. The
+[published `c04bb42` matrix](https://github.com/TilesOS/othie-ai/actions/runs/45930497728)
+passes clean install, typechecks, website lint and tests on macOS 15 and Windows.
+It covers the November 26 predicate evaluator. Windows startup-script syntax
+passes. Published CI for the trigger evaluator remains open. The audit and
+registry refresh preserve the existing dependency decision.
 
 ## Remaining acceptance work
 
@@ -1727,6 +1756,8 @@ and zero production findings.
   8.74.0 and canary 8.74.1-alpha.0 both pass 28/30 controls with minimatch
   11.0.9. The November 25 canary 8.74.1-alpha.2 and November 26 canary
   8.74.1-alpha.7 reproduce the same two reversed astral filename admission decisions.
+  The November 27 registry refresh finds the same canary and 10.2.6 as the
+  newest minimatch 10.x release.
   Preserve file-admission behavior or explicitly review the change before
   adopting it. The full audit retains seven moderate development
   entries after the Next.js patch. The production audit reports zero findings.
@@ -1743,7 +1774,7 @@ and zero production findings.
   comparisons narrow the failure to developer-message handling in the installed
   provider/model combination; provider conversion versus model internals remains unresolved.
 - Complete native Windows host and logon-startup acceptance. The published
-  desktop matrix passes through `1e414d6`, including the November 25 action evaluator.
+  desktop matrix passes through `c04bb42`, including the November 26 predicate evaluator.
 - A larger benchmark using production-scale repositories, dependency changes and
   additional models. The constrained-tool baseline, seven-case native pilot and
   two-repeat miniature multi-file corpus are recorded, but support no general
@@ -1848,6 +1879,16 @@ and zero production findings.
   evaluate verb equivalence together with the governing trigger. Preserve
   unqualified requests that need both rules and explicit comparisons of
   opposing positions. Independent judgments and native latency remain open.
+  November 27 freezes the seven predicate probes and passes all of them
+  alongside all nine matched pairs. Strict trigger confirmation loses three
+  older positives with event shorthand or an antecedent in a nearby sentence.
+  Preserve these regressions and all eight later probes. Next test whether
+  a trigger can be scoped to each coordinated action and resolved against
+  earlier event mentions within the same source. Score comma-separated and
+  irregular passive verbs, active conjuncts with bare objects, and policies
+  that share one trigger while adding another. Keep genuine incompatibilities,
+  unqualified requests, and comparisons as controls. Independent judgments
+  and native latency remain prerequisites for production adoption.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve
