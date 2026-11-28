@@ -98,13 +98,13 @@ export function subjectAdmission(query: string, documents: readonly Document[], 
   const clauses = requestIntents(query, true).map((clause) => {
     const matches = scopeTermMatches(clause.terms, documents);
     const descriptiveMatches: { source: string; text: string }[] = [];
-    const sentences = matches.flatMap(({ source, sentences }) => sentences.flatMap(({ text, terms }) => {
+    const sentences = matches.flatMap(({ source, sentences }) => sentences.flatMap(({ text, terms, index }) => {
       if (isScopeDisclaimer(text)) return [];
       if (descriptive.test(text) && !possibleRule.test(text)) {
         descriptiveMatches.push({ source, text });
         return [];
       }
-      return [{ source, terms, words: phraseTokens(text), text }];
+      return [{ source, terms, words: phraseTokens(text), text, index }];
     }));
     const required = new Set(phraseTokens(clause.required.join(" ")));
     const focused = new Set(sentences.filter(({ words }) => words.some((word) => required.has(word))).map(({ source }) => source));
@@ -117,7 +117,7 @@ export function subjectAdmission(query: string, documents: readonly Document[], 
       : matchSubject(text, eligible, comparison));
     const bound = subjects.flatMap(({ admitted }) => admitted);
     const action = typeof positionAware === "string" && parts.length && !comparison
-      ? actionAdmission(clause.text, eligible, positionAware) : undefined;
+      ? actionAdmission(clause.text, eligible, positionAware, documents) : undefined;
     const admitted = action?.admitted ?? (position?.descriptive_request ? [] : [...new Set(bound.length ? bound : eligible.map(({ source }) => source))]);
     return { ...clause, subjects, descriptive_matches: descriptiveMatches, admitted, ...(position ? { position_request: position } : {}),
       ...(action ? { action_bindings: action.bindings } : {}) };
