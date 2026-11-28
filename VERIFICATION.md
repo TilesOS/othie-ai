@@ -12,7 +12,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `npm ci --no-audit` | November 18 clean installation passes with the updated lockfile |
 | `npm run build` | All workspaces pass and Next.js 16.4.6 exports the website routes |
 | `npm run typecheck` | All workspaces pass |
-| `npm test` | November 27 workspace run passes 339 deterministic tests and skips one opt-in real-model test |
+| `npm test` | November 27 workspace run passes 342 deterministic tests and skips one opt-in real-model test |
 | MCP/lifecycle/cross-host and latency tests within `npm test` | Eight engine process tests pass |
 | November 21 compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass; parent process wall time 257–285 ms on the synthetic lexical workload |
 | Combined-history strict evaluator checks | Fresh engine 14/14, including stall controls; actual-default normal paths 8/8 |
@@ -73,6 +73,8 @@ synthetic documents and provider fixtures; it requires no model training or down
 | November 27 policy trigger evaluation | 1,084/1,096 exact-evidence gates and all nine matched pairs pass. Three historical positives lose recall. Two of eight later admission probes pass. |
 | November 27 published desktop CI | `c04bb42` passes install, typecheck, lint, and tests on macOS 15 and Windows. Windows startup-script syntax passes. |
 | November 27 compiled hook latency evaluator, three repeats | 24/24 delivery and default 2,000 ms gates pass. Parent process wall time is 261–285 ms on the synthetic lexical workload. |
+| November 27 policy event evaluation | 1,200/1,200 frozen exact-evidence gates and all nine matched pairs pass. Five of ten later admission probes pass. |
+| November 27 event follow-up compiled hook latency, three repeats | 24/24 delivery and default 2,000 ms gates pass. Parent process wall time is 262–282 ms on the synthetic lexical workload. |
 | November 10 prior-history CI inspection/retry | `ed3dcdb` passes Windows installation, typechecks, lint, tests and startup syntax; macOS cancelled without steps in both the initial run and one requested retry; macOS remains open |
 | November 2 prior-history CI inspection | `5937f7c` passes macOS and Windows installation, typechecks/tests and Windows startup syntax |
 | `npm run lint --workspace=@othie/website` | Pass |
@@ -85,7 +87,7 @@ synthetic documents and provider fixtures; it requires no model training or down
 | `git diff --check` | Pass |
 | `npm audit` and `npm audit --omit=dev` | November 27 refresh reports seven moderate development entries and zero production findings. Parser remediation still needs compatible file admission. |
 
-The full suite comprises 190 engine, 30 shared-hook, 102 website, 10 Codex, and seven
+The full suite comprises 193 engine, 30 shared-hook, 102 website, 10 Codex, and seven
 Claude Code tests. Process tests require access to local Unix sockets or Windows named
 pipes; they were run with local socket access outside the restricted command sandbox.
 
@@ -1748,6 +1750,38 @@ It covers the November 26 predicate evaluator. Windows startup-script syntax
 passes. Published CI for the trigger evaluator remains open. The audit and
 registry refresh preserve the existing dependency decision.
 
+## November 27 policy event follow-up
+
+The [policy event records](packages/engine/evaluation/records/2026-11-27/event-followup/README.md)
+freeze 18 synthetic documents and 26 prompts, including all eight trigger
+probes. The evaluation-only event arm binds conditions to individual actions,
+recognizes comma-separated and selected irregular passive predicates, and
+traces nominal events to earlier assertions in the same source. Per mode,
+complete recall and exact positive evidence improve from 14/34 to 34/34 on
+the new corpus. All 18 no-ops pass in each mode. The arm recovers the three
+historical misses and passes all 1,200 exact-evidence gates across eleven
+corpora. All nine matched pairs and every citation and token check pass.
+The ten earlier corpora reproduce their archived report digests.
+
+The event arm passes five of ten later admission probes, compared with three
+for the trigger arm. The misses involve unfamiliar active verbs in compound
+requests, separate subjects in coordinated passive assertions, alternative
+conditions, and antecedents in descriptive text. An explicit request about
+calling maintenance also admits evidence about maintenance itself. The same
+author prepared the fixtures, candidate and probes. Independent judgment and
+native latency acceptance remain open.
+
+Build, workspace typechecks, website lint and 342 deterministic tests pass.
+One opt-in real-model test is skipped. The compiled adapters pass all 24
+conditions at the default deadline with 262–282 ms parent wall time. The
+latest published matrix still covers `c04bb42`. The GitHub Actions lookup
+finds no run for the local trigger revision `5253c13`. The trigger and event
+revisions still need published CI. The lockfile and package manifests match
+`c04bb42`, and the registry check finds the same parser and minimatch releases.
+Automatic approval review rejected fresh audit requests because they would
+transmit the dependency tree to the registry. The preceding audit is the
+latest recorded audit evidence.
+
 ## Remaining acceptance work
 
 - Resolve the remaining minimatch 10.2.6 development dependency under the TypeScript
@@ -1889,6 +1923,14 @@ registry refresh preserve the existing dependency decision.
   that share one trigger while adding another. Keep genuine incompatibilities,
   unqualified requests, and comparisons as controls. Independent judgments
   and native latency remain prerequisites for production adoption.
+  The event follow-up passes eleven frozen corpora and all eight trigger
+  probes, including the three historical recall regressions. Preserve those
+  results and the ten later probes. Test unfamiliar verbs in coordinated
+  requests, distinct subjects in passive series, alternative triggers, and
+  earlier descriptive event mentions. Keep directional event matching
+  precise when a request specifies the action associated with the event.
+  Independently authored cases and judgments remain necessary before
+  production adoption.
   Source-revision overfetch recovers the three known short-query candidate gaps in the
   fixed fixtures but still fails semantic recall and latency acceptance. Next improve
   semantic scope without trading away qualifiers or opposing requirements, preserve
