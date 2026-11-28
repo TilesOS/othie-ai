@@ -1,0 +1,70 @@
+{
+  "protocol": "scope-event-admission-probes-v1",
+  "limitations": "Same-author probes written following the candidate commit. Score source admission before packing.",
+  "documents": [
+    { "name": "press-bins.md", "text": "Operators must pack press bins before storage." },
+    { "name": "wheel-guards.md", "text": "Operators must buff wheel guards after storage." },
+    { "name": "specimen-jars.md", "text": "Specimen jars must be chilled before labeling and packed after labeling." },
+    { "name": "labels-and-sleeves.md", "text": "Labels must be kept flat and sleeves stored upright after transit." },
+    { "name": "service-call.md", "text": "Dispatchers must record heater faults before calling maintenance." },
+    { "name": "maintenance-work.md", "text": "Dispatchers must record heater faults before maintenance." },
+    { "name": "freezer-opening.md", "text": "Staff must log freezer temperatures before opening." },
+    { "name": "freezer-closing.md", "text": "Staff must log freezer temperatures after closing." },
+    { "name": "filter-cart.md", "text": "Technicians must replace amber filters. Technicians must replace blue filters. Staff must wipe the cart after replacement." },
+    { "name": "ink-tray.md", "text": "Ink cartridge replacement takes place at the north station. Staff must wipe the tray after replacement." },
+    { "name": "closures.md", "text": "Operators must seal freight bags if the west gate closes." },
+    { "name": "opening.md", "text": "Operators must seal freight bags if the west gate opens." }
+  ],
+  "rows": [
+    {
+      "id": "unknown-active-request-conjunct",
+      "query": "Explain the requirements to pack press bins before storage and buff wheel guards after storage.",
+      "expected_sources": ["press-bins.md", "wheel-guards.md"]
+    },
+    {
+      "id": "passive-series-different-local-trigger",
+      "query": "Explain the requirement to pack specimen jars after labeling.",
+      "expected_sources": ["specimen-jars.md"]
+    },
+    {
+      "id": "passive-series-crossed-trigger",
+      "query": "Explain the requirement to chill specimen jars after labeling.",
+      "expected_sources": []
+    },
+    {
+      "id": "passive-conjunct-new-subject",
+      "query": "Explain the requirement to store sleeves after transit.",
+      "expected_sources": ["labels-and-sleeves.md"]
+    },
+    {
+      "id": "explicit-action-in-event",
+      "query": "Explain the requirement to record heater faults before calling maintenance.",
+      "expected_sources": ["service-call.md"]
+    },
+    {
+      "id": "alternative-requested-triggers",
+      "query": "Explain the requirement to log freezer temperatures before opening or after closing.",
+      "expected_sources": ["freezer-closing.md", "freezer-opening.md"]
+    },
+    {
+      "id": "nearest-event-antecedent",
+      "query": "Explain the requirement to wipe the cart after replacing blue filters.",
+      "expected_sources": ["filter-cart.md"]
+    },
+    {
+      "id": "stale-event-antecedent",
+      "query": "Explain the requirement to wipe the cart after replacing amber filters.",
+      "expected_sources": []
+    },
+    {
+      "id": "event-in-descriptive-sentence",
+      "query": "Explain the requirement to wipe the tray after replacing ink cartridges.",
+      "expected_sources": ["ink-tray.md"]
+    },
+    {
+      "id": "distinct-events-share-subject",
+      "query": "When the west gate closes, explain the requirement to seal freight bags.",
+      "expected_sources": ["closures.md"]
+    }
+  ]
+}
